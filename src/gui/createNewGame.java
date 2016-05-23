@@ -7,18 +7,19 @@ import javax.swing.border.Border;
 public class createNewGame {
 	public void createGui(){
 		JPanel panel = new JPanel(new GridBagLayout());
+	   //--------------------------------------------------------------
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.NORTH;
 		constraints.weighty = 1;
-		constraints.insets = new Insets(30,0,0,25);
+		constraints.insets = new Insets(30,0,0,0);
 		constraints.gridx = 0;
 		constraints.gridx++;
         constraints.gridy = 0;
         panel.add(setLabel("Das verrückte Labyrinth", 40), constraints);
-        //##############################################################
+      //--------------------------------------------------------------
         constraints.gridy++;
         panel.add(setLabel("Spiel erstellen", 30), constraints);
-        //##############################################################
+      //--------------------------------------------------------------
         constraints.gridx= 0;
         constraints.gridy++;
         panel.add(addTextFields(),constraints);
@@ -26,7 +27,7 @@ public class createNewGame {
         panel.add(addButtons("computer"),constraints);
         constraints.gridx++;
         panel.add(addButtons("spieler"),constraints);
-        //##############################################################
+      //--------------------------------------------------------------
         constraints.gridx= 0;
         constraints.gridy++;
         panel.add(addTextFields(),constraints);
@@ -34,7 +35,7 @@ public class createNewGame {
         panel.add(addButtons("computer"),constraints);
         constraints.gridx++;
         panel.add(addButtons("spieler"),constraints);
-        //##############################################################
+      //--------------------------------------------------------------
         constraints.gridx= 0;
         constraints.gridy++;
         panel.add(addTextFields(),constraints);
@@ -42,8 +43,22 @@ public class createNewGame {
         panel.add(addButtons("computer"),constraints);
         constraints.gridx++;
         panel.add(addButtons("spieler"),constraints);
-        
-		createFrame().add(panel);
+      //--------------------------------------------------------------
+
+        JPanel panel2 = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(30,0,0,10);
+        c.weighty = 1;
+        c.gridy = 0;
+        c.gridx = 0;
+        panel2.add(addButtons("Spiel starten"),c);
+        c.gridx++;
+        panel2.add(addButtons("Zurück"),c);
+      //--------------------------------------------------------------
+        JFrame frame = createFrame();
+		frame.add(panel, BorderLayout.NORTH);
+		frame.add(panel2, BorderLayout.CENTER);
+		
 	}	
 	
 	public JFrame createFrame(){
@@ -72,6 +87,7 @@ public class createNewGame {
 	public JButton addButtons(String text){
 		JButton button = new JButton(text);
 		button.setPreferredSize(new Dimension(200, 50));
+		button.setFont(new Font("Serif", Font.PLAIN, 25));
 		return button;
 	}
 }
