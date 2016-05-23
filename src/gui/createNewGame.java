@@ -5,70 +5,73 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 public class createNewGame {
-	
-	JFrame frame = new JFrame("create new Game");
-	JPanel labelContainer = new JPanel();
-	JPanel buttonContainer = new JPanel();
-	JPanel textfieldContainer = new JPanel();
-	
-	
 	public void createGui(){
-		setFrame(700, 700, 500, 100);
-		
-		labelContainer.setLayout(new BoxLayout(labelContainer, BoxLayout.Y_AXIS));
-		labelContainer.add(setLabel("Das verrücke Labyrinth", 40));
-		labelContainer.add(setLabel("Erstellen des Spiels", 25));
-		
-		buttonContainer.setLayout(new GridLayout(3, 3));
-		buttonContainer.add(addTextFields(10,50, "abc"));
-		buttonContainer.add(addButton(200, 50, "Computer Hinzufügen"));
-		buttonContainer.add(addButton(175, 50, "Spieler Hinzufügen"));
-		buttonContainer.add(addTextFields(10,50, "abc"));
-		buttonContainer.add(addButton(200, 50, "Computer Hinzufügen"));
-		buttonContainer.add(addButton(175, 50, "Spieler Hinzufügen"));
-		buttonContainer.add(addTextFields(10,50, "abc"));
-		buttonContainer.add(addButton(200, 50, "Computer Hinzufügen"));
-		buttonContainer.add(addButton(175, 50, "Spieler Hinzufügen"));
-
-		frame.setLayout(new BorderLayout());
-		frame.add(labelContainer, BorderLayout.NORTH);
-		frame.add(buttonContainer, BorderLayout.CENTER);
-		frame.add(addButton(200, 50, "Back"), BorderLayout.SOUTH);
-		
+		JPanel panel = new JPanel(new GridBagLayout());
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.NORTH;
+		constraints.weighty = 1;
+		constraints.insets = new Insets(30,0,0,25);
+		constraints.gridx = 0;
+		constraints.gridx++;
+        constraints.gridy = 0;
+        panel.add(setLabel("Das verrückte Labyrinth", 40), constraints);
+        //##############################################################
+        constraints.gridy++;
+        panel.add(setLabel("Spiel erstellen", 30), constraints);
+        //##############################################################
+        constraints.gridx= 0;
+        constraints.gridy++;
+        panel.add(addTextFields(),constraints);
+        constraints.gridx++;
+        panel.add(addButtons("computer"),constraints);
+        constraints.gridx++;
+        panel.add(addButtons("spieler"),constraints);
+        //##############################################################
+        constraints.gridx= 0;
+        constraints.gridy++;
+        panel.add(addTextFields(),constraints);
+        constraints.gridx++;
+        panel.add(addButtons("computer"),constraints);
+        constraints.gridx++;
+        panel.add(addButtons("spieler"),constraints);
+        //##############################################################
+        constraints.gridx= 0;
+        constraints.gridy++;
+        panel.add(addTextFields(),constraints);
+        constraints.gridx++;
+        panel.add(addButtons("computer"),constraints);
+        constraints.gridx++;
+        panel.add(addButtons("spieler"),constraints);
         
-	}
+		createFrame().add(panel);
+	}	
 	
-	public void setFrame(int sizeX, int sizeY, int locationX, int locationY){
-		//frame.getContentPane().setLayout(null); 
+	public JFrame createFrame(){
+		JFrame frame = new JFrame("Test Frame");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		frame.setSize(sizeX, sizeY);
-		frame.setLocation(locationX, locationY);
+		frame.setSize(1200, 500);
+		frame.setLocation(300, 200);
+		return frame;
 	}
 	
-	public JPanel setLabel(String labelString, int size){
-		JPanel panel = new JPanel();
+	public JLabel setLabel(String labelString, int size){
 		JLabel label = new JLabel(labelString);
 		label.setFont(new Font("Serif", Font.PLAIN, size));
-		panel.add(label);
-		return panel;
+		return label;
 	}
 	
-	public JPanel addButton(int sizeX, int sizeY, String label){
-		JPanel btnPanel = new JPanel();
-		JButton button = new JButton(label);
-		button.setPreferredSize(new Dimension(sizeX, sizeY));
-		btnPanel.add(button);
-		return btnPanel;
-	}
-	
-	public JPanel addTextFields(int sizeX, int sizeY, String text){
-		JPanel textPanel = new JPanel();
-		JTextField textField = new JTextField(sizeX);
-		textField.setPreferredSize(new Dimension(sizeX, sizeY));
+	public JTextField addTextFields(){
+		JTextField textField = new JTextField(10);
+		textField.setPreferredSize(new Dimension(10, 50));
 		Font font = new Font("SansSerif", Font.BOLD, 20);
 		textField.setFont(font);
-		textPanel.add(textField);
-		return textPanel;
+		return textField;
+	}
+	
+	public JButton addButtons(String text){
+		JButton button = new JButton(text);
+		button.setPreferredSize(new Dimension(200, 50));
+		return button;
 	}
 }
