@@ -62,7 +62,7 @@ public class createNewGame {
 	}	
 	
 	public JFrame createFrame(){
-		JFrame frame = new JFrame("Test Frame");
+		JFrame frame = new JFrame("createNewGame");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setSize(1200, 500);
