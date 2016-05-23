@@ -1,0 +1,4 @@
+\beamer@endinputifotherversion {3.24pt}
+\select@language {ngerman}
+\beamer@sectionintoc {1}{Bedienungsoberfl\IeC {\"a}che(GUI)}{2}{0}{1}
+\beamer@sectionintoc {2}{Spiel-Engine}{9}{0}{2}
