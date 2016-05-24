@@ -103,7 +103,7 @@ public class ChatClient extends JFrame implements ActionListener {
 
     public static void main(String[] args)  {
     									  //ScreenName, Hostname
-        ChatClient client = new ChatClient("Das Verrückte Labyrinth", "Host");
+    	ChatClient client = new ChatClient("Test Client", "localhost");
         client.listen();
     }
 }
