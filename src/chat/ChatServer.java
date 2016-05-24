@@ -14,7 +14,7 @@
  *  
  ******************************************************************************/
 
-package main;
+package chat;
 
 import java.net.Socket;
 import java.net.ServerSocket;

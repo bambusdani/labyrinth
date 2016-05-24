@@ -7,7 +7,7 @@
  *
  ******************************************************************************/
 
-package main;
+package chat;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -636,7 +636,7 @@ public final class In {
         // read one line at a time from absolute OS X / Linux path
         System.out.println("readLine() from absolute OS X / Linux path");
         System.out.println("---------------------------------------------------------------------------");
-        in = new In("/n/fs/introcs/www/java/stdlib/InTest.txt");
+        in = new In("InTest.txt");
         try {
             while (!in.isEmpty()) {
                 String s = in.readLine();

@@ -12,7 +12,7 @@
  *  
  ******************************************************************************/
 
-package main;
+package chat;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import java.net.Socket;
 
-public class ChatClient extends JFrame implements ActionListener {
+public class ChatClient2 extends JFrame implements ActionListener {
 
     private String screenName;
 
@@ -37,7 +37,7 @@ public class ChatClient extends JFrame implements ActionListener {
     private Out out;
     private In in;
 
-    public ChatClient(String screenName, String hostName) {
+    public ChatClient2(String screenName, String hostName) {
 
         // connect to server
         try {
@@ -102,7 +102,8 @@ public class ChatClient extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args)  {
-        ChatClient client = new ChatClient(args[0], args[1]);
+    									  //ScreenName, Hostname
+        ChatClient2 client = new ChatClient2("Das Verrückte Labyrinth 2", "Host");
         client.listen();
     }
 }
