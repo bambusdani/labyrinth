@@ -36,7 +36,7 @@ public class rules {
 		constraints.gridx = 0;
 		constraints.gridx++;
 	    constraints.gridy = 0;
-	    panel.add(setLabel("Das verrückte Labyrinth", 40), constraints);
+	    panel.add(setLabel("Das verrï¿½ckte Labyrinth", 40), constraints);
 	    //--------------------------------------------------------------
 	    // second header
         constraints.gridy = 2;
@@ -48,7 +48,7 @@ public class rules {
 	    //---------------------------------------------------------------
         // back button
         constraints.gridy = 4;
-        panel.add(addButtons("zurück"),constraints);
+        panel.add(addButtons("zurï¿½ck"),constraints);
         
         //--------------------------------------------------------------
         // creating the frame
@@ -76,12 +76,12 @@ public class rules {
 	public JScrollPane setScrollPane(String text, int sizeOfText){
 		
 		JTextArea textArea = new JTextArea(text);
-		textArea.setPreferredSize(new Dimension(400, 200));
 		textArea.setFont(new Font("Serif", Font.PLAIN, sizeOfText));
 		textArea.setLineWrap(true);
 		textArea.setEditable(false);
 		
 		JScrollPane scroll = new JScrollPane(textArea);
+		scroll.setPreferredSize(new Dimension(600,400));
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		return scroll;
 	}
@@ -96,7 +96,7 @@ public class rules {
 	}
 	
 	public String createLongText(){
-			for (int i = 0; i < 100; i++) {
+			for (int i = 0; i < 1000; i++) {
 				longText = longText + " Test ";
 			}
 			return longText;
