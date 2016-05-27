@@ -2,15 +2,19 @@ package gui;
 
 import javax.swing.*;
 
+import gameLogic.Board;
+
 import java.awt.*;
 
 public class playGround {
 	
-	int windowWidth=1000;
-	int windowHeight=700;
-	int gridButtonSize = 60;
+	private int windowWidth=1000;
+	private int windowHeight=700;
+	private int gridButtonSize = 60;
+	
+	
 
-	public void createGui() {
+	public void createGui(Board board) {
 		JFrame frame = new JFrame("DVL2 Spielfeld");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -23,25 +27,25 @@ public class playGround {
 		label.setLocation(5, 10);					//setLocation(x, y)
 		
 		//Player1 TextField
-		JTextField player1 = new JTextField("Player 1: 0");
+		JTextField player1 = new JTextField(board.getPlayer(0).getNameOfPlayer()+ " : " + board.getPlayer(0).getScore());
 		player1.setSize(100, 20);
 		player1.setEditable(false);					//Damit man nicht rein schreiben kann...
 		player1.setLocation(label.getPreferredSize().width+15, label.getLocation().y);
 		
 		//Player2 TextField
-		JTextField player2 = new JTextField("Player 2: 0");
+		JTextField player2 = new JTextField(board.getPlayer(1).getNameOfPlayer()+ " : " + board.getPlayer(1).getScore());
 		player2.setSize(100, 20);
 		player2.setEditable(false);					//Damit man nicht rein schreiben kann...
 		player2.setLocation(player1.getLocation().x+player1.getWidth()+15, label.getLocation().y);
 		
 		//Player3 TextField
-		JTextField player3 = new JTextField("Player 3: 0");
+		JTextField player3 = new JTextField(board.getPlayer(2).getNameOfPlayer()+ " : " + board.getPlayer(2).getScore());
 		player3.setSize(100, 20);
 		player3.setEditable(false);					//Damit man nicht rein schreiben kann...
 		player3.setLocation(player2.getLocation().x+player2.getWidth()+15, label.getLocation().y);
 		
 		//Player4 TextField
-		JTextField player4 = new JTextField("Player 4: 0");
+		JTextField player4 = new JTextField(board.getPlayer(3).getNameOfPlayer()+ " : " + board.getPlayer(3).getScore());
 		player4.setSize(100, 20);
 		player4.setEditable(false);					//Damit man nicht rein schreiben kann...
 		player4.setLocation(player3.getLocation().x+player3.getWidth()+15, label.getLocation().y);
@@ -54,6 +58,23 @@ public class playGround {
 				JButton b = new JButton();
 				b.setBackground(Color.WHITE);
 				b.setSize(gridButtonSize, gridButtonSize);
+				
+				//draws the Shape of the tile
+				//checks if the tile has a symbol and adds it to the tile
+				if(board.getTile(j, i).getSymbol() == null){
+					b.setText(board.getTile(j, i).getShape());
+				}
+				else{
+					b.setText(board.getTile(j, i).getShape() +" \n "+ board.getTile(j, i).getSymbol());					
+				}
+				
+				
+	
+				// checking if the first player is on the the spot if yes draw a colored border
+				if((board.getPlayer(0).getPositionX() == j) && (board.getPlayer(0).getPostitonY() == i)){
+					
+					b.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
+				}
 				
                 /* Das ist für später, um icons zu benutzen
                 ImageIcon icon = new ImageIcon(
