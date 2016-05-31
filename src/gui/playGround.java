@@ -23,7 +23,7 @@ public class playGround {
 
 		//Label "Fehlende Symbole"
 		JLabel label = new JLabel("Fehlende Symbole:");
-		label.setSize(label.getPreferredSize());	//Die größe wird je nach Text Länge gesetzt
+		label.setSize(label.getPreferredSize());	//Die grï¿½ï¿½e wird je nach Text Lï¿½nge gesetzt
 		label.setLocation(5, 10);					//setLocation(x, y)
 		
 		//Player1 TextField
@@ -76,7 +76,7 @@ public class playGround {
 					b.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
 				}
 				
-                /* Das ist für später, um icons zu benutzen
+                /* Das ist fï¿½r spï¿½ter, um icons zu benutzen
                 ImageIcon icon = new ImageIcon(
                         new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);*/
@@ -90,17 +90,17 @@ public class playGround {
 		
 		//Label "Erreichte Ziele"
 		JLabel achieved = new JLabel("Erreichte Ziele:");
-		achieved.setSize(achieved.getPreferredSize());	//Die größe wird je nach Text Länge gesetzt
+		achieved.setSize(achieved.getPreferredSize());	//Die grï¿½ï¿½e wird je nach Text Lï¿½nge gesetzt
 		achieved.setLocation(800, 150);					//setLocation(x, y)
 		
-		//Label "Nächstes Ziele"
-		JLabel next = new JLabel("Nächstes Ziele:");
-		next.setSize(next.getPreferredSize());	//Die größe wird je nach Text Länge gesetzt
+		//Label "Nï¿½chstes Ziele"
+		JLabel next = new JLabel("Nï¿½chstes Ziele:");
+		next.setSize(next.getPreferredSize());	//Die grï¿½ï¿½e wird je nach Text Lï¿½nge gesetzt
 		next.setLocation(800, 250);				//setLocation(x, y)
 		
 		//Label "Stein"
 		JLabel stone = new JLabel("Stone:");
-		stone.setSize(stone.getPreferredSize());	//Die größe wird je nach Text Länge gesetzt
+		stone.setSize(stone.getPreferredSize());	//Die grï¿½ï¿½e wird je nach Text Lï¿½nge gesetzt
 		stone.setLocation(800, 350);				//setLocation(x, y)
 		
 		//Chat
