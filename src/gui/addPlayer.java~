@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 public class addPlayer {
 
 	public addPlayer() {
-		// TODO Auto-generated constructor stub...
+		// TODO Auto-generated constructor stub
 	}
 
 	public void createGui(){
