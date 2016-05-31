@@ -28,9 +28,12 @@ public class ConnectionListener extends Thread {
                 // broadcast to everyone
                 String message = ith.getMessage();
                 if (message != null)
-                    for (Connection jth : connections)
+                    for (Connection jth : connections) {
                         jth.println(message);
 
+                        //SERVER BROADCASTS
+                        jth.println("THIS IS A SERVER BROADCAST. player x got a secret card");
+                    }
             }
 
             // don't monopolize processor
