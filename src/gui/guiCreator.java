@@ -15,7 +15,7 @@ public class guiCreator extends JPanel {
 		newLabyrinthGame.createGui();
 		
 		playGround playGround = new playGround();
-		playGround.createGui();
+		//playGround.createGui();
 		
 		joinGame joinGame = new joinGame();
 		joinGame.createGui();

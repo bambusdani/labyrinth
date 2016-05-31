@@ -89,7 +89,7 @@ public class ChatClient extends JFrame implements ActionListener {
 
         if(typedText.getText().substring(0,4).equalsIgnoreCase("MOVE")) {
             //Do Server Stuff
-            out.println("PLAYER X has moved to X,Y");
+            out.println("Du hast KarteX bekommen");
         }
         typedText.setText("");
         typedText.requestFocusInWindow();
@@ -111,7 +111,7 @@ public class ChatClient extends JFrame implements ActionListener {
 
     public static void main(String[] args)  {
     									  //ScreenName, Hostname
-    	ChatClient client = new ChatClient("Test Client", "localhost");
+    	ChatClient client = new ChatClient("Hjorleif", "localhost");
         client.listen();
     }
 }

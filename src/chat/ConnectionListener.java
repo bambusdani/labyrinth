@@ -32,7 +32,7 @@ public class ConnectionListener extends Thread {
                         jth.println(message);
 
                         //SERVER BROADCASTS
-                        jth.println("THIS IS A SERVER BROADCAST. player x got a secret card");
+                        //jth.println("THIS IS A SERVER BROADCAST. player x got a secret card");
                     }
             }
 
