@@ -82,7 +82,15 @@ public class ChatClient extends JFrame implements ActionListener {
 
     // process TextField after user hits Enter
     public void actionPerformed(ActionEvent e) {
-        out.println("[" + screenName + "]: " + typedText.getText());
+        //Chat Protocol
+        if(typedText.getText().substring(0,4).equalsIgnoreCase("CHAT")) {
+            out.println("[" + screenName + "]: " + typedText.getText());
+        }
+
+        if(typedText.getText().substring(0,4).equalsIgnoreCase("MOVE")) {
+            //Do Server Stuff
+            out.println("PLAYER X has moved to X,Y");
+        }
         typedText.setText("");
         typedText.requestFocusInWindow();
     }
