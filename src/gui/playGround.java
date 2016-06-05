@@ -1,17 +1,18 @@
 package gui;
 
 import javax.swing.*;
+import java.awt.*;
 
 import gameLogic.Board;
-
-import java.awt.*;
+import chat.*;
 
 public class playGround {
 	
 	private int windowWidth=1000;
 	private int windowHeight=700;
 	private int gridButtonSize = 60;
-	
+
+	private ChatClient chatClient;
 	
 
 	public void createGui(Board board) {
@@ -102,19 +103,28 @@ public class playGround {
 		JLabel stone = new JLabel("Stone:");
 		stone.setSize(stone.getPreferredSize());	//Die gr��e wird je nach Text L�nge gesetzt
 		stone.setLocation(800, 350);				//setLocation(x, y)
-		
-		//Chat
-		JTextField chat = new JTextField("Chat");
-		chat.setSize(250, 200);
-		chat.setEditable(false);					//Damit man nicht rein schreiben kann...
-		chat.setLocation(0, windowHeight-200);
-		
+
 		//Moveable Stone
 		JButton moveableStone = new JButton("M");
 		moveableStone.setBackground(Color.WHITE);
 		moveableStone.setSize(gridButtonSize, gridButtonSize);
 		moveableStone.setLocation(boardSquares[2][0].getX()-70, boardSquares[2][0].getY());
-		
+
+		//Chat
+		//chatClient = new ChatClient("Hjorleif", "localhost");
+		//chatClient.listen();
+		JTextField chat = new JTextField("Chat");
+		JTextArea  enteredText = new JTextArea(10, 32);
+		JTextField typedText   = new JTextField(32);
+		enteredText.setSize(250,200);
+		enteredText.setLocation(0,windowHeight-220);
+		typedText.setSize(250,20);
+		typedText.setLocation(0,windowHeight-20);
+		chatClient = new ChatClient("Hjorleif", "localhost", enteredText, typedText);
+		chatClient.listen();
+		//chat.setSize(250, 200);
+		//chat.setEditable(false);					//Damit man nicht rein schreiben kann...
+		//chat.setLocation(0, windowHeight-200);
 		
 		contentPane.add(label);
 		contentPane.add(player1);
@@ -126,7 +136,8 @@ public class playGround {
 		contentPane.add(next);
 		contentPane.add(stone);
 		
-		contentPane.add(chat);
+		contentPane.add(enteredText);
+		contentPane.add(typedText);
 		
 		contentPane.add(moveableStone);
 

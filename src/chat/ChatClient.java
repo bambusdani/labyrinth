@@ -27,8 +27,10 @@ public class ChatClient extends JFrame implements ActionListener {
     private String screenName;
 
     // GUI stuff
-    private JTextArea  enteredText = new JTextArea(10, 32);
-    private JTextField typedText   = new JTextField(32);
+    //private JTextArea  enteredText = new JTextArea(10, 32);
+    //private JTextField typedText   = new JTextField(32);
+    JTextArea enteredText;
+    JTextField typedText;
 
     // socket for connection to chat server
     private Socket socket;
@@ -37,7 +39,10 @@ public class ChatClient extends JFrame implements ActionListener {
     private Out out;
     private In in;
 
-    public ChatClient(String screenName, String hostName) {
+    public ChatClient(String screenName, String hostName, JTextArea textArea, JTextField textField) {
+
+        this.enteredText = textArea;
+        this.typedText = textField;
 
         // connect to server
         try {
@@ -66,17 +71,17 @@ public class ChatClient extends JFrame implements ActionListener {
         enteredText.setBackground(Color.LIGHT_GRAY);
         typedText.addActionListener(this);
 
-        Container content = getContentPane();
-        content.add(new JScrollPane(enteredText), BorderLayout.CENTER);
-        content.add(typedText, BorderLayout.SOUTH);
+        //Container content = getContentPane();
+        //content.add(new JScrollPane(enteredText), BorderLayout.CENTER);
+        //content.add(typedText, BorderLayout.SOUTH);
 
 
         // display the window, with focus on typing box
-        setTitle("Chat Client 1.0: [" + screenName + "]");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
+        //setTitle("Chat Client 1.0: [" + screenName + "]");
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //pack();
         typedText.requestFocusInWindow();
-        setVisible(true);
+        //setVisible(true);
 
     }
 
@@ -109,9 +114,9 @@ public class ChatClient extends JFrame implements ActionListener {
         System.err.println("Closed client socket");
     }
 
-    public static void main(String[] args)  {
+    /*public static void main(String[] args)  {
     									  //ScreenName, Hostname
     	ChatClient client = new ChatClient("Hjorleif", "localhost");
         client.listen();
-    }
+    }*/
 }

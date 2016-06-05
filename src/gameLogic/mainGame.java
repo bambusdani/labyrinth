@@ -14,7 +14,7 @@ public class mainGame {
 		Board board = new Board();
 		
 		playGround boardview = new playGround();
-		boardview.createGui(board);
+ 		boardview.createGui(board);
 		
 		
 
