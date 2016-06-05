@@ -1,10 +1,14 @@
 package gui;
 
+import oracle.jrockit.jfr.JFR;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,7 +16,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class joinGame {
+public class joinGame implements ActionListener{
+
+	JFrame frame = createFrame();
+	JButton back = addButtons("Zurück");
+
 	public void createGui(){
 		JPanel panel = new JPanel(new GridBagLayout());
 		   //--------------------------------------------------------------
@@ -36,8 +44,11 @@ public class joinGame {
 	        panel.add(setLabel("Übermitteln Sie die IP-Adresse dem Host", 25), constraints);
 	        constraints.gridy++;
 	        panel.add(setLabel("Warten Sie bis der Host das Spiel startet ", 25), constraints);
-	        
-	    createFrame().add(panel);
+	        constraints.gridy++;
+			back.addActionListener(this);
+
+			panel.add(back, constraints);
+	    frame.add(panel);
 	}
 	
 	public JFrame createFrame(){
@@ -68,5 +79,17 @@ public class joinGame {
 		button.setPreferredSize(new Dimension(200, 50));
 		button.setFont(new Font("Serif", Font.PLAIN, 25));
 		return button;
+	}
+
+	public void actionPerformed (ActionEvent ae){
+		// Die Quelle wird mit getSource() abgefragt und mit den
+		// Buttons abgeglichen. Wenn die Quelle des ActionEvents einer
+		// der Buttons ist, wird der Text des JLabels entsprechend geändert
+		if(ae.getSource() == this.back){
+			startMenu startMenu = new startMenu();
+			startMenu.createGui();
+			frame.dispose();
+
+		}
 	}
 }

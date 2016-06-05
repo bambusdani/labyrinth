@@ -1,10 +1,19 @@
 package gui;
 
+import gameLogic.Board;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-public class createNewGame {
+public class createNewGame implements ActionListener{
+
+	JButton start = addButtons("Spiel starten");
+	JButton back = addButtons("Zurück");
+	JFrame frame = createFrame();
+
 	public void createGui(){
 		JPanel panel = new JPanel(new GridBagLayout());
 	   //--------------------------------------------------------------
@@ -51,11 +60,13 @@ public class createNewGame {
         c.weighty = 1;
         c.gridy = 0;
         c.gridx = 0;
-        panel2.add(addButtons("Spiel starten"),c);
+		start.addActionListener(this);
+        panel2.add(start,c);
         c.gridx++;
-        panel2.add(addButtons("Zurück"),c);
+		back.addActionListener(this);
+        panel2.add(back,c);
       //--------------------------------------------------------------
-        JFrame frame = createFrame();
+
 		frame.add(panel, BorderLayout.NORTH);
 		frame.add(panel2, BorderLayout.CENTER);
 		
@@ -89,5 +100,22 @@ public class createNewGame {
 		button.setPreferredSize(new Dimension(200, 50));
 		button.setFont(new Font("Serif", Font.PLAIN, 25));
 		return button;
+	}
+
+	public void actionPerformed (ActionEvent ae){
+		// Die Quelle wird mit getSource() abgefragt und mit den
+		// Buttons abgeglichen. Wenn die Quelle des ActionEvents einer
+		// der Buttons ist, wird der Text des JLabels entsprechend geändert
+		if(ae.getSource() == this.back){
+			startMenu startMenu = new startMenu();
+			startMenu.createGui();
+			frame.dispose();
+		}
+		else if(ae.getSource() == this.start){
+			Board board = new Board();
+			playGround boardview = new playGround();
+			boardview.createGui(board);
+			frame.dispose();
+		}
 	}
 }

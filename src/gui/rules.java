@@ -6,23 +6,15 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
 
-public class rules {
-
-	public rules() {
-		// TODO Auto-generated constructor stub		
-	}
+public class rules implements ActionListener{
 
 	private String longText = "Test";
-	
-	
-	
+	JFrame frame = createFrame();
+	JButton back = addButtons("zurück");
 	
 	public void createGui(){
 		
@@ -36,7 +28,7 @@ public class rules {
 		constraints.gridx = 0;
 		constraints.gridx++;
 	    constraints.gridy = 0;
-	    panel.add(setLabel("Das verr�ckte Labyrinth", 40), constraints);
+	    panel.add(setLabel("Das verrückte Labyrinth", 40), constraints);
 	    //--------------------------------------------------------------
 	    // second header
         constraints.gridy = 2;
@@ -48,11 +40,11 @@ public class rules {
 	    //---------------------------------------------------------------
         // back button
         constraints.gridy = 4;
-        panel.add(addButtons("zur�ck"),constraints);
+		back.addActionListener(this);
+        panel.add(back,constraints);
         
         //--------------------------------------------------------------
         // creating the frame
-	    JFrame frame = createFrame();
 		frame.add(panel, BorderLayout.NORTH);
 			
 	}
@@ -102,4 +94,14 @@ public class rules {
 			return longText;
 		}
 
+	public void actionPerformed (ActionEvent ae){
+		// Die Quelle wird mit getSource() abgefragt und mit den
+		// Buttons abgeglichen. Wenn die Quelle des ActionEvents einer
+		// der Buttons ist, wird der Text des JLabels entsprechend geändert
+		if(ae.getSource() == this.back){
+			startMenu startMenu = new startMenu();
+			startMenu.createGui();
+			frame.dispose();
+		}
+	}
 }

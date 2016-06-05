@@ -1,15 +1,22 @@
 package gui;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class startMenu {
+public class startMenu implements ActionListener{
+	JFrame frame = createFrame();
+	JButton buttonRules = addButtons("Spielanleitung");
+	JButton buttonCreateGame = addButtons("Spiel erstellen");
+	JButton buttonJoinGame = addButtons("Spiel beitreten");
+
 	public void createGui(){
+
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
-		createFrame().add(panel);
+		frame.add(panel);
 		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.weighty = 1;
 		constraints.insets = new Insets(0,0,0,0);
@@ -19,11 +26,17 @@ public class startMenu {
         //##############################################################
         constraints.gridx= 0;
         constraints.gridy++;
-        panel.add(addButtons("Spiel erstellen"),constraints);
+
+		buttonCreateGame.addActionListener(this);
+        panel.add(buttonCreateGame,constraints);
         constraints.gridx++;
-        panel.add(addButtons("Spiel beitreten"),constraints);
-        constraints.gridx++;
-        panel.add(addButtons("Spielanleitung"),constraints);
+
+		buttonJoinGame.addActionListener(this);
+        panel.add(buttonJoinGame,constraints);
+		constraints.gridx++;
+
+		buttonRules.addActionListener(this);
+        panel.add(buttonRules,constraints);
 	}
 	
 	public JFrame createFrame(){
@@ -46,5 +59,26 @@ public class startMenu {
 		button.setPreferredSize(new Dimension(250, 60));
 		button.setFont(new Font("Serif", Font.PLAIN, 25));
 		return button;
+	}
+
+	public void actionPerformed (ActionEvent ae){
+		// Die Quelle wird mit getSource() abgefragt und mit den
+		// Buttons abgeglichen. Wenn die Quelle des ActionEvents einer
+		// der Buttons ist, wird der Text des JLabels entsprechend geändert
+		if(ae.getSource() == this.buttonRules){
+			rules gameRules = new rules();
+			gameRules.createGui();
+			frame.dispose();
+		}
+		else if(ae.getSource() == this.buttonCreateGame){
+			createNewGame newGame = new createNewGame();
+			newGame.createGui();
+			frame.dispose();
+		}
+		else if(ae.getSource() == this.buttonJoinGame){
+			joinGame joinGame = new joinGame();
+			joinGame.createGui();
+			frame.dispose();
+		}
 	}
 }
