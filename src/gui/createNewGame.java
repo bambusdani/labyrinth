@@ -11,7 +11,7 @@ import javax.swing.border.Border;
 public class createNewGame implements ActionListener{
 
 	JButton start = addButtons("Spiel starten");
-	JButton back = addButtons("ZurÃ¼ck");
+	JButton back = addButtons("Zurück");
 	JFrame frame = createFrame();
 
 	public void createGui(){
@@ -24,7 +24,7 @@ public class createNewGame implements ActionListener{
 		constraints.gridx = 0;
 		constraints.gridx++;
         constraints.gridy = 0;
-        panel.add(setLabel("Das verrÃ¼ckte Labyrinth", 40), constraints);
+        panel.add(setLabel("Das verrückte Labyrinth", 40), constraints);
       //--------------------------------------------------------------
         constraints.gridy++;
         panel.add(setLabel("Spiel erstellen", 30), constraints);
@@ -113,7 +113,7 @@ public class createNewGame implements ActionListener{
 		}
 		else if(ae.getSource() == this.start){
 			Board board = new Board();
-			playGround boardview = new playGround();
+			playGround2 boardview = new playGround2();
 			boardview.createGui(board);
 			frame.dispose();
 		}
