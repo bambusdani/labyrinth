@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class Player {
 
-	public Player(int startPositionX, int startPositionY, String nameOfPlayer,Color color, String[] cardSymbosNeeded, int score, int playerID) {
+	public Player(int startPositionX, int startPositionY, String nameOfPlayer,Color color, String[] cardSymbosNeeded, int score, int playerID, boolean turn) {
 		// TODO Auto-generated constructor stub
 		this.color = color;
 		this.startPositionX = startPositionX;
@@ -16,6 +16,8 @@ public class Player {
 		this.cardSymbolsNeeded = cardSymbosNeeded;
 		this.playerID = playerID;
 		this.score = score;
+		this.turn = turn;
+		
 		
 	}
 	
@@ -28,6 +30,7 @@ public class Player {
 	private String nameOfPlayer;
 	private String[] cardSymbolsNeeded;
 	private int playerID;
+	private boolean turn;
 	
 	
 	
@@ -71,6 +74,12 @@ public class Player {
 	}
 	public int getPlayerID (){
 		return playerID;
+	}
+	public boolean getTurn(){
+		return turn;
+	}
+	public void setTurn(boolean turn){
+		this.turn = turn;
 	}
 	
 

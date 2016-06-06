@@ -11,7 +11,7 @@ public class Board {
 		
 		// creates four empty Player
 		for (int i = 0; i < allPlayers.length; i++) {
-			allPlayers[i] = new Player(0, 0, "empty", new Color(0, 255, 0), null,0, i);
+			allPlayers[i] = new Player(0, 0, "empty", new Color(0, 255, 0), null,0, i, false);
 			
 		}
 		//add one player with data
@@ -61,7 +61,7 @@ public class Board {
 	
 	public void addPlayer(){
 		//needs to get the information from creating game
-		Player player = new Player(3, 5, "Rehan", new Color(255, 0, 0), null,5, 0);
+		Player player = new Player(3, 5, "Rehan", new Color(255, 0, 0), null,5, 0,true);
 		allPlayers[player.getPlayerID()]= player;
 	}
 	
