@@ -9,10 +9,10 @@ public class Board {
 	public Board() {
 		// TODO Auto-generated constructor stub
 		
+		//----------------------------
 		// creates four empty Player
 		for (int i = 0; i < allPlayers.length; i++) {
-			allPlayers[i] = new Player(0, 0, "empty", new Color(0, 255, 0), null,0, i, false);
-			
+			allPlayers[i] = new Player(0, 0, "empty", new Color(0, 255, 0), null,0, i, false);	
 		}
 		//add one player with data
 		addPlayer();
@@ -48,13 +48,16 @@ public class Board {
 		tiles[4][6] = new Tiles(false,4,6,"L",null,0);
 		tiles[6][6] = new Tiles(false,6,6,"L",null,0);
 		
-		
-		//_----------------------------------------------------------------------
+		//-----------------------------------------------------------------------
 	
 	}
 	
 	private Player[] allPlayers = new Player[4];
 	private Tiles[][] tiles  = new Tiles[7][7];
+	
+	//creates the first nextTile
+	//null not allowed as position so 99
+	private Tiles nextTile = new Tiles(true, 99, 99, "L", "Mouse", 0);
 	
 	
 	
@@ -71,6 +74,12 @@ public class Board {
 	
 	public Tiles getTile(int x, int y){
 		return tiles[x][y];
+	}
+	public Tiles getNextTile(){
+		return nextTile;
+	}
+	public void setNextTile(Tiles tile){
+		this.nextTile = tile;
 	}
 	
 }
