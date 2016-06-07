@@ -67,7 +67,7 @@ public class ConnectionListener extends Thread {
                                 jth.println(message);
                             } else {
                                 //if the message doens't make sense at all...
-                                jth.println("What the **** did you type?");
+                                jth.println("What the **** have you typed in?");
                             }
                         }
                         catch (Exception e) {
