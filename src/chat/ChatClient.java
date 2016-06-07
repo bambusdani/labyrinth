@@ -27,10 +27,10 @@ public class ChatClient extends JFrame implements ActionListener {
     private String screenName="";
 
     // GUI stuff
-    private JTextArea  enteredText = new JTextArea(10, 32);
-    private JTextField typedText   = new JTextField(32);
-    //JTextArea enteredText;
-    //JTextField typedText;
+    //private JTextArea  enteredText = new JTextArea(10, 32);
+    //private JTextField typedText   = new JTextField(32);
+    JTextArea enteredText;
+    JTextField typedText;
 
     // socket for connection to chat server
     private Socket socket;
@@ -39,10 +39,10 @@ public class ChatClient extends JFrame implements ActionListener {
     private Out out;
     private In in;
 
-    public ChatClient(String screenName, String hostName) {
+    public ChatClient(String screenName, String hostName, JTextArea textArea, JTextField textField) {
 
-        //this.enteredText = textArea;
-        //this.typedText = textField;
+        this.enteredText = textArea;
+        this.typedText = textField;
 
         // connect to server
         try {
@@ -67,37 +67,27 @@ public class ChatClient extends JFrame implements ActionListener {
 
 
         // create GUI stuff
-        enteredText.setEditable(false);
-        enteredText.setBackground(Color.LIGHT_GRAY);
+        //enteredText.setEditable(false);
+        //enteredText.setBackground(Color.LIGHT_GRAY);
         typedText.addActionListener(this);
 
-        Container content = getContentPane();
-        content.add(new JScrollPane(enteredText), BorderLayout.CENTER);
-        content.add(typedText, BorderLayout.SOUTH);
+        //Container content = getContentPane();
+        //content.add(new JScrollPane(enteredText), BorderLayout.CENTER);
+        //content.add(typedText, BorderLayout.SOUTH);
 
 
         // display the window, with focus on typing box
-        setTitle("Chat Client 1.0: [" + screenName + "]");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        typedText.requestFocusInWindow();
-        setVisible(true);
+        //setTitle("Chat Client 1.0: [" + screenName + "]");
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //pack();
+        //typedText.requestFocusInWindow();
+        //setVisible(true);
 
     }
 
     // process TextField after user hits Enter
     public void actionPerformed(ActionEvent e) {
-        //Chat Protocol
         out.println("[" + screenName + "]: " + typedText.getText());
-        /*if(typedText.getText().substring(0,4).equalsIgnoreCase("CHAT")) {
-
-            out.println("[" + screenName + "]: " + typedText.getText());
-        }
-
-        if(typedText.getText().substring(0,4).equalsIgnoreCase("MOVE")) {
-            //Do Server Stuff
-            out.println("Du hast KarteX bekommen");
-        }*/
         typedText.setText("");
         typedText.requestFocusInWindow();
     }
@@ -116,13 +106,13 @@ public class ChatClient extends JFrame implements ActionListener {
         System.err.println("Closed client socket");
     }
 
-    public String getScreenName() {
-        return this.screenName;
-    }
+    public Out getOut() { return this.out; }
+    public String getScreenName() { return this.screenName; }
+    public String getTypedText() { return this.typedText.getText(); }
 
-    public static void main(String[] args)  {
+    /*public static void main(String[] args)  {
     									  //ScreenName, Hostname
     	ChatClient client = new ChatClient("Hjorleif", "localhost");
         client.listen();
-    }
+    }*/
 }
