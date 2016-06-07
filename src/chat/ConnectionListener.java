@@ -55,6 +55,8 @@ public class ConnectionListener extends Thread {
 
                         TODO:
                         -get player color
+                        -move parameter
+                        -deal etc...
                          */
 
                         //'chat' parameter
