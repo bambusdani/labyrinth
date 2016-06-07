@@ -24,11 +24,13 @@ import java.net.Socket;
 
 public class ChatClient extends JFrame implements ActionListener {
 
-    private String screenName;
+    private String screenName="";
 
     // GUI stuff
     private JTextArea  enteredText = new JTextArea(10, 32);
     private JTextField typedText   = new JTextField(32);
+    //JTextArea enteredText;
+    //JTextField typedText;
 
     // socket for connection to chat server
     private Socket socket;
@@ -38,6 +40,9 @@ public class ChatClient extends JFrame implements ActionListener {
     private In in;
 
     public ChatClient(String screenName, String hostName) {
+
+        //this.enteredText = textArea;
+        //this.typedText = textField;
 
         // connect to server
         try {
@@ -83,14 +88,16 @@ public class ChatClient extends JFrame implements ActionListener {
     // process TextField after user hits Enter
     public void actionPerformed(ActionEvent e) {
         //Chat Protocol
-        if(typedText.getText().substring(0,4).equalsIgnoreCase("CHAT")) {
+        out.println("[" + screenName + "]: " + typedText.getText());
+        /*if(typedText.getText().substring(0,4).equalsIgnoreCase("CHAT")) {
+
             out.println("[" + screenName + "]: " + typedText.getText());
         }
 
         if(typedText.getText().substring(0,4).equalsIgnoreCase("MOVE")) {
             //Do Server Stuff
             out.println("Du hast KarteX bekommen");
-        }
+        }*/
         typedText.setText("");
         typedText.requestFocusInWindow();
     }
@@ -107,6 +114,10 @@ public class ChatClient extends JFrame implements ActionListener {
         try                 { socket.close();      }
         catch (Exception e) { e.printStackTrace(); }
         System.err.println("Closed client socket");
+    }
+
+    public String getScreenName() {
+        return this.screenName;
     }
 
     public static void main(String[] args)  {

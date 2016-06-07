@@ -33,7 +33,6 @@ public class Connection extends Thread {
         System.err.println("closing socket");
     }
 
-
    /***************************************************************************
     *  The methods getMessage() and setMessage() are synchronized
     *  so that the thread in Connection doesn't call setMessage()

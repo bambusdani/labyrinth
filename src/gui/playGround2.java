@@ -36,7 +36,13 @@ public class playGround2 implements ActionListener {
 	private JButton[][] boardSquares = new JButton[7][7];
 	private JFrame 	frame;
 	
+
 	
+	//test 
+	Board givenBoard = new Board();
+	
+	
+
 	public void createGui(Board board) {
 		
 		//================================================================================
@@ -51,7 +57,9 @@ public class playGround2 implements ActionListener {
 		constraintsPlayeroverview.gridwidth = 1;
 		constraintsPlayeroverview.insets = new Insets(15, 10, 10, 10);
 		
+
 		
+
 		//--------------------------------------------------------------------------------
 		// symbols left
 		constraintsPlayeroverview.gridx = 0;
@@ -175,7 +183,10 @@ public class playGround2 implements ActionListener {
 		constraintsInformation.gridx = 0;
 		constraintsInformation.gridy = 5;
 		// instead of "T" it should use an image
-		JLabel labelNextStoneSymbol = setLabel("T",fontSize, stoneSize, stoneSize, colorBlack );
+
+		
+		JLabel labelNextStoneSymbol = setLabel(board.getNextTile().getShape(),fontSize, stoneSize, stoneSize, colorBlack );
+
 		labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
 		panelInformation.add(labelNextStoneSymbol, constraintsInformation);
 		
@@ -436,12 +447,19 @@ public class playGround2 implements ActionListener {
 			newGame.createGui();
 		}
 		if(buttonRotate == e.getSource()){
-			System.out.println("es wird rotiert");
-		}
-		if (buttonsToPlaceStone[2][0] == e.getSource()) {
-			System.out.println("tja");
-		}
+
 		
+		
+		
+		
+		
+			int newRotation = givenBoard.getNextTile().getRotation()+90;
+			givenBoard.getNextTile().setRotation(newRotation);
+			System.out.println("Rotation beträgt: " + newRotation);
+			
+		}
+				
+
 		//------------------------------------------------------------
 		// checks which button on the gameField is pressed
 		for(int i = 0; i < boardSquares.length; i++){
@@ -466,4 +484,14 @@ public class playGround2 implements ActionListener {
 		}		
 	}
 	
+
+	
+	
+	// make it local in this class so it can be used by all methods
+	// only for test
+	public void setBoard(Board newBoard){
+		this.givenBoard = newBoard;
+	}
+	
+
 }
