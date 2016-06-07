@@ -120,8 +120,8 @@ public class playGround {
 		enteredText.setLocation(0,windowHeight-220);
 		typedText.setSize(250,20);
 		typedText.setLocation(0,windowHeight-20);
-		chatClient = new ChatClient("Hjorleif", "localhost", enteredText, typedText);
-		chatClient.listen();
+		//chatClient = new ChatClient("Hjorleif", "localhost", enteredText, typedText);
+		//chatClient.listen();
 		//chat.setSize(250, 200);
 		//chat.setEditable(false);					//Damit man nicht rein schreiben kann...
 		//chat.setLocation(0, windowHeight-200);
