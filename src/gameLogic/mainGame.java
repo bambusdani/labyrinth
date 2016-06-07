@@ -1,6 +1,7 @@
 package gameLogic;
 
 import gui.playGround;
+import gui.playGround2;
 
 public class mainGame {
 
@@ -13,7 +14,12 @@ public class mainGame {
 		
 		Board board = new Board();
 		
-		playGround boardview = new playGround();
+		
+		
+		
+		
+		
+		playGround2 boardview = new playGround2();
  		boardview.createGui(board);
 		
 		
