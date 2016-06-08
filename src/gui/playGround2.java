@@ -445,11 +445,15 @@ public class playGround2 implements ActionListener {
 
     public JTextField setTextField(int length) {
         JTextField textField = new JTextField(length);
+		textField.setMinimumSize(new Dimension(200, 100));
+		textField.setPreferredSize(new Dimension(200, 100));
         return textField;
     }
 
     public JTextArea setTextArea(int height, int width) {
         JTextArea textArea = new JTextArea(height, width);
+		textArea.setMinimumSize(new Dimension(200, 100));
+		textArea.setPreferredSize(new Dimension(200, 100));
         return textArea;
     }
 
