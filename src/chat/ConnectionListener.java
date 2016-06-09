@@ -67,11 +67,13 @@ public class ConnectionListener extends Thread {
                                 jth.println(message);
                             } else {
                                 //if the message doens't make sense at all...
-                                jth.println("What the **** have you typed in?");
+                                //will only be display in the client
+                                ith.println("What the **** have you typed in?");
                             }
                         }
                         catch (Exception e) {
-                            jth.println("error");
+                            //will only be displayed in the client
+                            ith.println("error");
                         }
 
                         //split string so we can work with messagge only and

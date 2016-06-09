@@ -43,7 +43,6 @@ public class playGround2 implements ActionListener {
 	//test 
 	Board givenBoard = new Board();
 	
-	
 
 	public void createGui(Board board) {
 		
