@@ -72,7 +72,7 @@ public class playGround {
 				
 	
 				// checking if the first player is on the the spot if yes draw a colored border
-				if((board.getPlayer(0).getPositionX() == j) && (board.getPlayer(0).getPostitonY() == i)){
+				if((board.getPlayer(0).getPositionX() == j) && (board.getPlayer(0).getPositionY() == i)){
 					
 					b.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
 				}
