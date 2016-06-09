@@ -445,8 +445,8 @@ public class playGround2 implements ActionListener {
 
     public JTextField setTextField(int length) {
         JTextField textField = new JTextField(length);
-		textField.setMinimumSize(new Dimension(200, 100));
-		textField.setPreferredSize(new Dimension(200, 100));
+		textField.setMinimumSize(new Dimension(100, 32));
+		textField.setPreferredSize(new Dimension(100, 32));
         return textField;
     }
 
