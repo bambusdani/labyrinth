@@ -41,10 +41,10 @@ public class Player {
 	public void setPositionX(int positionX) {
 		this.positionX = positionX;
 	}
-	public int getPostitonY() {
+	public int getPositionY() {
 		return postitonY;
 	}
-	public void setPostitonY(int postitonY) {
+	public void setPositionY(int postitonY) {
 		this.postitonY = postitonY;
 	}
 	public int getScore() {
