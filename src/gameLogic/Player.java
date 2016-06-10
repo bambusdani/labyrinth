@@ -44,7 +44,7 @@ public class Player {
 	public int getPositionY() {
 		return postitonY;
 	}
-	public void setPositionY(int postitonY) {
+	public void setPositionY(int positionY) {
 		this.postitonY = postitonY;
 	}
 	public int getScore() {
