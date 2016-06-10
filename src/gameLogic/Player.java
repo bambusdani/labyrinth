@@ -10,7 +10,7 @@ public class Player {
 		this.startPositionX = startPositionX;
 		this.startPositionY = startPositionY;
 		this.positionX = startPositionX;
-		this.postitonY = startPositionY;
+		this.positionY = startPositionY;
 		
 		this.nameOfPlayer 	= nameOfPlayer;
 		this.cardSymbolsNeeded = cardSymbosNeeded;
@@ -22,7 +22,7 @@ public class Player {
 	}
 	
 	private int positionX;
-	private int postitonY;
+	private int positionY;
 	private int score;
 	private Color color;
 	private int startPositionX;
@@ -41,11 +41,9 @@ public class Player {
 	public void setPositionX(int positionX) {
 		this.positionX = positionX;
 	}
-	public int getPositionY() {
-		return postitonY;
-	}
+	public int getPositionY() { return positionY; }
 	public void setPositionY(int positionY) {
-		this.postitonY = postitonY;
+		this.positionY = positionY;
 	}
 	public int getScore() {
 		return score;
