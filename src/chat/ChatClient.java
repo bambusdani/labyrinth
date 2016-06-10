@@ -24,11 +24,10 @@ import java.net.Socket;
 
 public class ChatClient extends JFrame implements ActionListener {
 
+    //screen name will later be playername
     private String screenName="";
 
     // GUI stuff
-    //private JTextArea  enteredText = new JTextArea(10, 32);
-    //private JTextField typedText   = new JTextField(32);
     JTextArea enteredText;
     JTextField typedText;
 
@@ -39,6 +38,10 @@ public class ChatClient extends JFrame implements ActionListener {
     private Out out;
     private In in;
 
+    //================================================================================
+    // constructor creates a connection the the server
+    // on socket = 4444
+    //================================================================================
     public ChatClient(String screenName, String hostName, JTextArea textArea, JTextField textField) {
 
         this.enteredText = textArea;
@@ -58,41 +61,26 @@ public class ChatClient extends JFrame implements ActionListener {
             new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
                     out.close();
-//                    in.close();
-//                    try                   { socket.close();        }
-//                    catch (Exception ioe) { ioe.printStackTrace(); }
                 }
             }
         );
 
-
-        // create GUI stuff
-        //enteredText.setEditable(false);
-        //enteredText.setBackground(Color.LIGHT_GRAY);
+        // gui action listener
         typedText.addActionListener(this);
-
-        //Container content = getContentPane();
-        //content.add(new JScrollPane(enteredText), BorderLayout.CENTER);
-        //content.add(typedText, BorderLayout.SOUTH);
-
-
-        // display the window, with focus on typing box
-        //setTitle("Chat Client 1.0: [" + screenName + "]");
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //pack();
-        //typedText.requestFocusInWindow();
-        //setVisible(true);
-
     }
 
-    // process TextField after user hits Enter
+    //================================================================================
+    // proccess textField after user hits enter
+    //================================================================================
     public void actionPerformed(ActionEvent e) {
         out.println("[" + screenName + "]: " + typedText.getText());
         typedText.setText("");
         typedText.requestFocusInWindow();
     }
 
+    //================================================================================
     // listen to socket and print everything that server broadcasts
+    //================================================================================
     public void listen() {
         String s;
         while ((s = in.readLine()) != null) {
@@ -106,10 +94,9 @@ public class ChatClient extends JFrame implements ActionListener {
         System.err.println("Closed client socket");
     }
 
-    public Out getOut() { return this.out; }
-    public String getScreenName() { return this.screenName; }
-    public String getTypedText() { return this.typedText.getText(); }
-
+    //================================================================================
+    // main method is for testing/debugging
+    //================================================================================
     /*public static void main(String[] args)  {
     									  //ScreenName, Hostname
     	ChatClient client = new ChatClient("Hjorleif", "localhost");

@@ -43,7 +43,6 @@ public class playGround2 implements ActionListener {
 	//test 
 	Board givenBoard = new Board();
 	
-	
 
 	public void createGui(Board board) {
 		
@@ -327,16 +326,16 @@ public class playGround2 implements ActionListener {
 				}
 				//-------------------------
 				// checking if the players are on the the spot if yes draw a colored border
-				if((board.getPlayer(0).getPositionX() == j) && (board.getPlayer(0).getPostitonY() == i)){
+				if((board.getPlayer(0).getPositionX() == j) && (board.getPlayer(0).getPositionY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
 				}
-				if((board.getPlayer(1).getPositionX() == j) && (board.getPlayer(1).getPostitonY() == i)){
+				if((board.getPlayer(1).getPositionX() == j) && (board.getPlayer(1).getPositionY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(1).getColor()));
 				}
-				if((board.getPlayer(2).getPositionX() == j) && (board.getPlayer(2).getPostitonY() == i)){
+				if((board.getPlayer(2).getPositionX() == j) && (board.getPlayer(2).getPositionY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(2).getColor()));
 				}
-				if((board.getPlayer(3).getPositionX() == j) && (board.getPlayer(3).getPostitonY() == i)){
+				if((board.getPlayer(3).getPositionX() == j) && (board.getPlayer(3).getPositionY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(3).getColor()));
 				}
 				//-------------------------
@@ -445,8 +444,8 @@ public class playGround2 implements ActionListener {
 
     public JTextField setTextField(int length) {
         JTextField textField = new JTextField(length);
-		textField.setMinimumSize(new Dimension(200, 100));
-		textField.setPreferredSize(new Dimension(200, 100));
+		textField.setMinimumSize(new Dimension(100, 32));
+		textField.setPreferredSize(new Dimension(100, 32));
         return textField;
     }
 
