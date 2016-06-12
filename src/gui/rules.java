@@ -12,15 +12,21 @@ import javax.swing.*;
 
 public class rules implements ActionListener{
 
+	//=====================================================================
 	private String longText = "Test";
 	JFrame frame = createFrame();
 	JButton back = addButtons("zurück");
+	//=====================================================================
 	
 	public void createGui(){
-		
+		//--------------------------------------------------------------
+		//create new Panel and set GridBagLayout to it
 		JPanel panel = new JPanel(new GridBagLayout());
 		//--------------------------------------------------------------
-		// header
+
+
+		//--------------------------------------------------------------
+		//create new GridBagLayout and set layout (x=1 ; y=0)
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.NORTH;
 		constraints.weighty = 1;
@@ -28,23 +34,40 @@ public class rules implements ActionListener{
 		constraints.gridx = 0;
 		constraints.gridx++;
 	    constraints.gridy = 0;
+
+		//create new label and set to layout
 	    panel.add(setLabel("Das verrückte Labyrinth", 40), constraints);
 	    //--------------------------------------------------------------
-	    // second header
+
+
+		//--------------------------------------------------------------
+	    //layout set to (x=1 ; y=2)
         constraints.gridy = 2;
+
+		//create new lable and set to layout
         panel.add(setLabel("Die Spielregeln: ", 30), constraints);
         //--------------------------------------------------------------
-        // scroll panel for the rules
+
+
+		//--------------------------------------------------------------
+        //layout set to (x=1 ; y=3)
         constraints.gridy = 3;
+
+		//create new scrollPanel and set to layout
         panel.add(setScrollPane("Das sind die Spielregeln: " + createLongText() ,20),constraints);
 	    //---------------------------------------------------------------
-        // back button
+
+
+		//--------------------------------------------------------------
+        //layout set to (x=1 ; y=4)
         constraints.gridy = 4;
+
+		//add actionlistener to back button and add it to panel
 		back.addActionListener(this);
         panel.add(back,constraints);
-        
         //--------------------------------------------------------------
-        // creating the frame
+
+        //set panel to frame and add borderlayout to frame
 		frame.add(panel, BorderLayout.NORTH);
 			
 	}
