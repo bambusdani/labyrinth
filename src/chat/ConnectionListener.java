@@ -7,10 +7,20 @@
 package chat;
 
 import java.util.Vector;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
 import gameLogic.Board;
 
 public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
+
+    static private final Logger log = Logger.getLogger(ConnectionListener.class.getName());
+    static private FileHandler fileTxt;
+    static private SimpleFormatter formatText;
 
     //--------------------------------------------------------------------------------
     // create a new board so we can get the player information needed
@@ -18,10 +28,36 @@ public class ConnectionListener extends Thread {
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
+
+        //================================================================================
+        // Create Logger
+        // Log Levels are: SEVERE (highest), WARNING, INFO, CONFIG, FINE, FINER, FINEST
+        //================================================================================
+        try {
+            //================================================================================
+            // set log level
+            this.log.setLevel(Level.INFO);
+
+            //================================================================================
+            // create file handler
+            fileTxt = new FileHandler("chatLog.txt");
+
+            //================================================================================
+            // create a text formatter
+            formatText = new SimpleFormatter();
+            fileTxt.setFormatter(formatText);
+            log.addHandler(fileTxt);
+
+        } catch (IOException e) {
+            //================================================================================
+            // catch error
+            System.err.print("Caught IOExceptin: " + e.getMessage());
+        }
     }
 
     //--------------------------------------------------------------------------------
     // check for incoming messages and broadcast
+    @Override
     public void run() {
         while (true) {
             for (int i = 0; i < connections.size(); i++) {
@@ -40,9 +76,9 @@ public class ConnectionListener extends Thread {
                 //  ith.print...
                 //================================================================================
                 String message = ith.getMessage();
+
                 if (message != null)
                     for (Connection jth : connections) {
-
                         //================================================================================
                         // split the message into username + message
                         // TODO get individual player id from tmpUsername
@@ -50,6 +86,10 @@ public class ConnectionListener extends Thread {
                         String[] tmpFullMessage = message.split(": ");
                         String tmpUsername = tmpFullMessage[0];
                         String tmpMessage = tmpFullMessage[tmpFullMessage.length-1];
+
+                        //================================================================================
+                        // add to log
+                        log.info(message);
 
                         //================================================================================
                         // Begin with parameters
@@ -61,6 +101,8 @@ public class ConnectionListener extends Thread {
                             // parameter 'CHAT'
                             //================================================================================
                             if (tmpMessage.substring(0, 4).equalsIgnoreCase("chat")) {
+                                //================================================================================
+                                // print message
                                 jth.println(message);
                             }
 
