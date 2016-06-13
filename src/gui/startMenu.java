@@ -12,6 +12,7 @@ public class startMenu implements ActionListener{
 	JButton buttonRules = addButtons("Spielanleitung");
 	JButton buttonCreateGame = addButtons("Spiel erstellen");
 	JButton buttonJoinGame = addButtons("Spiel beitreten");
+	JButton about = addButtons("About");
 	//====================================================================
 
 
@@ -75,6 +76,20 @@ public class startMenu implements ActionListener{
 		//add button to panel and set layout to it
         panel.add(buttonRules,constraints);
 		//--------------------------------------------------------------
+
+
+		//--------------------------------------------------------------
+		//layout set to (x=0 ; y=0)
+		constraints.gridx=1;
+		constraints.gridy=2;
+		constraints.gridwidth=1;
+
+		//actionlistener added to rules button
+		about.addActionListener(this);
+
+		//add button to panel and set layout to it
+		panel.add(about,constraints);
+		//--------------------------------------------------------------
 	}
 	
 	public JFrame createFrame(){
@@ -116,6 +131,11 @@ public class startMenu implements ActionListener{
 		else if(ae.getSource() == this.buttonJoinGame){
 			joinGame joinGame = new joinGame();
 			joinGame.createGui();
+			frame.dispose();
+		}
+		else if(ae.getSource() == this.about){
+			About about = new About();
+			about.createGui();
 			frame.dispose();
 		}
 	}

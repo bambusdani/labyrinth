@@ -5,9 +5,15 @@ import properties.GameProperty;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Properties;
 
-public class About {
+public class About implements ActionListener {
+
+    //Element of class JFrame is created by method createFrame() (-> Method create frame with special defined parameters)
+    JFrame frame = createFrame();
+    JButton back = addButtons("Zurück");
 
     //===========================================================
     //creates the gui
@@ -24,7 +30,7 @@ public class About {
         //-------------------------------------------------------------------
 
         //--------------------------------------------------------------------------------------
-        //Layout for Header is set (x=0 ; y=0 ; width=2columns ; marginRight=30)
+        //Layout for Header is set (x=0 ; y=0 ; width = 2columns ; marginRight=30)
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.NORTH;
         constraints.weighty = 1;
@@ -39,8 +45,8 @@ public class About {
 
 
         //--------------------------------------------------------------------------------------
+        //Layout for Developers is set (x=0 ; y=1 ; width = 1column)
         constraints.anchor = GridBagConstraints.WEST;
-        //Layout for Developers is set (x=0 ; y=1 ; width=1column)
         constraints.gridwidth=1;
         constraints.gridy++;
         constraints.insets = new Insets(30,0,0,0);
@@ -53,8 +59,8 @@ public class About {
 
 
         //--------------------------------------------------------------------------------------
+        //Layout for Developers is set (x=0 ; y=2 ; width = 1column)
         constraints.gridx=0;
-        //Layout for Developers is set (x=0 ; y=2 ; width=1column)
         constraints.gridwidth=1;
         constraints.gridy++;
         panel.add(setLabel("Url : ", 25), constraints);
@@ -87,16 +93,15 @@ public class About {
         constraints.gridy = 4;
 
         //Layout for Developers is set (x=0 ; y=4 ; width=1column)
-
-        panel.add(addButtons("Back"), constraints);
+        back.addActionListener(this);
+        panel.add(back, constraints);
 
         //--------------------------------------------------------------------------------------
 
 
 
         //-------------------------------------------------------------------------------------------------------------------
-        //Element of class JFrame is created by method createFrame() (-> Method create frame with special defined parameters)
-        JFrame frame = createFrame();
+
 
         //The whole Panel, which contains the GUI Elements on its Layout is added to the frame with a Borderlayout
         frame.add(panel, BorderLayout.NORTH);
@@ -149,4 +154,18 @@ public class About {
         return textField;
     }
     //=====================================================
+
+    //=====================================================================
+    //actionlistener method for the back button
+    public void actionPerformed (ActionEvent ae){
+        // Die Quelle wird mit getSource() abgefragt und mit den
+        // Buttons abgeglichen. Wenn die Quelle des ActionEvents einer
+        // der Buttons ist, wird der Text des JLabels entsprechend geändert
+        if(ae.getSource() == this.back){
+            startMenu startMenu = new startMenu();
+            startMenu.createGui();
+            frame.dispose();
+        }
+    }
+    //=====================================================================
 }
