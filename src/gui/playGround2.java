@@ -9,12 +9,10 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
+
 import gameLogic.Board;
+import chat.ChatClient;
 
 public class playGround2 implements ActionListener {
 
@@ -35,12 +33,17 @@ public class playGround2 implements ActionListener {
 	private JButton[][] buttonsToPlaceStone = new JButton[7][7];
 	private JButton[][] boardSquares = new JButton[7][7];
 	private JFrame 	frame;
-	
+
+	//chat stuff
+	private JTextArea textArea;
+	private JTextField textField;
+
+
 	
 	//test 
 	Board givenBoard = new Board();
 	
-	
+
 	public void createGui(Board board) {
 		
 		//================================================================================
@@ -55,6 +58,9 @@ public class playGround2 implements ActionListener {
 		constraintsPlayeroverview.gridwidth = 1;
 		constraintsPlayeroverview.insets = new Insets(15, 10, 10, 10);
 		
+
+		
+
 		//--------------------------------------------------------------------------------
 		// symbols left
 		constraintsPlayeroverview.gridx = 0;
@@ -154,7 +160,7 @@ public class playGround2 implements ActionListener {
 		// next goal
 		constraintsInformation.gridx = 0;
 		constraintsInformation.gridy = 2;
-		JLabel labelNextGoal = setLabel("Nächstes Ziele: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+		JLabel labelNextGoal = setLabel("Nï¿½chstes Ziele: ",fontSize, boxSizeX, boxSizeY, colorBlack );
 		panelInformation.add(labelNextGoal, constraintsInformation);
 		
 		//-----------------------------------------------------------------------------------
@@ -170,7 +176,7 @@ public class playGround2 implements ActionListener {
 		// next stone
 		constraintsInformation.gridx = 0;
 		constraintsInformation.gridy = 4;
-		JLabel labelNextStone = setLabel("Nächster Stein: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+		JLabel labelNextStone = setLabel("Nï¿½chster Stein: ",fontSize, boxSizeX, boxSizeY, colorBlack );
 		panelInformation.add(labelNextStone, constraintsInformation);
 		
 		//-----------------------------------------------------------------------------------
@@ -178,7 +184,10 @@ public class playGround2 implements ActionListener {
 		constraintsInformation.gridx = 0;
 		constraintsInformation.gridy = 5;
 		// instead of "T" it should use an image
+
+		
 		JLabel labelNextStoneSymbol = setLabel(board.getNextTile().getShape(),fontSize, stoneSize, stoneSize, colorBlack );
+
 		labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
 		panelInformation.add(labelNextStoneSymbol, constraintsInformation);
 		
@@ -203,13 +212,22 @@ public class playGround2 implements ActionListener {
 		constraintsChat.weighty = 1;
 		constraintsChat.gridwidth = 1;
 		constraintsChat.insets = new Insets(5, 5, 5, 5);
-		
+
+        //-----------------------------------------------------------------------------------
+        // text area
 		constraintsChat.gridx = 0;
 		constraintsChat.gridy = 0;
-		JLabel labelChat = setLabel("Chat",fontSize, 400, 150, colorBlack );
-		labelChat.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
-		panelChat.add(labelChat, constraintsChat);
-		
+        textArea = setTextArea(7,32);
+        textArea.setEditable(false);
+        panelChat.add(textArea, constraintsChat);
+
+        //-----------------------------------------------------------------------------------
+        // input field
+        constraintsChat.gridx = 0;
+        constraintsChat.gridy = 1;
+		textField = setTextField(32);
+		panelChat.add(textField, constraintsChat);
+
 		//===================================================================================
 		// panel board
 		//===================================================================================
@@ -308,16 +326,16 @@ public class playGround2 implements ActionListener {
 				}
 				//-------------------------
 				// checking if the players are on the the spot if yes draw a colored border
-				if((board.getPlayer(0).getPositionX() == j) && (board.getPlayer(0).getPostitonY() == i)){
+				if((board.getPlayer(0).getPositionX() == j) && (board.getPlayer(0).getPositionY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
 				}
-				if((board.getPlayer(1).getPositionX() == j) && (board.getPlayer(1).getPostitonY() == i)){
+				if((board.getPlayer(1).getPositionX() == j) && (board.getPlayer(1).getPositionY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(1).getColor()));
 				}
-				if((board.getPlayer(2).getPositionX() == j) && (board.getPlayer(2).getPostitonY() == i)){
+				if((board.getPlayer(2).getPositionX() == j) && (board.getPlayer(2).getPositionY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(2).getColor()));
 				}
-				if((board.getPlayer(3).getPositionX() == j) && (board.getPlayer(3).getPostitonY() == i)){
+				if((board.getPlayer(3).getPositionX() == j) && (board.getPlayer(3).getPositionY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(3).getColor()));
 				}
 				//-------------------------
@@ -378,7 +396,7 @@ public class playGround2 implements ActionListener {
 		constraintsContent.weightx = 1;
 		constraintsContent.weighty = 1;
 		constraintsContent.gridwidth = 1;
-		constraintsContent.gridheight= 1;
+		constraintsContent.gridheight= 2;
 		constraintsContent.insets = new Insets(0, 0, 0, 0);
 		constraintsContent.gridx = 0;
 		constraintsContent.gridy = 5;
@@ -424,6 +442,19 @@ public class playGround2 implements ActionListener {
 		return button;
 	}
 
+    public JTextField setTextField(int length) {
+        JTextField textField = new JTextField(length);
+		textField.setMinimumSize(new Dimension(100, 32));
+		textField.setPreferredSize(new Dimension(100, 32));
+        return textField;
+    }
+
+    public JTextArea setTextArea(int height, int width) {
+        JTextArea textArea = new JTextArea(height, width);
+		textArea.setMinimumSize(new Dimension(200, 100));
+		textArea.setPreferredSize(new Dimension(200, 100));
+        return textArea;
+    }
 
 	//=================================================================================
 	//actionListener
@@ -439,12 +470,19 @@ public class playGround2 implements ActionListener {
 			newGame.createGui();
 		}
 		if(buttonRotate == e.getSource()){
+
+		
+		
+		
+		
+		
 			int newRotation = givenBoard.getNextTile().getRotation()+90;
 			givenBoard.getNextTile().setRotation(newRotation);
-			System.out.println("Rotation beträgt: " + newRotation);
+			System.out.println("Rotation betrï¿½gt: " + newRotation);
 			
 		}
-				
+
+
 		//------------------------------------------------------------
 		// checks which button on the gameField is pressed
 		for(int i = 0; i < boardSquares.length; i++){
@@ -469,10 +507,17 @@ public class playGround2 implements ActionListener {
 		}		
 	}
 	
+
+	
+	
 	// make it local in this class so it can be used by all methods
 	// only for test
 	public void setBoard(Board newBoard){
 		this.givenBoard = newBoard;
 	}
-	
+
+	//for chat
+	public JTextArea getTextArea() { return this.textArea; }
+	public JTextField getTextField() { return this.textField; }
+
 }
