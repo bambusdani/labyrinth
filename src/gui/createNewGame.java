@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 
 /*
@@ -237,8 +236,7 @@ public class createNewGame implements ActionListener{
 		}
 		else if(ae.getSource() == this.start){
 			Board board = new Board();
-			playGround2 boardview = new playGround2();
-			boardview.createGui(board);
+			playGround boardview = new playGround(board);
 
 			//actual frame is closed
 			frame.dispose();

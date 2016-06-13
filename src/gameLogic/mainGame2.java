@@ -1,7 +1,7 @@
 package gameLogic;
 
 import chat.ChatClient;
-import gui.playGround2;
+import gui.playGround;
 
 public class mainGame2 {
 
@@ -14,8 +14,7 @@ public class mainGame2 {
 		
 		Board board2 = new Board();
 
-		playGround2 boardview2 = new playGround2();
- 		boardview2.createGui(board2);
+		playGround boardview2 = new playGround(board2);
 
 		ChatClient client2 = new ChatClient("Yoda", "localhost", boardview2.getTextArea(), boardview2.getTextField());
 		client2.listen();
