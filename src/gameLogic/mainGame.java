@@ -5,6 +5,9 @@ import chat.ChatServer;
 import gui.playGround;
 import gui.playGround2;
 
+import java.util.ArrayList;
+import java.util.Properties;
+
 public class mainGame {
 
 	public mainGame() {
@@ -21,6 +24,8 @@ public class mainGame {
 
 		ChatClient client = new ChatClient("Darth Vader", "localhost", boardview.getTextArea(), boardview.getTextField());
 		client.listen();
+
+
 	}
 
 }

@@ -12,7 +12,10 @@ import javax.swing.*;
 * */
 public class guiCreator extends JPanel {
 	public static void main(String[] args) {
-		createNewGame createNewGame = new createNewGame();
-		createNewGame.createGui();
+		/*createNewGame createNewGame = new createNewGame();
+		createNewGame.createGui();*/
+
+		About about = new About();
+		about.createGui();
 	}
 }
