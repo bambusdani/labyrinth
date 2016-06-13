@@ -97,7 +97,7 @@ public class addPlayer {
 	    constraints.anchor = GridBagConstraints.WEST;
 
 		//Button is created and set to its defined Layout
-	    panel.add(addButtons("Spieler hinzuf�gen"),constraints);
+	    panel.add(addButtons("Spieler hinzufügen"),constraints);
 		//------------------------------------------------------
 
 
@@ -108,7 +108,7 @@ public class addPlayer {
 	    constraints.anchor = GridBagConstraints.EAST;
 
 		//Button is created and set to its defined Layout
-	    panel.add(addButtons("zur�ck"),constraints);
+	    panel.add(addButtons("zurück"),constraints);
 		//-------------------------------------------
 
 
