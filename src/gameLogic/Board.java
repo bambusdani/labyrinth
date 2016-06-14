@@ -39,7 +39,7 @@ public class Board {
 		tiles[0][0] = new Tiles(false,0,0,"L",null,0);
 		tiles[2][0] = new Tiles(false,2,0,"L",null,0);
 		tiles[4][0] = new Tiles(false,4,0,"T","dragon",0);
-		tiles[6][0] = new Tiles(false,6,0,"L",null,0);
+		tiles[6][0] = new Tiles(false,6,0,"L","x",0);
 		tiles[0][2] = new Tiles(false,0,2,"I",null,0);
 		tiles[2][2] = new Tiles(false,2,2,"I","fish",0);
 		tiles[4][2] = new Tiles(false,4,2,"T","lamp",0);
