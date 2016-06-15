@@ -21,6 +21,7 @@ public class ConnectionListener extends Thread {
     static private final Logger log = Logger.getLogger(ConnectionListener.class.getName());
     static private FileHandler fileTxt;
     static private SimpleFormatter formatText;
+    static private int playerID;
 
     //--------------------------------------------------------------------------------
     // create a new board so we can get the player information needed
@@ -82,10 +83,17 @@ public class ConnectionListener extends Thread {
                         //================================================================================
                         // split the message into username + message
                         // TODO get individual player id from tmpUsername
-                        //================================================================================
                         String[] tmpFullMessage = message.split(": ");
                         String tmpUsername = tmpFullMessage[0].substring(1, tmpFullMessage[0].length()-1);
                         String tmpMessage = tmpFullMessage[tmpFullMessage.length-1];
+
+                        //================================================================================
+                        // assign playername to work with the board
+                        for (int j = 0; j < board.getAllPlayers().length; j++) {
+                            if(tmpUsername == board.getAllPlayers()[j].getNameOfPlayer()) {
+                                playerID = board.getAllPlayers()[j].getPlayerID();
+                            }
+                        }
 
                         //================================================================================
                         // add to log
@@ -104,7 +112,6 @@ public class ConnectionListener extends Thread {
                                 //================================================================================
                                 // print message
                                 jth.println(message);
-                                ith.println(tmpUsername);
                             }
 
                             //================================================================================
@@ -120,18 +127,18 @@ public class ConnectionListener extends Thread {
 
                                 //--------------------------------------------------------------------------------
                                 // for testing purposes uncomment or comment
-                                jth.println("Player " + board.getPlayer(0).getPlayerID() +
-                                        " current Position: "  + board.getPlayer(0).getPositionX() + ", " + board.getPlayer(0).getPositionY());
+                                jth.println("Player " + board.getPlayer(playerID).getPlayerID() +
+                                        " current Position: "  + board.getPlayer(playerID).getPositionX() + ", " + board.getPlayer(playerID).getPositionY());
 
                                 //--------------------------------------------------------------------------------
                                 // set new position
-                                board.getPlayer(0).setPositionX(board.getPlayer(0).getPositionX()+tmpX);
-                                board.getPlayer(0).setPositionY(board.getPlayer(0).getPositionY()+tmpY);
+                                board.getPlayer(playerID).setPositionX(board.getPlayer(playerID).getPositionX()+tmpX);
+                                board.getPlayer(playerID).setPositionY(board.getPlayer(playerID).getPositionY()+tmpY);
 
                                 //--------------------------------------------------------------------------------
                                 // broadcast to all players
-                                jth.println("Player " + board.getPlayer(0).getPlayerID() +
-                                        " moved to : " + board.getPlayer(0).getPositionX() + ", " + board.getPlayer(0).getPositionY());
+                                jth.println("Player " + board.getPlayer(playerID).getPlayerID() +
+                                        " moved to: " + board.getPlayer(playerID).getPositionX() + ", " + board.getPlayer(playerID).getPositionY());
                             }
 
                             //================================================================================
@@ -139,6 +146,8 @@ public class ConnectionListener extends Thread {
                             //================================================================================
                             if (tmpMessage.substring(0,4).equalsIgnoreCase("pass")) {
                                 //send to server that player has passed
+                                jth.println("Player " + board.getPlayer(playerID).getPlayerID() +
+                                        " has passed.");
                             }
 
                             else {
