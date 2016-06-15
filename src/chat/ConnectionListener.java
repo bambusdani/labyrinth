@@ -133,6 +133,13 @@ public class ConnectionListener extends Thread {
                                         " moved to : " + board.getPlayer(0).getPositionX() + ", " + board.getPlayer(0).getPositionY());
                             }
 
+                            //================================================================================
+                            // parameter 'PASS'
+                            //================================================================================
+                            if (tmpMessage.substring(0,4).equalsIgnoreCase("pass")) {
+                                //send to server that player has passed
+                            }
+
                             else {
                                 //--------------------------------------------------------------------------------
                                 // if the message doens't make sense at all...
