@@ -144,7 +144,7 @@ public class ConnectionListener extends Thread {
                             //================================================================================
                             // parameter 'PASS'
                             //================================================================================
-                            if (tmpMessage.substring(0,4).equalsIgnoreCase("pass")) {
+                            else if (tmpMessage.substring(0,4).equalsIgnoreCase("pass")) {
                                 //send to server that player has passed
                                 jth.println("Player " + board.getPlayer(playerID).getPlayerID() +
                                         " has passed.");
