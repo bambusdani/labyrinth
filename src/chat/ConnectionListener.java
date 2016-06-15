@@ -84,7 +84,7 @@ public class ConnectionListener extends Thread {
                         // TODO get individual player id from tmpUsername
                         //================================================================================
                         String[] tmpFullMessage = message.split(": ");
-                        String tmpUsername = tmpFullMessage[0];
+                        String tmpUsername = tmpFullMessage[0].substring(1, tmpFullMessage[0].length()-1);
                         String tmpMessage = tmpFullMessage[tmpFullMessage.length-1];
 
                         //================================================================================
@@ -104,6 +104,7 @@ public class ConnectionListener extends Thread {
                                 //================================================================================
                                 // print message
                                 jth.println(message);
+                                ith.println(tmpUsername);
                             }
 
                             //================================================================================
