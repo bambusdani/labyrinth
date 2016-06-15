@@ -6,18 +6,20 @@ import java.util.ArrayList;
 
 public class Board {
 
+	private Player[] allPlayers = new Player[4];
+	private Tiles[][] tiles  = new Tiles[7][7];
+
+	//creates the first nextTile
+	//null not allowed as position so 99
+	private Tiles nextTile = new Tiles(true, 99, 99, "L", "Mouse", 0);
+
 	public Board() {
 		// TODO Auto-generated constructor stub
 		
 		//----------------------------
 		// creates four empty Player
 		for (int i = 0; i < allPlayers.length; i++) {
-
-			
-
-			
-			allPlayers[i] = new Player(0, 0, "empty", new Color(0, 255, 0), null,0, i, false);	
-
+			allPlayers[i] = new Player(0, 0, "empty", new Color(0, 255, 0), null,0, i, false);
 		}
 		//add one player with data
 		addPlayer();
@@ -57,16 +59,6 @@ public class Board {
 	
 	}
 	
-	private Player[] allPlayers = new Player[4];
-	private Tiles[][] tiles  = new Tiles[7][7];
-	
-	//creates the first nextTile
-	//null not allowed as position so 99
-	private Tiles nextTile = new Tiles(true, 99, 99, "L", "Mouse", 0);
-	
-	
-	
-	
 	public void addPlayer(){
 		//needs to get the information from creating game
 		Player player = new Player(3, 5, "Rehan", new Color(255, 0, 0), null,5, 0,true);
@@ -76,7 +68,6 @@ public class Board {
 	public Player getPlayer(int indexOfPlayer){
 		return allPlayers[indexOfPlayer];
 	}
-	
 	public Tiles getTile(int x, int y){
 		return tiles[x][y];
 	}
@@ -85,6 +76,9 @@ public class Board {
 	}
 	public void setNextTile(Tiles tile){
 		this.nextTile = tile;
+	}
+	public void setTile(int x, int y, Tiles tile){
+		tiles[x][y] = tile;
 	}
 	
 }

@@ -306,7 +306,9 @@ public class playGround implements ActionListener {
 				}
 			}
 		}
-		
+
+
+
 			
 		//-----------------------------------------------------------------------------------------
 		// creates 7 X 7 Buttons
@@ -474,10 +476,6 @@ public class playGround implements ActionListener {
 			newGame.createGui();
 		}
 		if(buttonRotate == e.getSource()){
-
-		
-		
-		
 		
 		
 			int newRotation = givenBoard.getNextTile().getRotation()+90;
@@ -506,6 +504,8 @@ public class playGround implements ActionListener {
 				if( e.getActionCommand().equals("ArrowButton: "+ j + " " +i)){
 					//writes the command of the button
 					System.out.println("ArrowButton j: "+j +", i: "+ i +" pressed");
+
+
 				}
 			}
 		}		
