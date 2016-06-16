@@ -493,6 +493,7 @@ public class playGround implements ActionListener {
 			for(int j = 0; j< boardSquares[i].length; j++){
 				
 				if( e.getActionCommand().equals("gameField: "+j+" "+i)){
+
 					//writes the command of the button
 					System.out.println("Button j: "+j +", i: "+ i +" pressed");
 				}
