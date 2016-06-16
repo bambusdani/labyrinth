@@ -3,3 +3,6 @@
 #Intellij
 *.iml
 .idea/
+
+#Chatlog
+chatLog.txt
