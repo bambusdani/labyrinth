@@ -68,11 +68,8 @@ public class Board {
 	public Player getPlayer(int indexOfPlayer){
 		return allPlayers[indexOfPlayer];
 	}
-<<<<<<< HEAD
 	public Player[] getAllPlayers() { return this.allPlayers; }
-	
-=======
->>>>>>> Rehan1
+
 	public Tiles getTile(int x, int y){
 		return tiles[x][y];
 	}
