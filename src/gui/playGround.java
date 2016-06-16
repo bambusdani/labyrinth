@@ -53,9 +53,7 @@ public class playGround implements ActionListener {
 		constraintsPlayeroverview.weighty = 1;
 		constraintsPlayeroverview.gridwidth = 1;
 		constraintsPlayeroverview.insets = new Insets(15, 10, 10, 10);
-		
 
-		
 
 		//--------------------------------------------------------------------------------
 		// symbols left
@@ -352,7 +350,7 @@ public class playGround implements ActionListener {
 				boardSquares[j][i].addActionListener(this);
 				
 				panelGameField.add(boardSquares[j][i], constraintsGameField);
-			}			
+			}
 		}
 		
 
@@ -413,7 +411,7 @@ public class playGround implements ActionListener {
 		this.frame.add(panelContent);
 		
 	}
-	
+
 	//====================================================================
 	// Functions
 	//====================================================================

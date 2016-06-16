@@ -23,7 +23,7 @@ public class GameProperty{
 
         try {
 
-            input = new FileInputStream("/home/rehan/git/labyrinth/src/properties/GameProperties.properties");
+            input = new FileInputStream("./scr/properties/GameProperties.properties");
 
             // load a properties file
             prop.load(input);
