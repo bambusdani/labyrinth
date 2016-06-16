@@ -23,7 +23,7 @@ public class GameProperty{
 
         try {
 
-            input = new FileInputStream("./scr/properties/GameProperties.properties");
+            input = new FileInputStream("src/properties/GameProperties.properties");
 
             // load a properties file
             prop.load(input);
