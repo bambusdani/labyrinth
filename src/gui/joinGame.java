@@ -1,6 +1,5 @@
 package gui;
 
-import oracle.jrockit.jfr.JFR;
 
 import java.awt.Dimension;
 import java.awt.Font;

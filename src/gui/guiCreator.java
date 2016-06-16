@@ -15,8 +15,11 @@ public class guiCreator extends JPanel {
 		/*createNewGame createNewGame = new createNewGame();
 		createNewGame.createGui();*/
 
-		startMenu startMenu = new startMenu();
-		startMenu.createGui();
+		/*startMenu startMenu = new startMenu();
+		startMenu.createGui();*/
+
+		About about = new About();
+		about.createGui();
 
 	}
 }

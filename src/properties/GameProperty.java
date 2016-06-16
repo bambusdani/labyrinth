@@ -23,7 +23,7 @@ public class GameProperty{
 
         try {
 
-            input = new FileInputStream("/home/rehan/git/labyrinth/src/properties/GameProperties.properties");
+            input = new FileInputStream("src/properties/GameProperties.properties");
 
             // load a properties file
             prop.load(input);
@@ -58,7 +58,7 @@ public class GameProperty{
 
         //try to write properties to the file
         try {
-            output = new FileOutputStream("/home/rehan/git/labyrinth/src/properties/GameProperties.properties");
+            output = new FileOutputStream("src/properties/GameProperties.properties");
 
             // set the properties value
             prop.setProperty("url", url);
