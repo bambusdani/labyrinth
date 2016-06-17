@@ -1,140 +1,528 @@
 package gui;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 import gameLogic.Board;
+import chat.ChatClient;
 
-import java.awt.*;
+public class playGround implements ActionListener {
 
-public class playGround {
+	private int fontSize = 20;
+	private int boxSizeX = 175;
+	private int boxSizeY = 50;
+	private Color colorBlack = new Color(0, 0, 0);
+	private int stoneSize = 75;
+
+	//all buttons for actionListener
+	private JButton buttonNewGame;
+	private JButton buttonEndGame;
+	private JButton buttonRotate;
+	private JButton[][] buttonsToPlaceStone = new JButton[7][7];
+	private JButton[][] boardSquares = new JButton[7][7];
+	private JFrame 	frame;
+
+	//chat stuff
+	private JTextArea textArea;
+	private JTextField textField;
+
+	//test
+	Board givenBoard = new Board();
+
+
+
+	public playGround(Board board) {
+		// TODO Auto-generated constructor stub
+
+		//================================================================================
+		// panel Player overview
+		//================================================================================
+		JPanel panelPlayeroverview = new JPanel(new GridBagLayout());
+		GridBagConstraints constraintsPlayeroverview = new GridBagConstraints();
+		
+		constraintsPlayeroverview.anchor = GridBagConstraints.CENTER;
+		constraintsPlayeroverview.weightx = 1;
+		constraintsPlayeroverview.weighty = 1;
+		constraintsPlayeroverview.gridwidth = 1;
+		constraintsPlayeroverview.insets = new Insets(15, 10, 10, 10);
+		
+
+		
+
+		//--------------------------------------------------------------------------------
+		// symbols left
+		constraintsPlayeroverview.gridx = 0;
+		constraintsPlayeroverview.gridy = 0;
+		JLabel labelSymbolsLeft = setLabel("Fehlende Symbole: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+		panelPlayeroverview.add(labelSymbolsLeft, constraintsPlayeroverview);
+		//---------------------------------------------------------------------------------
+		// Player 0
+		constraintsPlayeroverview.gridx = 1;
+		constraintsPlayeroverview.gridy = 0;
+		JLabel labelPlayer0 = setLabel(board.getPlayer(0).getNameOfPlayer()+ ": " + board.getPlayer(0).getScore() ,fontSize, boxSizeX, boxSizeY, board.getPlayer(0).getColor());
+		//shows which players turn it is
+		if(board.getPlayer(0).getTurn() == true){
+			labelPlayer0.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+		}
+		panelPlayeroverview.add(labelPlayer0, constraintsPlayeroverview);
+		//---------------------------------------------------------------------------------
+		// Player 1
+		constraintsPlayeroverview.gridx = 2;
+		constraintsPlayeroverview.gridy = 0;
+		JLabel labelPlayer1 = setLabel(board.getPlayer(1).getNameOfPlayer()+ ": " + board.getPlayer(1).getScore()  ,fontSize, boxSizeX, boxSizeY , board.getPlayer(1).getColor());
+		//shows which players turn it is
+		if(board.getPlayer(1).getTurn() == true){
+			labelPlayer1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+		}
+		panelPlayeroverview.add(labelPlayer1, constraintsPlayeroverview);
+		//---------------------------------------------------------------------------------
+		// Player 2
+		constraintsPlayeroverview.gridx = 3;
+		constraintsPlayeroverview.gridy = 0;
+		JLabel labelPlayer2 = setLabel(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore() ,fontSize, boxSizeX, boxSizeY , board.getPlayer(2).getColor());
+		//shows which players turn it is
+		if(board.getPlayer(2).getTurn() == true){
+			labelPlayer2.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+		}
+		panelPlayeroverview.add(labelPlayer2, constraintsPlayeroverview);
+		//---------------------------------------------------------------------------------
+		// Player 3
+		constraintsPlayeroverview.gridx = 4;
+		constraintsPlayeroverview.gridy = 0;
+		JLabel labelPlayer3 = setLabel(board.getPlayer(3).getNameOfPlayer()+": " + board.getPlayer(3).getScore() ,fontSize, boxSizeX, boxSizeY , board.getPlayer(3).getColor() );
+		//shows which players turn it is
+		if(board.getPlayer(3).getTurn() == true){
+			labelPlayer3.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+		}
+		panelPlayeroverview.add(labelPlayer3, constraintsPlayeroverview);
+		
+		//---------------------------------------------------------------------------------
+		// Button new Game
+		constraintsPlayeroverview.gridx = 5;
+		constraintsPlayeroverview.gridy = 0;
+		this.buttonNewGame = setButtons("Neues Spiel", fontSize, boxSizeX, boxSizeY);
+		//adding ActionListener
+		this.buttonNewGame.addActionListener(this);
+		panelPlayeroverview.add(this.buttonNewGame, constraintsPlayeroverview);
+		
+		//---------------------------------------------------------------------------------
+		// Button end Game
+		constraintsPlayeroverview.gridx = 6;
+		constraintsPlayeroverview.gridy = 0;
+		this.buttonEndGame = setButtons("Spiel beenden", fontSize, boxSizeX, boxSizeY);
+		
+		//adding ActionListener
+		this.buttonEndGame.addActionListener(this);
+		
+		panelPlayeroverview.add(this.buttonEndGame, constraintsPlayeroverview);
 	
-	private int windowWidth=1000;
-	private int windowHeight=700;
-	private int gridButtonSize = 60;
-	
-	
+		//===================================================================================
+		// panel information
+		//===================================================================================
+		JPanel panelInformation = new JPanel(new GridBagLayout());
+		GridBagConstraints constraintsInformation = new GridBagConstraints();
+		
+		constraintsInformation.anchor = GridBagConstraints.NORTHWEST;
+		constraintsInformation.weightx = 1;
+		constraintsInformation.weighty = 1;
+		constraintsInformation.gridwidth = 1;
+		constraintsInformation.insets = new Insets(0, 0, 0, 0);
+		
+		//-----------------------------------------------------------------------------------
+		// reached goals
+		constraintsInformation.gridx = 0;
+		constraintsInformation.gridy = 0;
+		JLabel labelReachedGoals = setLabel("Erreichte Ziele: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+		panelInformation.add(labelReachedGoals, constraintsInformation);
+		
+		//-----------------------------------------------------------------------------------
+		// last reached goal symbol
+		constraintsInformation.gridx = 0;
+		constraintsInformation.gridy = 1;
+		// instead of Dragon it should use an image
+		JLabel labelReachedGoalsSymbol = setLabel("Dragon",fontSize, stoneSize, stoneSize, colorBlack );
+		labelReachedGoalsSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+		panelInformation.add(labelReachedGoalsSymbol, constraintsInformation);
+		
+		//-----------------------------------------------------------------------------------
+		// next goal
+		constraintsInformation.gridx = 0;
+		constraintsInformation.gridy = 2;
+		JLabel labelNextGoal = setLabel("Nï¿½chstes Ziele: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+		panelInformation.add(labelNextGoal, constraintsInformation);
+		
+		//-----------------------------------------------------------------------------------
+		// next goal symbol
+		constraintsInformation.gridx = 0;
+		constraintsInformation.gridy = 3;
+		// instead of Dragon it should use an image
+		JLabel labelNextGoalSymbol = setLabel("Dragon",fontSize, stoneSize, stoneSize, colorBlack );
+		labelNextGoalSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+		panelInformation.add(labelNextGoalSymbol, constraintsInformation);
+		
+		//-----------------------------------------------------------------------------------
+		// next stone
+		constraintsInformation.gridx = 0;
+		constraintsInformation.gridy = 4;
+		JLabel labelNextStone = setLabel("Nï¿½chster Stein: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+		panelInformation.add(labelNextStone, constraintsInformation);
+		
+		//-----------------------------------------------------------------------------------
+		// next stone symbol
+		constraintsInformation.gridx = 0;
+		constraintsInformation.gridy = 5;
+		// instead of "T" it should use an image
 
-	public void createGui(Board board) {
-		JFrame frame = new JFrame("DVL2 Spielfeld");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JLabel labelNextStoneSymbol = setLabel(board.getNextTile().getShape(),fontSize, stoneSize, stoneSize, colorBlack );
 
-		JPanel contentPane = new JPanel();
-		contentPane.setLayout(null);
+		labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+		panelInformation.add(labelNextStoneSymbol, constraintsInformation);
+		
+		//-----------------------------------------------------------------------------------
+		// Button rotate
+		constraintsInformation.insets = new Insets(20, 0, 0, 0);
+		constraintsInformation.gridx = 0;
+		constraintsInformation.gridy = 6;
+		this.buttonRotate = setButtons("Rotate", fontSize, stoneSize, stoneSize);
+		//add ActionListener
+		this.buttonRotate.addActionListener(this);
+		panelInformation.add(this.buttonRotate, constraintsInformation);
+		
+		//===================================================================================
+		// panel chat
+		//===================================================================================
+		JPanel panelChat = new JPanel(new GridBagLayout());
+		GridBagConstraints constraintsChat = new GridBagConstraints();
+		
+		constraintsChat.anchor = GridBagConstraints.SOUTHWEST;
+		constraintsChat.weightx = 1;
+		constraintsChat.weighty = 1;
+		constraintsChat.gridwidth = 1;
+		constraintsChat.insets = new Insets(0, 5, 5, 5);
 
-		//Label "Fehlende Symbole"
-		JLabel label = new JLabel("Fehlende Symbole:");
-		label.setSize(label.getPreferredSize());	//Die größe wird je nach Text Länge gesetzt
-		label.setLocation(5, 10);					//setLocation(x, y)
+        //-----------------------------------------------------------------------------------
+        // text area
+		constraintsChat.gridx = 0;
+		constraintsChat.gridy = 0;
+
+		textArea = setTextArea(300 , 125);
+		textArea.setEditable(false);
+
+		// creating scroll panel
+		JScrollPane scroll = new JScrollPane(textArea);
+		scroll.setMinimumSize(new Dimension(300,125));
+		scroll.setPreferredSize(new Dimension(300,125));
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		panelChat.add(scroll, constraintsChat);
+
+        //-----------------------------------------------------------------------------------
+        // input field
+        constraintsChat.gridx = 0;
+        constraintsChat.gridy = 1;
+		textField = setTextField(300 , 32);
+		panelChat.add(textField, constraintsChat);
+
+		//===================================================================================
+		// panel board
+		//===================================================================================
 		
-		//Player1 TextField
-		JTextField player1 = new JTextField(board.getPlayer(0).getNameOfPlayer()+ " : " + board.getPlayer(0).getScore());
-		player1.setSize(100, 20);
-		player1.setEditable(false);					//Damit man nicht rein schreiben kann...
-		player1.setLocation(label.getPreferredSize().width+15, label.getLocation().y);
+		JPanel panelGameField = new JPanel(new GridBagLayout());
+		GridBagConstraints constraintsGameField = new GridBagConstraints();
 		
-		//Player2 TextField
-		JTextField player2 = new JTextField(board.getPlayer(1).getNameOfPlayer()+ " : " + board.getPlayer(1).getScore());
-		player2.setSize(100, 20);
-		player2.setEditable(false);					//Damit man nicht rein schreiben kann...
-		player2.setLocation(player1.getLocation().x+player1.getWidth()+15, label.getLocation().y);
+		constraintsGameField.anchor = GridBagConstraints.CENTER;
+		constraintsGameField.weightx = 1;
+		constraintsGameField.weighty = 1;
+		constraintsGameField.gridwidth = 1;
+		constraintsGameField.insets = new Insets(0, 0, 0, 0);
 		
-		//Player3 TextField
-		JTextField player3 = new JTextField(board.getPlayer(2).getNameOfPlayer()+ " : " + board.getPlayer(2).getScore());
-		player3.setSize(100, 20);
-		player3.setEditable(false);					//Damit man nicht rein schreiben kann...
-		player3.setLocation(player2.getLocation().x+player2.getWidth()+15, label.getLocation().y);
+		//-----------------------------------------------------------------------------------------
+		//creating the buttons where to place the new stone
+		//global
+		//JButton[][] buttonsToPlaceStone = new JButton[7][7];
 		
-		//Player4 TextField
-		JTextField player4 = new JTextField(board.getPlayer(3).getNameOfPlayer()+ " : " + board.getPlayer(3).getScore());
-		player4.setSize(100, 20);
-		player4.setEditable(false);					//Damit man nicht rein schreiben kann...
-		player4.setLocation(player3.getLocation().x+player3.getWidth()+15, label.getLocation().y);
-		
-		//Grid
-		JButton[][] boardSquares = new JButton[7][7];
-		
-		for(int i = 0; i < boardSquares.length; i++) {
-			for(int j = 0; j < boardSquares[i].length; j++) {
-				JButton b = new JButton();
-				b.setBackground(Color.WHITE);
-				b.setSize(gridButtonSize, gridButtonSize);
+		for(int i = 0; i < buttonsToPlaceStone.length; i++){
+			for(int j = 0; j< buttonsToPlaceStone[i].length; j++){
 				
-				//draws the Shape of the tile
-				//checks if the tile has a symbol and adds it to the tile
-				if(board.getTile(j, i).getSymbol() == null){
-					b.setText(board.getTile(j, i).getShape());
-				}
-				else{
-					b.setText(board.getTile(j, i).getShape() +" \n "+ board.getTile(j, i).getSymbol());					
-				}
-				
-				
-	
-				// checking if the first player is on the the spot if yes draw a colored border
-				if((board.getPlayer(0).getPositionX() == j) && (board.getPlayer(0).getPostitonY() == i)){
+				//top horizontal line
+				if((j % 2 == 0) && (i == 0) && (j > 0)){
+					constraintsGameField.gridx = j;
+					constraintsGameField.gridy = 0;
+					JButton buttonStone = setButtons("->", fontSize, stoneSize, stoneSize);
+					this.buttonsToPlaceStone[j][i] = buttonStone;
+					//add ActionListener
+					this.buttonsToPlaceStone[j][i].setActionCommand("ArrowButton: "+ j + " " +i);
+					this.buttonsToPlaceStone[j][i].addActionListener(this);
+					panelGameField.add(this.buttonsToPlaceStone[j][i], constraintsGameField);
 					
-					b.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
+			
+					
 				}
-				
-                /* Das ist für später, um icons zu benutzen
-                ImageIcon icon = new ImageIcon(
-                        new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
-                b.setIcon(icon);*/
-				
-				boardSquares[j][i] = b;
-				//Setting location with start location 350,150
-				boardSquares[j][i].setLocation(350+i*gridButtonSize, 150+j*gridButtonSize);
-				contentPane.add(boardSquares[j][i]);
+				//bottom horizontal line
+				if((j % 2 == 0) && (i == 6) && (j > 0)){
+					constraintsGameField.gridx = j;
+					constraintsGameField.gridy = 8;
+					JButton buttonStone = setButtons("->", fontSize, stoneSize, stoneSize);
+					buttonsToPlaceStone[j][i] = buttonStone;
+					//add ActionListener
+					this.buttonsToPlaceStone[j][i].setActionCommand("ArrowButton: "+ j + " " +i);
+					this.buttonsToPlaceStone[j][i].addActionListener(this);
+					panelGameField.add(this.buttonsToPlaceStone[j][i], constraintsGameField);
+				}
+				// left vertical line
+				if((i % 2 == 0) && (j == 0) && (i > 0)){
+					constraintsGameField.gridx = 0;
+					constraintsGameField.gridy = i;
+					JButton buttonStone = setButtons("->", fontSize, stoneSize, stoneSize);
+					buttonsToPlaceStone[j][i] = buttonStone;
+					//add ActionListener
+					this.buttonsToPlaceStone[j][i].setActionCommand("ArrowButton: "+ j + " " +i);
+					this.buttonsToPlaceStone[j][i].addActionListener(this);
+					panelGameField.add(this.buttonsToPlaceStone[j][i], constraintsGameField);
+				}
+				// right vertical line
+				if((i % 2 == 0) && (j == 6) && (i > 0)){
+					constraintsGameField.gridx = 8;
+					constraintsGameField.gridy = i;
+					JButton buttonStone = setButtons("->", fontSize, stoneSize, stoneSize);
+					buttonsToPlaceStone[j][i] = buttonStone;
+					//add ActionListener
+					this.buttonsToPlaceStone[j][i].setActionCommand("ArrowButton: "+ j + " " +i);
+					this.buttonsToPlaceStone[j][i].addActionListener(this);
+					panelGameField.add(this.buttonsToPlaceStone[j][i], constraintsGameField);
+				}
+				// rest is filled with null
+				else{
+					buttonsToPlaceStone[j][i] = null;
+				}
 			}
 		}
 		
-		//Label "Erreichte Ziele"
-		JLabel achieved = new JLabel("Erreichte Ziele:");
-		achieved.setSize(achieved.getPreferredSize());	//Die größe wird je nach Text Länge gesetzt
-		achieved.setLocation(800, 150);					//setLocation(x, y)
+			
+		//-----------------------------------------------------------------------------------------
+		// creates 7 X 7 Buttons
+		//global
+		//JButton[][] boardSquares = new JButton[7][7];
+		for(int i = 0; i < boardSquares.length; i++){
+			for(int j = 0; j< boardSquares[i].length; j++){
+				
+				//creating button
+				constraintsGameField.gridx = i+1;
+				constraintsGameField.gridy = j+1;
+				
+				JButton buttonStone = setButtons(board.getTile(i, j).getShape(), fontSize, stoneSize, stoneSize);
+				//------------------------
+				// is placing the symbols on the tiles
+				if(board.getTile(j, i).getSymbol() == null){
+					buttonStone.setText(board.getTile(j, i).getShape());
+				}
+				else{
+					buttonStone.setText(board.getTile(j, i).getShape() + " " + board.getTile(j, i).getSymbol());					
+				}
+				//-------------------------
+				// checking if the players are on the the spot if yes draw a colored border
+				if((board.getPlayer(0).getPositionX() == j) && (board.getPlayer(0).getPositionY() == i)){
+					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
+				}
+				if((board.getPlayer(1).getPositionX() == j) && (board.getPlayer(1).getPositionY() == i)){
+					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(1).getColor()));
+				}
+				if((board.getPlayer(2).getPositionX() == j) && (board.getPlayer(2).getPositionY() == i)){
+					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(2).getColor()));
+				}
+				if((board.getPlayer(3).getPositionX() == j) && (board.getPlayer(3).getPositionY() == i)){
+					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(3).getColor()));
+				}
+				//-------------------------
+				// saves the field in a 2d array
+				boardSquares[j][i]= buttonStone; 
+				//adding actionListener
+				boardSquares[j][i].setActionCommand("gameField: "+j+" "+i);
+				boardSquares[j][i].addActionListener(this);
+				
+				panelGameField.add(boardSquares[j][i], constraintsGameField);
+			}			
+		}
 		
-		//Label "Nächstes Ziele"
-		JLabel next = new JLabel("Nächstes Ziele:");
-		next.setSize(next.getPreferredSize());	//Die größe wird je nach Text Länge gesetzt
-		next.setLocation(800, 250);				//setLocation(x, y)
+
+		//====================================================================================
+		// creating frame
+		// sets the position on the panelContent
+		//====================================================================================
 		
-		//Label "Stein"
-		JLabel stone = new JLabel("Stone:");
-		stone.setSize(stone.getPreferredSize());	//Die größe wird je nach Text Länge gesetzt
-		stone.setLocation(800, 350);				//setLocation(x, y)
+		JPanel panelContent = new JPanel(new GridBagLayout());
+		GridBagConstraints constraintsContent = new GridBagConstraints();
 		
+		//Play overview
+		constraintsContent.anchor = GridBagConstraints.NORTH;
+		constraintsContent.weightx = 1;
+		constraintsContent.weighty = 1;
+		constraintsContent.gridwidth = 7;
+		constraintsContent.gridheight= 1;
+		constraintsContent.insets = new Insets(0, 0, 5, 0);
+		constraintsContent.gridx = 0;
+		constraintsContent.gridy = 0;
+		panelContent.add(panelPlayeroverview, constraintsContent);
+		//--------------------
+		//GameField
+		constraintsContent.anchor = GridBagConstraints.EAST;
+		constraintsContent.weightx = 1;
+		constraintsContent.weighty = 1;
+		constraintsContent.gridwidth = 2;
+		constraintsContent.gridheight= 4;
+		constraintsContent.insets = new Insets(0, 50, 0, 50);
+		constraintsContent.gridx = 0;
+		constraintsContent.gridy = 1;
+		panelContent.add(panelGameField, constraintsContent);
+		//---------		
+		//Information
+		constraintsContent.anchor = GridBagConstraints.WEST;
+		constraintsContent.weightx = 1;
+		constraintsContent.weighty = 1;
+		constraintsContent.gridwidth = 2;
+		constraintsContent.gridheight= 4;
+		constraintsContent.insets = new Insets(0, 10, 0, 0);
+		constraintsContent.gridx = 4;
+		constraintsContent.gridy = 1;
+		panelContent.add(panelInformation, constraintsContent);
+		//---------	
 		//Chat
-		JTextField chat = new JTextField("Chat");
-		chat.setSize(250, 200);
-		chat.setEditable(false);					//Damit man nicht rein schreiben kann...
-		chat.setLocation(0, windowHeight-200);
+		constraintsContent.anchor = GridBagConstraints.SOUTHWEST;
+		constraintsContent.weightx = 1;
+		constraintsContent.weighty = 1;
+		constraintsContent.gridwidth = 1;
+		constraintsContent.gridheight= 2;
+		constraintsContent.insets = new Insets(0, 0, 0, 0);
+		constraintsContent.gridx = 0;
+		constraintsContent.gridy = 5;
+		panelContent.add(panelChat, constraintsContent);
+		//---------
+		//adding to frame
+		this.frame = createFrame();		
+		this.frame.add(panelContent);
 		
-		//Moveable Stone
-		JButton moveableStone = new JButton("M");
-		moveableStone.setBackground(Color.WHITE);
-		moveableStone.setSize(gridButtonSize, gridButtonSize);
-		moveableStone.setLocation(boardSquares[2][0].getX()-70, boardSquares[2][0].getY());
+	}
+	
+	//====================================================================
+	// Functions
+	//====================================================================
+	public JFrame createFrame(){
+		JFrame frame = new JFrame("Join Game");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		frame.setSize(1200, 900);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		//frame.setLocation(300, 200);
+		return frame;
+	}
+	
+	public JLabel setLabel(String labelString, int fontSize, int sizeX, int sizeY, Color fontColor){
+		JLabel label = new JLabel(labelString);
+		label.setMinimumSize(new Dimension(sizeX, sizeY));
+		label.setPreferredSize(new Dimension(sizeX, sizeY));
+		//label.setMaximumSize(new Dimension(sizeX, sizeY));
+		label.setFont(new Font("Serif", Font.PLAIN, fontSize));
+		label.setForeground(fontColor);
+		return label;
+	}
 		
+	public JButton setButtons(String text, int fontSize, int sizeX, int sizeY){
+		JButton button = new JButton(text);
 		
-		contentPane.add(label);
-		contentPane.add(player1);
-		contentPane.add(player2);
-		contentPane.add(player3);
-		contentPane.add(player4);
+		//makes a fix size
+		button.setMinimumSize(new Dimension(sizeX, sizeY));
+		button.setPreferredSize(new Dimension(sizeX, sizeY));
+		//button.setMaximumSize(new Dimension(sizeX, sizeY));
+		button.setFont(new Font("Serif", Font.PLAIN, fontSize));
+		return button;
+	}
+
+    public JTextField setTextField(int width, int height) {
+        JTextField textField = new JTextField(width);
+		textField.setMinimumSize(new Dimension(width, height));
+		textField.setPreferredSize(new Dimension(width, height));
+        return textField;
+    }
+
+    public JTextArea setTextArea(int width , int height) {
+        JTextArea textArea = new JTextArea(height, width);
+		textArea.setMinimumSize(new Dimension(width, height));
+		textArea.setPreferredSize(new Dimension(width, height));
+        return textArea;
+    }
+
+	//=================================================================================
+	//actionListener
+	//=================================================================================
+	public void actionPerformed(ActionEvent e) {
 		
-		contentPane.add(achieved);
-		contentPane.add(next);
-		contentPane.add(stone);
-		
-		contentPane.add(chat);
-		
-		contentPane.add(moveableStone);
+		if(buttonEndGame == e.getSource()){
+			frame.dispose();
+		}
+		if(buttonNewGame == e.getSource()){
+			frame.dispose();
+			createNewGame newGame = new createNewGame();
+			newGame.createGui();
+		}
+		if(buttonRotate == e.getSource()){
 
 		
-		frame.setContentPane(contentPane);
-		frame.setSize(windowWidth, windowHeight);
-		frame.setLocationByPlatform(true);
-		frame.setVisible(true);
-		frame.setLayout(null);
+		
+		
+		
+		
+			int newRotation = givenBoard.getNextTile().getRotation()+90;
+			givenBoard.getNextTile().setRotation(newRotation);
+			System.out.println("Rotation betrï¿½gt: " + newRotation);
+			
+		}
+
+
+		//------------------------------------------------------------
+		// checks which button on the gameField is pressed
+		for(int i = 0; i < boardSquares.length; i++){
+			for(int j = 0; j< boardSquares[i].length; j++){
+				
+				if( e.getActionCommand().equals("gameField: "+j+" "+i)){
+
+					//writes the command of the button
+					System.out.println("Button j: "+j +", i: "+ i +" pressed");
+				}
+			}
+		}
+		//-------------------------------------------------------------
+		// checks which button to place the next stone is pressed
+		for(int i = 0; i < buttonsToPlaceStone.length; i++){
+			for(int j = 0; j< buttonsToPlaceStone[i].length; j++){
+				
+				if( e.getActionCommand().equals("ArrowButton: "+ j + " " +i)){
+					//writes the command of the button
+					System.out.println("ArrowButton j: "+j +", i: "+ i +" pressed");
+				}
+			}
+		}		
 	}
+	
+
+	
+	
+	// make it local in this class so it can be used by all methods
+	// only for test
+	public void setBoard(Board newBoard){
+		this.givenBoard = newBoard;
+	}
+
+	//for chat
+	public JTextArea getTextArea() { return this.textArea; }
+	public JTextField getTextField() { return this.textField; }
+
 }

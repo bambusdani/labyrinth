@@ -24,11 +24,12 @@ import java.net.Socket;
 
 public class ChatClient extends JFrame implements ActionListener {
 
-    private String screenName;
+    //screen name will later be playername
+    private String screenName="";
 
     // GUI stuff
-    private JTextArea  enteredText = new JTextArea(10, 32);
-    private JTextField typedText   = new JTextField(32);
+    JTextArea enteredText;
+    JTextField typedText;
 
     // socket for connection to chat server
     private Socket socket;
@@ -37,7 +38,14 @@ public class ChatClient extends JFrame implements ActionListener {
     private Out out;
     private In in;
 
-    public ChatClient(String screenName, String hostName) {
+    //================================================================================
+    // constructor creates a connection the the server
+    // on socket = 4444
+    //================================================================================
+    public ChatClient(String screenName, String hostName, JTextArea textArea, JTextField textField) {
+
+        this.enteredText = textArea;
+        this.typedText = textField;
 
         // connect to server
         try {
@@ -53,41 +61,26 @@ public class ChatClient extends JFrame implements ActionListener {
             new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
                     out.close();
-//                    in.close();
-//                    try                   { socket.close();        }
-//                    catch (Exception ioe) { ioe.printStackTrace(); }
                 }
             }
         );
 
-
-        // create GUI stuff
-        enteredText.setEditable(false);
-        enteredText.setBackground(Color.LIGHT_GRAY);
+        // gui action listener
         typedText.addActionListener(this);
-
-        Container content = getContentPane();
-        content.add(new JScrollPane(enteredText), BorderLayout.CENTER);
-        content.add(typedText, BorderLayout.SOUTH);
-
-
-        // display the window, with focus on typing box
-        setTitle("Chat Client 1.0: [" + screenName + "]");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        typedText.requestFocusInWindow();
-        setVisible(true);
-
     }
 
-    // process TextField after user hits Enter
+    //================================================================================
+    // proccess textField after user hits enter
+    //================================================================================
     public void actionPerformed(ActionEvent e) {
         out.println("[" + screenName + "]: " + typedText.getText());
         typedText.setText("");
         typedText.requestFocusInWindow();
     }
 
+    //================================================================================
     // listen to socket and print everything that server broadcasts
+    //================================================================================
     public void listen() {
         String s;
         while ((s = in.readLine()) != null) {
@@ -101,9 +94,19 @@ public class ChatClient extends JFrame implements ActionListener {
         System.err.println("Closed client socket");
     }
 
-    public static void main(String[] args)  {
-    									  //ScreenName, Hostname
-    	ChatClient client = new ChatClient("Test Client", "localhost");
-        client.listen();
+    //================================================================================
+    // get screenName
+    //================================================================================
+    public String getScreenName() {
+        return this.screenName;
     }
+
+    //================================================================================
+    // main method is for testing/debugging
+    //================================================================================
+    /*public static void main(String[] args)  {
+    									  //ScreenName, Hostname
+    	ChatClient client = new ChatClient("Hjorleif", "localhost");
+        client.listen();
+    }*/
 }

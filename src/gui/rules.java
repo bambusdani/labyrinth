@@ -6,29 +6,27 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
 
-public class rules {
+public class rules implements ActionListener{
 
-	public rules() {
-		// TODO Auto-generated constructor stub		
-	}
-
+	//=====================================================================
 	private String longText = "Test";
-	
-	
-	
+	JFrame frame = createFrame();
+	JButton back = addButtons("zurück");
+	//=====================================================================
 	
 	public void createGui(){
-		
+		//--------------------------------------------------------------
+		//create new Panel and set GridBagLayout to it
 		JPanel panel = new JPanel(new GridBagLayout());
 		//--------------------------------------------------------------
-		// header
+
+
+		//--------------------------------------------------------------
+		//create new GridBagLayout and set layout (x=1 ; y=0)
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.NORTH;
 		constraints.weighty = 1;
@@ -36,23 +34,40 @@ public class rules {
 		constraints.gridx = 0;
 		constraints.gridx++;
 	    constraints.gridy = 0;
-	    panel.add(setLabel("Das verr�ckte Labyrinth", 40), constraints);
+
+		//create new label and set to layout
+	    panel.add(setLabel("Das verrückte Labyrinth", 40), constraints);
 	    //--------------------------------------------------------------
-	    // second header
+
+
+		//--------------------------------------------------------------
+	    //layout set to (x=1 ; y=2)
         constraints.gridy = 2;
+
+		//create new lable and set to layout
         panel.add(setLabel("Die Spielregeln: ", 30), constraints);
         //--------------------------------------------------------------
-        // scroll panel for the rules
+
+
+		//--------------------------------------------------------------
+        //layout set to (x=1 ; y=3)
         constraints.gridy = 3;
+
+		//create new scrollPanel and set to layout
         panel.add(setScrollPane("Das sind die Spielregeln: " + createLongText() ,20),constraints);
 	    //---------------------------------------------------------------
-        // back button
+
+
+		//--------------------------------------------------------------
+        //layout set to (x=1 ; y=4)
         constraints.gridy = 4;
-        panel.add(addButtons("zur�ck"),constraints);
-        
+
+		//add actionlistener to back button and add it to panel
+		back.addActionListener(this);
+        panel.add(back,constraints);
         //--------------------------------------------------------------
-        // creating the frame
-	    JFrame frame = createFrame();
+
+        //set panel to frame and add borderlayout to frame
 		frame.add(panel, BorderLayout.NORTH);
 			
 	}
@@ -102,4 +117,14 @@ public class rules {
 			return longText;
 		}
 
+	public void actionPerformed (ActionEvent ae){
+		// Die Quelle wird mit getSource() abgefragt und mit den
+		// Buttons abgeglichen. Wenn die Quelle des ActionEvents einer
+		// der Buttons ist, wird der Text des JLabels entsprechend geändert
+		if(ae.getSource() == this.back){
+			startMenu startMenu = new startMenu();
+			startMenu.createGui();
+			frame.dispose();
+		}
+	}
 }

@@ -12,7 +12,12 @@ public class Board {
 		//----------------------------
 		// creates four empty Player
 		for (int i = 0; i < allPlayers.length; i++) {
+
+			
+
+			
 			allPlayers[i] = new Player(0, 0, "empty", new Color(0, 255, 0), null,0, i, false);	
+
 		}
 		//add one player with data
 		addPlayer();
@@ -71,6 +76,7 @@ public class Board {
 	public Player getPlayer(int indexOfPlayer){
 		return allPlayers[indexOfPlayer];
 	}
+	public Player[] getAllPlayers() { return this.allPlayers; }
 	
 	public Tiles getTile(int x, int y){
 		return tiles[x][y];

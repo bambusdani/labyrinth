@@ -1,1 +1,11 @@
 /bin/
+
+#Intellij
+*.iml
+.idea/
+
+#Chatlog
+chatLog.txt
+
+#mac
+.DS_Store
