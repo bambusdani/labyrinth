@@ -1,6 +1,7 @@
 package gameLogic;
 
 import chat.ChatClient;
+import gui.MyPlayGround;
 import gui.playGround;
 
 import java.util.ArrayList;
@@ -20,8 +21,14 @@ public class mainGame {
 		playGround boardview = new playGround(board);
 
 
+
 		ChatClient client = new ChatClient("Darth Vader", "localhost", boardview.getTextArea(), boardview.getTextField());
 		client.listen();
+		/*ChatClient client = new ChatClient("Darth Vader", "localhost", boardview.getTextArea(), boardview.getTextField());
+		client.listen();*/
+
+
+
 	}
 
 }
