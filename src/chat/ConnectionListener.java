@@ -8,19 +8,14 @@ package chat;
 
 import java.util.Vector;
 import java.io.IOException;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.util.logging.*;
 
 import gameLogic.*;
 
 public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
 
-    static private final Logger log = Logger.getLogger(ConnectionListener.class.getName());
-    static private FileHandler fileTxt;
-    static private SimpleFormatter formatText;
+    private final static Logger LOGGER = Logger.getLogger(ConnectionListener.class.getName());
     static private int playerID;
 
     //--------------------------------------------------------------------------------
@@ -37,22 +32,11 @@ public class ConnectionListener extends Thread {
         try {
             //================================================================================
             // set log level
-            this.log.setLevel(Level.INFO);
-
-            //================================================================================
-            // create file handler
-            fileTxt = new FileHandler("chatLog.txt");
-
-            //================================================================================
-            // create a text formatter
-            formatText = new SimpleFormatter();
-            fileTxt.setFormatter(formatText);
-            log.addHandler(fileTxt);
-
-        } catch (IOException e) {
+            LOGGER.info("Starting");
+        } catch (Exception e) {
             //================================================================================
             // catch error
-            System.err.print("Caught IOExceptin: " + e.getMessage());
+            LOGGER.warning(e.toString());
         }
     }
 
@@ -97,7 +81,7 @@ public class ConnectionListener extends Thread {
 
                         //================================================================================
                         // add to log
-                        log.info(message);
+                        LOGGER.info(message);
 
                         //================================================================================
                         // Begin with parameters
