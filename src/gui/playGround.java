@@ -10,9 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
-
-import gameLogic.Board;
-import chat.ChatClient;
+import gameLogic.*;
 
 public class playGround implements ActionListener {
 

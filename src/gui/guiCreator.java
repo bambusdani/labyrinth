@@ -1,9 +1,5 @@
 package gui;
 
-import gameLogic.Board;
-
-import java.awt.GridLayout;
-import java.awt.event.*;
 import javax.swing.*;
 
 
