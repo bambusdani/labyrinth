@@ -1,6 +1,7 @@
 package gui;
 
 import gameLogic.Board;
+import gameLogic.MyBoard;
 
 import java.awt.GridLayout;
 import java.awt.event.*;
@@ -18,8 +19,10 @@ public class guiCreator extends JPanel {
 		/*startMenu startMenu = new startMenu();
 		startMenu.createGui();*/
 
-		About about = new About();
-		about.createGui();
+		MyBoard board = new MyBoard();
+		MyPlayGround playGround = new MyPlayGround(board);
+
+
 
 	}
 }
