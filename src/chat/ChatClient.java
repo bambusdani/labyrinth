@@ -95,6 +95,13 @@ public class ChatClient extends JFrame implements ActionListener {
     }
 
     //================================================================================
+    // get screenName
+    //================================================================================
+    public String getScreenName() {
+        return this.screenName;
+    }
+
+    //================================================================================
     // main method is for testing/debugging
     //================================================================================
     /*public static void main(String[] args)  {

@@ -54,9 +54,9 @@ import java.util.regex.Pattern;
  *  @author Kevin Wayne
  */
 public final class In {
-    
+
     ///// begin: section (1 of 2) of code duplicated from In to StdIn.
-    
+
     // assume Unicode UTF-8 encoding
     private static final String CHARSET_NAME = "UTF-8";
 
@@ -66,22 +66,22 @@ public final class In {
     // the default token separator; we maintain the invariant that this value 
     // is held by the scanner's delimiter between calls
     private static final Pattern WHITESPACE_PATTERN
-        = Pattern.compile("\\p{javaWhitespace}+");
+            = Pattern.compile("\\p{javaWhitespace}+");
 
     // makes whitespace characters significant 
     private static final Pattern EMPTY_PATTERN
-        = Pattern.compile("");
+            = Pattern.compile("");
 
     // used to read the entire input. source:
     // http://weblogs.java.net/blog/pat/archive/2004/10/stupid_scanner_1.html
     private static final Pattern EVERYTHING_PATTERN
-        = Pattern.compile("\\A");
+            = Pattern.compile("\\A");
 
     //// end: section (1 of 2) of code duplicated from In to StdIn.
 
     private Scanner scanner;
 
-   /**
+    /**
      * Initializes an input stream from standard input.
      */
     public In() {
@@ -89,7 +89,7 @@ public final class In {
         scanner.useLocale(LOCALE);
     }
 
-   /**
+    /**
      * Initializes an input stream from a socket.
      *
      * @param  socket the socket
@@ -108,7 +108,7 @@ public final class In {
         }
     }
 
-   /**
+    /**
      * Initializes an input stream from a URL.
      *
      * @param  url the URL
@@ -128,7 +128,7 @@ public final class In {
         }
     }
 
-   /**
+    /**
      * Initializes an input stream from a file.
      *
      * @param  file the file
@@ -150,7 +150,7 @@ public final class In {
     }
 
 
-   /**
+    /**
      * Initializes an input stream from a filename or web page name.
      *
      * @param  name the filename or web page name
@@ -218,11 +218,11 @@ public final class In {
     public boolean exists()  {
         return scanner != null;
     }
-    
+
     ////  begin: section (2 of 2) of code duplicated from In to StdIn,
     ////  with all methods changed from "public" to "public static".
 
-   /**
+    /**
      * Returns true if input stream is empty (except possibly whitespace).
      * Use this to know whether the next call to {@link #readString()}, 
      * {@link #readDouble()}, etc will succeed.
@@ -234,7 +234,7 @@ public final class In {
         return !scanner.hasNext();
     }
 
-   /** 
+    /**
      * Returns true if this input stream has a next line.
      * Use this method to know whether the
      * next call to {@link #readLine()} will succeed.
@@ -251,7 +251,7 @@ public final class In {
      * Returns true if this input stream has more inputy (including whitespace).
      * Use this method to know whether the next call to {@link #readChar()} will succeed.
      * This method is functionally equivalent to {@link #hasNextLine()}.
-     * 
+     *
      * @return <tt>true</tt> if this input stream has more input (including whitespace);
      *         <tt>false</tt> otherwise   
      */
@@ -263,7 +263,7 @@ public final class In {
     }
 
 
-   /**
+    /**
      * Reads and returns the next line in this input stream.
      *
      * @return the next line in this input stream; <tt>null</tt> if no such line
@@ -288,13 +288,13 @@ public final class In {
         scanner.useDelimiter(EMPTY_PATTERN);
         String ch = scanner.next();
         assert ch.length() == 1 : "Internal (Std)In.readChar() error!"
-            + " Please contact the authors.";
+                + " Please contact the authors.";
         scanner.useDelimiter(WHITESPACE_PATTERN);
         return ch.charAt(0);
-    }  
+    }
 
 
-   /**
+    /**
      * Reads and returns the remainder of this input stream, as a string.
      *
      * @return the remainder of this input stream, as a string
@@ -310,7 +310,7 @@ public final class In {
     }
 
 
-   /**
+    /**
      * Reads the next token from this input stream and returns it as a <tt>String</tt>.
      *
      * @return the next <tt>String</tt> in this input stream
@@ -319,7 +319,7 @@ public final class In {
         return scanner.next();
     }
 
-   /**
+    /**
      * Reads the next token from this input stream, parses it as a <tt>int</tt>,
      * and returns the <tt>int</tt>.
      *
@@ -329,7 +329,7 @@ public final class In {
         return scanner.nextInt();
     }
 
-   /**
+    /**
      * Reads the next token from this input stream, parses it as a <tt>double</tt>,
      * and returns the <tt>double</tt>.
      *
@@ -339,7 +339,7 @@ public final class In {
         return scanner.nextDouble();
     }
 
-   /**
+    /**
      * Reads the next token from this input stream, parses it as a <tt>float</tt>,
      * and returns the <tt>float</tt>.
      *
@@ -349,7 +349,7 @@ public final class In {
         return scanner.nextFloat();
     }
 
-   /**
+    /**
      * Reads the next token from this input stream, parses it as a <tt>long</tt>,
      * and returns the <tt>long</tt>.
      *
@@ -359,7 +359,7 @@ public final class In {
         return scanner.nextLong();
     }
 
-   /**
+    /**
      * Reads the next token from this input stream, parses it as a <tt>short</tt>,
      * and returns the <tt>short</tt>.
      *
@@ -369,7 +369,7 @@ public final class In {
         return scanner.nextShort();
     }
 
-   /**
+    /**
      * Reads the next token from this input stream, parses it as a <tt>byte</tt>,
      * and returns the <tt>byte</tt>.
      * <p>
@@ -457,14 +457,14 @@ public final class In {
             vals[i] = Double.parseDouble(fields[i]);
         return vals;
     }
-    
+
     ///// end: section (2 of 2) of code duplicated from In to StdIn */
 
-   /**
+    /**
      * Closes this input stream.
      */
     public void close() {
-        scanner.close();  
+        scanner.close();
     }
 
     /**
@@ -479,7 +479,7 @@ public final class In {
         return new In(filename).readAllInts();
     }
 
-   /**
+    /**
      * Reads all doubles from a file and returns them as
      * an array of doubles.
      *
@@ -491,7 +491,7 @@ public final class In {
         return new In(filename).readAllDoubles();
     }
 
-   /**
+    /**
      * Reads all strings from a file and returns them as
      * an array of strings.
      *
@@ -514,7 +514,7 @@ public final class In {
         return new In().readAllInts();
     }
 
-   /**
+    /**
      * Reads all doubles from standard input and returns them as
      * an array of doubles.
      *
@@ -525,7 +525,7 @@ public final class In {
         return new In().readAllDoubles();
     }
 
-   /**
+    /**
      * Reads all strings from standard input and returns them as
      *  an array of strings.
      *
@@ -535,8 +535,8 @@ public final class In {
     public static String[] readStrings() {
         return new In().readAllStrings();
     }
-    
-   /**
+
+    /**
      * Unit tests the <tt>In</tt> data type.
      */
     public static void main(String[] args) {
