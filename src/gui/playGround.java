@@ -371,16 +371,16 @@ public class playGround implements ActionListener {
 				}
 				//-------------------------
 				// checking if the players are on the the spot if yes draw a colored border
-				if((board.getPlayer(0).getPositionX() == j) && (board.getPlayer(0).getPositionY() == i)){
+				if((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
 				}
-				if((board.getPlayer(1).getPositionX() == j) && (board.getPlayer(1).getPositionY() == i)){
+				if((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(1).getColor()));
 				}
-				if((board.getPlayer(2).getPositionX() == j) && (board.getPlayer(2).getPositionY() == i)){
+				if((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(2).getColor()));
 				}
-				if((board.getPlayer(3).getPositionX() == j) && (board.getPlayer(3).getPositionY() == i)){
+				if((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(3).getColor()));
 				}
 				//-------------------------
@@ -391,12 +391,6 @@ public class playGround implements ActionListener {
 				boardSquares[j][i].setActionCommand("gameField: "+j+" "+i);
 				boardSquares[j][i].addActionListener(this);
 
-				//TODO !!!!!!!!!!!!!!!!
-				//Test
-				//alle felder lassen sich ansprechen außer das erste j 0 i 0 dazu muss es früher angewendet werden bzw in boardSquares[][] gespeichert werden
-				//board.setTile(0,1,board.getTile(0,0));
-				//board.setTile(1,0, board.getNextTile());
-				board.setTile(0,0 ,board.getNextTile());
 				panelGameField.add(boardSquares[j][i], constraintsGameField);
 
 				//-------------
@@ -556,7 +550,7 @@ public class playGround implements ActionListener {
 
 			buttonArrow_1_0.setText("haha");
 			boardSquares[1][0].setText(board.getNextTile().getShape());
-			board.setTile(1,0, board.getNextTile());
+			board.setTiles(1,0, board.getNextTile());
 
 
 		}
