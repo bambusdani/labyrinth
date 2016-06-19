@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import gameLogic.Board;
+import gameLogic.*;
 
 public class ConnectionListener extends Thread {
     private Vector<Connection> connections;

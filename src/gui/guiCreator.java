@@ -1,11 +1,13 @@
 package gui;
 
+
 import gameLogic.Board;
 import gameLogic.MyBoard;
 
+import javax.swing.*;
 import java.awt.GridLayout;
 import java.awt.event.*;
-import javax.swing.*;
+
 
 
 /*
