@@ -19,7 +19,9 @@ public class mainGame {
 
 
 
+
 		ChatClient client = new ChatClient("Darth Vader", "localhost", boardview.getTextArea(), boardview.getTextField());
+
 		client.listen();
 
 

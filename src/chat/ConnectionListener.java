@@ -8,19 +8,15 @@ package chat;
 
 import java.util.Vector;
 import java.io.IOException;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.util.logging.*;
 
 import gameLogic.*;
 
 public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
 
-    static private final Logger log = Logger.getLogger(ConnectionListener.class.getName());
-    static private FileHandler fileTxt;
-    static private SimpleFormatter formatText;
+
+    private final static Logger LOGGER = Logger.getLogger(ConnectionListener.class.getName());
     static private int playerID;
 
     //--------------------------------------------------------------------------------
@@ -31,28 +27,18 @@ public class ConnectionListener extends Thread {
         this.connections = connections;
 
         //================================================================================
-        // Create Logger
-        // Log Levels are: SEVERE (highest), WARNING, INFO, CONFIG, FINE, FINER, FINEST
+        // setup the logger
         //================================================================================
         try {
             //================================================================================
             // set log level
-            this.log.setLevel(Level.INFO);
 
-            //================================================================================
-            // create file handler
-            fileTxt = new FileHandler("chatLog.txt");
-
-            //================================================================================
-            // create a text formatter
-            formatText = new SimpleFormatter();
-            fileTxt.setFormatter(formatText);
-            log.addHandler(fileTxt);
-
-        } catch (IOException e) {
+            LOGGER.info("*****STARTING*****");
+        } catch (Exception e) {
             //================================================================================
             // catch error
-            System.err.print("Caught IOExceptin: " + e.getMessage());
+            LOGGER.warning(e.toString());
+
         }
     }
 
@@ -90,14 +76,15 @@ public class ConnectionListener extends Thread {
                         //================================================================================
                         // assign playername to work with the board
                         for (int j = 0; j < board.getAllPlayers().length; j++) {
-                            if(tmpUsername == board.getAllPlayers()[j].getNameOfPlayer()) {
+                            if(tmpUsername.equalsIgnoreCase(board.getAllPlayers()[j].getNameOfPlayer())) {
                                 playerID = board.getAllPlayers()[j].getPlayerID();
                             }
                         }
 
                         //================================================================================
-                        // add to log
-                        log.info(message);
+                        // add to message log
+                        LOGGER.info("INCOMING " + message);
+
 
                         //================================================================================
                         // Begin with parameters
@@ -147,9 +134,27 @@ public class ConnectionListener extends Thread {
                             // parameter 'PASS'
                             //================================================================================
                             else if (tmpMessage.substring(0,4).equalsIgnoreCase("pass")) {
-                                //send to server that player has passed
-                                jth.println("Player " + board.getPlayer(playerID).getPlayerID() +
+
+                                //--------------------------------------------------------------------------------
+                                // set player turn false
+                                board.getPlayer(playerID).setTurn(false);
+
+                                //--------------------------------------------------------------------------------
+                                // send to server that player has passed
+                                jth.println("Player " + playerID +
                                         " has passed.");
+
+                                //--------------------------------------------------------------------------------
+                                // player id's go from 1-4
+                                // set turn for next player true
+                                if(playerID+1 > 4) {
+                                    // next player is '1'
+                                    board.getPlayer(1).setTurn(true);
+                                    jth.println("It's Player's 1 turn.");
+                                } else {
+                                    board.getPlayer(playerID+1).setTurn(true);
+                                    jth.println("It's Player's " + (playerID+1) + " turn.");
+                                }
                             }
 
                             else {
