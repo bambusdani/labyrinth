@@ -21,7 +21,7 @@ public class Tiles {
     /** GETTER                                         SETTER */
     public boolean getMoveable(){return moveable;}
     public Position getPosition(){return position;}  public void setPosition(Position position){this.position = position;}
-    public String getShape(){return shape;}
+    public String getShape(){return shape;}          public void setShape(String shape){this.shape = shape;}
     public String getSymbol(){return symbol;}
     public int getRotation(){return rotation;}       public void setRotation(int rotation){this.rotation = rotation;}
 }
