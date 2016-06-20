@@ -26,7 +26,7 @@ public class playGround implements ActionListener {
 	private JButton buttonEndGame;
 	private	JButton buttonRotate;
 	public JButton[][] boardSquares = new JButton[7][7];
-	private JFrame 	frame;
+	private JFrame frame;
 
 	//Nächstes Teil das eingefügt wird
 

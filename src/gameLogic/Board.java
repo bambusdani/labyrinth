@@ -36,7 +36,7 @@ public class Board {
     //===========================
 
     /** -> GETTER                                                    SETTER */
-    public Player getPlayer(int x){return this.allPlayers[x];}
+    public Player getPlayer(int id){return this.allPlayers[id];}
     public Tiles[][] getallTiles(){return this.tiles;}
     public Tiles getTile(int x, int y){return this.tiles[x][y];}     public void setTiles(int x, int y, Tiles tile){this.tiles[x][y] = tile;}
     public Tiles getNextTile(){return nextTile;}                     public void setNextTile(Tiles nextTile){this.nextTile = nextTile;}
