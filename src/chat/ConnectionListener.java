@@ -73,14 +73,14 @@ public class ConnectionListener extends Thread {
                         //================================================================================
                         // assign playername to work with the board
                         for (int j = 0; j < board.getAllPlayers().length; j++) {
-                            if(tmpUsername == board.getAllPlayers()[j].getNameOfPlayer()) {
+                            if(tmpUsername.equalsIgnoreCase(board.getAllPlayers()[j].getNameOfPlayer())) {
                                 playerID = board.getAllPlayers()[j].getPlayerID();
                             }
                         }
 
                         //================================================================================
                         // add to message log
-                        LOGGER.info(message);
+                        LOGGER.info("INCOMING " + message);
 
                         //================================================================================
                         // Begin with parameters
@@ -130,9 +130,26 @@ public class ConnectionListener extends Thread {
                             // parameter 'PASS'
                             //================================================================================
                             else if (tmpMessage.substring(0,4).equalsIgnoreCase("pass")) {
-                                //send to server that player has passed
-                                jth.println("Player " + board.getPlayer(playerID).getPlayerID() +
+                                //--------------------------------------------------------------------------------
+                                // set player turn false
+                                board.getPlayer(playerID).setTurn(false);
+
+                                //--------------------------------------------------------------------------------
+                                // send to server that player has passed
+                                jth.println("Player " + playerID +
                                         " has passed.");
+
+                                //--------------------------------------------------------------------------------
+                                // player id's go from 1-4
+                                // set turn for next player true
+                                if(playerID+1 > 4) {
+                                    // next player is '1'
+                                    board.getPlayer(1).setTurn(true);
+                                    jth.println("It's Player's 1 turn.");
+                                } else {
+                                    board.getPlayer(playerID+1).setTurn(true);
+                                    jth.println("It's Player's " + (playerID+1) + " turn.");
+                                }
                             }
 
                             else {
