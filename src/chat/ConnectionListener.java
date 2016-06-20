@@ -18,6 +18,8 @@ public class ConnectionListener extends Thread {
 
     private final static Logger LOGGER = Logger.getLogger(ConnectionListener.class.getName());
     static private int playerID;
+    private boolean mError, mException;
+    private String sException;
 
     //--------------------------------------------------------------------------------
     // create a new board so we can get the player information needed
@@ -64,6 +66,21 @@ public class ConnectionListener extends Thread {
                 //================================================================================
                 String message = ith.getMessage();
 
+
+                //--------------------------------------------------------------------------------
+                // Broadcast to specific clients goes here before the jth-loop!
+                if(mError) {
+                    ith.println("What the **** have you typed in?");
+                    mError = false;
+                }
+                if(mException) {
+                    ith.println(sException);
+                    mException = false;
+                }
+
+                //--------------------------------------------------------------------------------
+                // Begin with server broadcasting to all clients
+                // Begin with reading client messages
                 if (message != null)
                     for (Connection jth : connections) {
                         //================================================================================
@@ -183,13 +200,14 @@ public class ConnectionListener extends Thread {
                                 //--------------------------------------------------------------------------------
                                 // if the message doens't make sense at all...
                                 // will only be display in the client
-                                ith.println("What the **** have you typed in?");
+                                mError = true;
                             }
                         }
                         catch (Exception e) {
                             //--------------------------------------------------------------------------------
                             // error will only be displayed in the client
-                            ith.println(e.getMessage());
+                            mException = true;
+                            sException = e.getMessage();
                         }
                     }
             }
