@@ -554,10 +554,11 @@ public class playGround implements ActionListener {
 		// buttonArrow_1_0 means line j:1 i:0 on the field
 		// topArrowButtons
 		if(buttonArrow_1_0 == e.getSource()){
-			System.out.println("ArrowButton j: 1 i: 0");
+
 
 			//ist zug möglich?
 			if(possibleInsertions[0]) {
+				System.out.println("ArrowButton j: 1 i: 0");
 				for(int index = 0; index < possibleInsertions.length; index++) {
 					possibleInsertions[index] = true;
 				}
