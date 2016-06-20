@@ -20,11 +20,7 @@ public class mainGame {
 
 
 
-<<<<<<< HEAD
-		ChatClient client = new ChatClient("Daniel", "localhost", boardview.getTextArea(), boardview.getTextField());
-=======
 		ChatClient client = new ChatClient("Rehan", "localhost", boardview.getTextArea(), boardview.getTextField());
->>>>>>> daniel
 
 		client.listen();
 
