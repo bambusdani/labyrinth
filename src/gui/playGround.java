@@ -30,6 +30,7 @@ public class playGround implements ActionListener {
 	//Nächstes Teil das eingefügt wird
 	String storage;
 
+
 	//Buttons for the arrows to place the next stone
 	//top
 	public JButton buttonArrow_1_0;
