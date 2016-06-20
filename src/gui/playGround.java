@@ -27,6 +27,10 @@ public class playGround implements ActionListener {
 	public JButton[][] boardSquares = new JButton[7][7];
 	private JFrame 	frame;
 
+	//Nächstes Teil das eingefügt wird
+	String storage;
+
+
 	//Buttons for the arrows to place the next stone
 	//top
 	public JButton buttonArrow_1_0;
@@ -55,6 +59,8 @@ public class playGround implements ActionListener {
 
 
 	public playGround(Board board) {
+
+		storage = board.getNextTile().getShape();
 
 		this.board = board;
 		//================================================================================
@@ -257,6 +263,7 @@ public class playGround implements ActionListener {
 		constraintsGameField.gridwidth = 1;
 		constraintsGameField.insets = new Insets(0, 0, 0, 0);
 
+
 		//--------------------------------------------------
 		// Buttons to place the next stone
 		//--------------------------------------------------
@@ -370,16 +377,16 @@ public class playGround implements ActionListener {
 				}
 				//-------------------------
 				// checking if the players are on the the spot if yes draw a colored border
-				if((board.getPlayer(0).getPositionX() == j) && (board.getPlayer(0).getPositionY() == i)){
+				if((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
 				}
-				if((board.getPlayer(1).getPositionX() == j) && (board.getPlayer(1).getPositionY() == i)){
+				if((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(1).getColor()));
 				}
-				if((board.getPlayer(2).getPositionX() == j) && (board.getPlayer(2).getPositionY() == i)){
+				if((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(2).getColor()));
 				}
-				if((board.getPlayer(3).getPositionX() == j) && (board.getPlayer(3).getPositionY() == i)){
+				if((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)){
 					buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(3).getColor()));
 				}
 				//-------------------------
@@ -390,15 +397,11 @@ public class playGround implements ActionListener {
 				boardSquares[j][i].setActionCommand("gameField: "+j+" "+i);
 				boardSquares[j][i].addActionListener(this);
 
-				//TODO !!!!!!!!!!!!!!!!
-				//Test
-				//alle felder lassen sich ansprechen außer das erste j 0 i 0 dazu muss es früher angewendet werden bzw in boardSquares[][] gespeichert werden
-				//board.setTile(0,1,board.getTile(0,0));
-				//board.setTile(1,0, board.getNextTile());
-				board.setTile(0,0 ,board.getNextTile());
 				panelGameField.add(boardSquares[j][i], constraintsGameField);
+
 				//-------------
 			}
+
 
 		}
 		System.out.println("j 0 i 0: "+ board.getTile(0,0).getShape());
@@ -523,8 +526,10 @@ public class playGround implements ActionListener {
 		}
 		if(buttonRotate == e.getSource()){
 
+
 			int newRotation = board.getNextTile().getRotation()+90;
 			board.getNextTile().setRotation(newRotation);
+
 			System.out.println("Rotation betr�gt: " + newRotation);
 
 		}
@@ -542,53 +547,177 @@ public class playGround implements ActionListener {
 			}
 		}
 		//-------------------------------------------------------------
+
 		// checks which button was pressed  to place the next stone
 		// buttonArrow_1_0 means line j:1 i:0 on the field
 		// topArrowButtons
 		if(buttonArrow_1_0 == e.getSource()){
 			System.out.println("ArrowButton j: 1 i: 0");
 
-			buttonArrow_1_0.setText("haha");
-			boardSquares[1][0].setText(board.getNextTile().getShape());
-			board.setTile(1,0, board.getNextTile());
+			String tmpStorage = "";
+			for(int index = 0; index < 7; index++){
+				tmpStorage = boardSquares[1][index].getText();
+				boardSquares[1][index].setText(storage);
+				board.setTiles(1, index, board.getNextTile());
+				storage = tmpStorage;
+			}
+			board.getNextTile().setShape(tmpStorage);
+			tmpStorage = "";
 
 
 		}
 		if(buttonArrow_3_0 == e.getSource()){
 			System.out.println("ArrowButton j: 3 i: 0");
+
+			String tmpStorage = "";
+			for(int index = 0; index < 7; index++){
+				tmpStorage = boardSquares[3][index].getText();
+				boardSquares[3][index].setText(storage);
+				board.setTiles(3, index, board.getNextTile());
+				storage = tmpStorage;
+			}
+			board.getNextTile().setShape(storage);
+
 		}
 		if(buttonArrow_5_0 == e.getSource()){
 			System.out.println("ArrowButton j: 5 i: 0");
+
+			String tmpStorage="";
+			for(int index = 0; index < 7; index++){
+				tmpStorage = boardSquares[5][index].getText();
+				boardSquares[5][index].setText(storage);
+				board.setTiles(5, index, board.getNextTile());
+				storage = tmpStorage;
+			}
+			board.getNextTile().setShape(storage);
+
+
 		}
 		// bottomArrowButtons
 		if(buttonArrow_1_6 == e.getSource()){
 			System.out.println("ArrowButton j: 1 i: 6");
+
+			String tmpStorage = "";
+			for(int index = 6; index >= 0; index--){
+				tmpStorage = boardSquares[1][index].getText();
+				boardSquares[1][index].setText(storage);
+				board.setTiles(1, index, board.getNextTile());
+				storage = tmpStorage;
+			}
+			board.getNextTile().setShape(tmpStorage);
+			tmpStorage = "";
+
 		}
 		if(buttonArrow_3_6 == e.getSource()){
 			System.out.println("ArrowButton j: 3 i: 6");
+
+			String tmpStorage = "";
+			for(int index = 6; index >= 0; index--){
+				tmpStorage = boardSquares[3][index].getText();
+				boardSquares[3][index].setText(storage);
+				board.setTiles(3, index, board.getNextTile());
+				storage = tmpStorage;
+			}
+			board.getNextTile().setShape(tmpStorage);
+			tmpStorage = "";
+
 		}
 		if(buttonArrow_5_6 == e.getSource()){
 			System.out.println("ArrowButton j: 5 i: 6");
+
+			String tmpStorage = "";
+			for(int index = 6; index >= 0; index--){
+				tmpStorage = boardSquares[5][index].getText();
+				boardSquares[5][index].setText(storage);
+				board.setTiles(5, index, board.getNextTile());
+				storage = tmpStorage;
+			}
+			board.getNextTile().setShape(tmpStorage);
+			tmpStorage = "";
+
 		}
 		//leftArrowButton
 		if(buttonArrow_0_1 == e.getSource()){
 			System.out.println("ArrowButton j: 0 i: 1");
+
+			String tmpStorage="";
+			for(int index = 0; index < 7; index++){
+				tmpStorage = boardSquares[index][1].getText();
+				boardSquares[index][1].setText(storage);
+				board.setTiles(index, 1, board.getNextTile());
+				storage = tmpStorage;
+			}
+			board.getNextTile().setShape(storage);
+
 		}
 		if(buttonArrow_0_3 == e.getSource()){
 			System.out.println("ArrowButton j: 0 i: 3");
+
+			String tmpStorage="";
+			for(int index = 0; index < 7; index++){
+				tmpStorage = boardSquares[index][3].getText();
+				boardSquares[index][3].setText(storage);
+				board.setTiles(index, 3, board.getNextTile());
+				storage = tmpStorage;
+			}
+			board.getNextTile().setShape(storage);
+
 		}
 		if(buttonArrow_0_5 == e.getSource()){
 			System.out.println("ArrowButton j: 0 i: 5");
+
+			String tmpStorage="";
+			for(int index = 0; index < 7; index++){
+				tmpStorage = boardSquares[index][5].getText();
+				boardSquares[index][5].setText(storage);
+				board.setTiles(index, 5, board.getNextTile());
+				storage = tmpStorage;
+			}
+			board.getNextTile().setShape(storage);
+
 		}
 		//rightArrowButton
 		if(buttonArrow_6_1 == e.getSource()){
 			System.out.println("ArrowButton j: 6 i: 1");
+
+			String tmpStorage = "";
+			for(int index = 6; index >= 0; index--){
+				tmpStorage = boardSquares[index][1].getText();
+				boardSquares[index][1].setText(storage);
+				board.setTiles(index, 1, board.getNextTile());
+				storage = tmpStorage;
+			}
+			board.getNextTile().setShape(tmpStorage);
+			tmpStorage = "";
+
 		}
 		if(buttonArrow_6_3 == e.getSource()){
 			System.out.println("ArrowButton j: 6 i: 3");
+
+			String tmpStorage = "";
+			for(int index = 6; index >= 0; index--){
+				tmpStorage = boardSquares[index][3].getText();
+				boardSquares[index][3].setText(storage);
+				board.setTiles(index, 3, board.getNextTile());
+				storage = tmpStorage;
+			}
+			board.getNextTile().setShape(tmpStorage);
+			tmpStorage = "";
+
 		}
 		if(buttonArrow_6_5 == e.getSource()){
 			System.out.println("ArrowButton j: 6 i: 5");
+
+			String tmpStorage = "";
+			for(int index = 6; index >= 0; index--){
+				tmpStorage = boardSquares[index][5].getText();
+				boardSquares[index][5].setText(storage);
+				board.setTiles(index, 5, board.getNextTile());
+				storage = tmpStorage;
+			}
+			board.getNextTile().setShape(tmpStorage);
+			tmpStorage = "";
+
 		}
 
 	}

@@ -111,17 +111,19 @@ public class ConnectionListener extends Thread {
                                 //--------------------------------------------------------------------------------
                                 // for testing purposes uncomment or comment
                                 jth.println("Player " + board.getPlayer(playerID).getPlayerID() +
-                                        " current Position: "  + board.getPlayer(playerID).getPositionX() + ", " + board.getPlayer(playerID).getPositionY());
+                                        " current Position: "  + board.getPlayer(playerID).getAcutalPosition().getX() + ", " + board.getPlayer(playerID).getAcutalPosition().getY());
 
                                 //--------------------------------------------------------------------------------
                                 // set new position
-                                board.getPlayer(playerID).setPositionX(board.getPlayer(playerID).getPositionX()+tmpX);
-                                board.getPlayer(playerID).setPositionY(board.getPlayer(playerID).getPositionY()+tmpY);
+                                //board.getPlayer(playerID).setPositionX(board.getPlayer(playerID).getPositionX()+tmpX); (alte Version)
+                                board.getPlayer(playerID).getAcutalPosition().setX(board.getPlayer(playerID).getAcutalPosition().getX()+tmpX);
+                                //board.getPlayer(playerID).setPositionY(board.getPlayer(playerID).getPositionY()+tmpY);
+                                board.getPlayer(playerID).getAcutalPosition().setY(board.getPlayer(playerID).getAcutalPosition().getY()+tmpY);
 
                                 //--------------------------------------------------------------------------------
                                 // broadcast to all players
                                 jth.println("Player " + board.getPlayer(playerID).getPlayerID() +
-                                        " moved to: " + board.getPlayer(playerID).getPositionX() + ", " + board.getPlayer(playerID).getPositionY());
+                                        " moved to: " + board.getPlayer(playerID).getAcutalPosition().getX() + ", " + board.getPlayer(playerID).getAcutalPosition().getY());
                             }
 
                             //================================================================================

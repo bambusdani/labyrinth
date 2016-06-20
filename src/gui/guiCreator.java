@@ -1,5 +1,8 @@
 package gui;
 
+
+import gameLogic.Board;
+
 import javax.swing.*;
 
 
@@ -14,8 +17,10 @@ public class guiCreator extends JPanel {
 		/*startMenu startMenu = new startMenu();
 		startMenu.createGui();*/
 
-		About about = new About();
-		about.createGui();
+		Board board = new Board();
+		playGround playGround = new playGround(board);
+
+
 
 	}
 }
