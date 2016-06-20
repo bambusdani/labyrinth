@@ -172,6 +172,8 @@ public class ConnectionListener extends Thread {
                                 int tmpX = Integer.parseInt(tmpMessage.substring(9,10));
                                 int tmpY = Integer.parseInt(tmpMessage.substring(11,12));
 
+                                board.pushTile(tmpTileID, tmpRotation, tmpX, tmpY);
+
                                 jth.println("Player " + playerID + " pushed tile " + tmpTileID +
                                         " with rotation " + tmpRotation +
                                         " to " + tmpX + " " + tmpY + ".");
