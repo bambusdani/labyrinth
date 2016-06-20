@@ -16,7 +16,7 @@ public class mainGame2 {
 
 		playGround boardview2 = new playGround(board2);
 
-		ChatClient client2 = new ChatClient("Yoda", "localhost", boardview2.getTextArea(), boardview2.getTextField());
+		ChatClient client2 = new ChatClient("Marvin", "localhost", boardview2.getTextArea(), boardview2.getTextField());
 		client2.listen();
 	}
 
