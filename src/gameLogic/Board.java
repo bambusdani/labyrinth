@@ -26,6 +26,8 @@ public class Board {
         shuffleTiles(this.tiles);
 
         String[] creaturesNeeded = {"creature1", "creature2"};
+
+                                  //startPosition   , actualPosition   , ID, Color               ,turn,score, name, cardsymbolNeeded
         allPlayers[0] = new Player(new Position(0,0), new Position(1,1), 1 , new Color(255, 0 ,0), true, 5, "Rehan", creaturesNeeded);
         allPlayers[1] = new Player(new Position(0,6), new Position(2,5), 2 , new Color(0, 255 ,0), true, 6, "Marvin", creaturesNeeded);
         allPlayers[2] = new Player(new Position(6,0), new Position(6,3), 3 , new Color(0, 255 ,255), true, 6, "Daniel", creaturesNeeded);

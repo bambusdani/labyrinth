@@ -28,11 +28,15 @@ public class playGround implements ActionListener {
 	private JFrame 	frame;
 
 	//Nächstes Teil das eingefügt wird
+
+
 	public Tiles tmpStorageTile;
 	public JLabel labelNextStoneSymbol;
 
 	//Im Uhrzeigersinn den Buttons(einschub/pfeilbuttons) zugewiesen
 	public boolean[] possibleInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
+
+
 
 
 	//Buttons for the arrows to place the next stone
@@ -63,6 +67,10 @@ public class playGround implements ActionListener {
 
 
 	public playGround(Board board) {
+
+
+
+
 
 		this.board = board;
 		//================================================================================
@@ -202,10 +210,12 @@ public class playGround implements ActionListener {
 		// instead of "T" it should use an image
 
 
+
 		this.labelNextStoneSymbol = setLabel(board.getNextTile().getShape(),fontSize, stoneSize, stoneSize, colorBlack );
 
 		this.labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
 		panelInformation.add(this.labelNextStoneSymbol, constraintsInformation);
+
 
 		//-----------------------------------------------------------------------------------
 		// Button rotate
@@ -550,10 +560,14 @@ public class playGround implements ActionListener {
 		}
 		//-------------------------------------------------------------
 
+
+
 		// checks which button was pressed  to place the next stone
 		// buttonArrow_1_0 means line j:1 i:0 on the field
 		// topArrowButtons
 		if(buttonArrow_1_0 == e.getSource()){
+
+
 
 
 			//ist zug möglich?
@@ -578,7 +592,8 @@ public class playGround implements ActionListener {
 				board.setNextTile(tmpStorageTile);
 				labelNextStoneSymbol.setText(board.getNextTile().getShape());
 			}
-			else{System.err.print("Invalid -> ArrowButton j: 1 i: 0");}
+
+			else{System.err.println("Invalid -> ArrowButton j: 1 i: 0");}
 
 		}
 		if(buttonArrow_3_0 == e.getSource()){
@@ -726,9 +741,13 @@ public class playGround implements ActionListener {
 				System.err.println("Invalid -> ArrowButton j: 5 i: 6");
 			}
 
+
+
 		}
 		//leftArrowButton
 		if(buttonArrow_0_1 == e.getSource()){
+
+
 
 
 			//ist zug möglich?
@@ -792,6 +811,8 @@ public class playGround implements ActionListener {
 		if(buttonArrow_0_5 == e.getSource()){
 
 
+
+
 			//ist zug möglich?
 			if(possibleInsertions[9]) {
 				System.out.println("ArrowButton j: 0 i: 5");
@@ -819,9 +840,14 @@ public class playGround implements ActionListener {
 				System.err.println("Invalid -> ArrowButton j: 0 i: 5");
 			}
 
+
+
+
 		}
 		//rightArrowButton
 		if(buttonArrow_6_1 == e.getSource()){
+
+
 
 
 			//ist zug möglich?
@@ -909,9 +935,13 @@ public class playGround implements ActionListener {
 			else{
 				System.err.println("Invalid -> ArrowButton j: 6 i: 5");
 			}
+
+
 		}
 
 	}
+
+
 
 	public void setBoard(Board newBoard){
 		this.board = newBoard;
@@ -927,5 +957,6 @@ public class playGround implements ActionListener {
 
 }
 
-//test 17.06.2016
-//h
+
+
+
