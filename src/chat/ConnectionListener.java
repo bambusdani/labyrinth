@@ -15,6 +15,7 @@ import gameLogic.*;
 public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
 
+
     private final static Logger LOGGER = Logger.getLogger(ConnectionListener.class.getName());
     static private int playerID;
 
@@ -31,11 +32,13 @@ public class ConnectionListener extends Thread {
         try {
             //================================================================================
             // set log level
+
             LOGGER.info("*****STARTING*****");
         } catch (Exception e) {
             //================================================================================
             // catch error
             LOGGER.warning(e.toString());
+
         }
     }
 
@@ -81,6 +84,7 @@ public class ConnectionListener extends Thread {
                         //================================================================================
                         // add to message log
                         LOGGER.info("INCOMING " + message);
+
 
                         //================================================================================
                         // Begin with parameters
@@ -130,6 +134,7 @@ public class ConnectionListener extends Thread {
                             // parameter 'PASS'
                             //================================================================================
                             else if (tmpMessage.substring(0,4).equalsIgnoreCase("pass")) {
+
                                 //--------------------------------------------------------------------------------
                                 // set player turn false
                                 board.getPlayer(playerID).setTurn(false);

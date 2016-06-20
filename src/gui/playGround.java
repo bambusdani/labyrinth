@@ -28,7 +28,15 @@ public class playGround implements ActionListener {
 	private JFrame 	frame;
 
 	//Nächstes Teil das eingefügt wird
-	String storage;
+
+
+	public Tiles tmpStorageTile;
+	public JLabel labelNextStoneSymbol;
+
+	//Im Uhrzeigersinn den Buttons(einschub/pfeilbuttons) zugewiesen
+	public boolean[] possibleInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
+
+
 
 
 	//Buttons for the arrows to place the next stone
@@ -60,7 +68,9 @@ public class playGround implements ActionListener {
 
 	public playGround(Board board) {
 
-		storage = board.getNextTile().getShape();
+
+
+
 
 		this.board = board;
 		//================================================================================
@@ -190,7 +200,7 @@ public class playGround implements ActionListener {
 		// next stone
 		constraintsInformation.gridx = 0;
 		constraintsInformation.gridy = 4;
-		JLabel labelNextStone = setLabel("N�chster Stein: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+		JLabel labelNextStone = setLabel("Nächster Stein: ",fontSize, boxSizeX, boxSizeY, colorBlack );
 		panelInformation.add(labelNextStone, constraintsInformation);
 
 		//-----------------------------------------------------------------------------------
@@ -200,10 +210,12 @@ public class playGround implements ActionListener {
 		// instead of "T" it should use an image
 
 
-		JLabel labelNextStoneSymbol = setLabel(board.getNextTile().getShape(),fontSize, stoneSize, stoneSize, colorBlack );
 
-		labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
-		panelInformation.add(labelNextStoneSymbol, constraintsInformation);
+		this.labelNextStoneSymbol = setLabel(board.getNextTile().getShape(),fontSize, stoneSize, stoneSize, colorBlack );
+
+		this.labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+		panelInformation.add(this.labelNextStoneSymbol, constraintsInformation);
+
 
 		//-----------------------------------------------------------------------------------
 		// Button rotate
@@ -548,179 +560,379 @@ public class playGround implements ActionListener {
 		}
 		//-------------------------------------------------------------
 
+
+
 		// checks which button was pressed  to place the next stone
 		// buttonArrow_1_0 means line j:1 i:0 on the field
 		// topArrowButtons
 		if(buttonArrow_1_0 == e.getSource()){
 			System.out.println("ArrowButton j: 1 i: 0");
 
-			String tmpStorage = "";
-			for(int index = 0; index < 7; index++){
-				tmpStorage = boardSquares[1][index].getText();
-				boardSquares[1][index].setText(storage);
-				board.setTiles(1, index, board.getNextTile());
-				storage = tmpStorage;
-			}
-			board.getNextTile().setShape(tmpStorage);
-			tmpStorage = "";
 
+			//ist zug möglich?
+			if(possibleInsertions[0]) {
+				for(int index = 0; index < possibleInsertions.length; index++) {
+					possibleInsertions[index] = true;
+				}
+				//gegenüber auf false
+				possibleInsertions[8]=false;
+
+				tmpStorageTile = board.getTile(1, 6);
+
+				for (int index = 6; index > 0; index--) {
+					board.setTiles(1, index, board.getTile(1, index - 1));
+					boardSquares[1][index].setText(board.getTile(1, index).getShape());
+				}
+
+				board.setTiles(1, 0, board.getNextTile());
+				boardSquares[1][0].setText(board.getTile(1, 0).getShape());
+
+
+				board.setNextTile(tmpStorageTile);
+				labelNextStoneSymbol.setText(board.getNextTile().getShape());
+			}
+			else{System.err.print("Invalid -> ArrowButton j: 1 i: 0");}
 
 		}
 		if(buttonArrow_3_0 == e.getSource()){
-			System.out.println("ArrowButton j: 3 i: 0");
 
-			String tmpStorage = "";
-			for(int index = 0; index < 7; index++){
-				tmpStorage = boardSquares[3][index].getText();
-				boardSquares[3][index].setText(storage);
-				board.setTiles(3, index, board.getNextTile());
-				storage = tmpStorage;
+
+			//ist zug möglich?
+			if(possibleInsertions[1]) {
+				System.out.println("ArrowButton j: 3 i: 0");
+				//gegenüber auf false
+				for(int index = 0; index < possibleInsertions.length; index++) {
+					possibleInsertions[index] = true;
+				}
+				possibleInsertions[7] = false;
+
+				tmpStorageTile = board.getTile(3, 6);
+
+				for (int index = 6; index > 0; index--) {
+					board.setTiles(3, index, board.getTile(3, index - 1));
+					boardSquares[3][index].setText(board.getTile(3, index).getShape());
+				}
+
+				board.setTiles(3, 0, board.getNextTile());
+				boardSquares[3][0].setText(board.getTile(3, 0).getShape());
+
+				board.setNextTile(tmpStorageTile);
+				labelNextStoneSymbol.setText(board.getNextTile().getShape());
 			}
-			board.getNextTile().setShape(storage);
+			else{System.err.print("Invalid -> ArrowButton j: 3 i: 0");}
 
 		}
 		if(buttonArrow_5_0 == e.getSource()){
-			System.out.println("ArrowButton j: 5 i: 0");
 
-			String tmpStorage="";
-			for(int index = 0; index < 7; index++){
-				tmpStorage = boardSquares[5][index].getText();
-				boardSquares[5][index].setText(storage);
-				board.setTiles(5, index, board.getNextTile());
-				storage = tmpStorage;
+
+			//ist zug möglich?
+			if(possibleInsertions[2]) {
+				System.out.println("ArrowButton j: 5 i: 0");
+
+				for (int index = 0; index < possibleInsertions.length; index++) {
+					possibleInsertions[index] = true;
+				}
+				//gegenüber auf false
+				possibleInsertions[6] = false;
+
+				tmpStorageTile = board.getTile(5, 6);
+
+				for (int index = 6; index > 0; index--) {
+					board.setTiles(5, index, board.getTile(5, index - 1));
+					boardSquares[5][index].setText(board.getTile(5, index).getShape());
+				}
+
+				board.setTiles(5, 0, board.getNextTile());
+				boardSquares[5][0].setText(board.getTile(5, 0).getShape());
+
+				board.setNextTile(tmpStorageTile);
+				labelNextStoneSymbol.setText(board.getNextTile().getShape());
 			}
-			board.getNextTile().setShape(storage);
-
+			else{
+				System.err.println("Invalid -> ArrowButton j: 5 i: 0");}
 
 		}
 		// bottomArrowButtons
 		if(buttonArrow_1_6 == e.getSource()){
-			System.out.println("ArrowButton j: 1 i: 6");
+			//ist zug möglich?
+			if(possibleInsertions[8]) {
+				for (int index = 0; index < possibleInsertions.length; index++) {
+					possibleInsertions[index] = true;
+				}
+				//gegenüber auf false
+				possibleInsertions[0] = false;
 
-			String tmpStorage = "";
-			for(int index = 6; index >= 0; index--){
-				tmpStorage = boardSquares[1][index].getText();
-				boardSquares[1][index].setText(storage);
-				board.setTiles(1, index, board.getNextTile());
-				storage = tmpStorage;
+				System.out.println("ArrowButton j: 1 i: 6");
+
+				tmpStorageTile = board.getTile(1, 0);
+
+				for (int index = 0; index < 6; index++) {
+					board.setTiles(1, index, board.getTile(1, index + 1));
+					boardSquares[1][index].setText(board.getTile(1, index).getShape());
+				}
+
+				board.setTiles(1, 6, board.getNextTile());
+				boardSquares[1][6].setText(board.getTile(1, 6).getShape());
+
+				board.setNextTile(tmpStorageTile);
+				labelNextStoneSymbol.setText(board.getNextTile().getShape());
 			}
-			board.getNextTile().setShape(tmpStorage);
-			tmpStorage = "";
+			else{
+				System.err.println("Invalid -> ArrowButton j: 1 i: 6");}
 
 		}
 		if(buttonArrow_3_6 == e.getSource()){
-			System.out.println("ArrowButton j: 3 i: 6");
 
-			String tmpStorage = "";
-			for(int index = 6; index >= 0; index--){
-				tmpStorage = boardSquares[3][index].getText();
-				boardSquares[3][index].setText(storage);
-				board.setTiles(3, index, board.getNextTile());
-				storage = tmpStorage;
+
+			//ist zug möglich?
+			if(possibleInsertions[7]) {
+				System.out.println("ArrowButton j: 3 i: 6");
+				for (int index = 0; index < possibleInsertions.length; index++) {
+					possibleInsertions[index] = true;
+				}
+				//gegenüber auf false
+				possibleInsertions[1] = false;
+
+				tmpStorageTile = board.getTile(3, 0);
+
+				for (int index = 0; index < 6; index++) {
+					board.setTiles(3, index, board.getTile(3, index + 1));
+					boardSquares[3][index].setText(board.getTile(3, index).getShape());
+				}
+
+				board.setTiles(3, 6, board.getNextTile());
+				boardSquares[3][6].setText(board.getTile(3, 6).getShape());
+
+				board.setNextTile(tmpStorageTile);
+				labelNextStoneSymbol.setText(board.getNextTile().getShape());
 			}
-			board.getNextTile().setShape(tmpStorage);
-			tmpStorage = "";
+			else{
+				System.err.println("Invalid -> ArrowButton j: 3 i: 6");}
 
 		}
 		if(buttonArrow_5_6 == e.getSource()){
-			System.out.println("ArrowButton j: 5 i: 6");
 
-			String tmpStorage = "";
-			for(int index = 6; index >= 0; index--){
-				tmpStorage = boardSquares[5][index].getText();
-				boardSquares[5][index].setText(storage);
-				board.setTiles(5, index, board.getNextTile());
-				storage = tmpStorage;
+
+			//ist zug möglich?
+			if(possibleInsertions[6]) {
+				System.out.println("ArrowButton j: 5 i: 6");
+				for (int index = 0; index < possibleInsertions.length; index++) {
+					possibleInsertions[index] = true;
+				}
+				//gegenüber auf false
+				possibleInsertions[2] = false;
+
+				tmpStorageTile = board.getTile(5, 0);
+
+				for (int index = 0; index < 6; index++) {
+					board.setTiles(5, index, board.getTile(5, index + 1));
+					boardSquares[5][index].setText(board.getTile(5, index).getShape());
+				}
+
+				board.setTiles(5, 6, board.getNextTile());
+				boardSquares[5][6].setText(board.getTile(5, 6).getShape());
+
+				board.setNextTile(tmpStorageTile);
+				labelNextStoneSymbol.setText(board.getNextTile().getShape());
 			}
-			board.getNextTile().setShape(tmpStorage);
-			tmpStorage = "";
+			else{
+				System.err.println("Invalid -> ArrowButton j: 5 i: 6");
+			}
+
 
 		}
 		//leftArrowButton
 		if(buttonArrow_0_1 == e.getSource()){
-			System.out.println("ArrowButton j: 0 i: 1");
 
-			String tmpStorage="";
-			for(int index = 0; index < 7; index++){
-				tmpStorage = boardSquares[index][1].getText();
-				boardSquares[index][1].setText(storage);
-				board.setTiles(index, 1, board.getNextTile());
-				storage = tmpStorage;
+
+
+			//ist zug möglich?
+			if(possibleInsertions[11]) {
+				System.out.println("ArrowButton j: 0 i: 1");
+				for (int index = 0; index < possibleInsertions.length; index++) {
+					possibleInsertions[index] = true;
+				}
+				//gegenüber auf false
+				possibleInsertions[3] = false;
+
+
+				tmpStorageTile = board.getTile(6, 1);
+
+				for (int index = 6; index > 0; index--) {
+					board.setTiles(index, 1, board.getTile(index - 1, 1));
+					boardSquares[index][1].setText(board.getTile(index, 1).getShape());
+				}
+
+				board.setTiles(0, 1, board.getNextTile());
+				boardSquares[0][1].setText(board.getTile(0, 1).getShape());
+
+				board.setNextTile(tmpStorageTile);
+				labelNextStoneSymbol.setText(board.getNextTile().getShape());
 			}
-			board.getNextTile().setShape(storage);
+			else{
+				System.err.println("Invalid -> ArrowButton j: 0 i: 1");
+			}
 
 		}
 		if(buttonArrow_0_3 == e.getSource()){
-			System.out.println("ArrowButton j: 0 i: 3");
 
-			String tmpStorage="";
-			for(int index = 0; index < 7; index++){
-				tmpStorage = boardSquares[index][3].getText();
-				boardSquares[index][3].setText(storage);
-				board.setTiles(index, 3, board.getNextTile());
-				storage = tmpStorage;
+
+			//ist zug möglich?
+			if(possibleInsertions[10]) {
+				System.out.println("ArrowButton j: 0 i: 3");
+				for (int index = 0; index < possibleInsertions.length; index++) {
+					possibleInsertions[index] = true;
+				}
+				//gegenüber auf false
+				possibleInsertions[4] = false;
+
+				tmpStorageTile = board.getTile(6, 3);
+
+				for (int index = 6; index > 0; index--) {
+					board.setTiles(index, 3, board.getTile(index - 1, 3));
+					boardSquares[index][3].setText(board.getTile(index, 3).getShape());
+				}
+
+				board.setTiles(0, 3, board.getNextTile());
+				boardSquares[0][3].setText(board.getTile(0, 3).getShape());
+
+				board.setNextTile(tmpStorageTile);
+				labelNextStoneSymbol.setText(board.getNextTile().getShape());
 			}
-			board.getNextTile().setShape(storage);
+			else{
+				System.err.println("Invalid -> ArrowButton j: 0 i: 3");
+			}
 
 		}
 		if(buttonArrow_0_5 == e.getSource()){
-			System.out.println("ArrowButton j: 0 i: 5");
 
-			String tmpStorage="";
-			for(int index = 0; index < 7; index++){
-				tmpStorage = boardSquares[index][5].getText();
-				boardSquares[index][5].setText(storage);
-				board.setTiles(index, 5, board.getNextTile());
-				storage = tmpStorage;
+
+
+			//ist zug möglich?
+			if(possibleInsertions[9]) {
+				System.out.println("ArrowButton j: 0 i: 5");
+				for (int index = 0; index < possibleInsertions.length; index++) {
+					possibleInsertions[index] = true;
+				}
+				//gegenüber auf false
+				possibleInsertions[5] = false;
+
+
+				tmpStorageTile = board.getTile(6, 5);
+
+				for (int index = 6; index > 0; index--) {
+					board.setTiles(index, 5, board.getTile(index - 1, 5));
+					boardSquares[index][5].setText(board.getTile(index, 5).getShape());
+				}
+
+				board.setTiles(0, 5, board.getNextTile());
+				boardSquares[0][5].setText(board.getTile(0, 5).getShape());
+
+				board.setNextTile(tmpStorageTile);
+				labelNextStoneSymbol.setText(board.getNextTile().getShape());
 			}
-			board.getNextTile().setShape(storage);
+			else{
+				System.err.println("Invalid -> ArrowButton j: 0 i: 5");
+			}
+
 
 		}
 		//rightArrowButton
 		if(buttonArrow_6_1 == e.getSource()){
-			System.out.println("ArrowButton j: 6 i: 1");
 
-			String tmpStorage = "";
-			for(int index = 6; index >= 0; index--){
-				tmpStorage = boardSquares[index][1].getText();
-				boardSquares[index][1].setText(storage);
-				board.setTiles(index, 1, board.getNextTile());
-				storage = tmpStorage;
+
+
+			//ist zug möglich?
+			if(possibleInsertions[3]) {
+				System.out.println("ArrowButton j: 6 i: 1");
+				for (int index = 0; index < possibleInsertions.length; index++) {
+					possibleInsertions[index] = true;
+				}
+				//gegenüber auf false
+				possibleInsertions[11] = false;
+
+				tmpStorageTile = board.getTile(0, 1);
+
+				for (int index = 0; index < 6; index++) {
+					board.setTiles(index, 1, board.getTile(index + 1, 1));
+					boardSquares[index][1].setText(board.getTile(index, 1).getShape());
+				}
+
+				board.setTiles(6, 1, board.getNextTile());
+				boardSquares[6][1].setText(board.getTile(6, 1).getShape());
+
+				board.setNextTile(tmpStorageTile);
+				labelNextStoneSymbol.setText(board.getNextTile().getShape());
 			}
-			board.getNextTile().setShape(tmpStorage);
-			tmpStorage = "";
+			else{
+				System.err.println("Invalid -> ArrowButton j: 6 i: 1");
+			}
 
 		}
 		if(buttonArrow_6_3 == e.getSource()){
-			System.out.println("ArrowButton j: 6 i: 3");
 
-			String tmpStorage = "";
-			for(int index = 6; index >= 0; index--){
-				tmpStorage = boardSquares[index][3].getText();
-				boardSquares[index][3].setText(storage);
-				board.setTiles(index, 3, board.getNextTile());
-				storage = tmpStorage;
+
+			//ist zug möglich?
+			if(possibleInsertions[4]) {
+				System.out.println("ArrowButton j: 6 i: 3");
+				for (int index = 0; index < possibleInsertions.length; index++) {
+					possibleInsertions[index] = true;
+				}
+				//gegenüber auf false
+				possibleInsertions[10] = false;
+
+				tmpStorageTile = board.getTile(0, 3);
+
+				for (int index = 0; index < 6; index++) {
+					board.setTiles(index, 3, board.getTile(index + 1, 3));
+					boardSquares[index][3].setText(board.getTile(index, 3).getShape());
+				}
+
+				board.setTiles(6, 3, board.getNextTile());
+				boardSquares[6][3].setText(board.getTile(6, 3).getShape());
+
+				board.setNextTile(tmpStorageTile);
+				labelNextStoneSymbol.setText(board.getNextTile().getShape());
 			}
-			board.getNextTile().setShape(tmpStorage);
-			tmpStorage = "";
+			else{
+				System.err.println("Invalid -> ArrowButton j: 6 i: 3");
+			}
 
 		}
 		if(buttonArrow_6_5 == e.getSource()){
-			System.out.println("ArrowButton j: 6 i: 5");
 
-			String tmpStorage = "";
-			for(int index = 6; index >= 0; index--){
-				tmpStorage = boardSquares[index][5].getText();
-				boardSquares[index][5].setText(storage);
-				board.setTiles(index, 5, board.getNextTile());
-				storage = tmpStorage;
+
+			//ist zug möglich?
+			if(possibleInsertions[5]) {
+				System.out.println("ArrowButton j: 6 i: 5");
+				for (int index = 0; index < possibleInsertions.length; index++) {
+					possibleInsertions[index] = true;
+				}
+				//gegenüber auf false
+				possibleInsertions[9] = false;
+
+				tmpStorageTile = board.getTile(0, 5);
+
+				for (int index = 0; index < 6; index++) {
+					board.setTiles(index, 5, board.getTile(index + 1, 5));
+					boardSquares[index][5].setText(board.getTile(index, 5).getShape());
+				}
+
+				board.setTiles(6, 5, board.getNextTile());
+				boardSquares[6][5].setText(board.getTile(6, 5).getShape());
+
+				board.setNextTile(tmpStorageTile);
+				labelNextStoneSymbol.setText(board.getNextTile().getShape());
 			}
-			board.getNextTile().setShape(tmpStorage);
-			tmpStorage = "";
+			else{
+				System.err.println("Invalid -> ArrowButton j: 6 i: 5");
+			}
+
 
 		}
 
 	}
+
 
 
 	public void setBoard(Board newBoard){
@@ -737,5 +949,6 @@ public class playGround implements ActionListener {
 
 }
 
-//test 17.06.2016
-//h
+
+
+
