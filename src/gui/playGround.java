@@ -572,11 +572,11 @@ public class playGround implements ActionListener {
 		if(buttonArrow_1_0 == e.getSource()){
 			//send to server that move was made
 			protocol.setMadeMove(true);
-			System.out.println("ArrowButton j: 1 i: 0");
 
 
 			//ist zug möglich?
 			if(possibleInsertions[0]) {
+				System.out.println("ArrowButton j: 1 i: 0");
 				//send to server that move was valid
 				protocol.setValidMove(true);
 
