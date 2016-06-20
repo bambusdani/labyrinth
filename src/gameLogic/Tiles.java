@@ -3,6 +3,7 @@ package gameLogic;
 public class Tiles {
 
     /** ATTRIBUTE */
+    private int id;
     private boolean moveable;
     private Position position;
     private String shape;
@@ -10,7 +11,8 @@ public class Tiles {
     private int rotation;
 
     /** KONSTRUKTOR */
-    public Tiles(boolean moveable, Position position, String shape, String symbol, int rotation){
+    public Tiles(int id, boolean moveable, Position position, String shape, String symbol, int rotation){
+        this.id = id;
         this.moveable = moveable;
         this.position = position;
         this.shape = shape;
@@ -24,4 +26,11 @@ public class Tiles {
     public String getShape(){return shape;}          public void setShape(String shape){this.shape = shape;}
     public String getSymbol(){return symbol;}
     public int getRotation(){return rotation;}       public void setRotation(int rotation){this.rotation = rotation;}
+    public int getId(){return this.id;}              public void setID(int id){this.id = id;}
+
+    /** PUSH */
+    public void push(int pRotation, int pX, int pY) {
+        setRotation(pRotation);
+        setPosition(new Position(pX,pY));
+    }
 }

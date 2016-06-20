@@ -157,6 +157,28 @@ public class ConnectionListener extends Thread {
                                 }
                             }
 
+                            //================================================================================
+                            // parameter 'PUSH'
+                            //================================================================================
+                            else if (tmpMessage.substring(0,4).equalsIgnoreCase("push")) {
+                                //--------------------------------------------------------------------------------
+                                // extract tileID, rotation and x y from e.g 'push 1 2 3 5'
+                                // tileID = 6th character
+                                // rotation = 8th character
+                                // x position = 10th character
+                                // y position = 12th character
+                                int tmpTileID = Integer.parseInt(tmpMessage.substring(5,6));
+                                int tmpRotation = Integer.parseInt(tmpMessage.substring(7,8));
+                                int tmpX = Integer.parseInt(tmpMessage.substring(9,10));
+                                int tmpY = Integer.parseInt(tmpMessage.substring(11,12));
+
+                                board.pushTile(tmpTileID, tmpRotation, tmpX, tmpY);
+
+                                jth.println("Player " + playerID + " pushed tile " + tmpTileID +
+                                        " with rotation " + tmpRotation +
+                                        " to " + tmpX + " " + tmpY + ".");
+                            }
+
                             else {
                                 //--------------------------------------------------------------------------------
                                 // if the message doens't make sense at all...
