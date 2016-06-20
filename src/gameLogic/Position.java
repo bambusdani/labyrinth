@@ -1,13 +1,13 @@
 package gameLogic;
 
-public class MyPosition {
+public class Position {
 
     /** ATTRIBUTE */
        private int x;
        private int y;
 
     /** KONSTRUKTOR */
-    public MyPosition(int x, int y){
+    public Position(int x, int y){
         this.x = x;
         this.y = y;
     }
