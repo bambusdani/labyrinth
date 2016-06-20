@@ -20,6 +20,7 @@ public class ConnectionListener extends Thread {
     static private int playerID;
     private boolean mError, mException;
     private String sException;
+    private Protocol protocol;
 
     //--------------------------------------------------------------------------------
     // create a new board so we can get the player information needed
@@ -27,6 +28,7 @@ public class ConnectionListener extends Thread {
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
+        this.protocol = new Protocol();
 
         //================================================================================
         // setup the logger
@@ -78,6 +80,19 @@ public class ConnectionListener extends Thread {
                     mException = false;
                 }
 
+                //================================================================================
+                // if moved, is it valid?
+                //================================================================================
+                if(protocol.isMadeMove()) {
+                    if(protocol.isValidMove()) {
+                        ith.println("movevalid true");
+                        protocol.setMadeMove(false);
+                    } else {
+                        ith.println("movevalid false");
+                        protocol.setMadeMove(false);
+                    }
+                }
+
                 //--------------------------------------------------------------------------------
                 // Begin with server broadcasting to all clients
                 // Begin with reading client messages
@@ -101,7 +116,6 @@ public class ConnectionListener extends Thread {
                         //================================================================================
                         // add to message log
                         LOGGER.info("INCOMING " + message);
-
 
                         //================================================================================
                         // Begin with parameters

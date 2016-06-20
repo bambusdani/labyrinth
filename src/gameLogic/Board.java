@@ -42,7 +42,6 @@ public class Board {
     public Tiles getNextTile(){return nextTile;}                     public void setNextTile(Tiles nextTile){this.nextTile = nextTile;}
     public Player[] getAllPlayers(){return  this.allPlayers;}
 
-
     //=================================================================================
     /** -> SPIELER VERWALTUNG */
 

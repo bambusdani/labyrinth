@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import gameLogic.*;
+import chat.Protocol;
 
 public class playGround implements ActionListener {
 
@@ -63,6 +64,7 @@ public class playGround implements ActionListener {
 	private JTextField textField;
 
 	public Board board ;
+	public Protocol protocol;
 
 
 
@@ -73,6 +75,8 @@ public class playGround implements ActionListener {
 
 
 		this.board = board;
+		this.protocol = new Protocol();
+
 		//================================================================================
 		// panel Player overview
 		//================================================================================
@@ -566,13 +570,12 @@ public class playGround implements ActionListener {
 		// buttonArrow_1_0 means line j:1 i:0 on the field
 		// topArrowButtons
 		if(buttonArrow_1_0 == e.getSource()){
-
-
-
-
 			//ist zug möglich?
 			if(possibleInsertions[0]) {
 				System.out.println("ArrowButton j: 1 i: 0");
+				//send to server that move was valid
+				protocol.setValidMove(true);
+
 				for(int index = 0; index < possibleInsertions.length; index++) {
 					possibleInsertions[index] = true;
 				}
@@ -592,8 +595,11 @@ public class playGround implements ActionListener {
 				board.setNextTile(tmpStorageTile);
 				labelNextStoneSymbol.setText(board.getNextTile().getShape());
 			}
-
-			else{System.err.println("Invalid -> ArrowButton j: 1 i: 0");}
+			else {
+				System.err.print("Invalid -> ArrowButton j: 1 i: 0");
+				//send to server that move was invalid
+				protocol.setValidMove(false);
+			}
 
 		}
 		if(buttonArrow_3_0 == e.getSource()){
