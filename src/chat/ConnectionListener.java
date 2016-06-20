@@ -26,13 +26,12 @@ public class ConnectionListener extends Thread {
         this.connections = connections;
 
         //================================================================================
-        // Create Logger
-        // Log Levels are: SEVERE (highest), WARNING, INFO, CONFIG, FINE, FINER, FINEST
+        // setup the logger
         //================================================================================
         try {
             //================================================================================
             // set log level
-            LOGGER.info("Starting");
+            LOGGER.info("*****STARTING*****");
         } catch (Exception e) {
             //================================================================================
             // catch error
@@ -80,7 +79,7 @@ public class ConnectionListener extends Thread {
                         }
 
                         //================================================================================
-                        // add to log
+                        // add to message log
                         LOGGER.info(message);
 
                         //================================================================================
