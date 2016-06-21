@@ -9,6 +9,7 @@ public class Shape {
 
     private ImageIcon image;
     private String shape;
+    //oben rechts unten links (Im Uhrzeigersinn)
     private boolean[] possiblePaths = new boolean[4]; //top right bottom left???
     private String creature;
 
@@ -29,15 +30,17 @@ public class Shape {
 
 
     /** Rotate Image Function */
+
     public ImageIcon rotateImage(double degrees){
         ImageIcon imageIcon = this.image;
+
         //to Buffered Image
         BufferedImage buImg = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         buImg.getGraphics().drawImage(imageIcon.getImage(), 0,0, imageIcon.getImageObserver());
 
         //drehen
         AffineTransform affineTransform = AffineTransform.getRotateInstance(
-                Math.toRadians(degrees),
+                Math.toRadians(90),
                 buImg.getWidth() / 2,
                 buImg.getHeight() / 2);
         BufferedImage rotatedImage = new BufferedImage(buImg.getWidth(), buImg
@@ -48,6 +51,16 @@ public class Shape {
 
         //to ImageIcon
         ImageIcon imageI = new ImageIcon(rotatedImage);
+
+        boolean oben = this.possiblePaths[0];
+        boolean rechts = this.possiblePaths[1];
+        boolean unten = this.possiblePaths[2];
+        boolean links = this.possiblePaths[3];
+
+        possiblePaths[0] = links;
+        possiblePaths[1] = oben;
+        possiblePaths[2] = rechts;
+        possiblePaths[3] = unten;
 
         return imageI;
     }
