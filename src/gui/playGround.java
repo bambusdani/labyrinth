@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import gameLogic.*;
 import chat.Protocol;
+import gameLogic.Shape;
 
 public class playGround implements ActionListener {
 
@@ -28,6 +29,7 @@ public class playGround implements ActionListener {
 
 	public Tiles tmpStorageTile;
 	public JLabel labelNextStoneSymbol;
+	public int rotationAngle = 0 ;
 
 	//Im Uhrzeigersinn den Buttons(einschub/pfeilbuttons) zugewiesen
 	public boolean[] possibleInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
@@ -544,11 +546,16 @@ public class playGround implements ActionListener {
 		}
 		if(buttonRotate == e.getSource()){
 
+			rotationAngle += 90;
 
 			int newRotation = board.getNextTile().getRotation()+90;
 			board.getNextTile().setRotation(newRotation);
 
-			System.out.println("Rotation betr�gt: " + newRotation);
+			System.out.println("Rotation beträgt: " + newRotation);
+
+			labelNextStoneSymbol.setIcon(board.getNextTile().getShape().rotateImage(rotationAngle));
+
+
 
 		}
 

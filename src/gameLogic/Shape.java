@@ -29,7 +29,8 @@ public class Shape {
 
 
     /** Rotate Image Function */
-    public static ImageIcon rotateImage(ImageIcon imageIcon, double degrees){
+    public ImageIcon rotateImage(double degrees){
+        ImageIcon imageIcon = this.image;
         //to Buffered Image
         BufferedImage buImg = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         buImg.getGraphics().drawImage(imageIcon.getImage(), 0,0, imageIcon.getImageObserver());
