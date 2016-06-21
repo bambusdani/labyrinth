@@ -24,16 +24,17 @@ public class playGround implements ActionListener {
 	private JFrame frame;
 
 	//Nächstes Teil das eingefügt wird
-
-
 	public Tiles tmpStorageTile;
 	public JLabel labelNextStoneSymbol;
 
 	//Im Uhrzeigersinn den Buttons(einschub/pfeilbuttons) zugewiesen
 	public boolean[] possibleInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
 
-
-
+	// Images for the Arrrow buttons
+	private ImageIcon imageArrowDown = new ImageIcon("src/resources/arrows/downArrow.png");
+	private ImageIcon imageArrowLeft = new ImageIcon("src/resources/arrows/leftArrow.png");
+	private ImageIcon imageArrowUp	 = new ImageIcon("src/resources/arrows/upArrow.png");
+	private ImageIcon imageArrowRight= new ImageIcon("src/resources/arrows/rightArrow.png");
 
 	//Buttons for the arrows to place the next stone
 	//top
@@ -66,11 +67,16 @@ public class playGround implements ActionListener {
 	public playGround(Board board) {
 
 
-
-
-
 		this.board = board;
 		this.protocol = new Protocol();
+
+		//--------------------------------------------------------------------------------------------------
+		//set size of images
+		imageArrowDown.setImage(imageArrowDown.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
+		imageArrowLeft.setImage(imageArrowLeft.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
+		imageArrowUp.setImage(imageArrowUp.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
+		imageArrowRight.setImage(imageArrowRight.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
+
 
 		//================================================================================
 		// panel Player overview
@@ -212,10 +218,6 @@ public class playGround implements ActionListener {
 
 		this.labelNextStoneSymbol = setLabel("",fontSize, stoneSize, stoneSize, colorBlack );
 		this.labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-
-
-
-
 		this.labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
 		panelInformation.add(this.labelNextStoneSymbol, constraintsInformation);
 
@@ -285,43 +287,49 @@ public class playGround implements ActionListener {
 		// #1 top
 		constraintsGameField.gridx = 2;
 		constraintsGameField.gridy = 0;
-		this.buttonArrow_1_0 = setButtons("->", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_1_0 = setButtons("", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_1_0.setIcon(imageArrowDown);
 		//adding ActionListener
 		this.buttonArrow_1_0.addActionListener(this);
 		panelGameField.add(this.buttonArrow_1_0, constraintsGameField);
 		// #2 top
 		constraintsGameField.gridx = 4;
 		constraintsGameField.gridy = 0;
-		this.buttonArrow_3_0 = setButtons("->", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_3_0 = setButtons("", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_3_0.setIcon(imageArrowDown);
 		//adding ActionListener
 		this.buttonArrow_3_0.addActionListener(this);
 		panelGameField.add(this.buttonArrow_3_0, constraintsGameField);
 		// #3 top
 		constraintsGameField.gridx = 6;
 		constraintsGameField.gridy = 0;
-		this.buttonArrow_5_0 = setButtons("->", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_5_0 = setButtons("", fontSize, stoneSize, stoneSize);
 		//adding ActionListener
 		this.buttonArrow_5_0.addActionListener(this);
+		this.buttonArrow_5_0.setIcon(imageArrowDown);
 		panelGameField.add(this.buttonArrow_5_0, constraintsGameField);
 		//-----------------------------
 		// #1 bottom
 		constraintsGameField.gridx = 2;
 		constraintsGameField.gridy = 8;
-		this.buttonArrow_1_6 = setButtons("->", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_1_6 = setButtons("", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_1_6.setIcon(imageArrowUp);
 		//adding ActionListener
 		this.buttonArrow_1_6.addActionListener(this);
 		panelGameField.add(this.buttonArrow_1_6, constraintsGameField);
 		// #2 bottom
 		constraintsGameField.gridx = 4;
 		constraintsGameField.gridy = 8;
-		this.buttonArrow_3_6 = setButtons("->", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_3_6 = setButtons("", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_3_6.setIcon(imageArrowUp);
 		//adding ActionListener
 		this.buttonArrow_3_6.addActionListener(this);
 		panelGameField.add(this.buttonArrow_3_6, constraintsGameField);
 		// #3 bottom
 		constraintsGameField.gridx = 6;
 		constraintsGameField.gridy = 8;
-		this.buttonArrow_5_6 = setButtons("->", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_5_6 = setButtons("", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_5_6.setIcon(imageArrowUp);
 		//adding ActionListener
 		this.buttonArrow_5_6.addActionListener(this);
 		panelGameField.add(this.buttonArrow_5_6, constraintsGameField);
@@ -329,21 +337,24 @@ public class playGround implements ActionListener {
 		// #1 left
 		constraintsGameField.gridx = 0;
 		constraintsGameField.gridy = 2;
-		this.buttonArrow_0_1 = setButtons("->", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_0_1 = setButtons("", fontSize, stoneSize, stoneSize);
 		//adding ActionListener
 		this.buttonArrow_0_1.addActionListener(this);
+		this.buttonArrow_0_1.setIcon(imageArrowRight);
 		panelGameField.add(this.buttonArrow_0_1, constraintsGameField);
 		// #2 left
 		constraintsGameField.gridx = 0;
 		constraintsGameField.gridy = 4;
-		this.buttonArrow_0_3 = setButtons("->", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_0_3 = setButtons("", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_0_3.setIcon(imageArrowRight);
 		//adding ActionListener
 		this.buttonArrow_0_3.addActionListener(this);
 		panelGameField.add(this.buttonArrow_0_3, constraintsGameField);
 		// #3 left
 		constraintsGameField.gridx = 0;
 		constraintsGameField.gridy = 6;
-		this.buttonArrow_0_5 = setButtons("->", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_0_5 = setButtons("", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_0_5.setIcon(imageArrowRight);
 		//adding ActionListener
 		this.buttonArrow_0_5.addActionListener(this);
 		panelGameField.add(this.buttonArrow_0_5, constraintsGameField);
@@ -351,21 +362,24 @@ public class playGround implements ActionListener {
 		// #1 right
 		constraintsGameField.gridx = 8;
 		constraintsGameField.gridy = 2;
-		this.buttonArrow_6_1 = setButtons("->", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_6_1 = setButtons("", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_6_1.setIcon(imageArrowLeft);
 		//adding ActionListener
 		this.buttonArrow_6_1.addActionListener(this);
 		panelGameField.add(this.buttonArrow_6_1, constraintsGameField);
 		// #2 right
 		constraintsGameField.gridx = 8;
 		constraintsGameField.gridy = 4;
-		this.buttonArrow_6_3 = setButtons("->", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_6_3 = setButtons("", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_6_3.setIcon(imageArrowLeft);
 		//adding ActionListener
 		this.buttonArrow_6_3.addActionListener(this);
 		panelGameField.add(this.buttonArrow_6_3, constraintsGameField);
 		// #3 right
 		constraintsGameField.gridx = 8;
 		constraintsGameField.gridy = 6;
-		this.buttonArrow_6_5 = setButtons("->", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_6_5 = setButtons("", fontSize, stoneSize, stoneSize);
+		this.buttonArrow_6_5.setIcon(imageArrowLeft);
 		//adding ActionListener
 		this.buttonArrow_6_5.addActionListener(this);
 		panelGameField.add(this.buttonArrow_6_5, constraintsGameField);
