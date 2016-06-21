@@ -11,6 +11,7 @@ public class Board {
 
     //=============================================================
     //Save Images in Variables
+    // Tiles
     //"I"
     private ImageIcon tile1Image   = new ImageIcon("src/resources/tiles/tile1.jpg");
     //"L"
@@ -47,7 +48,10 @@ public class Board {
     private ImageIcon tile29Image  = new ImageIcon("src/resources/tiles/tile29.jpg");
     private ImageIcon tile30Image  = new ImageIcon("src/resources/tiles/tile30.jpg");
 
-
+    // Creatures
+    private ImageIcon creatureImage1 = new ImageIcon("src/resources/creatures/creature1.jpg");
+    private ImageIcon creatureImage2 = new ImageIcon("src/resources/creatures/creature2.jpg");
+    //should be all!!!!!!!!!!!!!!!!
 
 
     //==============================================================
@@ -58,7 +62,7 @@ public class Board {
 
 
     private boolean[] possibleWays={true,false,true,false}; // muss direckt in die initialisierung muss zwischen "I" "L" "T" unterschieden werden
-    private Tiles nextTile = new Tiles(0 ,true, null, new Shape(tile2Image, "I", null , "mouse" ), 0);
+    private Tiles nextTile = new Tiles(0 ,true, null, new Shape(tile2Image, "I", null , "" ), 0);
 
     //=============================================================
 
@@ -101,7 +105,9 @@ public class Board {
         tile29Image.setImage(tile29Image.getImage().getScaledInstance(70,70,Image.SCALE_DEFAULT));
         tile30Image.setImage(tile30Image.getImage().getScaledInstance(70,70,Image.SCALE_DEFAULT));
 
-
+        //creatures
+        creatureImage1.setImage(creatureImage1.getImage().getScaledInstance(70,70,Image.SCALE_DEFAULT));
+        creatureImage2.setImage(creatureImage2.getImage().getScaledInstance(70,70,Image.SCALE_DEFAULT));
 
 
 
@@ -117,11 +123,25 @@ public class Board {
 
         String[] creaturesNeeded = {"creature1", "creature2"};
 
-                                  //startPosition   , actualPosition   , ID, Color               ,turn,score, name, cardsymbolNeeded
-        allPlayers[0] = new Player(new Position(0,0), new Position(1,1), 1 , new Color(255, 0 ,0), true, 5, "Rehan", creaturesNeeded);
-        allPlayers[1] = new Player(new Position(0,6), new Position(2,5), 2 , new Color(0, 255 ,0), false, 6, "Marvin", creaturesNeeded);
-        allPlayers[2] = new Player(new Position(6,0), new Position(6,3), 3 , new Color(0, 255 ,255), false, 6, "Daniel", creaturesNeeded);
-        allPlayers[3] = new Player(new Position(6,6), new Position(2,5), 4 , new Color(255, 255 ,0), false, 6, null , creaturesNeeded);
+        //Liste mit allen Creaturen zu finden
+        // vl liste besser geeignet als array
+        // alle einzeln erstellen in einer liste mischen und dann auf spieler aufteilen
+        GoalCard mouse = new GoalCard("mouse", creatureImage1);
+        GoalCard crown = new GoalCard("crown", creatureImage2);
+        GoalCard[] allCreaturesNeeded = { mouse, crown };
+        // vl eine liste und nur immer eine bestimmte anzahl raus nehmen
+        GoalCard[] creaturesNeededPlayer1 = {mouse};
+        GoalCard[] creaturesNeededPlayer2 = {crown};
+        GoalCard[] creaturesNeededPlayer3 = {null};
+        GoalCard[] creaturesNeededPlayer4 = {null};
+
+
+
+                                  //startPosition   , actualPosition   , ID, Color                      ,turn,score, name, cardsymbolNeeded
+        allPlayers[0] = new Player(new Position(0,0), new Position(1,1), 1 , new Color(255, 0 ,0),      true,   5, "Rehan",    creaturesNeededPlayer1);
+        allPlayers[1] = new Player(new Position(0,6), new Position(2,5), 2 , new Color(0, 255 ,0),      false,  6, "Marvin",   creaturesNeededPlayer2);
+        allPlayers[2] = new Player(new Position(6,0), new Position(6,3), 3 , new Color(0, 255 ,255),    false,  6, "Daniel",   creaturesNeededPlayer3);
+        allPlayers[3] = new Player(new Position(6,6), new Position(2,5), 4 , new Color(255, 255 ,0),    false,  6, null ,      creaturesNeededPlayer4);
     }
     //===========================
 

@@ -37,6 +37,7 @@ public class playGround implements ActionListener {
 	private ImageIcon imageArrowLeft = new ImageIcon("src/resources/arrows/leftArrow.png");
 	private ImageIcon imageArrowUp	 = new ImageIcon("src/resources/arrows/upArrow.png");
 	private ImageIcon imageArrowRight= new ImageIcon("src/resources/arrows/rightArrow.png");
+	private ImageIcon imageRotate	 = new ImageIcon("src/resources/arrows/rotateArrow.png");
 
 	//Buttons for the arrows to place the next stone
 	//top
@@ -78,6 +79,7 @@ public class playGround implements ActionListener {
 		imageArrowLeft.setImage(imageArrowLeft.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
 		imageArrowUp.setImage(imageArrowUp.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
 		imageArrowRight.setImage(imageArrowRight.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
+		imageRotate.setImage(imageRotate.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
 
 
 		//================================================================================
@@ -183,7 +185,9 @@ public class playGround implements ActionListener {
 		constraintsInformation.gridx = 0;
 		constraintsInformation.gridy = 1;
 		// instead of Dragon it should use an image
-		JLabel labelReachedGoalsSymbol = setLabel("Dragon",fontSize, stoneSize, stoneSize, colorBlack );
+		JLabel labelReachedGoalsSymbol = setLabel("",fontSize, stoneSize, stoneSize, colorBlack );
+	//gibt nur das ziel des Players 0 aus sowie das erste ziel gibt ebenfalls falschen wert aus!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		labelReachedGoalsSymbol.setIcon(board.getAllPlayers()[1].getCreaturesNeeded()[0].getSymbolImage());
 		labelReachedGoalsSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
 		panelInformation.add(labelReachedGoalsSymbol, constraintsInformation);
 
@@ -200,6 +204,8 @@ public class playGround implements ActionListener {
 		constraintsInformation.gridy = 3;
 		// instead of Dragon it should use an image
 		JLabel labelNextGoalSymbol = setLabel("Dragon",fontSize, stoneSize, stoneSize, colorBlack );
+		//muss spielerabhängig gemacht werden!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		labelNextGoalSymbol.setIcon(board.getAllPlayers()[0].getCreaturesNeeded()[0].getSymbolImage());
 		labelNextGoalSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
 		panelInformation.add(labelNextGoalSymbol, constraintsInformation);
 
@@ -229,7 +235,8 @@ public class playGround implements ActionListener {
 		constraintsInformation.insets = new Insets(20, 0, 0, 0);
 		constraintsInformation.gridx = 0;
 		constraintsInformation.gridy = 6;
-		this.buttonRotate = setButtons("Rotate", fontSize, stoneSize, stoneSize);
+		this.buttonRotate = setButtons("", fontSize, stoneSize, stoneSize);
+		this.buttonRotate.setIcon(imageRotate);
 		//add ActionListener
 		this.buttonRotate.addActionListener(this);
 		panelInformation.add(this.buttonRotate, constraintsInformation);
