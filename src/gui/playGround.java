@@ -1,11 +1,6 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -215,7 +210,11 @@ public class playGround implements ActionListener {
 
 
 
-		this.labelNextStoneSymbol = setLabel(board.getNextTile().getShape(),fontSize, stoneSize, stoneSize, colorBlack );
+		this.labelNextStoneSymbol = setLabel("",fontSize, stoneSize, stoneSize, colorBlack );
+		this.labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
+
+
+
 
 		this.labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
 		panelInformation.add(this.labelNextStoneSymbol, constraintsInformation);
@@ -382,15 +381,18 @@ public class playGround implements ActionListener {
 				constraintsGameField.gridx = j+1;
 				constraintsGameField.gridy = i+1;
 
-				JButton buttonStone = setButtons(board.getTile(j, i).getShape(), fontSize, stoneSize, stoneSize);
+				JButton buttonStone = setButtons("", fontSize, stoneSize, stoneSize);
+				buttonStone.setIcon(board.getTile(j,i).getShape().getImage());//drawing pic on it
 				//------------------------
 				// is placing the symbols on the tiles
-				if(board.getTile(j, i).getSymbol() == null){
+
+				//wird nicht mehr benötigt
+				/*if(board.getTile(j, i).getSymbol() == null){
 					buttonStone.setText(board.getTile(j, i).getShape());
 				}
 				else{
 					buttonStone.setText(board.getTile(j, i).getShape() + " " + board.getTile(j, i).getSymbol());
-				}
+				}*/
 				//-------------------------
 				// checking if the players are on the the spot if yes draw a colored border
 				if((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)){
@@ -590,14 +592,15 @@ public class playGround implements ActionListener {
 
 				for (int index = 6; index > 0; index--) {
 					board.setTiles(1, index, board.getTile(1, index - 1));
-					boardSquares[1][index].setText(board.getTile(1, index).getShape());
+					//boardSquares[1][index].setText(board.getTile(1, index).getShape());
+					boardSquares[1][index].setIcon(board.getTile(1, index).getShape().getImage());
 				}
 
 				board.setTiles(1, 0, board.getNextTile());
-				boardSquares[1][0].setText(board.getTile(1, 0).getShape());
+				boardSquares[1][0].setIcon(board.getTile(1, 0).getShape().getImage());
 
 				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setText(board.getNextTile().getShape());
+				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 			}
 			else {
 				System.err.print("Invalid -> ArrowButton j: 1 i: 0");
@@ -622,14 +625,14 @@ public class playGround implements ActionListener {
 
 				for (int index = 6; index > 0; index--) {
 					board.setTiles(3, index, board.getTile(3, index - 1));
-					boardSquares[3][index].setText(board.getTile(3, index).getShape());
+					boardSquares[3][index].setIcon(board.getTile(3, index).getShape().getImage());
 				}
 
 				board.setTiles(3, 0, board.getNextTile());
-				boardSquares[3][0].setText(board.getTile(3, 0).getShape());
+				boardSquares[3][0].setIcon(board.getTile(3, 0).getShape().getImage());
 
 				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setText(board.getNextTile().getShape());
+				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 			}
 			else{System.err.print("Invalid -> ArrowButton j: 3 i: 0");}
 
@@ -651,14 +654,14 @@ public class playGround implements ActionListener {
 
 				for (int index = 6; index > 0; index--) {
 					board.setTiles(5, index, board.getTile(5, index - 1));
-					boardSquares[5][index].setText(board.getTile(5, index).getShape());
+					boardSquares[5][index].setIcon(board.getTile(5, index).getShape().getImage());
 				}
 
 				board.setTiles(5, 0, board.getNextTile());
-				boardSquares[5][0].setText(board.getTile(5, 0).getShape());
+				boardSquares[5][0].setIcon(board.getTile(5, 0).getShape().getImage());
 
 				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setText(board.getNextTile().getShape());
+				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 			}
 			else{
 				System.err.println("Invalid -> ArrowButton j: 5 i: 0");}
@@ -680,14 +683,14 @@ public class playGround implements ActionListener {
 
 				for (int index = 0; index < 6; index++) {
 					board.setTiles(1, index, board.getTile(1, index + 1));
-					boardSquares[1][index].setText(board.getTile(1, index).getShape());
+					boardSquares[1][index].setIcon(board.getTile(1, index).getShape().getImage());
 				}
 
 				board.setTiles(1, 6, board.getNextTile());
-				boardSquares[1][6].setText(board.getTile(1, 6).getShape());
+				boardSquares[1][6].setIcon(board.getTile(1, 6).getShape().getImage());
 
 				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setText(board.getNextTile().getShape());
+				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 			}
 			else{
 				System.err.println("Invalid -> ArrowButton j: 1 i: 6");}
@@ -709,14 +712,14 @@ public class playGround implements ActionListener {
 
 				for (int index = 0; index < 6; index++) {
 					board.setTiles(3, index, board.getTile(3, index + 1));
-					boardSquares[3][index].setText(board.getTile(3, index).getShape());
+					boardSquares[3][index].setIcon(board.getTile(3, index).getShape().getImage());
 				}
 
 				board.setTiles(3, 6, board.getNextTile());
-				boardSquares[3][6].setText(board.getTile(3, 6).getShape());
+				boardSquares[3][6].setIcon(board.getTile(3, 6).getShape().getImage());
 
 				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setText(board.getNextTile().getShape());
+				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 			}
 			else{
 				System.err.println("Invalid -> ArrowButton j: 3 i: 6");}
@@ -738,14 +741,14 @@ public class playGround implements ActionListener {
 
 				for (int index = 0; index < 6; index++) {
 					board.setTiles(5, index, board.getTile(5, index + 1));
-					boardSquares[5][index].setText(board.getTile(5, index).getShape());
+					boardSquares[5][index].setIcon(board.getTile(5, index).getShape().getImage());
 				}
 
 				board.setTiles(5, 6, board.getNextTile());
-				boardSquares[5][6].setText(board.getTile(5, 6).getShape());
+				boardSquares[5][6].setIcon(board.getTile(5, 6).getShape().getImage());
 
 				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setText(board.getNextTile().getShape());
+				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 			}
 			else{
 				System.err.println("Invalid -> ArrowButton j: 5 i: 6");
@@ -774,14 +777,14 @@ public class playGround implements ActionListener {
 
 				for (int index = 6; index > 0; index--) {
 					board.setTiles(index, 1, board.getTile(index - 1, 1));
-					boardSquares[index][1].setText(board.getTile(index, 1).getShape());
+					boardSquares[index][1].setIcon(board.getTile(index, 1).getShape().getImage());
 				}
 
 				board.setTiles(0, 1, board.getNextTile());
-				boardSquares[0][1].setText(board.getTile(0, 1).getShape());
+				boardSquares[0][1].setIcon(board.getTile(0, 1).getShape().getImage());
 
 				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setText(board.getNextTile().getShape());
+				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 			}
 			else{
 				System.err.println("Invalid -> ArrowButton j: 0 i: 1");
@@ -804,14 +807,14 @@ public class playGround implements ActionListener {
 
 				for (int index = 6; index > 0; index--) {
 					board.setTiles(index, 3, board.getTile(index - 1, 3));
-					boardSquares[index][3].setText(board.getTile(index, 3).getShape());
+					boardSquares[index][3].setIcon(board.getTile(index, 3).getShape().getImage());
 				}
 
 				board.setTiles(0, 3, board.getNextTile());
-				boardSquares[0][3].setText(board.getTile(0, 3).getShape());
+				boardSquares[0][3].setIcon(board.getTile(0, 3).getShape().getImage());
 
 				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setText(board.getNextTile().getShape());
+				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 			}
 			else{
 				System.err.println("Invalid -> ArrowButton j: 0 i: 3");
@@ -837,14 +840,14 @@ public class playGround implements ActionListener {
 
 				for (int index = 6; index > 0; index--) {
 					board.setTiles(index, 5, board.getTile(index - 1, 5));
-					boardSquares[index][5].setText(board.getTile(index, 5).getShape());
+					boardSquares[index][5].setIcon(board.getTile(index, 5).getShape().getImage());
 				}
 
 				board.setTiles(0, 5, board.getNextTile());
-				boardSquares[0][5].setText(board.getTile(0, 5).getShape());
+				boardSquares[0][5].setIcon(board.getTile(0, 5).getShape().getImage());
 
 				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setText(board.getNextTile().getShape());
+				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 			}
 			else{
 				System.err.println("Invalid -> ArrowButton j: 0 i: 5");
@@ -873,14 +876,14 @@ public class playGround implements ActionListener {
 
 				for (int index = 0; index < 6; index++) {
 					board.setTiles(index, 1, board.getTile(index + 1, 1));
-					boardSquares[index][1].setText(board.getTile(index, 1).getShape());
+					boardSquares[index][1].setIcon(board.getTile(index, 1).getShape().getImage());
 				}
 
 				board.setTiles(6, 1, board.getNextTile());
-				boardSquares[6][1].setText(board.getTile(6, 1).getShape());
+				boardSquares[6][1].setIcon(board.getTile(6, 1).getShape().getImage());
 
 				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setText(board.getNextTile().getShape());
+				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 			}
 			else{
 				System.err.println("Invalid -> ArrowButton j: 6 i: 1");
@@ -903,14 +906,14 @@ public class playGround implements ActionListener {
 
 				for (int index = 0; index < 6; index++) {
 					board.setTiles(index, 3, board.getTile(index + 1, 3));
-					boardSquares[index][3].setText(board.getTile(index, 3).getShape());
+					boardSquares[index][3].setIcon(board.getTile(index, 3).getShape().getImage());
 				}
 
 				board.setTiles(6, 3, board.getNextTile());
-				boardSquares[6][3].setText(board.getTile(6, 3).getShape());
+				boardSquares[6][3].setIcon(board.getTile(6, 3).getShape().getImage());
 
 				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setText(board.getNextTile().getShape());
+				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 			}
 			else{
 				System.err.println("Invalid -> ArrowButton j: 6 i: 3");
@@ -933,14 +936,14 @@ public class playGround implements ActionListener {
 
 				for (int index = 0; index < 6; index++) {
 					board.setTiles(index, 5, board.getTile(index + 1, 5));
-					boardSquares[index][5].setText(board.getTile(index, 5).getShape());
+					boardSquares[index][5].setIcon(board.getTile(index, 5).getShape().getImage());
 				}
 
 				board.setTiles(6, 5, board.getNextTile());
-				boardSquares[6][5].setText(board.getTile(6, 5).getShape());
+				boardSquares[6][5].setIcon(board.getTile(6, 5).getShape().getImage());
 
 				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setText(board.getNextTile().getShape());
+				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 			}
 			else{
 				System.err.println("Invalid -> ArrowButton j: 6 i: 5");
