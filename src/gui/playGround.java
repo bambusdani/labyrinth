@@ -549,12 +549,11 @@ public class playGround implements ActionListener {
 			rotationAngle += 90;
 
 			int newRotation = board.getNextTile().getRotation()+90;
-			board.getNextTile().setRotation(newRotation);
 
 			System.out.println("Rotation beträgt: " + newRotation);
 
 			labelNextStoneSymbol.setIcon(board.getNextTile().getShape().rotateImage(rotationAngle));
-
+			board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(rotationAngle));
 
 
 		}
