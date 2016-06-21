@@ -1,15 +1,20 @@
 package Test;
 
-import java.awt.Graphics2D;
-import java.awt.event.*;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.net.URL;
-import javax.swing.*;
-
+import java.io.File;
 
 public class test{
-    public static void main(String[] args) {
-        
+
+    public static void main(String[] args) throws Exception {
+
+
     }
+
+
+
 }
