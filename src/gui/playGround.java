@@ -3,11 +3,16 @@ package gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 import javax.swing.*;
+
+import chat.*;
 import gameLogic.*;
-import chat.Protocol;
 import gameLogic.Shape;
+
+import java.net.Socket;
 
 public class playGround implements ActionListener {
 
@@ -65,13 +70,28 @@ public class playGround implements ActionListener {
 	public Board board ;
 	public Protocol protocol;
 
+	// socket for connection to chat server
+	private Socket socket;
 
+	// for writing to and reading from the server
+	private Out out;
+	private In in;
+	private String screenName;
 
-	public playGround(Board board) {
+	public playGround(Board board, String hostName, String screenName) {
 
 
 		this.board = board;
 		this.protocol = new Protocol();
+
+		// connect to server
+		try {
+			socket = new Socket(hostName, 4444);
+			out    = new Out(socket);
+			in     = new In(socket);
+		}
+		catch (Exception ex) { ex.printStackTrace(); }
+		this.screenName = screenName;
 
 		//--------------------------------------------------------------------------------------------------
 		//set size of images
@@ -274,6 +294,7 @@ public class playGround implements ActionListener {
 		constraintsChat.gridx = 0;
 		constraintsChat.gridy = 1;
 		textField = setTextField(300 , 32);
+		textField.addActionListener(this);
 		panelChat.add(textField, constraintsChat);
 
 		//===================================================================================
@@ -556,6 +577,9 @@ public class playGround implements ActionListener {
 	//actionListener
 	//=================================================================================
 	public void actionPerformed(ActionEvent e) {
+		out.println("[" + screenName + "]: " + textField.getText());
+		textField.setText("");
+		textField.requestFocusInWindow();
 
 		if(buttonEndGame == e.getSource()){
 			frame.dispose();
@@ -600,8 +624,7 @@ public class playGround implements ActionListener {
 		// topArrowButtons
 		if(buttonArrow_1_0 == e.getSource()){
 			//send to server that move was made
-			protocol.setMadeMove(true);
-
+			board.getPlayer(0).setMessage("playground true");
 
 			//ist zug möglich?
 			if(possibleInsertions[0]) {
@@ -631,8 +654,6 @@ public class playGround implements ActionListener {
 			}
 			else {
 				System.err.print("Invalid -> ArrowButton j: 1 i: 0");
-				//send to server that move was invalid
-				protocol.setValidMove(false);
 			}
 
 		}
@@ -993,6 +1014,21 @@ public class playGround implements ActionListener {
 		return this.textField;
 	}
 
+	//================================================================================
+	// listen to socket and print everything that server broadcasts
+	//================================================================================
+	public void listen() {
+		String s;
+		while ((s = in.readLine()) != null) {
+			textArea.insert(s + "\n", textArea.getText().length());
+			textArea.setCaretPosition(textArea.getText().length());
+		}
+		out.close();
+		in.close();
+		try                 { socket.close();      }
+		catch (Exception e) { e.printStackTrace(); }
+		System.err.println("Closed client socket");
+	}
 }
 
 

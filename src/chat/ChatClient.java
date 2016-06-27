@@ -66,7 +66,7 @@ public class ChatClient extends JFrame implements ActionListener {
         );
 
         // gui action listener
-        typedText.addActionListener(this);
+        //typedText.addActionListener(this);
     }
 
     //================================================================================

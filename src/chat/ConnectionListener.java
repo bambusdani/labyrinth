@@ -80,17 +80,10 @@ public class ConnectionListener extends Thread {
                     mException = false;
                 }
 
-                //================================================================================
-                // if moved, is it valid?
-                //================================================================================
-                if(protocol.isMadeMove()) {
-                    if(protocol.isValidMove()) {
-                        ith.println("movevalid true");
-                        protocol.setMadeMove(false);
-                    } else {
-                        ith.println("movevalid false");
-                        protocol.setMadeMove(false);
-                    }
+
+                //TEST
+                if(board.getPlayer(0).getMessage() != null) {
+                    ith.println(board.getPlayer(0).getMessage());
                 }
 
                 //--------------------------------------------------------------------------------
@@ -98,6 +91,7 @@ public class ConnectionListener extends Thread {
                 // Begin with reading client messages
                 if (message != null)
                     for (Connection jth : connections) {
+
                         //================================================================================
                         // split the message into username + message
                         // TODO get individual player id from tmpUsername
@@ -232,5 +226,4 @@ public class ConnectionListener extends Thread {
             catch (Exception e) { e.printStackTrace(); }
         }
     }
-
 }

@@ -14,15 +14,16 @@ public class mainGame {
 		
 		Board board = new Board();
 
-		playGround boardview = new playGround(board);
+		playGround boardview = new playGround(board, "localhost", "Rehan");
+		boardview.listen();
 
 
 
 
 
-		ChatClient client = new ChatClient("Rehan", "localhost", boardview.getTextArea(), boardview.getTextField());
+		//ChatClient client = new ChatClient("Rehan", "localhost", boardview.getTextArea(), boardview.getTextField());
 
-		client.listen();
+		//client.listen();
 
 
 

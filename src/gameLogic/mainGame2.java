@@ -14,10 +14,10 @@ public class mainGame2 {
 		
 		Board board2 = new Board();
 
-		playGround boardview2 = new playGround(board2);
+		//playGround boardview2 = new playGround(board2);
 
-		ChatClient client2 = new ChatClient("Marvin", "localhost", boardview2.getTextArea(), boardview2.getTextField());
-		client2.listen();
+		//ChatClient client2 = new ChatClient("Marvin", "localhost", boardview2.getTextArea(), boardview2.getTextField());
+		//client2.listen();
 	}
 
 }

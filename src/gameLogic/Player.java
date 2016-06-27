@@ -13,6 +13,7 @@ public class Player {
     private boolean turn;
     private int score;
     private String nameOfPlayer;
+    private String message;
 
     /** KONSTRUKTOR */
     public Player(Position startPosition, Position actualPosition, int playerID, Color color, boolean turn, int score, String nameOfPlayer, GoalCard[] cardSymbolNeeded) {
@@ -35,6 +36,6 @@ public class Player {
     public boolean getTurn(){return turn;}                          public void setTurn(boolean turn){this.turn = turn;}
     public int getScore(){return score;}                            public void setScore(int score){this.score = score;}
     public String getNameOfPlayer(){return nameOfPlayer;}
-
+    public String getMessage() {return this.message;}               public void setMessage(String message) {this.message = message;}
 
 }
