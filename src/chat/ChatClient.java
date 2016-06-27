@@ -81,7 +81,7 @@ public class ChatClient extends JFrame implements ActionListener {
     //================================================================================
     // listen to socket and print everything that server broadcasts
     //================================================================================
-    public void listen() {
+    /*public void listen() {
         String s;
         while ((s = in.readLine()) != null) {
             enteredText.insert(s + "\n", enteredText.getText().length());
@@ -92,7 +92,7 @@ public class ChatClient extends JFrame implements ActionListener {
         try                 { socket.close();      }
         catch (Exception e) { e.printStackTrace(); }
         System.err.println("Closed client socket");
-    }
+    }*/
 
     //================================================================================
     // get screenName

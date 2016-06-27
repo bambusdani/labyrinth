@@ -91,7 +91,7 @@ public class playGround implements ActionListener {
 			in     = new In(socket);
 		}
 		catch (Exception ex) { ex.printStackTrace(); }
-		this.screenName = screenName;
+		this.screenName = "[" + screenName + "]: ";
 
 		//--------------------------------------------------------------------------------------------------
 		//set size of images
@@ -577,9 +577,17 @@ public class playGround implements ActionListener {
 	//actionListener
 	//=================================================================================
 	public void actionPerformed(ActionEvent e) {
-		out.println("[" + screenName + "]: " + textField.getText());
-		textField.setText("");
-		textField.requestFocusInWindow();
+		//chat text field
+		if(textField == e.getSource()) {
+			if(textField.getText().equalsIgnoreCase("LEAVE")) {
+				out.println(screenName + "LEAVE");
+				System.exit(0);
+			} else {
+				out.println(screenName + "CHAT " + textField.getText());
+				textField.setText("");
+				textField.requestFocusInWindow();
+			}
+		}
 
 		if(buttonEndGame == e.getSource()){
 			frame.dispose();
@@ -624,7 +632,7 @@ public class playGround implements ActionListener {
 		// topArrowButtons
 		if(buttonArrow_1_0 == e.getSource()){
 			//send to server that move was made
-			board.getPlayer(0).setMessage("playground true");
+			out.println(screenName + "CHAT hi");
 
 			//ist zug möglich?
 			if(possibleInsertions[0]) {
@@ -1004,14 +1012,6 @@ public class playGround implements ActionListener {
 
 	public void setBoard(Board newBoard){
 		this.board = newBoard;
-	}
-
-	//for chat
-	public JTextArea getTextArea() {
-		return this.textArea;
-	}
-	public JTextField getTextField() {
-		return this.textField;
 	}
 
 	//================================================================================

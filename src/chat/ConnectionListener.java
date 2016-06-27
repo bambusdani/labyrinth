@@ -120,16 +120,24 @@ public class ConnectionListener extends Thread {
                             //================================================================================
                             // parameter 'CHAT'
                             //================================================================================
-                            if (tmpMessage.substring(0, 4).equalsIgnoreCase("chat")) {
+                            if (tmpMessage.substring(0, 4).equalsIgnoreCase("CHAT")) {
                                 //================================================================================
-                                // print message
-                                jth.println(message);
+                                // get chat message:
+                                // message sent to server could look like:
+                                // "CHAT hello"
+                                // so we broadcast message from substring 5 (counting from 0)
+                                String tmpChat = tmpMessage.substring(5);
+
+                                // print username + message
+                                jth.println("[" + tmpUsername + "]: " + tmpChat);
+                                //add to log
+                                LOGGER.info("OUTGOING " + "[" + tmpUsername + "]: " + tmpChat);
                             }
 
                             //================================================================================
                             // parameter 'MOVE'
                             //================================================================================
-                            else if (tmpMessage.substring(0, 4).equalsIgnoreCase("move")) {
+                            else if (tmpMessage.substring(0, 4).equalsIgnoreCase("MOVE")) {
                                 //--------------------------------------------------------------------------------
                                 // extract x and y potistion from message e.g 'move 1 1' with substring
                                 // x position = 6th character
@@ -158,7 +166,7 @@ public class ConnectionListener extends Thread {
                             //================================================================================
                             // parameter 'PASS'
                             //================================================================================
-                            else if (tmpMessage.substring(0,4).equalsIgnoreCase("pass")) {
+                            else if (tmpMessage.substring(0,4).equalsIgnoreCase("PASS")) {
 
                                 //--------------------------------------------------------------------------------
                                 // set player turn false
@@ -185,7 +193,7 @@ public class ConnectionListener extends Thread {
                             //================================================================================
                             // parameter 'PUSH'
                             //================================================================================
-                            else if (tmpMessage.substring(0,4).equalsIgnoreCase("push")) {
+                            else if (tmpMessage.substring(0,4).equalsIgnoreCase("PUSH")) {
                                 //--------------------------------------------------------------------------------
                                 // extract tileID, rotation and x y from e.g 'push 1 2 3 5'
                                 // tileID = 6th character
@@ -202,6 +210,16 @@ public class ConnectionListener extends Thread {
                                 jth.println("Player " + playerID + " pushed tile " + tmpTileID +
                                         " with rotation " + tmpRotation +
                                         " to " + tmpX + " " + tmpY + ".");
+                            }
+
+                            //================================================================================
+                            // parameter 'LEAVE'
+                            //================================================================================
+                            else if (tmpMessage.substring(0,5).equalsIgnoreCase("LEAVE")) {
+                                //broadcast
+                                jth.println("Player " + playerID + " left the game.");
+                                //add to log
+                                LOGGER.info("OUTGOING: " + "Player " + playerID + " left the game.");
                             }
 
                             else {
