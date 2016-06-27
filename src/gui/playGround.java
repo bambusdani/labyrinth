@@ -981,8 +981,6 @@ public class playGround implements ActionListener {
 
 	}
 
-
-
 	public void setBoard(Board newBoard){
 		this.board = newBoard;
 	}
