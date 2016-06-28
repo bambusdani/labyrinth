@@ -94,9 +94,7 @@ public class Protocol extends Thread {
 
             //--------------------------------------------------------------------------------
             // set new position
-            //board.getPlayer(playerID).setPositionX(board.getPlayer(playerID).getPositionX()+tmpX); (alte Version)
             board.getPlayer(playerID).getAcutalPosition().setX(board.getPlayer(playerID).getAcutalPosition().getX() + tmpX);
-            //board.getPlayer(playerID).setPositionY(board.getPlayer(playerID).getPositionY()+tmpY);
             board.getPlayer(playerID).getAcutalPosition().setY(board.getPlayer(playerID).getAcutalPosition().getY() + tmpY);
 
             //--------------------------------------------------------------------------------
