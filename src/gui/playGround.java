@@ -79,10 +79,7 @@ public class playGround implements ActionListener {
 	private String screenName;
 
 	public playGround(Board board, String hostName, String screenName) {
-
-
 		this.board = board;
-		this.protocol = new Protocol();
 
 		// connect to server
 		try {
