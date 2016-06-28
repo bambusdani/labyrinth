@@ -18,6 +18,9 @@ public class Protocol extends Thread {
     public void validate() {
         chat();
         move();
+        pass();
+        push();
+        leave();
     }
 
     public void splitMessage() {
@@ -50,6 +53,9 @@ public class Protocol extends Thread {
     // Beginning with chat Protocol. Avaiable is
     // 'CHAT message'
     // 'MOVE x y'
+    // 'PASS'
+    // 'PUSH tileID rotation x y'
+    // 'LEAVE'
     //================================================================================
 
 
@@ -97,6 +103,73 @@ public class Protocol extends Thread {
             // broadcast to all players
             setMessage("Player " + board.getPlayer(playerID).getPlayerID() +
                     " moved to: " + board.getPlayer(playerID).getAcutalPosition().getX() + ", " + board.getPlayer(playerID).getAcutalPosition().getY());
+        }
+    }
+
+    //================================================================================
+    // parameter 'PASS'
+    //================================================================================
+    public void pass() {
+        splitMessage();
+
+        if (message.substring(0,4).equalsIgnoreCase("PASS")) {
+
+            //--------------------------------------------------------------------------------
+            // set player turn false
+            board.getPlayer(playerID).setTurn(false);
+
+            //--------------------------------------------------------------------------------
+            // player id's go from 1-4
+            // set turn for next player true
+            if(playerID+1 > 4) {
+                // next player is '1'
+                board.getPlayer(1).setTurn(true);
+                setMessage("Player " + playerID +
+                        " has passed.\n" + "It's Player's 1 turn.");
+            } else {
+                board.getPlayer(playerID+1).setTurn(true);
+                setMessage("Player " + playerID +
+                        " has passed.\n" + "It's Player's " + (playerID+1) + " turn.");
+            }
+        }
+    }
+
+    //================================================================================
+    // parameter 'PUSH'
+    //================================================================================
+    public void push() {
+        splitMessage();
+
+
+        if (message.substring(0,4).equalsIgnoreCase("PUSH")) {
+            //--------------------------------------------------------------------------------
+            // extract tileID, rotation and x y from e.g 'push 1 2 3 5'
+            // tileID = 6th character
+            // rotation = 8th character
+            // x position = 10th character
+            // y position = 12th character
+            int tmpTileID = Integer.parseInt(message.substring(5,6));
+            int tmpRotation = Integer.parseInt(message.substring(7,8));
+            int tmpX = Integer.parseInt(message.substring(9,10));
+            int tmpY = Integer.parseInt(message.substring(11,12));
+
+            board.pushTile(tmpTileID, tmpRotation, tmpX, tmpY);
+
+            setMessage("Player " + playerID + " pushed tile " + tmpTileID +
+                    " with rotation " + tmpRotation +
+                    " to " + tmpX + " " + tmpY + ".");
+        }
+    }
+
+    //================================================================================
+    // parameter 'LEAVE'
+    //================================================================================
+    public void leave() {
+        splitMessage();
+
+        if (message.substring(0,5).equalsIgnoreCase("LEAVE")) {
+            //broadcast
+            setMessage("Player " + playerID + " left the game.");
         }
     }
 }
