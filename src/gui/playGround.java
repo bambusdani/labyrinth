@@ -632,13 +632,11 @@ public class playGround implements ActionListener {
 		// topArrowButtons
 		if(buttonArrow_1_0 == e.getSource()){
 			//send to server that move was made
-			out.println(screenName + "CHAT hi");
+			out.println(screenName + "PUSH 1 2 3 4");
 
 			//ist zug möglich?
 			if(possibleInsertions[0]) {
 				System.out.println("ArrowButton j: 1 i: 0");
-				//send to server that move was valid
-				protocol.setValidMove(true);
 
 				for(int index = 0; index < possibleInsertions.length; index++) {
 					possibleInsertions[index] = true;

@@ -109,64 +109,29 @@ public class ConnectionListener extends Thread {
 
                         //================================================================================
                         // add to message log
-                        LOGGER.info("INCOMING " + message);
+                        //LOGGER.info("INCOMING " + message);
 
                         //================================================================================
                         // Begin with parameters
                         // for testing purposes we use playerId(0)
                         //================================================================================
                         try {
+                            //get message to process
+                            protocol.setMessage(message);
+                            //add to log
+                            LOGGER.info("INCOMING: " + message);
 
-                            //================================================================================
-                            // parameter 'CHAT'
-                            //================================================================================
-                            if (tmpMessage.substring(0, 4).equalsIgnoreCase("CHAT")) {
-                                //================================================================================
-                                // get chat message:
-                                // message sent to server could look like:
-                                // "CHAT hello"
-                                // so we broadcast message from substring 5 (counting from 0)
-                                String tmpChat = tmpMessage.substring(5);
+                            //validate message and print it
+                            jth.println(protocol.getMessage());
+                            //add to log
+                            LOGGER.info("OUTGOING: " + protocol.getMessage());
 
-                                // print username + message
-                                jth.println("[" + tmpUsername + "]: " + tmpChat);
-                                //add to log
-                                LOGGER.info("OUTGOING " + "[" + tmpUsername + "]: " + tmpChat);
-                            }
 
-                            //================================================================================
-                            // parameter 'MOVE'
-                            //================================================================================
-                            else if (tmpMessage.substring(0, 4).equalsIgnoreCase("MOVE")) {
-                                //--------------------------------------------------------------------------------
-                                // extract x and y potistion from message e.g 'move 1 1' with substring
-                                // x position = 6th character
-                                // y position = 8th character
-                                int tmpX = Integer.parseInt(tmpMessage.substring(5,6));
-                                int tmpY = Integer.parseInt(tmpMessage.substring(7,8));
-
-                                //--------------------------------------------------------------------------------
-                                // for testing purposes uncomment or comment
-                                jth.println("Player " + board.getPlayer(playerID).getPlayerID() +
-                                        " current Position: "  + board.getPlayer(playerID).getAcutalPosition().getX() + ", " + board.getPlayer(playerID).getAcutalPosition().getY());
-
-                                //--------------------------------------------------------------------------------
-                                // set new position
-                                //board.getPlayer(playerID).setPositionX(board.getPlayer(playerID).getPositionX()+tmpX); (alte Version)
-                                board.getPlayer(playerID).getAcutalPosition().setX(board.getPlayer(playerID).getAcutalPosition().getX()+tmpX);
-                                //board.getPlayer(playerID).setPositionY(board.getPlayer(playerID).getPositionY()+tmpY);
-                                board.getPlayer(playerID).getAcutalPosition().setY(board.getPlayer(playerID).getAcutalPosition().getY()+tmpY);
-
-                                //--------------------------------------------------------------------------------
-                                // broadcast to all players
-                                jth.println("Player " + board.getPlayer(playerID).getPlayerID() +
-                                        " moved to: " + board.getPlayer(playerID).getAcutalPosition().getX() + ", " + board.getPlayer(playerID).getAcutalPosition().getY());
-                            }
 
                             //================================================================================
                             // parameter 'PASS'
                             //================================================================================
-                            else if (tmpMessage.substring(0,4).equalsIgnoreCase("PASS")) {
+                            if (tmpMessage.substring(0,4).equalsIgnoreCase("PASS")) {
 
                                 //--------------------------------------------------------------------------------
                                 // set player turn false
