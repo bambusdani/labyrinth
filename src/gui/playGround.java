@@ -632,6 +632,7 @@ public class playGround implements ActionListener {
 		// topArrowButtons
 		if(buttonArrow_1_0 == e.getSource()){
 			//send to server that move was made
+			//pushing example
 			out.println(screenName + "PUSH 1 2 3 4");
 
 			//ist zug möglich?
