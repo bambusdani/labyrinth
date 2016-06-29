@@ -60,9 +60,7 @@ public class Board {
     private Player[] allPlayers = new Player[4];
     private Tiles[][] tiles = new Tiles[7][7];
 
-
-    private boolean[] possibleWays={true,false,true,false}; // muss direckt in die initialisierung muss zwischen "I" "L" "T" unterschieden werden
-    private Tiles nextTile = new Tiles(0 ,true, null, new Shape(tile2Image, "I", null , "" ), 0);
+    private Tiles nextTile = new Tiles(0 ,true, null, new Shape(tile2Image, "L", new boolean[] {true,false,false,true} , null ), 0);
 
     //=============================================================
 
@@ -138,7 +136,7 @@ public class Board {
 
 
                                   //startPosition   , actualPosition   , ID, Color                      ,turn,score, name, cardsymbolNeeded
-        allPlayers[0] = new Player(new Position(0,0), new Position(1,1), 1 , new Color(255, 0 ,0),      true,   5, "Rehan",    creaturesNeededPlayer1);
+        allPlayers[0] = new Player(new Position(0,0), new Position(4,5), 1 , new Color(255, 0 ,0),      true,   5, "Rehan",    creaturesNeededPlayer1);
         allPlayers[1] = new Player(new Position(0,6), new Position(2,5), 2 , new Color(0, 255 ,0),      false,  6, "Marvin",   creaturesNeededPlayer2);
         allPlayers[2] = new Player(new Position(6,0), new Position(6,3), 3 , new Color(0, 255 ,255),    false,  6, "Daniel",   creaturesNeededPlayer3);
         allPlayers[3] = new Player(new Position(6,6), new Position(2,5), 4 , new Color(255, 255 ,0),    false,  6, null ,      creaturesNeededPlayer4);
@@ -215,40 +213,40 @@ public class Board {
     /** -> Creates Tiles */
     public void createTiles(Tiles[][] tiles){
         //Alle tiles extra gesetzt, dadurch kann man jedes tile genau festlegen...
-        //new Tiless(id, moveable, position, shape, symbol, rotation)
-        //erste Reihe                                                   //fünfte Reihe
+        //new Tiless(id, moveable, position(x,y), shape(image,shapeOfImage, possibleWaysToMove, Symbol), rotation)
+        //erste Reihe                                                                                                                               //fünfte Reihe
 
-        tiles[0][0] = new Tiles(1,false,new Position(0,0), new Shape(tile30Image, "I" , possibleWays,"mouse"),0);       tiles[4][0] = new Tiles(29,false,new Position(0,0),new Shape(tile16Image, "I" , possibleWays,"mouse"),0);
-        tiles[0][1] = new Tiles(2,true,new Position(0,0),  new Shape(tile8Image, "I" , possibleWays,"mouse"),0);        tiles[4][1] = new Tiles(30,true,new Position(0,0), new Shape(tile1Image, "I" , possibleWays,"mouse"),0);
-        tiles[0][2] = new Tiles(3,false,new Position(0,0), new Shape(tile17Image, "I" , possibleWays,"mouse"),0);       tiles[4][2] = new Tiles(31,false,new Position(0,0),new Shape(tile19Image, "I" , possibleWays,"mouse"),0);
-        tiles[0][3] = new Tiles(4,true,new Position(0,0),  new Shape(tile9Image, "I" , possibleWays, null),0);          tiles[4][3] = new Tiles(32,true,new Position(0,0), new Shape(tile1Image, "I" , possibleWays,"mouse"),0);
-        tiles[0][4] = new Tiles(5,false,new Position(0,0), new Shape(tile21Image, "I" , possibleWays,"mouse"),0);       tiles[4][4] = new Tiles(33,false,new Position(0,0),new Shape(tile23Image, "I" , possibleWays,"mouse"),0);
-        tiles[0][5] = new Tiles(6,true,new Position(0,0),  new Shape(tile3Image, "I" , possibleWays,"mouse"),0);        tiles[4][5] = new Tiles(34,true,new Position(0,0), new Shape(tile1Image, "I" , possibleWays,"mouse"),0);
-        tiles[0][6] = new Tiles(7,false,new Position(0,0), new Shape(tile28Image, "I" , possibleWays,"mouse"),0);       tiles[4][6] = new Tiles(35,false,new Position(0,0),new Shape(tile26Image, "I" , possibleWays,"mouse"),0);
-        //zweite Reihe                                                  //sechste Reihe
-        tiles[1][0] = new Tiles(8,true,new Position(0,0),  new Shape(tile4Image, "I" , possibleWays,"mouse"),0);        tiles[5][0] = new Tiles(36,true,new Position(0,0),new Shape(tile2Image, "I" , possibleWays,"mouse"),0);
-        tiles[1][1] = new Tiles(9,true,new Position(0,0),  new Shape(tile5Image, "I" , possibleWays,"mouse"),0);        tiles[5][1] = new Tiles(37,true,new Position(0,0),new Shape(tile2Image, "I" , possibleWays,"mouse"),0);
-        tiles[1][2] = new Tiles(10,true,new Position(0,0), new Shape(tile6Image, "I" , possibleWays,"mouse"),0);        tiles[5][2] = new Tiles(38,true,new Position(0,0),new Shape(tile2Image, "I" , possibleWays,"mouse"),0);
-        tiles[1][3] = new Tiles(11,true,new Position(0,0), new Shape(tile7Image, "I" , possibleWays,"mouse"),0);        tiles[5][3] = new Tiles(39,true,new Position(0,0),new Shape(tile1Image, "I" , possibleWays,"mouse"),0);
-        tiles[1][4] = new Tiles(12,true,new Position(0,0), new Shape(tile10Image, "I" , possibleWays,"mouse"),0);       tiles[5][4] = new Tiles(40,true,new Position(0,0),new Shape(tile1Image, "I" , possibleWays,"mouse"),0);
-        tiles[1][5] = new Tiles(13,true,new Position(0,0), new Shape(tile11Image, "I" , possibleWays,"mouse"),0);       tiles[5][5] = new Tiles(41,true,new Position(0,0),new Shape(tile1Image, "I" , possibleWays,"mouse"),0);
-        tiles[1][6] = new Tiles(14,true,new Position(0,0), new Shape(tile12Image, "I" , possibleWays,"mouse"),0);       tiles[5][6] = new Tiles(42,true,new Position(0,0),new Shape(tile1Image, "I" , possibleWays,"mouse"),0);
-        //dritte Reihe                                                  //siebte Reihe
-        tiles[2][0] = new Tiles(15,false,new Position(0,0),new Shape(tile15Image, "I" , possibleWays,"mouse"),0);       tiles[6][0] = new Tiles(43,false,new Position(0,0),new Shape(tile29Image, "I" , possibleWays,"mouse"),0);
-        tiles[2][1] = new Tiles(16,true,new Position(0,0), new Shape(tile13Image, "I" , possibleWays,"mouse"),0);       tiles[6][1] = new Tiles(44,true,new Position(0,0), new Shape(tile1Image, "I" , possibleWays,"mouse"),0);
-        tiles[2][2] = new Tiles(17,false,new Position(0,0),new Shape(tile18Image, "I" , possibleWays,"mouse"),0);       tiles[6][2] = new Tiles(45,false,new Position(0,0),new Shape(tile20Image, "I" , possibleWays,"mouse"),0);
-        tiles[2][3] = new Tiles(18,true,new Position(0,0), new Shape(tile14Image, "I" , possibleWays,"mouse"),0);       tiles[6][3] = new Tiles(46,true,new Position(0,0), new Shape(tile1Image, "I" , possibleWays,"mouse"),0);
-        tiles[2][4] = new Tiles(19,false,new Position(0,0),new Shape(tile22Image, "I" , possibleWays,"mouse"),0);       tiles[6][4] = new Tiles(47,false,new Position(0,0),new Shape(tile24Image, "I" , possibleWays,"mouse"),0);
-        tiles[2][5] = new Tiles(20,true,new Position(0,0), new Shape(tile1Image, "I" , possibleWays,"mouse"),0);        tiles[6][5] = new Tiles(48,true,new Position(0,0), new Shape(tile1Image, "I" , possibleWays,"mouse"),0);
-        tiles[2][6] = new Tiles(21,false,new Position(0,0),new Shape(tile25Image, "I" , possibleWays,"mouse"),0);       tiles[6][6] = new Tiles(49,false,new Position(0,0),new Shape(tile27Image, "I" , possibleWays,"mouse"),0);
+        tiles[0][0] = new Tiles(1,false,new Position(0,0), new Shape(tile30Image, "L" , new boolean[] {false,true,true,false},"green"),0);          tiles[4][0] = new Tiles(29,false,new Position(4,0),new Shape(tile16Image, "T" , new boolean[] {false,true,true,true},"map"),0);
+        tiles[0][1] = new Tiles(2,true,new  Position(0,1),  new Shape(tile8Image, "L" ,  new boolean[] {true,true,false,false},"motte"),0);         tiles[4][1] = new Tiles(30,true,new  Position(4,1), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
+        tiles[0][2] = new Tiles(3,false,new Position(0,2), new Shape(tile17Image, "T" , new boolean[] {true,true,true,false},"kerze"),0);           tiles[4][2] = new Tiles(31,false,new Position(4,2),new Shape(tile19Image, "T" , new boolean[] {false,true,true,true},"krone"),0);
+        tiles[0][3] = new Tiles(4,true,new  Position(0,3),  new Shape(tile9Image, "T" ,  new boolean[] {true,true,false,true}, "drache"),0);        tiles[4][3] = new Tiles(32,true,new  Position(4,3), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
+        tiles[0][4] = new Tiles(5,false,new Position(0,4), new Shape(tile21Image, "T" , new boolean[] {true,true,true,false},"helm"),0);            tiles[4][4] = new Tiles(33,false,new Position(4,4),new Shape(tile23Image, "T" , new boolean[] {true,false,true,true},"key"),0);
+        tiles[0][5] = new Tiles(6,true,new  Position(0,5),  new Shape(tile3Image, "L" ,  new boolean[] {false,true,true,false},"eule"),0);          tiles[4][5] = new Tiles(34,true,new  Position(4,5), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
+        tiles[0][6] = new Tiles(7,false,new Position(0,6), new Shape(tile28Image, "L" , new boolean[] {true,true,false,false},"blue"),0);           tiles[4][6] = new Tiles(35,false,new Position(4,6),new Shape(tile26Image, "T" , new boolean[] {true,true,false,true},"skul"),0);
+        //zweite Reihe                                                                                                                              //sechste Reihe
+        tiles[1][0] = new Tiles(8,true,new  Position(1,0),  new Shape(tile4Image, "T" ,  new boolean[] {true,true,false,true},"zauberer"),0);       tiles[5][0] = new Tiles(36,true,new Position(5,0),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
+        tiles[1][1] = new Tiles(9,true,new  Position(1,1),  new Shape(tile5Image, "L" ,  new boolean[] {true,true,false,false},"käfer"),0);         tiles[5][1] = new Tiles(37,true,new Position(5,1),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
+        tiles[1][2] = new Tiles(10,true,new Position(1,2), new Shape(tile6Image, "T" ,  new boolean[] {true,true,false,true},"Fgeist"),0);          tiles[5][2] = new Tiles(38,true,new Position(5,2),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
+        tiles[1][3] = new Tiles(11,true,new Position(1,3), new Shape(tile7Image, "L" ,  new boolean[] {false,true,true,false},"salamander"),0);     tiles[5][3] = new Tiles(39,true,new Position(5,3),new Shape(tile1Image, "I" , new boolean[] {false,true,false,true},null),0);
+        tiles[1][4] = new Tiles(12,true,new Position(1,4), new Shape(tile10Image, "T" , new boolean[] {true,true,false,true},"troll"),0);           tiles[5][4] = new Tiles(40,true,new Position(5,4),new Shape(tile1Image, "I" , new boolean[] {false,true,false,true},null),0);
+        tiles[1][5] = new Tiles(13,true,new Position(1,5), new Shape(tile11Image, "L" , new boolean[] {false,false,true,true},"mouse"),0);          tiles[5][5] = new Tiles(41,true,new Position(5,5),new Shape(tile1Image, "I" , new boolean[] {false,true,false,true},null),0);
+        tiles[1][6] = new Tiles(14,true,new Position(1,6), new Shape(tile12Image, "T" , new boolean[] {true,true,false,true},"fledermaus"),0);      tiles[5][6] = new Tiles(42,true,new Position(5,6),new Shape(tile1Image, "I" , new boolean[] {false,true,false,true},null),0);
+        //dritte Reihe                                                                                                                              //siebte Reihe
+        tiles[2][0] = new Tiles(15,false,new Position(2,0),new Shape(tile15Image, "T" , new boolean[] {false,true,true,true},"ring"),0);            tiles[6][0] = new Tiles(43,false,new Position(6,0),new Shape(tile29Image, "L" , new boolean[] {false,true,false,true},"yellow"),0);
+        tiles[2][1] = new Tiles(16,true,new  Position(2,1), new Shape(tile13Image, "T" , new boolean[] {true,true,false,true},"geist"),0);          tiles[6][1] = new Tiles(44,true,new  Position(6,1), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
+        tiles[2][2] = new Tiles(17,false,new Position(2,2),new Shape(tile18Image, "T" , new boolean[] {true,true,true,false},"schatz"),0);          tiles[6][2] = new Tiles(45,false,new Position(6,2),new Shape(tile20Image, "T" , new boolean[] {true,false,true,true},"book"),0);
+        tiles[2][3] = new Tiles(18,true,new  Position(2,3), new Shape(tile14Image, "L" , new boolean[] {true,true,false,false},"spinne"),0);        tiles[6][3] = new Tiles(46,true,new  Position(6,3), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
+        tiles[2][4] = new Tiles(19,false,new Position(2,4),new Shape(tile22Image, "T" , new boolean[] {true,true,false,true},"rubin"),0);           tiles[6][4] = new Tiles(47,false,new Position(6,4),new Shape(tile24Image, "T" , new boolean[] {true,false,true,true},"coins"),0);
+        tiles[2][5] = new Tiles(20,true,new  Position(2,5), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);            tiles[6][5] = new Tiles(48,true,new  Position(6,5), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
+        tiles[2][6] = new Tiles(21,false,new Position(2,6),new Shape(tile25Image, "T" , new boolean[] {true,true,false,true},"schwert"),0);         tiles[6][6] = new Tiles(49,false,new Position(6,6),new Shape(tile27Image, "L" , new boolean[] {true,false,false,true},"red"),0);
         //vierte Reihe
-        tiles[3][0] = new Tiles(22,true,new Position(0,0),new Shape(tile2Image, "I" , possibleWays,"mouse"),0);
-        tiles[3][1] = new Tiles(23,true,new Position(0,0),new Shape(tile2Image, "I" , possibleWays,"mouse"),0);
-        tiles[3][2] = new Tiles(24,true,new Position(0,0),new Shape(tile2Image, "I" , possibleWays,"mouse"),0);
-        tiles[3][3] = new Tiles(25,true,new Position(0,0),new Shape(tile2Image, "I" , possibleWays,"mouse"),0);
-        tiles[3][4] = new Tiles(26,true,new Position(0,0),new Shape(tile2Image, "I" , possibleWays,"mouse"),0);
-        tiles[3][5] = new Tiles(27,true,new Position(0,0),new Shape(tile2Image, "I" , possibleWays,"mouse"),0);
-        tiles[3][6] = new Tiles(28,true,new Position(0,0),new Shape(tile2Image, "I" , possibleWays,"mouse"),0);
+        tiles[3][0] = new Tiles(22,true,new Position(3,0),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
+        tiles[3][1] = new Tiles(23,true,new Position(3,1),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
+        tiles[3][2] = new Tiles(24,true,new Position(3,2),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
+        tiles[3][3] = new Tiles(25,true,new Position(3,3),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
+        tiles[3][4] = new Tiles(26,true,new Position(3,4),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
+        tiles[3][5] = new Tiles(27,true,new Position(3,5),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
+        tiles[3][6] = new Tiles(28,true,new Position(3,6),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
 
     }
     //===================================================================================================================================

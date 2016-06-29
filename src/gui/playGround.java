@@ -46,7 +46,7 @@ public class playGround implements ActionListener {
 
 	//Buttons for the arrows to place the next stone
 	//top
-	public JButton buttonArrow_1_0;
+	private JButton buttonArrow_1_0;
 	private JButton buttonArrow_3_0;
 	private JButton buttonArrow_5_0;
 	//bottom
@@ -463,7 +463,7 @@ public class playGround implements ActionListener {
 
 
 		}
-		System.out.println("j 0 i 0: "+ board.getTile(0,0).getShape());
+
 
 		//====================================================================================
 		// creating frame
@@ -617,6 +617,33 @@ public class playGround implements ActionListener {
 				if( e.getActionCommand().equals("gameField: "+j+" "+i)){
 					//writes the command of the button
 					System.out.println("Button j: "+j +", i: "+ i +" pressed");
+
+					/////////////////////////////////////////////////////////////////////////////////
+					//TODO ist der zug möglich
+					/////////////////////////////////////////////////////////////////////////////////
+					// erstellt aus j und i eine neue Position
+					Position buttonPositionPressed= new Position(j, i);
+					//funktionaufruf
+					//übergibt alle Tiles, den Player mit der PlayerID , und die Position des Buttons
+					int playerID = 0;
+					// auf false setzen
+					boolean[][] visited = new boolean[7][7];
+					/*for (int p=0; p<7;p++){
+						for (int q= 0;q<7;q++){
+							visited[p][q]= false;
+						}
+					}*/
+
+					System.out.println( isMovePossible(board.getallTiles() , buttonPositionPressed , board.getPlayer(playerID).getAcutalPosition().getX(), board.getPlayer(playerID).getAcutalPosition().getY(), visited));
+
+					//////////////////////////////////////////////////////////////////////////////////
+
+					//gibt den array aus welchen weg man gehen kann bzw wo wände sind true=freier weg
+					System.out.println("mögliche Wege zu gehen");
+					System.out.print(board.getTile(j,i).getShape().getPossiblePaths()[0] + " " );
+					System.out.print(board.getTile(j,i).getShape().getPossiblePaths()[1] + " ");
+					System.out.print(board.getTile(j,i).getShape().getPossiblePaths()[2] + " ");
+					System.out.print(board.getTile(j,i).getShape().getPossiblePaths()[3]);
 				}
 			}
 		}
@@ -630,7 +657,7 @@ public class playGround implements ActionListener {
 		if(buttonArrow_1_0 == e.getSource()){
 			//send to server that move was made
 			//pushing example
-			out.println(screenName + "PUSH 1 2 3 4");
+			//out.println(screenName + "PUSH 1 2 3 4");
 
 			//ist zug möglich?
 			if(possibleInsertions[0]) {
@@ -1025,6 +1052,68 @@ public class playGround implements ActionListener {
 		catch (Exception e) { e.printStackTrace(); }
 		System.err.println("Closed client socket");
 	}
+
+	//================================================================================
+	// function is move possible
+	//	tiles = alle Tiles
+	//	buttonPositionPressed = Position wo der Button gedrückt wurde
+	// 	tilePositionX / Y = jetzige Position des Spielers
+	//	visited = merkt sich wo man bereits war sonst durchläuft es eine dauerschleife
+	//================================================================================
+
+	public boolean isMovePossible(Tiles[][] tiles, Position buttonPositionPressed, int tilePositionX, int tilePositionY ,boolean[][] visited ){
+
+		//abbruchbedingung bzw. wurde das Ziel erreicht
+		if (buttonPositionPressed.getX() == tilePositionX && buttonPositionPressed.getY() == tilePositionY){
+			return true;
+		}
+		else
+		{
+			//bereits ganz außen? wird nicht benötigt bzw funkt nicht
+			//if (tilePositionX == 0 || tilePositionX == 6 || tilePositionY == 0 || tilePositionY == 6) {
+			//	return false;
+			//}
+			//nach oben gehen möglich?
+			//schaut die Möglichen Pfade zum gehen auf dem jetzigen Tile an und schaut das selbe beim darauffolgenden
+			if(tiles[tilePositionX][tilePositionY].getShape().getPossiblePaths()[0] && tiles[tilePositionX][tilePositionY - 1].getShape().getPossiblePaths()[2] && !visited[tilePositionX][tilePositionY - 1]) {
+				//ja
+				System.out.println("oben");
+				visited[tilePositionX][tilePositionY ] = true;
+				return isMovePossible(tiles, buttonPositionPressed, tilePositionX, tilePositionY - 1, visited);
+			}
+			//nach rechts gehen möglich?
+			 else if(tiles[tilePositionX][tilePositionY].getShape().getPossiblePaths()[1] && tiles[tilePositionX + 1][tilePositionY].getShape().getPossiblePaths()[3] && !visited[tilePositionX+ 1][tilePositionY]){
+				//ja
+				System.out.println("rechts");
+				 visited[tilePositionX ][tilePositionY ] = true;
+				return isMovePossible(tiles, buttonPositionPressed, tilePositionX + 1, tilePositionY ,visited);
+			}
+			//nach unten gehen möglich?
+			 else if(tiles[tilePositionX][tilePositionY].getShape().getPossiblePaths()[2] && tiles[tilePositionX][tilePositionY + 1].getShape().getPossiblePaths()[0] && !visited[tilePositionX][tilePositionY + 1]){
+				//ja
+				System.out.println("unten");
+				 visited[tilePositionX][tilePositionY ] = true;
+				return isMovePossible(tiles, buttonPositionPressed, tilePositionX , tilePositionY + 1, visited);
+			}
+			//nach links gehen möglich?
+			 else if(tiles[tilePositionX][tilePositionY].getShape().getPossiblePaths()[3] && tiles[tilePositionX -1][tilePositionY].getShape().getPossiblePaths()[1] && !visited[tilePositionX - 1][tilePositionY]){
+				//ja
+				System.out.println("links");
+				 visited[tilePositionX ][tilePositionY ] = true;
+				return isMovePossible(tiles, buttonPositionPressed, tilePositionX - 1, tilePositionY ,visited);
+			}
+			else{
+			// Falls keine Richtung möglich ist wird false zurückgegeben
+			return false;
+			}
+
+		}
+
+
+	}
+
+
+
 }
 
 
