@@ -5,7 +5,7 @@
 .idea/
 
 #Chatlog
-chatLog.txt
+chatLog.log
 
 #mac
 .DS_Store
