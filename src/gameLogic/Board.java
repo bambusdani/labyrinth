@@ -62,7 +62,7 @@ public class Board {
 
 
     private boolean[] possibleWays={true,false,true,false}; // muss direckt in die initialisierung muss zwischen "I" "L" "T" unterschieden werden
-    private Tiles nextTile = new Tiles(0 ,true, null, new Shape(tile2Image, "I", null , "" ), 0);
+    private Tiles nextTile = new Tiles(0 ,true, null, new Shape(tile2Image, "I", new boolean[]{true, true, false, false} , "" ), 0);
 
     //=============================================================
 

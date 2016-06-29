@@ -35,6 +35,16 @@ public class Shape {
     /** Rotate Image Function */
 
     public ImageIcon rotateImage(double degrees){
+        /*boolean oben = this.possiblePaths[0];
+        boolean rechts = this.possiblePaths[1];
+        boolean unten = this.possiblePaths[2];
+        boolean links = this.possiblePaths[3];
+
+        this.possiblePaths[0] = links;
+        this.possiblePaths[1] = oben;
+        this.possiblePaths[2] = rechts;
+        this.possiblePaths[3] = unten;*/
+
         ImageIcon imageIcon = this.buImg;
         BufferedImage buImg = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         buImg.getGraphics().drawImage(imageIcon.getImage(), 0,0, imageIcon.getImageObserver());
@@ -47,18 +57,25 @@ public class Shape {
 
         ImageIcon imageI = new ImageIcon(buImg);
 
-        /*
-        boolean oben = this.possiblePaths[0];
-        boolean rechts = this.possiblePaths[1];
-        boolean unten = this.possiblePaths[2];
-        boolean links = this.possiblePaths[3];
 
-        this.possiblePaths[0] = links;
-        this.possiblePaths[1] = oben;
-        this.possiblePaths[2] = rechts;
-        this.possiblePaths[3] = unten;*/
+
 
         return imageI;
     }
+
+    public void setRotatedPossiblePath(boolean[] possiblePaths){
+        boolean oben = possiblePaths[0];
+        boolean rechts = possiblePaths[1];
+        boolean unten = possiblePaths[2];
+        boolean links = possiblePaths[3];
+
+        possiblePaths[0] = links;
+        possiblePaths[1] = oben;
+        possiblePaths[2] = rechts;
+        possiblePaths[3] = unten;
+
+        this.possiblePaths = possiblePaths;
+    }
+
 
 }
