@@ -630,7 +630,8 @@ public class playGround implements ActionListener {
 		if(buttonArrow_1_0 == e.getSource()){
 			//send to server that move was made
 			//pushing example
-			out.println(screenName + "PUSH 1 2 3 4");
+			/** Displays which button is pressed in the chat window*/
+			//out.println(screenName + "PUSH 1 2 3 4");
 
 			//ist zug möglich?
 			if(possibleInsertions[0]) {
