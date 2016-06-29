@@ -12,7 +12,7 @@ public class Shape {
 
     private ImageIcon buImg;
     private String shape;
-    //oben rechts unten links
+    //top right bottom left
     private boolean[] possiblePaths = new boolean[4]; //top right bottom left???
     private String creature;
 
