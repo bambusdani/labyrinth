@@ -606,8 +606,14 @@ public class playGround implements ActionListener {
 
 			System.out.println("Rotation beträgt: " + newRotation);
 
+			System.out.println(board.getNextTile().getShape().getPossiblePaths()[0]+" ");
+			System.out.println(board.getNextTile().getShape().getPossiblePaths()[1]+" ");
+			System.out.println(board.getNextTile().getShape().getPossiblePaths()[2]+" ");
+			System.out.println(board.getNextTile().getShape().getPossiblePaths()[3]+" ");
+
 			labelNextStoneSymbol.setIcon(board.getNextTile().getShape().rotateImage(rotationAngle));
 			board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(rotationAngle));
+			board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());
 
 
 		}
@@ -665,6 +671,8 @@ public class playGround implements ActionListener {
 		if(buttonArrow_1_0 == e.getSource()){
 			//send to server that move was made
 			//pushing example
+
+			/** Displays which button is pressed in the chat window*/
 			//out.println(screenName + "PUSH 1 2 3 4");
 
 			//ist zug möglich?
