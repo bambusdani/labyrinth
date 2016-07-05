@@ -637,7 +637,7 @@ public class playGround implements ActionListener {
 					Position buttonPositionPressed= new Position(j, i);
 					int playerID = 0;
 					// Ist der Zug möglich, falls ja ändere die Ränder
-					gameFunctions.movePlayerIfMovePossible(boardSquares,board.getPlayer(playerID),buttonPositionPressed,board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY(),board.getallTiles());
+					gameFunctions.movePlayerIfMovePossible(boardSquares,board.getAllPlayers(), playerID ,buttonPositionPressed,board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY(),board.getallTiles());
 
 					//////////////////////////////////////////////////////////////////////////////////
 					//gibt den array aus welchen weg man gehen kann bzw wo wände sind true=freier weg
@@ -681,6 +681,8 @@ public class playGround implements ActionListener {
 					//boardSquares[1][index].setText(board.getTile(1, index).getShape());
 					boardSquares[1][index].setIcon(board.getTile(1, index).getShape().getImage());
 				}
+				//moves Player if you place a stone
+				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,0);
 
 				board.setTiles(1, 0, board.getNextTile());
 				boardSquares[1][0].setIcon(board.getTile(1, 0).getShape().getImage());
@@ -711,6 +713,9 @@ public class playGround implements ActionListener {
 					board.setTiles(3, index, board.getTile(3, index - 1));
 					boardSquares[3][index].setIcon(board.getTile(3, index).getShape().getImage());
 				}
+				//moves Player if you place a stone
+				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,1);
+
 
 				board.setTiles(3, 0, board.getNextTile());
 				boardSquares[3][0].setIcon(board.getTile(3, 0).getShape().getImage());
@@ -740,6 +745,8 @@ public class playGround implements ActionListener {
 					board.setTiles(5, index, board.getTile(5, index - 1));
 					boardSquares[5][index].setIcon(board.getTile(5, index).getShape().getImage());
 				}
+				//moves Player if you place a stone
+				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,2);
 
 				board.setTiles(5, 0, board.getNextTile());
 				boardSquares[5][0].setIcon(board.getTile(5, 0).getShape().getImage());
@@ -769,6 +776,9 @@ public class playGround implements ActionListener {
 					board.setTiles(1, index, board.getTile(1, index + 1));
 					boardSquares[1][index].setIcon(board.getTile(1, index).getShape().getImage());
 				}
+				//moves Player if you place a stone
+				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,8);
+
 
 				board.setTiles(1, 6, board.getNextTile());
 				boardSquares[1][6].setIcon(board.getTile(1, 6).getShape().getImage());
@@ -798,6 +808,8 @@ public class playGround implements ActionListener {
 					board.setTiles(3, index, board.getTile(3, index + 1));
 					boardSquares[3][index].setIcon(board.getTile(3, index).getShape().getImage());
 				}
+				//moves Player if you place a stone
+				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,7);
 
 				board.setTiles(3, 6, board.getNextTile());
 				boardSquares[3][6].setIcon(board.getTile(3, 6).getShape().getImage());
@@ -827,6 +839,8 @@ public class playGround implements ActionListener {
 					board.setTiles(5, index, board.getTile(5, index + 1));
 					boardSquares[5][index].setIcon(board.getTile(5, index).getShape().getImage());
 				}
+				//moves Player if you place a stone
+				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,6);
 
 				board.setTiles(5, 6, board.getNextTile());
 				boardSquares[5][6].setIcon(board.getTile(5, 6).getShape().getImage());
@@ -863,6 +877,8 @@ public class playGround implements ActionListener {
 					board.setTiles(index, 1, board.getTile(index - 1, 1));
 					boardSquares[index][1].setIcon(board.getTile(index, 1).getShape().getImage());
 				}
+				//moves Player if you place a stone
+				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,11);
 
 				board.setTiles(0, 1, board.getNextTile());
 				boardSquares[0][1].setIcon(board.getTile(0, 1).getShape().getImage());
@@ -893,6 +909,9 @@ public class playGround implements ActionListener {
 					board.setTiles(index, 3, board.getTile(index - 1, 3));
 					boardSquares[index][3].setIcon(board.getTile(index, 3).getShape().getImage());
 				}
+				//moves Player if you place a stone
+				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,10);
+
 
 				board.setTiles(0, 3, board.getNextTile());
 				boardSquares[0][3].setIcon(board.getTile(0, 3).getShape().getImage());
@@ -926,6 +945,9 @@ public class playGround implements ActionListener {
 					board.setTiles(index, 5, board.getTile(index - 1, 5));
 					boardSquares[index][5].setIcon(board.getTile(index, 5).getShape().getImage());
 				}
+				//moves Player if you place a stone
+				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,9);
+
 
 				board.setTiles(0, 5, board.getNextTile());
 				boardSquares[0][5].setIcon(board.getTile(0, 5).getShape().getImage());
@@ -962,6 +984,8 @@ public class playGround implements ActionListener {
 					board.setTiles(index, 1, board.getTile(index + 1, 1));
 					boardSquares[index][1].setIcon(board.getTile(index, 1).getShape().getImage());
 				}
+				//moves Player if you place a stone
+				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,3);
 
 				board.setTiles(6, 1, board.getNextTile());
 				boardSquares[6][1].setIcon(board.getTile(6, 1).getShape().getImage());
@@ -992,6 +1016,9 @@ public class playGround implements ActionListener {
 					board.setTiles(index, 3, board.getTile(index + 1, 3));
 					boardSquares[index][3].setIcon(board.getTile(index, 3).getShape().getImage());
 				}
+				//moves Player if you place a stone
+				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,4);
+
 
 				board.setTiles(6, 3, board.getNextTile());
 				boardSquares[6][3].setIcon(board.getTile(6, 3).getShape().getImage());
@@ -1022,6 +1049,8 @@ public class playGround implements ActionListener {
 					board.setTiles(index, 5, board.getTile(index + 1, 5));
 					boardSquares[index][5].setIcon(board.getTile(index, 5).getShape().getImage());
 				}
+				//moves Player if you place a stone
+				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,5);
 
 				board.setTiles(6, 5, board.getNextTile());
 				boardSquares[6][5].setIcon(board.getTile(6, 5).getShape().getImage());

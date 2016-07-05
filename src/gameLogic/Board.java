@@ -136,9 +136,9 @@ public class Board {
 
 
                                   //startPosition   , actualPosition   , ID, Color                      ,turn,score, name, cardsymbolNeeded
-        allPlayers[0] = new Player(new Position(0,0), new Position(4,5), 1 , new Color(255, 0 ,0),      true,   5, "Rehan",    creaturesNeededPlayer1);
-        allPlayers[1] = new Player(new Position(0,6), new Position(2,5), 2 , new Color(0, 255 ,0),      false,  6, "Marvin",   creaturesNeededPlayer2);
-        allPlayers[2] = new Player(new Position(6,0), new Position(6,3), 3 , new Color(0, 255 ,255),    false,  6, "Daniel",   creaturesNeededPlayer3);
+        allPlayers[0] = new Player(new Position(0,0), new Position(1,5), 1 , new Color(255, 0 ,0),      true,   5, "Rehan",    creaturesNeededPlayer1);
+        allPlayers[1] = new Player(new Position(0,6), new Position(3,2), 2 , new Color(0, 255 ,0),      false,  6, "Marvin",   creaturesNeededPlayer2);
+        allPlayers[2] = new Player(new Position(6,0), new Position(5,3), 3 , new Color(0, 255 ,255),    false,  6, "Daniel",   creaturesNeededPlayer3);
         allPlayers[3] = new Player(new Position(6,6), new Position(2,5), 4 , new Color(255, 255 ,0),    false,  6, null ,      creaturesNeededPlayer4);
     }
     //===========================
