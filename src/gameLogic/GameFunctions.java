@@ -10,6 +10,12 @@ public class GameFunctions {
     //wird für checkMazeIfMoveISPossible benötigt
     boolean[][] visited = new boolean[7][7];
 
+    //placeStoneWithArrows
+    //Im Uhrzeigersinn den Buttons(einschub/pfeilbuttons) zugewiesen
+    public boolean[] possibleInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
+    Tiles tmpStorageTile;
+
+
     //konstruktor
     public GameFunctions(){
 
@@ -23,7 +29,7 @@ public class GameFunctions {
      * entfernt den bisherigen Rand und fügt an der neuen Stelle einen an
      * ruft die Funktion checkMazeIfMovePossible auf
      *
-     * TODO Überschreibt bisher noch die anderen Ränder
+     * TODO Überschreibt bisher noch die anderen Ränder -> gehört eigentlich zu GUI nicht Server
      *
      * ==============================================================================================================**/
     public void movePlayerIfMovePossible(JButton[][] allButtons, Player[] allPlayer, int playerID, Position buttonPositionPressed, int tilePositionX, int tilePositionY, Tiles[][] tiles){
@@ -155,7 +161,7 @@ public class GameFunctions {
                 }
             }
             //----------------------------
-            // Für Pfei  6 7 8 bottom
+            // Für Pfeil  6 7 8 bottom
             if (((arrowNumber == 6) || (arrowNumber == 7) || (arrowNumber == 8)) && (allPlayer[playerID].getAcutalPosition().getX() == rownumber)) {
                 //setze Farbe zurück
                 allButtons[rownumber][allPlayer[playerID].getAcutalPosition().getY()].setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black));
@@ -170,7 +176,7 @@ public class GameFunctions {
                 }
             }
             //----------------------------
-            // Für Pfei  3 4 5 right
+            // Für Pfeil  3 4 5 right
             if (((arrowNumber == 3) || (arrowNumber == 4) || (arrowNumber == 5)) && (allPlayer[playerID].getAcutalPosition().getY() == rownumber)) {
                 //setze Farbe zurück
                 allButtons[allPlayer[playerID].getAcutalPosition().getX()][rownumber].setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black));
@@ -185,7 +191,7 @@ public class GameFunctions {
                 }
             }
             //----------------------------
-            // Für Pfei  9 10 11 right
+            // Für Pfeil  9 10 11 right
             if (((arrowNumber == 9) || (arrowNumber == 10) || (arrowNumber == 11)) && (allPlayer[playerID].getAcutalPosition().getY() == rownumber)) {
                 //setze Farbe zurück
                 allButtons[allPlayer[playerID].getAcutalPosition().getX()][rownumber].setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black));
@@ -202,6 +208,41 @@ public class GameFunctions {
 
         }
 
+    }
+    //==================================================================================================================
+
+
+    /**
+     * IsPlayerGettingPoints
+     * Funktion, welche überprüft, ob der Spieler auf dem gesuchten Symbol steht. Falls ja wird ein Punkt dazu addiert
+     * return 0 = kein Punkt
+     * Return 1 = Punkt
+     * return 2 = spiel beenden
+     */
+    public int isPlayerGettingPoints(Board board, int playerID){
+
+        if(board.getPlayer(playerID).getCreaturesNeeded().get(0).getCreature() == board.getTile(board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY()).getShape().getCreature()){
+            //falls sie identisch sind
+            // Punkt für den Spieler
+
+            //erstes Element wird entfernt
+            board.getPlayer(playerID).getCreaturesNeeded().remove(0);
+
+            if(board.getPlayer(playerID).getCreaturesNeeded().isEmpty()){
+                //falls die Liste der NeededCreatures leer ist -> Spieler hat gewonnen
+                return 2;
+            }
+            else{
+                System.out.println(board.getPlayer(playerID).getCreaturesNeeded().get(0).getCreature());
+                //Wert beim Spieler um 1 erhöhen
+                board.getPlayer(playerID).setScore(board.getPlayer(playerID).getScore() + 1);
+                return 1;
+            }
+        }
+        else{
+           // kein Punkt erziehlt
+            return 0;
+        }
     }
     //==================================================================================================================
 
