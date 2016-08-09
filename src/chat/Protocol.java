@@ -9,6 +9,7 @@ public class Protocol {
     private String username;
     private String message;
     private String outMessage;
+    private String logMessage;
     private int playerID;
 
     public Protocol() {
@@ -34,6 +35,10 @@ public class Protocol {
     public String getOutMessage() {
         validate();
         return this.outMessage;
+    }
+
+    public String getLogMessage() {
+        return this.logMessage;
     }
 
     public void validate() {
@@ -70,6 +75,9 @@ public class Protocol {
         // "chat hello"
         // we broadcast message from substring 5 (counting from 0)
         this.outMessage = this.username + this.message.substring(5);
+
+        //log entry
+        this.logMessage = "chat " + this.playerID + " " + this.message.substring(5);
     }
 
     //================================================================================
@@ -92,31 +100,37 @@ public class Protocol {
         // broadcast to all players
         this.outMessage = "Player " + board.getPlayer(playerID).getPlayerID() +
                 " moved to: " + board.getPlayer(playerID).getAcutalPosition().getX() + ", " + board.getPlayer(playerID).getAcutalPosition().getY();
+
+        //log entry
+        this.logMessage = "move" + this.playerID + " " + tmpX + " " + tmpY;
     }
 
     //================================================================================
     // parameter 'PASS'
     //================================================================================
     public void pass() {
-        if (message.substring(0,4).equalsIgnoreCase("PASS")) {
+        //--------------------------------------------------------------------------------
+        // set player turn false
+        board.getPlayer(playerID).setTurn(false);
 
-            //--------------------------------------------------------------------------------
-            // set player turn false
-            board.getPlayer(playerID).setTurn(false);
+        //--------------------------------------------------------------------------------
+        // player id's go from 1-4
+        // set turn for next player true
+        if(playerID+1 > 4) {
+            // next player is '1'
+            board.getPlayer(1).setTurn(true);
+            this.outMessage = "Player " + playerID +
+                    " has passed.\n" + "It's Player's 1 turn.";
 
-            //--------------------------------------------------------------------------------
-            // player id's go from 1-4
-            // set turn for next player true
-            if(playerID+1 > 4) {
-                // next player is '1'
-                board.getPlayer(1).setTurn(true);
-                this.outMessage = "Player " + playerID +
-                        " has passed.\n" + "It's Player's 1 turn.";
-            } else {
-                board.getPlayer(playerID+1).setTurn(true);
-                this.outMessage = "Player " + playerID +
-                        " has passed.\n" + "It's Player's " + (playerID+1) + " turn.";
-            }
+            //log entry
+            this.logMessage = "passed " + this.playerID;
+        } else {
+            board.getPlayer(playerID+1).setTurn(true);
+            this.outMessage = "Player " + playerID +
+                    " has passed.\n" + "It's Player's " + (playerID+1) + " turn.";
+
+            //log entry
+            this.logMessage = "passed " + this.playerID;
         }
     }
 
@@ -140,15 +154,20 @@ public class Protocol {
         this.outMessage = "Player " + playerID + " pushed tile " + tmpTileID +
                 " with rotation " + tmpRotation +
                 " to " + tmpX + " " + tmpY + ".";
+
+        //log entry
+        this.logMessage = "pushed " + tmpTileID + " " + tmpRotation + " " + tmpX
+                + " " + tmpY;
     }
 
     //================================================================================
     // parameter 'LEAVE'
     //================================================================================
     public void leave() {
-        if (message.substring(0,5).equalsIgnoreCase("LEAVE")) {
-            //broadcast
-            this.outMessage = "Player " + playerID + " left the game.";
-        }
+        //broadcast
+        this.outMessage = "disconnect " + playerID;
+
+        //log entry
+        this.logMessage = "disconnect " + playerID;
     }
 }

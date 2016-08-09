@@ -93,7 +93,7 @@ public class ConnectionListener extends Thread {
                             //jth.println(protocol.getMessage());
                             jth.println(protocol.getOutMessage());
                             //add to log
-                            LOGGER.info("OUTGOING: " + protocol.getOutMessage());
+                            LOGGER.info("OUTGOING: " + protocol.getLogMessage());
                         }
                         catch (Exception e) {
                             //--------------------------------------------------------------------------------

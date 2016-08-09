@@ -583,6 +583,8 @@ public class playGround implements ActionListener {
 			if(textField.getText().equalsIgnoreCase("leave")) {
 				out.println(screenName + "leave");
 				frame.dispose();
+			} else if(textField.getText().equalsIgnoreCase("pass")) {
+				out.println(screenName + "pass");
 			} else {
 				out.println(screenName + "chat " + textField.getText());
 			}

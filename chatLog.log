@@ -28,3 +28,23 @@
 [05/07/2016 10:12:24] OUTGOING: klajflajfla 
 [05/07/2016 10:12:24] INCOMING: [Rehan]: CHAT klajflajfla 
 [05/07/2016 10:12:24] OUTGOING: klajflajfla 
+[09/08/2016 20:03:58] *****STARTING***** 
+[09/08/2016 20:04:05] INCOMING: chat hi 
+[09/08/2016 20:04:05] OUTGOING: [Rehan]: hi 
+[09/08/2016 20:04:08] INCOMING: pass 
+[09/08/2016 20:04:08] OUTGOING: Player 1 has passed.
+It's Player's 2 turn. 
+[09/08/2016 20:04:13] INCOMING: pass 
+[09/08/2016 20:04:13] OUTGOING: Player 1 has passed.
+It's Player's 2 turn. 
+[09/08/2016 20:04:18] INCOMING: leave 
+[09/08/2016 20:04:18] OUTGOING: disconnect 1 
+[09/08/2016 20:14:19] *****STARTING***** 
+[09/08/2016 20:14:29] INCOMING: chat hi 
+[09/08/2016 20:14:29] OUTGOING: chat 1 hi 
+[09/08/2016 20:14:59] INCOMING: pass 
+[09/08/2016 20:14:59] OUTGOING: passed 1 
+[09/08/2016 20:15:01] INCOMING: push 1 2 3 4 
+[09/08/2016 20:15:01] OUTGOING: pushed 1 2 3 4 
+[09/08/2016 20:15:08] INCOMING: leave 
+[09/08/2016 20:15:08] OUTGOING: disconnect 1 
