@@ -576,7 +576,12 @@ public class playGround implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		//chat text field
 		if(textField == e.getSource()) {
-			out.println(screenName + "chat " + textField.getText());
+			if(textField.getText().equalsIgnoreCase("leave")) {
+				out.println(screenName + "leave");
+				frame.dispose();
+			} else {
+				out.println(screenName + "chat " + textField.getText());
+			}
 			textField.setText("");
 			textField.requestFocusInWindow();
 		}
@@ -630,10 +635,8 @@ public class playGround implements ActionListener {
 		// topArrowButtons
 		if(buttonArrow_1_0 == e.getSource()){
 			//send to server that move was made
-			//pushing example
-			/** Displays which button is pressed in the chat window*/
-			out.println(screenName + "move 1 2");
-			//out.println(screenName + "PUSH 1 2 3 4");
+			//pushing
+			out.println(screenName + "push 1 2 3 4");
 
 			//ist zug möglich?
 			if(possibleInsertions[0]) {

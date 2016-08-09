@@ -21,7 +21,6 @@ public class ConnectionListener extends Thread {
     private boolean mError, mException;
     private String sException;
     private Protocol protocol;
-    private Prot prot;
 
     //--------------------------------------------------------------------------------
     // create a new board so we can get the player information needed
@@ -30,7 +29,7 @@ public class ConnectionListener extends Thread {
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
         //this.protocol = new Protocol();
-        this.prot = new Prot();
+        this.protocol = new Protocol();
 
         //================================================================================
         // setup the logger
@@ -86,15 +85,15 @@ public class ConnectionListener extends Thread {
                             //get message to process
                             //protocol.setMessage(message);
                             String[] tmpMessage = message.split(": ");
-                            prot.setIncMessage(tmpMessage);
+                            protocol.setIncMessage(tmpMessage);
                             //add to log
                             LOGGER.info("INCOMING: " + tmpMessage[1]);
 
                             //validate message and print it
                             //jth.println(protocol.getMessage());
-                            jth.println(prot.getOutMessage());
+                            jth.println(protocol.getOutMessage());
                             //add to log
-                            LOGGER.info("OUTGOING: " + prot.getOutMessage());
+                            LOGGER.info("OUTGOING: " + protocol.getOutMessage());
                         }
                         catch (Exception e) {
                             //--------------------------------------------------------------------------------
