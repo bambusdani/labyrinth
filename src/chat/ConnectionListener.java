@@ -21,6 +21,7 @@ public class ConnectionListener extends Thread {
     private boolean mError, mException;
     private String sException;
     private Protocol protocol;
+    private Prot prot;
 
     //--------------------------------------------------------------------------------
     // create a new board so we can get the player information needed
@@ -28,7 +29,8 @@ public class ConnectionListener extends Thread {
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
-        this.protocol = new Protocol();
+        //this.protocol = new Protocol();
+        this.prot = new Prot();
 
         //================================================================================
         // setup the logger
@@ -82,14 +84,17 @@ public class ConnectionListener extends Thread {
                     for (Connection jth : connections) {
                         try {
                             //get message to process
-                            protocol.setMessage(message);
+                            //protocol.setMessage(message);
+                            String[] tmpMessage = message.split(": ");
+                            prot.setIncMessage(tmpMessage);
                             //add to log
-                            LOGGER.info("INCOMING: " + message);
+                            LOGGER.info("INCOMING: " + tmpMessage[1]);
 
                             //validate message and print it
-                            jth.println(protocol.getMessage());
+                            //jth.println(protocol.getMessage());
+                            jth.println(prot.getOutMessage());
                             //add to log
-                            LOGGER.info("OUTGOING: " + protocol.getMessage());
+                            LOGGER.info("OUTGOING: " + prot.getOutMessage());
                         }
                         catch (Exception e) {
                             //--------------------------------------------------------------------------------

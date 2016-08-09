@@ -8,6 +8,7 @@ public class Protocol extends Thread {
     private String[] fullMessage;
     private String username;
     private String message;
+    private String outMessage;
     private int playerID;
 
     public Protocol() {
@@ -26,7 +27,7 @@ public class Protocol extends Thread {
     public void splitMessage() {
         fullMessage = message.split(": ");
         username = "[" + fullMessage[0].substring(1, fullMessage[0].length()-1) + "]: ";
-        message = fullMessage[fullMessage.length-1];
+        outMessage = fullMessage[fullMessage.length-1];
 
         assignUsername();
     }
@@ -42,7 +43,7 @@ public class Protocol extends Thread {
 
     public synchronized String getMessage() {
         validate();
-        return message;
+        return outMessage;
     }
 
     public synchronized void setMessage(String message) {
@@ -71,7 +72,8 @@ public class Protocol extends Thread {
             // message sent to server could look like:
             // "CHAT hello"
             // so we broadcast message from substring 5 (counting from 0)
-            String tmpChat = message.substring(5);
+            String tmpChat = outMessage.substring(5);
+            System.out.println(tmpChat);
 
             // print username + message
             setMessage(username + tmpChat);
