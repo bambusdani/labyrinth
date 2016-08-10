@@ -10,6 +10,12 @@ public class GameFunctions {
     //wird für checkMazeIfMoveISPossible benötigt
     boolean[][] visited = new boolean[7][7];
 
+    //placeStoneWithArrows
+    //Im Uhrzeigersinn den Buttons(einschub/pfeilbuttons) zugewiesen
+    public boolean[] possibleArrowInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
+    Tiles tmpStorageTile;
+
+
     //konstruktor
     public GameFunctions(){
 
@@ -23,7 +29,7 @@ public class GameFunctions {
      * entfernt den bisherigen Rand und fügt an der neuen Stelle einen an
      * ruft die Funktion checkMazeIfMovePossible auf
      *
-     * TODO Überschreibt bisher noch die anderen Ränder
+     * TODO Überschreibt bisher noch die anderen Ränder -> gehört eigentlich zu GUI nicht Server
      *
      * ==============================================================================================================**/
     public void movePlayerIfMovePossible(JButton[][] allButtons, Player[] allPlayer, int playerID, Position buttonPositionPressed, int tilePositionX, int tilePositionY, Tiles[][] tiles){
@@ -155,7 +161,7 @@ public class GameFunctions {
                 }
             }
             //----------------------------
-            // Für Pfei  6 7 8 bottom
+            // Für Pfeil  6 7 8 bottom
             if (((arrowNumber == 6) || (arrowNumber == 7) || (arrowNumber == 8)) && (allPlayer[playerID].getAcutalPosition().getX() == rownumber)) {
                 //setze Farbe zurück
                 allButtons[rownumber][allPlayer[playerID].getAcutalPosition().getY()].setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black));
@@ -170,7 +176,7 @@ public class GameFunctions {
                 }
             }
             //----------------------------
-            // Für Pfei  3 4 5 right
+            // Für Pfeil  3 4 5 right
             if (((arrowNumber == 3) || (arrowNumber == 4) || (arrowNumber == 5)) && (allPlayer[playerID].getAcutalPosition().getY() == rownumber)) {
                 //setze Farbe zurück
                 allButtons[allPlayer[playerID].getAcutalPosition().getX()][rownumber].setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black));
@@ -185,7 +191,7 @@ public class GameFunctions {
                 }
             }
             //----------------------------
-            // Für Pfei  9 10 11 right
+            // Für Pfeil  9 10 11 right
             if (((arrowNumber == 9) || (arrowNumber == 10) || (arrowNumber == 11)) && (allPlayer[playerID].getAcutalPosition().getY() == rownumber)) {
                 //setze Farbe zurück
                 allButtons[allPlayer[playerID].getAcutalPosition().getX()][rownumber].setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black));
@@ -206,5 +212,201 @@ public class GameFunctions {
     //==================================================================================================================
 
 
+    /**
+     * IsPlayerGettingPoints
+     * Funktion, welche überprüft, ob der Spieler auf dem gesuchten Symbol steht. Falls ja wird ein Punkt dazu addiert
+     * return 0 = kein Punkt
+     * Return 1 = Punkt
+     * return 2 = spiel beenden
+     */
+    public int isPlayerGettingPoints(Board board, int playerID){
+
+        if(board.getPlayer(playerID).getCreaturesNeeded().get(0).getCreature() == board.getTile(board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY()).getShape().getCreature()){
+            //falls sie identisch sind
+            // Punkt für den Spieler
+
+            //erstes Element wird entfernt
+            board.getPlayer(playerID).getCreaturesNeeded().remove(0);
+
+            if(board.getPlayer(playerID).getCreaturesNeeded().isEmpty()){
+                //falls die Liste der NeededCreatures leer ist -> Spieler hat gewonnen
+                return 2;
+            }
+            else{
+                System.out.println(board.getPlayer(playerID).getCreaturesNeeded().get(0).getCreature());
+                //Wert beim Spieler um 1 erhöhen
+                board.getPlayer(playerID).setScore(board.getPlayer(playerID).getScore() + 1);
+                return 1;
+            }
+        }
+        else{
+           // kein Punkt erziehlt
+            return 0;
+        }
+    }
+    //==================================================================================================================
+
+    /**
+     * isArrowMoveAllowed
+     * looks if it is allowed to place a new stone on the field.
+     * When one turn before a stone was placed on the opposite side it´s not allowed to place it
+     * @param buttonID
+     * @return boolean
+     */
+
+
+
+    public boolean isArrowMoveAllowed (int buttonID){
+
+        switch (buttonID){
+            case 0:
+                if(possibleArrowInsertions[8]){
+                    System.err.println("is allowed");
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[0]= false;
+                    return true;
+                }
+                break;
+            case 1:
+                if(possibleArrowInsertions[7]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[1]= false;
+                    return true;
+                }
+                break;
+            case 2:
+                if(possibleArrowInsertions[6]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[2]= false;
+                    return true;
+                }
+                break;
+            case 3:
+                if(possibleArrowInsertions[11]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[3]= false;
+                    return true;
+                }
+                break;
+            case 4:
+                if(possibleArrowInsertions[10]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[4]= false;
+                    return true;
+                }
+                break;
+            case 5:
+                if(possibleArrowInsertions[9]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[5]= false;
+                    return true;
+                }
+                break;
+            case 6:
+                if(possibleArrowInsertions[2]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[6]= false;
+                    return true;
+                }
+                break;
+            case 7:
+                if(possibleArrowInsertions[1]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[7]= false;
+                    return true;
+                }
+                break;
+            case 8:
+                if(possibleArrowInsertions[0]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[8]= false;
+                    return true;
+                }
+                break;
+            case 9:
+                if(possibleArrowInsertions[5]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[9]= false;
+                    return true;
+                }
+                break;
+            case 10:
+                if(possibleArrowInsertions[4]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[10]= false;
+                    return true;
+                }
+                break;
+            case 11:
+                if(possibleArrowInsertions[3]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[11]= false;
+                    return true;
+                }
+                break;
+            default:
+                System.err.println("Fehler beim Arrow auswählen.");
+                break;
+        }
+        return false;
+    }
+
+    // is used in isArrowMoveAllowed
+    public void resetAllPossibleArrowInsertrions(){
+        for(int index = 0; index < possibleArrowInsertions.length; index++) {
+            possibleArrowInsertions[index] = true;
+        }
+    }
+
+    /**
+     *
+     * @param arrowButtonID
+     * @param boardFromClient
+     * @return
+     */
+
+    //board from client -> later from server
+    public Board placeNextStoneInMaze(int arrowButtonID, Board boardFromClient){
+
+        if(isArrowMoveAllowed(arrowButtonID)){
+
+            switch (arrowButtonID){
+
+                case 0:
+                    tmpStorageTile = boardFromClient.getTile(1, 6);
+                    //move all tiles one forward
+                    for (int index = 6; index > 0; index--) {
+                        boardFromClient.setTiles(1, index, boardFromClient.getTile(1, index - 1));
+                        //Ausgabe -> muss in GUI
+                        //boardSquares[1][index].setIcon(board.getTile(1, index).getShape().getImage());
+                    }
+                    // TODO move all Players on the line if you place a stone
+
+                    //place on the first spot the next tile
+                    boardFromClient.setTiles(1, 0, boardFromClient.getNextTile());
+                    //place the tmpStorageTile
+                    boardFromClient.setNextTile(tmpStorageTile);
+
+                    break;
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+            return boardFromClient;
+
+    }
 
 }

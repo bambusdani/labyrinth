@@ -28,6 +28,7 @@
 [05/07/2016 10:12:24] OUTGOING: klajflajfla 
 [05/07/2016 10:12:24] INCOMING: [Rehan]: CHAT klajflajfla 
 [05/07/2016 10:12:24] OUTGOING: klajflajfla 
+<<<<<<< HEAD
 [09/08/2016 20:03:58] *****STARTING***** 
 [09/08/2016 20:04:05] INCOMING: chat hi 
 [09/08/2016 20:04:05] OUTGOING: [Rehan]: hi 
@@ -48,3 +49,83 @@ It's Player's 2 turn.
 [09/08/2016 20:15:01] OUTGOING: pushed 1 2 3 4 
 [09/08/2016 20:15:08] INCOMING: leave 
 [09/08/2016 20:15:08] OUTGOING: disconnect 1 
+=======
+[07/08/2016 17:45:58] *****STARTING***** 
+[07/08/2016 17:46:18] INCOMING: [Rehan]: CHAT hey 
+[07/08/2016 17:46:18] INCOMING: [Rehan]: CHAT hey 
+[07/08/2016 17:46:28] INCOMING: [Rehan]: CHAT chat hallo 
+[07/08/2016 17:46:28] OUTGOING: hallo 
+[07/08/2016 17:46:28] INCOMING: [Rehan]: CHAT chat hallo 
+[07/08/2016 17:46:28] OUTGOING: hallo 
+[07/08/2016 17:46:31] INCOMING: [Rehan]: CHAT adfa 
+[07/08/2016 17:46:31] INCOMING: [Rehan]: CHAT adfa 
+[08/08/2016 15:48:28] *****STARTING***** 
+[08/08/2016 15:48:54] INCOMING: [Rehan]: CHAT afafad 
+[08/08/2016 15:48:54] OUTGOING: afafad 
+[08/08/2016 16:28:30] INCOMING: [Rehan]: CHAT jflajflajf 
+[08/08/2016 16:28:30] OUTGOING: jflajflajf 
+[08/08/2016 16:28:30] INCOMING: [Rehan]: CHAT jflajflajf 
+[08/08/2016 16:28:30] OUTGOING: jflajflajf 
+[08/08/2016 16:28:30] INCOMING: [Rehan]: CHAT jflajflajf 
+[08/08/2016 16:28:30] OUTGOING: jflajflajf 
+[08/08/2016 16:28:33] INCOMING: [Rehan]: CHAT chat dkalf 
+[08/08/2016 16:28:33] OUTGOING: dkalf 
+[08/08/2016 16:28:33] INCOMING: [Rehan]: CHAT chat dkalf 
+[08/08/2016 16:28:33] OUTGOING: dkalf 
+[08/08/2016 16:28:33] INCOMING: [Rehan]: CHAT chat dkalf 
+[08/08/2016 16:28:33] OUTGOING: dkalf 
+[08/08/2016 16:28:40] INCOMING: [Rehan]: CHAT chat slkjfla 
+[08/08/2016 16:28:40] OUTGOING: slkjfla 
+[08/08/2016 16:28:40] INCOMING: [Rehan]: CHAT chat slkjfla 
+[08/08/2016 16:28:40] OUTGOING: slkjfla 
+[08/08/2016 16:28:40] INCOMING: [Rehan]: CHAT chat slkjfla 
+[08/08/2016 16:28:40] OUTGOING: slkjfla 
+[08/08/2016 16:28:41] INCOMING: [Rehan]: CHAT d 
+[08/08/2016 16:28:41] INCOMING: [Rehan]: CHAT d 
+[08/08/2016 16:28:41] INCOMING: [Rehan]: CHAT d 
+[08/08/2016 16:28:46] INCOMING: [Rehan]: CHAT lafjlajflajfalö 
+[08/08/2016 16:28:46] OUTGOING: lafjlajflajfalö 
+[08/08/2016 16:28:46] INCOMING: [Rehan]: CHAT lafjlajflajfalö 
+[08/08/2016 16:28:46] OUTGOING: lafjlajflajfalö 
+[08/08/2016 16:28:46] INCOMING: [Rehan]: CHAT lafjlajflajfalö 
+[08/08/2016 16:28:46] OUTGOING: lafjlajflajfalö 
+[08/08/2016 16:28:47] INCOMING: [Rehan]: CHAT alfjaö 
+[08/08/2016 16:28:47] OUTGOING: alfjaö 
+[08/08/2016 16:28:47] INCOMING: [Rehan]: CHAT alfjaö 
+[08/08/2016 16:28:47] OUTGOING: alfjaö 
+[08/08/2016 16:28:47] INCOMING: [Rehan]: CHAT alfjaö 
+[08/08/2016 16:28:47] OUTGOING: alfjaö 
+[08/08/2016 16:28:47] INCOMING: [Rehan]: CHAT aljfla 
+[08/08/2016 16:28:47] OUTGOING: aljfla 
+[08/08/2016 16:28:47] INCOMING: [Rehan]: CHAT aljfla 
+[08/08/2016 16:28:47] OUTGOING: aljfla 
+[08/08/2016 16:28:47] INCOMING: [Rehan]: CHAT aljfla 
+[08/08/2016 16:28:47] OUTGOING: aljfla 
+[08/08/2016 16:28:48] INCOMING: [Rehan]: CHAT lafjöla 
+[08/08/2016 16:28:48] OUTGOING: lafjöla 
+[08/08/2016 16:28:48] INCOMING: [Rehan]: CHAT lafjöla 
+[08/08/2016 16:28:48] OUTGOING: lafjöla 
+[08/08/2016 16:28:48] INCOMING: [Rehan]: CHAT lafjöla 
+[08/08/2016 16:28:48] OUTGOING: lafjöla 
+[08/08/2016 16:28:49] INCOMING: [Rehan]: CHAT   
+[08/08/2016 16:28:49] INCOMING: [Rehan]: CHAT   
+[08/08/2016 16:28:49] INCOMING: [Rehan]: CHAT   
+[08/08/2016 16:28:50] INCOMING: [Rehan]: CHAT afjljf afjlajf 
+[08/08/2016 16:28:50] OUTGOING: afjljf afjlajf 
+[08/08/2016 16:28:50] INCOMING: [Rehan]: CHAT afjljf afjlajf 
+[08/08/2016 16:28:50] OUTGOING: afjljf afjlajf 
+[08/08/2016 16:28:50] INCOMING: [Rehan]: CHAT afjljf afjlajf 
+[08/08/2016 16:28:50] OUTGOING: afjljf afjlajf 
+[08/08/2016 16:28:53] INCOMING: [Rehan]: CHAT lajfl aja 
+[08/08/2016 16:28:53] OUTGOING: lajfl aja 
+[08/08/2016 16:28:53] INCOMING: [Rehan]: CHAT lajfl aja 
+[08/08/2016 16:28:53] OUTGOING: lajfl aja 
+[08/08/2016 16:28:53] INCOMING: [Rehan]: CHAT lajfl aja 
+[08/08/2016 16:28:53] OUTGOING: lajfl aja 
+[08/08/2016 16:28:55] INCOMING: [Rehan]: CHAT     lkafjl  
+[08/08/2016 16:28:55] OUTGOING:     lkafjl  
+[08/08/2016 16:28:55] INCOMING: [Rehan]: CHAT     lkafjl  
+[08/08/2016 16:28:55] OUTGOING:     lkafjl  
+[08/08/2016 16:28:55] INCOMING: [Rehan]: CHAT     lkafjl  
+[08/08/2016 16:28:55] OUTGOING:     lkafjl  
+>>>>>>> 3139d51b0155de4ae94f75fe83ca639842d18924

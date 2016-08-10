@@ -5,18 +5,18 @@ import javax.swing.*;
 
 public class GoalCard {
 
-    private String symbol;
+    private String creature;
     private ImageIcon symbolImage;
 
     public GoalCard(String symbol, ImageIcon symbolImage) {
-        this.symbol = symbol;
+        this.creature = symbol;
         this.symbolImage = symbolImage;
     }
 
 
 
-    public String getSymbol() {
-        return symbol;
+    public String getCreature() {
+        return creature;
     }
 
     public ImageIcon getSymbolImage() {

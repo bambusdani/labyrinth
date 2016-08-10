@@ -49,9 +49,37 @@ public class Board {
     private ImageIcon tile30Image  = new ImageIcon("src/resources/tiles/tile30.jpg");
 
     // Creatures
-    private ImageIcon creatureImage1 = new ImageIcon("src/resources/creatures/creature1.jpg");
-    private ImageIcon creatureImage2 = new ImageIcon("src/resources/creatures/creature2.jpg");
-    //should be all!!!!!!!!!!!!!!!!
+    private ImageIcon creatureImage1 = new ImageIcon("src/resources/creatures/creature1.png");
+    private ImageIcon creatureImage2 = new ImageIcon("src/resources/creatures/creature2.png");
+    private ImageIcon creatureImage3 = new ImageIcon("src/resources/creatures/creature3.png");
+    private ImageIcon creatureImage4 = new ImageIcon("src/resources/creatures/creature4.png");
+    private ImageIcon creatureImage5 = new ImageIcon("src/resources/creatures/creature5.png");
+    private ImageIcon creatureImage6 = new ImageIcon("src/resources/creatures/creature6.png");
+    private ImageIcon creatureImage7 = new ImageIcon("src/resources/creatures/creature7.png");
+    private ImageIcon creatureImage8 = new ImageIcon("src/resources/creatures/creature8.png");
+    private ImageIcon creatureImage9 = new ImageIcon("src/resources/creatures/creature9.png");
+    private ImageIcon creatureImage10= new ImageIcon("src/resources/creatures/creature10.png");
+    private ImageIcon creatureImage11= new ImageIcon("src/resources/creatures/creature11.png");
+    private ImageIcon creatureImage12= new ImageIcon("src/resources/creatures/creature12.png");
+    private ImageIcon creatureImage13= new ImageIcon("src/resources/creatures/creature13.png");
+    private ImageIcon creatureImage14= new ImageIcon("src/resources/creatures/creature14.png");
+    private ImageIcon creatureImage15= new ImageIcon("src/resources/creatures/creature15.png");
+    private ImageIcon creatureImage16= new ImageIcon("src/resources/creatures/creature16.png");
+    private ImageIcon creatureImage17= new ImageIcon("src/resources/creatures/creature17.png");
+    private ImageIcon creatureImage18= new ImageIcon("src/resources/creatures/creature18.png");
+    private ImageIcon creatureImage19= new ImageIcon("src/resources/creatures/creature19.png");
+    private ImageIcon creatureImage20= new ImageIcon("src/resources/creatures/creature20.png");
+    private ImageIcon creatureImage21= new ImageIcon("src/resources/creatures/creature21.png");
+    private ImageIcon creatureImage22= new ImageIcon("src/resources/creatures/creature22.png");
+    private ImageIcon creatureImage23= new ImageIcon("src/resources/creatures/creature23.png");
+    private ImageIcon creatureImage24= new ImageIcon("src/resources/creatures/creature24.png");
+    //startPointsCreature
+    private ImageIcon creatureImageRed    = new ImageIcon("src/resources/creatures/red.png");
+    private ImageIcon creatureImageBlue   = new ImageIcon("src/resources/creatures/blue.png");
+    private ImageIcon creatureImageYellow = new ImageIcon("src/resources/creatures/yellow.png");
+    private ImageIcon creatureImageGreen  = new ImageIcon("src/resources/creatures/green.png");
+
+
 
 
     //==============================================================
@@ -104,10 +132,35 @@ public class Board {
         tile30Image.setImage(tile30Image.getImage().getScaledInstance(70,70,Image.SCALE_DEFAULT));
 
         //creatures
-        creatureImage1.setImage(creatureImage1.getImage().getScaledInstance(70,70,Image.SCALE_DEFAULT));
-        creatureImage2.setImage(creatureImage2.getImage().getScaledInstance(70,70,Image.SCALE_DEFAULT));
-
-
+        creatureImage1.setImage(creatureImage1.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage2.setImage(creatureImage2.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage3.setImage(creatureImage3.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage4.setImage(creatureImage4.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage5.setImage(creatureImage5.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage6.setImage(creatureImage6.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage7.setImage(creatureImage7.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage8.setImage(creatureImage8.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage9.setImage(creatureImage9.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage10.setImage(creatureImage10.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage11.setImage(creatureImage11.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage12.setImage(creatureImage12.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage13.setImage(creatureImage13.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage14.setImage(creatureImage14.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage15.setImage(creatureImage15.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage16.setImage(creatureImage16.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage17.setImage(creatureImage17.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage18.setImage(creatureImage18.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage19.setImage(creatureImage19.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage20.setImage(creatureImage20.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage21.setImage(creatureImage21.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage22.setImage(creatureImage22.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage23.setImage(creatureImage23.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImage24.setImage(creatureImage24.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        //startPositionCreatures
+        creatureImageGreen.setImage(creatureImageGreen.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImageYellow.setImage(creatureImageYellow.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImageBlue.setImage(creatureImageBlue.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+        creatureImageRed.setImage(creatureImageRed.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
 
 
 
@@ -119,27 +172,89 @@ public class Board {
         //Tiles vermischen
         shuffleTiles(this.tiles);
 
-        String[] creaturesNeeded = {"creature1", "creature2"};
+        //==============================================================================================================
+        /**
+         * Creating all GoalCards
+         * placeing all Cards into the list allCreaturesNeeded
+         * shuffel all and place it in the player neededCreatures
+         */
+        GoalCard mouse      = new GoalCard("mouse",     creatureImage1);
+        GoalCard krone      = new GoalCard("krone",     creatureImage2);
+        GoalCard spinne     = new GoalCard("spinne",    creatureImage3);
+        GoalCard kerze      = new GoalCard("kerze",     creatureImage4);
+        GoalCard rubin      = new GoalCard("rubin",     creatureImage5);
+        GoalCard geist      = new GoalCard("geist",     creatureImage6);
+        GoalCard eule       = new GoalCard("eule",      creatureImage7);
+        GoalCard fledermaus = new GoalCard("fledermaus",creatureImage8);
+        GoalCard drache     = new GoalCard("drache",    creatureImage9);
+        GoalCard motte      = new GoalCard("motte",     creatureImage10);
+        GoalCard fgeist     = new GoalCard("fgeist",    creatureImage11);
+        GoalCard key        = new GoalCard("key",       creatureImage12);
+        GoalCard map        = new GoalCard("map",       creatureImage13);
+        GoalCard zauberer   = new GoalCard("zauberer",  creatureImage14);
+        GoalCard skull      = new GoalCard("skull",     creatureImage15);
+        GoalCard coins      = new GoalCard("coins",     creatureImage16);
+        GoalCard schatz     = new GoalCard("schatz",    creatureImage17);
+        GoalCard ring       = new GoalCard("ring",      creatureImage18);
+        GoalCard helm       = new GoalCard("helm",      creatureImage19);
+        GoalCard salamander = new GoalCard("salamander",creatureImage20);
+        GoalCard troll      = new GoalCard("troll",     creatureImage21);
+        GoalCard book       = new GoalCard("book",      creatureImage22);
+        GoalCard schwert    = new GoalCard("schwert",   creatureImage23);
+        GoalCard käfer      = new GoalCard("käfer",     creatureImage24);
+        //Startpositionen -> falsches Bild
+        GoalCard red        = new GoalCard("red",       creatureImageRed);
+        GoalCard yellow     = new GoalCard("yellow",    creatureImageYellow);
+        GoalCard green      = new GoalCard("green",     creatureImageGreen);
+        GoalCard blue       = new GoalCard("blue",      creatureImageBlue);
 
-        //Liste mit allen Creaturen zu finden
-        // vl liste besser geeignet als array
-        // alle einzeln erstellen in einer liste mischen und dann auf spieler aufteilen
-        GoalCard mouse = new GoalCard("mouse", creatureImage1);
-        GoalCard crown = new GoalCard("crown", creatureImage2);
-        GoalCard[] allCreaturesNeeded = { mouse, crown };
-        // vl eine liste und nur immer eine bestimmte anzahl raus nehmen
-        GoalCard[] creaturesNeededPlayer1 = {mouse};
-        GoalCard[] creaturesNeededPlayer2 = {crown};
-        GoalCard[] creaturesNeededPlayer3 = {null};
-        GoalCard[] creaturesNeededPlayer4 = {null};
+        //creating a list off all cards
+        List<GoalCard> allCreaturesNeeded = Arrays.asList(mouse, krone, spinne, kerze, rubin, geist, eule, fledermaus, drache, motte, fgeist, key, map, zauberer, skull, coins, schatz, ring, helm, salamander, troll, book, schwert, käfer);
+
+        //shuffel of List
+        Collections.shuffle(allCreaturesNeeded);
+
+        List<GoalCard> creaturesNeededPlayer1 = new ArrayList<>();
+        List<GoalCard> creaturesNeededPlayer2 = new ArrayList<>();
+        List<GoalCard> creaturesNeededPlayer3 = new ArrayList<>();
+        List<GoalCard> creaturesNeededPlayer4 = new ArrayList<>();
+
+        for (int index = 0 ; allCreaturesNeeded.size() >= index ; index++){
+            if(index < 6){
+                //first Player
+                creaturesNeededPlayer1.add(allCreaturesNeeded.get(index));
+            }
+            if(index >= 6 && index < 12){
+                //second Player
+                creaturesNeededPlayer2.add(allCreaturesNeeded.get(index));
+            }
+            if(index >= 12 && index < 18){
+                //third Player
+                creaturesNeededPlayer3.add(allCreaturesNeeded.get(index));
+            }
+            if(index >= 18 && index < 24){
+                //forth Player
+                creaturesNeededPlayer4.add(allCreaturesNeeded.get(index));
+            }
+        }
+
+        //letzte karte zuweisen -> Startposition
+        creaturesNeededPlayer1.add(red);
+        creaturesNeededPlayer2.add(blue);
+        creaturesNeededPlayer3.add(yellow);
+        creaturesNeededPlayer4.add(green);
+
+        //==============================================================================================================
 
 
 
+
+    //TODO bei der Spielererstellung müssen die Daten aus dem Fenster davor übergeben werde
                                   //startPosition   , actualPosition   , ID, Color                      ,turn,score, name, cardsymbolNeeded
-        allPlayers[0] = new Player(new Position(0,0), new Position(1,5), 1 , new Color(255, 0 ,0),      true,   5, "Rehan",    creaturesNeededPlayer1);
+        allPlayers[0] = new Player(new Position(6,6), new Position(1,5), 1 , new Color(255, 0 ,0),      true,   0, "Rehan",    creaturesNeededPlayer1);
         allPlayers[1] = new Player(new Position(0,6), new Position(3,2), 2 , new Color(0, 255 ,0),      false,  6, "Marvin",   creaturesNeededPlayer2);
-        allPlayers[2] = new Player(new Position(6,0), new Position(5,3), 3 , new Color(0, 255 ,255),    false,  6, "Daniel",   creaturesNeededPlayer3);
-        allPlayers[3] = new Player(new Position(6,6), new Position(2,5), 4 , new Color(255, 255 ,0),    false,  6, null ,      creaturesNeededPlayer4);
+        allPlayers[2] = new Player(new Position(6,0), new Position(5,3), 3 , new Color(34, 70,255),     false,  6, "Daniel",   creaturesNeededPlayer3);
+        allPlayers[3] = new Player(new Position(0,0), new Position(2,5), 4 , new Color(255, 255 ,0),    false,  6, " " ,      creaturesNeededPlayer4);
     }
     //===========================
 
@@ -222,11 +337,11 @@ public class Board {
         tiles[0][3] = new Tiles(4,true,new  Position(0,3),  new Shape(tile9Image, "T" ,  new boolean[] {true,true,false,true}, "drache"),0);        tiles[4][3] = new Tiles(32,true,new  Position(4,3), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
         tiles[0][4] = new Tiles(5,false,new Position(0,4), new Shape(tile21Image, "T" , new boolean[] {true,true,true,false},"helm"),0);            tiles[4][4] = new Tiles(33,false,new Position(4,4),new Shape(tile23Image, "T" , new boolean[] {true,false,true,true},"key"),0);
         tiles[0][5] = new Tiles(6,true,new  Position(0,5),  new Shape(tile3Image, "L" ,  new boolean[] {false,true,true,false},"eule"),0);          tiles[4][5] = new Tiles(34,true,new  Position(4,5), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
-        tiles[0][6] = new Tiles(7,false,new Position(0,6), new Shape(tile28Image, "L" , new boolean[] {true,true,false,false},"blue"),0);           tiles[4][6] = new Tiles(35,false,new Position(4,6),new Shape(tile26Image, "T" , new boolean[] {true,true,false,true},"skul"),0);
+        tiles[0][6] = new Tiles(7,false,new Position(0,6), new Shape(tile28Image, "L" , new boolean[] {true,true,false,false},"blue"),0);           tiles[4][6] = new Tiles(35,false,new Position(4,6),new Shape(tile26Image, "T" , new boolean[] {true,true,false,true},"skull"),0);
         //zweite Reihe                                                                                                                              //sechste Reihe
         tiles[1][0] = new Tiles(8,true,new  Position(1,0),  new Shape(tile4Image, "T" ,  new boolean[] {true,true,false,true},"zauberer"),0);       tiles[5][0] = new Tiles(36,true,new Position(5,0),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
         tiles[1][1] = new Tiles(9,true,new  Position(1,1),  new Shape(tile5Image, "L" ,  new boolean[] {true,true,false,false},"käfer"),0);         tiles[5][1] = new Tiles(37,true,new Position(5,1),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
-        tiles[1][2] = new Tiles(10,true,new Position(1,2), new Shape(tile6Image, "T" ,  new boolean[] {true,true,false,true},"Fgeist"),0);          tiles[5][2] = new Tiles(38,true,new Position(5,2),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
+        tiles[1][2] = new Tiles(10,true,new Position(1,2), new Shape(tile6Image, "T" ,  new boolean[] {true,true,false,true},"fgeist"),0);          tiles[5][2] = new Tiles(38,true,new Position(5,2),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
         tiles[1][3] = new Tiles(11,true,new Position(1,3), new Shape(tile7Image, "L" ,  new boolean[] {false,true,true,false},"salamander"),0);     tiles[5][3] = new Tiles(39,true,new Position(5,3),new Shape(tile1Image, "I" , new boolean[] {false,true,false,true},null),0);
         tiles[1][4] = new Tiles(12,true,new Position(1,4), new Shape(tile10Image, "T" , new boolean[] {true,true,false,true},"troll"),0);           tiles[5][4] = new Tiles(40,true,new Position(5,4),new Shape(tile1Image, "I" , new boolean[] {false,true,false,true},null),0);
         tiles[1][5] = new Tiles(13,true,new Position(1,5), new Shape(tile11Image, "L" , new boolean[] {false,false,true,true},"mouse"),0);          tiles[5][5] = new Tiles(41,true,new Position(5,5),new Shape(tile1Image, "I" , new boolean[] {false,true,false,true},null),0);
