@@ -585,14 +585,14 @@ public class playGround implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		//chat text field
 		if(textField == e.getSource()) {
-			if(textField.getText().equalsIgnoreCase("LEAVE")) {
-				out.println(screenName + "LEAVE");
-				System.exit(0);
+			if(textField.getText().equalsIgnoreCase("leave")) {
+				out.println(screenName + "leave");
+				frame.dispose();
 			} else {
-				out.println(screenName + "CHAT " + textField.getText());
-				textField.setText("");
-				textField.requestFocusInWindow();
+				out.println(screenName + "chat " + textField.getText());
 			}
+			textField.setText("");
+			textField.requestFocusInWindow();
 		}
 
 		if(buttonEndGame == e.getSource()){
@@ -727,10 +727,9 @@ public class playGround implements ActionListener {
 			//gameFunctions.placeStoneWithArrow( board, 0, boardSquares, labelNextStoneSymbol );
 			/*
 			//send to server that move was made
-			//pushing example
 
-			/** Displays which button is pressed in the chat window*/
-			//out.println(screenName + "PUSH 1 2 3 4");
+			//pushing
+			out.println(screenName + "push 1 2 3 4");
 
 			//ist zug möglich?
 	//##################################################################################################################

@@ -28,6 +28,7 @@ public class ConnectionListener extends Thread {
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
+        //this.protocol = new Protocol();
         this.protocol = new Protocol();
 
         //================================================================================
@@ -82,14 +83,17 @@ public class ConnectionListener extends Thread {
                     for (Connection jth : connections) {
                         try {
                             //get message to process
-                            protocol.setMessage(message);
+                            //protocol.setMessage(message);
+                            String[] tmpMessage = message.split(": ");
+                            protocol.setIncMessage(tmpMessage);
                             //add to log
-                            LOGGER.info("INCOMING: " + message);
+                            LOGGER.info("INCOMING: " + tmpMessage[1]);
 
                             //validate message and print it
-                            jth.println(protocol.getMessage());
+                            //jth.println(protocol.getMessage());
+                            jth.println(protocol.getOutMessage());
                             //add to log
-                            LOGGER.info("OUTGOING: " + protocol.getMessage());
+                            LOGGER.info("OUTGOING: " + protocol.getOutMessage());
                         }
                         catch (Exception e) {
                             //--------------------------------------------------------------------------------
