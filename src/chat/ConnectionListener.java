@@ -21,6 +21,7 @@ public class ConnectionListener extends Thread {
     private boolean mError, mException;
     private String sException;
     private Protocol protocol;
+    private Logic logic;
 
     //--------------------------------------------------------------------------------
     // create a new board so we can get the player information needed
@@ -30,6 +31,7 @@ public class ConnectionListener extends Thread {
         this.connections = connections;
         //this.protocol = new Protocol();
         this.protocol = new Protocol();
+        this.logic = new Logic();
 
         //================================================================================
         // setup the logger

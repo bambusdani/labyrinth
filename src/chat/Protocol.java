@@ -15,6 +15,7 @@ public class Protocol {
     public Protocol() {
         board = new Board();
         this.playerID = 0;
+
     }
 
     public void setIncMessage(String[] incMessage) {
