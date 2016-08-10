@@ -12,7 +12,7 @@ public class GameFunctions {
 
     //placeStoneWithArrows
     //Im Uhrzeigersinn den Buttons(einschub/pfeilbuttons) zugewiesen
-    public boolean[] possibleInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
+    public boolean[] possibleArrowInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
     Tiles tmpStorageTile;
 
 
@@ -246,6 +246,167 @@ public class GameFunctions {
     }
     //==================================================================================================================
 
+    /**
+     * isArrowMoveAllowed
+     * looks if it is allowed to place a new stone on the field.
+     * When one turn before a stone was placed on the opposite side it´s not allowed to place it
+     * @param buttonID
+     * @return boolean
+     */
 
+
+
+    public boolean isArrowMoveAllowed (int buttonID){
+
+        switch (buttonID){
+            case 0:
+                if(possibleArrowInsertions[8]){
+                    System.err.println("is allowed");
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[0]= false;
+                    return true;
+                }
+                break;
+            case 1:
+                if(possibleArrowInsertions[7]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[1]= false;
+                    return true;
+                }
+                break;
+            case 2:
+                if(possibleArrowInsertions[6]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[2]= false;
+                    return true;
+                }
+                break;
+            case 3:
+                if(possibleArrowInsertions[11]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[3]= false;
+                    return true;
+                }
+                break;
+            case 4:
+                if(possibleArrowInsertions[10]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[4]= false;
+                    return true;
+                }
+                break;
+            case 5:
+                if(possibleArrowInsertions[9]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[5]= false;
+                    return true;
+                }
+                break;
+            case 6:
+                if(possibleArrowInsertions[2]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[6]= false;
+                    return true;
+                }
+                break;
+            case 7:
+                if(possibleArrowInsertions[1]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[7]= false;
+                    return true;
+                }
+                break;
+            case 8:
+                if(possibleArrowInsertions[0]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[8]= false;
+                    return true;
+                }
+                break;
+            case 9:
+                if(possibleArrowInsertions[5]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[9]= false;
+                    return true;
+                }
+                break;
+            case 10:
+                if(possibleArrowInsertions[4]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[10]= false;
+                    return true;
+                }
+                break;
+            case 11:
+                if(possibleArrowInsertions[3]){
+                    resetAllPossibleArrowInsertrions();
+                    possibleArrowInsertions[11]= false;
+                    return true;
+                }
+                break;
+            default:
+                System.err.println("Fehler beim Arrow auswählen.");
+                break;
+        }
+        return false;
+    }
+
+    // is used in isArrowMoveAllowed
+    public void resetAllPossibleArrowInsertrions(){
+        for(int index = 0; index < possibleArrowInsertions.length; index++) {
+            possibleArrowInsertions[index] = true;
+        }
+    }
+
+    /**
+     *
+     * @param arrowButtonID
+     * @param boardFromClient
+     * @return
+     */
+
+    //board from client -> later from server
+    public Board placeNextStoneInMaze(int arrowButtonID, Board boardFromClient){
+
+        if(isArrowMoveAllowed(arrowButtonID)){
+
+            switch (arrowButtonID){
+
+                case 0:
+                    tmpStorageTile = boardFromClient.getTile(1, 6);
+                    //move all tiles one forward
+                    for (int index = 6; index > 0; index--) {
+                        boardFromClient.setTiles(1, index, boardFromClient.getTile(1, index - 1));
+                        //Ausgabe -> muss in GUI
+                        //boardSquares[1][index].setIcon(board.getTile(1, index).getShape().getImage());
+                    }
+                    // TODO move all Players on the line if you place a stone
+
+                    //place on the first spot the next tile
+                    boardFromClient.setTiles(1, 0, boardFromClient.getNextTile());
+                    //place the tmpStorageTile
+                    boardFromClient.setNextTile(tmpStorageTile);
+
+                    break;
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+            return boardFromClient;
+
+    }
 
 }

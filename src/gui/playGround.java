@@ -15,6 +15,8 @@ import gameLogic.Shape;
 import java.net.Socket;
 
 public class playGround implements ActionListener {
+	//TODO muss beim Konstruktor mit übergeben werden -> jeder Spieler bekommt sein eigenes Feld
+	private int playerID = 0;
 
 	private int fontSize = 20;
 	private int boxSizeX = 175;
@@ -71,7 +73,6 @@ public class playGround implements ActionListener {
 	//label für das Nachste Ziel
 	private JLabel labelNextGoalSymbol;
 
-
 	//chat stuff
 	private JTextArea textArea;
 	private JTextField textField;
@@ -88,7 +89,8 @@ public class playGround implements ActionListener {
 	private String screenName;
 
 	// Erstellen der Klasse mit wichtigen Funktionen
-	GameFunctions gameFunctions = new GameFunctions();
+	private GameFunctions gameFunctions = new GameFunctions();
+
 
 
 	public playGround(Board board, String hostName, String screenName) {
@@ -136,7 +138,7 @@ public class playGround implements ActionListener {
 		constraintsPlayeroverview.gridy = 0;
 		labelPlayer0 = setLabel(board.getPlayer(0).getNameOfPlayer()+ ": " + board.getPlayer(0).getScore() ,fontSize, boxSizeX, boxSizeY, board.getPlayer(0).getColor());
 		//shows which players turn it is
-		if(board.getPlayer(0).getTurn() == true){
+		if(board.getPlayer(0).getTurn()){
 			labelPlayer0.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
 		}
 		panelPlayeroverview.add(labelPlayer0, constraintsPlayeroverview);
@@ -146,7 +148,7 @@ public class playGround implements ActionListener {
 		constraintsPlayeroverview.gridy = 0;
 		labelPlayer1 = setLabel(board.getPlayer(1).getNameOfPlayer()+ ": " + board.getPlayer(1).getScore()  ,fontSize, boxSizeX, boxSizeY , board.getPlayer(1).getColor());
 		//shows which players turn it is
-		if(board.getPlayer(1).getTurn() == true){
+		if(board.getPlayer(1).getTurn()){
 			labelPlayer1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
 		}
 		panelPlayeroverview.add(labelPlayer1, constraintsPlayeroverview);
@@ -156,7 +158,7 @@ public class playGround implements ActionListener {
 		constraintsPlayeroverview.gridy = 0;
 		labelPlayer2 = setLabel(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore() ,fontSize, boxSizeX, boxSizeY , board.getPlayer(2).getColor());
 		//shows which players turn it is
-		if(board.getPlayer(2).getTurn() == true){
+		if(board.getPlayer(2).getTurn()){
 			labelPlayer2.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
 		}
 		panelPlayeroverview.add(labelPlayer2, constraintsPlayeroverview);
@@ -166,7 +168,7 @@ public class playGround implements ActionListener {
 		constraintsPlayeroverview.gridy = 0;
 		labelPlayer3 = setLabel(board.getPlayer(3).getNameOfPlayer()+": " + board.getPlayer(3).getScore() ,fontSize, boxSizeX, boxSizeY , board.getPlayer(3).getColor() );
 		//shows which players turn it is
-		if(board.getPlayer(3).getTurn() == true){
+		if(board.getPlayer(3).getTurn()){
 			labelPlayer3.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
 		}
 		panelPlayeroverview.add(labelPlayer3, constraintsPlayeroverview);
@@ -218,10 +220,8 @@ public class playGround implements ActionListener {
 		// instead of Dragon it should use an image
 		JLabel labelReachedGoalsSymbol = setLabel("",fontSize, stoneSize, stoneSize, colorBlack );
 	//gibt nur das ziel des Players 0 aus sowie das erste ziel gibt ebenfalls falschen wert aus!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//labelReachedGoalsSymbol.setIcon(board.getAllPlayers()[1].getCreaturesNeeded()[0].getSymbolImage());
 
 		labelReachedGoalsSymbol.setIcon(board.getAllPlayers()[1].getCreaturesNeeded().get(0).getSymbolImage());
-
 		labelReachedGoalsSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
 		panelInformation.add(labelReachedGoalsSymbol, constraintsInformation);
 
@@ -229,7 +229,7 @@ public class playGround implements ActionListener {
 		// next goal
 		constraintsInformation.gridx = 0;
 		constraintsInformation.gridy = 2;
-		JLabel labelNextGoal = setLabel("N�chstes Ziele: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+		JLabel labelNextGoal = setLabel("Nächstes Ziel: ",fontSize, boxSizeX, boxSizeY, colorBlack );
 		panelInformation.add(labelNextGoal, constraintsInformation);
 
 		//-----------------------------------------------------------------------------------
@@ -238,10 +238,8 @@ public class playGround implements ActionListener {
 		constraintsInformation.gridy = 3;
 		// instead of Dragon it should use an image
 		labelNextGoalSymbol = setLabel("Dragon",fontSize, stoneSize, stoneSize, colorBlack );
-		//muss spielerabhängig gemacht werden!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//labelNextGoalSymbol.setIcon(board.getAllPlayers()[0].getCreaturesNeeded()[0].getSymbolImage());
 
-		labelNextGoalSymbol.setIcon(board.getAllPlayers()[0].getCreaturesNeeded().get(0).getSymbolImage());
+		labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
 
 		labelNextGoalSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
 		panelInformation.add(labelNextGoalSymbol, constraintsInformation);
@@ -444,16 +442,7 @@ public class playGround implements ActionListener {
 
 				JButton buttonStone = setButtons("", fontSize, stoneSize, stoneSize);
 				buttonStone.setIcon(board.getTile(j,i).getShape().getImage());//drawing pic on it
-				//------------------------
-				// is placing the symbols on the tiles
 
-				//wird nicht mehr benötigt
-				/*if(board.getTile(j, i).getSymbol() == null){
-					buttonStone.setText(board.getTile(j, i).getShape());
-				}
-				else{
-					buttonStone.setText(board.getTile(j, i).getShape() + " " + board.getTile(j, i).getSymbol());
-				}*/
 				//-------------------------
 				// checking if the players are on the the spot if yes draw a colored border
 				if((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)){
@@ -650,8 +639,9 @@ public class playGround implements ActionListener {
 					// Aufruf ob der Zug möglich ist
 
 					// erstellt aus j und i eine neue Position
-					Position buttonPositionPressed= new Position(j, i);
-					int playerID = 0;
+					Position buttonPositionPressed = new Position(j, i);
+
+					//TODO wurde bereits ein Stein reingeschoben???
 					// Ist der Zug möglich, falls ja ändere die Ränder
 					gameFunctions.movePlayerIfMovePossible(boardSquares,board.getAllPlayers(), playerID ,buttonPositionPressed,board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY(),board.getallTiles());
 
@@ -701,6 +691,38 @@ public class playGround implements ActionListener {
 		// topArrowButtons
 		if(buttonArrow_1_0 == e.getSource()){
 
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(0,board);
+
+			//Spielfeld wird komplett neu gezeichnet
+			for(int j = 0; j < boardSquares.length; j++) {
+				for (int i = 0; i < boardSquares[j].length; i++) {
+
+					boardSquares[j][i].setIcon(board.getTile(j,i).getShape().getImage());
+
+					// checking if the players are on the the spot if yes draw a colored border
+					if((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)){
+						boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
+					}
+					if((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)){
+						boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(1).getColor()));
+					}
+					if((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i)){
+						boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(2).getColor()));
+					}
+					if((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)){
+						boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(3).getColor()));
+					}
+				}
+			}
+			labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
+
+
+
+
+
+
+
 			//noch nicht funktionsfähig
 			//gameFunctions.placeStoneWithArrow( board, 0, boardSquares, labelNextStoneSymbol );
 			/*
@@ -711,7 +733,8 @@ public class playGround implements ActionListener {
 			//out.println(screenName + "PUSH 1 2 3 4");
 
 			//ist zug möglich?
-			if(possibleInsertions[0]) {
+	//##################################################################################################################
+	/*		if(possibleInsertions[0]) {
 				System.out.println("ArrowButton j: 1 i: 0");
 
 				for(int index = 0; index < possibleInsertions.length; index++) {
@@ -739,8 +762,8 @@ public class playGround implements ActionListener {
 			else {
 				System.err.print("Invalid -> ArrowButton j: 1 i: 0");
 			}
-
-
+		*/
+		//##############################################################################################################
 		}
 		if(buttonArrow_3_0 == e.getSource()){
 

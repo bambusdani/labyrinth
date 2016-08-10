@@ -244,27 +244,12 @@ public class Board {
         creaturesNeededPlayer3.add(yellow);
         creaturesNeededPlayer4.add(green);
 
-
-        //testausgabe
-        for (int index=0 ; creaturesNeededPlayer1.size() > index; index ++){
-            System.out.println(creaturesNeededPlayer1.get(index).getCreature());
-        }
-        for (int index=0 ; creaturesNeededPlayer2.size() > index; index ++){
-            System.out.println(creaturesNeededPlayer2.get(index).getCreature());
-        }
-        for (int index=0 ; creaturesNeededPlayer3.size() > index; index ++){
-            System.out.println(creaturesNeededPlayer3.get(index).getCreature());
-        }
-        for (int index=0 ; creaturesNeededPlayer4.size() > index; index ++){
-            System.out.println(creaturesNeededPlayer4.get(index).getCreature());
-        }
-
         //==============================================================================================================
 
 
 
 
-
+    //TODO bei der Spielererstellung müssen die Daten aus dem Fenster davor übergeben werde
                                   //startPosition   , actualPosition   , ID, Color                      ,turn,score, name, cardsymbolNeeded
         allPlayers[0] = new Player(new Position(6,6), new Position(1,5), 1 , new Color(255, 0 ,0),      true,   0, "Rehan",    creaturesNeededPlayer1);
         allPlayers[1] = new Player(new Position(0,6), new Position(3,2), 2 , new Color(0, 255 ,0),      false,  6, "Marvin",   creaturesNeededPlayer2);
