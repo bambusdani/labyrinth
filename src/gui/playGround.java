@@ -585,12 +585,8 @@ public class playGround implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		//chat text field
 		if(textField == e.getSource()) {
-			if(textField.getText().equalsIgnoreCase("leave")) {
-				out.println(screenName + "leave");
-				frame.dispose();
-			} else {
-				out.println(screenName + "chat " + textField.getText());
-			}
+			out.println(screenName + "chat " + textField.getText());
+			
 			textField.setText("");
 			textField.requestFocusInWindow();
 		}
