@@ -686,446 +686,113 @@ public class playGround implements ActionListener {
 		// buttonArrow_1_0 means line j:1 i:0 on the field
 		// topArrowButtons
 		if(buttonArrow_1_0 == e.getSource()){
-
+			// TODO arrowID 0
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(0,board);
-
-			//Spielfeld wird komplett neu gezeichnet
-			for(int j = 0; j < boardSquares.length; j++) {
-				for (int i = 0; i < boardSquares[j].length; i++) {
-
-					boardSquares[j][i].setIcon(board.getTile(j,i).getShape().getImage());
-
-					// checking if the players are on the the spot if yes draw a colored border
-					if((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)){
-						boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
-					}
-					if((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)){
-						boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(1).getColor()));
-					}
-					if((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i)){
-						boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(2).getColor()));
-					}
-					if((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)){
-						boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(3).getColor()));
-					}
-				}
-			}
-			labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
 
 
-
-
-
-
-
-			//noch nicht funktionsfähig
-			//gameFunctions.placeStoneWithArrow( board, 0, boardSquares, labelNextStoneSymbol );
-			/*
-			//send to server that move was made
-
-			//pushing
-			out.println(screenName + "push 1 2 3 4");
-
-			//ist zug möglich?
-	//##################################################################################################################
-	/*		if(possibleInsertions[0]) {
-				System.out.println("ArrowButton j: 1 i: 0");
-
-				for(int index = 0; index < possibleInsertions.length; index++) {
-					possibleInsertions[index] = true;
-				}
-				//gegenüber auf false
-				possibleInsertions[8]=false;
-
-				tmpStorageTile = board.getTile(1, 6);
-
-				for (int index = 6; index > 0; index--) {
-					board.setTiles(1, index, board.getTile(1, index - 1));
-					//boardSquares[1][index].setText(board.getTile(1, index).getShape());
-					boardSquares[1][index].setIcon(board.getTile(1, index).getShape().getImage());
-				}
-				//moves Player if you place a stone
-				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,0);
-
-				board.setTiles(1, 0, board.getNextTile());
-				boardSquares[1][0].setIcon(board.getTile(1, 0).getShape().getImage());
-
-				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-			}
-			else {
-				System.err.print("Invalid -> ArrowButton j: 1 i: 0");
-			}
-		*/
-		//##############################################################################################################
 		}
 		if(buttonArrow_3_0 == e.getSource()){
-
-
-			//ist zug möglich?
-			if(possibleInsertions[1]) {
-				System.out.println("ArrowButton j: 3 i: 0");
-				//gegenüber auf false
-				for(int index = 0; index < possibleInsertions.length; index++) {
-					possibleInsertions[index] = true;
-				}
-				possibleInsertions[7] = false;
-
-				tmpStorageTile = board.getTile(3, 6);
-
-				for (int index = 6; index > 0; index--) {
-					board.setTiles(3, index, board.getTile(3, index - 1));
-					boardSquares[3][index].setIcon(board.getTile(3, index).getShape().getImage());
-				}
-				//moves Player if you place a stone
-				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,1);
-
-
-				board.setTiles(3, 0, board.getNextTile());
-				boardSquares[3][0].setIcon(board.getTile(3, 0).getShape().getImage());
-
-				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-			}
-			else{System.err.print("Invalid -> ArrowButton j: 3 i: 0");}
-
+			// TODO arrowID 1
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(1,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
 		}
+
 		if(buttonArrow_5_0 == e.getSource()){
-
-
-			//ist zug möglich?
-			if(possibleInsertions[2]) {
-				System.out.println("ArrowButton j: 5 i: 0");
-
-				for (int index = 0; index < possibleInsertions.length; index++) {
-					possibleInsertions[index] = true;
-				}
-				//gegenüber auf false
-				possibleInsertions[6] = false;
-
-				tmpStorageTile = board.getTile(5, 6);
-
-				for (int index = 6; index > 0; index--) {
-					board.setTiles(5, index, board.getTile(5, index - 1));
-					boardSquares[5][index].setIcon(board.getTile(5, index).getShape().getImage());
-				}
-				//moves Player if you place a stone
-				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,2);
-
-				board.setTiles(5, 0, board.getNextTile());
-				boardSquares[5][0].setIcon(board.getTile(5, 0).getShape().getImage());
-
-				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-			}
-			else{
-				System.err.println("Invalid -> ArrowButton j: 5 i: 0");}
+			// TODO arrowID 2
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(2,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
 
 		}
 		// bottomArrowButtons
 		if(buttonArrow_1_6 == e.getSource()){
-			//ist zug möglich?
+			// TODO arrowID 8
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(8,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
 
-			if(possibleInsertions[8]) {
-				for (int index = 0; index < possibleInsertions.length; index++) {
-					possibleInsertions[index] = true;
-				}
-				//gegenüber auf false
-				possibleInsertions[0] = false;
-
-				System.out.println("ArrowButton j: 1 i: 6");
-
-				tmpStorageTile = board.getTile(1, 0);
-
-				for (int index = 0; index < 6; index++) {
-					board.setTiles(1, index, board.getTile(1, index + 1));
-					boardSquares[1][index].setIcon(board.getTile(1, index).getShape().getImage());
-				}
-				//moves Player if you place a stone
-				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,8);
-
-				board.setTiles(1, 6, board.getNextTile());
-				boardSquares[1][6].setIcon(board.getTile(1, 6).getShape().getImage());
-
-				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-			}
-			else{
-				System.err.println("Invalid -> ArrowButton j: 1 i: 6");}
 
 		}
 		if(buttonArrow_3_6 == e.getSource()){
-
-
-			//ist zug möglich?
-			if(possibleInsertions[7]) {
-				System.out.println("ArrowButton j: 3 i: 6");
-				for (int index = 0; index < possibleInsertions.length; index++) {
-					possibleInsertions[index] = true;
-				}
-				//gegenüber auf false
-				possibleInsertions[1] = false;
-
-				tmpStorageTile = board.getTile(3, 0);
-
-				for (int index = 0; index < 6; index++) {
-					board.setTiles(3, index, board.getTile(3, index + 1));
-					boardSquares[3][index].setIcon(board.getTile(3, index).getShape().getImage());
-				}
-				//moves Player if you place a stone
-				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,7);
-
-				board.setTiles(3, 6, board.getNextTile());
-				boardSquares[3][6].setIcon(board.getTile(3, 6).getShape().getImage());
-
-				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-			}
-			else{
-				System.err.println("Invalid -> ArrowButton j: 3 i: 6");}
+// TODO arrowID 7
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(7,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
 
 		}
 		if(buttonArrow_5_6 == e.getSource()){
-
-
-			//ist zug möglich?
-			if(possibleInsertions[6]) {
-				System.out.println("ArrowButton j: 5 i: 6");
-				for (int index = 0; index < possibleInsertions.length; index++) {
-					possibleInsertions[index] = true;
-				}
-				//gegenüber auf false
-				possibleInsertions[2] = false;
-
-				tmpStorageTile = board.getTile(5, 0);
-
-				for (int index = 0; index < 6; index++) {
-					board.setTiles(5, index, board.getTile(5, index + 1));
-					boardSquares[5][index].setIcon(board.getTile(5, index).getShape().getImage());
-				}
-				//moves Player if you place a stone
-				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,6);
-
-				board.setTiles(5, 6, board.getNextTile());
-				boardSquares[5][6].setIcon(board.getTile(5, 6).getShape().getImage());
-
-				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-			}
-			else{
-				System.err.println("Invalid -> ArrowButton j: 5 i: 6");
-			}
-
-
+// TODO arrowID 6
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(6,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
 
 		}
 		//leftArrowButton
 		if(buttonArrow_0_1 == e.getSource()){
-
-
-
-
-			//ist zug möglich?
-			if(possibleInsertions[11]) {
-				System.out.println("ArrowButton j: 0 i: 1");
-				for (int index = 0; index < possibleInsertions.length; index++) {
-					possibleInsertions[index] = true;
-				}
-				//gegenüber auf false
-				possibleInsertions[3] = false;
-
-
-				tmpStorageTile = board.getTile(6, 1);
-
-				for (int index = 6; index > 0; index--) {
-					board.setTiles(index, 1, board.getTile(index - 1, 1));
-					boardSquares[index][1].setIcon(board.getTile(index, 1).getShape().getImage());
-				}
-				//moves Player if you place a stone
-				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,11);
-
-				board.setTiles(0, 1, board.getNextTile());
-				boardSquares[0][1].setIcon(board.getTile(0, 1).getShape().getImage());
-
-				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-			}
-			else{
-				System.err.println("Invalid -> ArrowButton j: 0 i: 1");
-			}
+// TODO arrowID 11
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(11,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
 
 		}
 		if(buttonArrow_0_3 == e.getSource()){
-
-
-			//ist zug möglich?
-			if(possibleInsertions[10]) {
-				System.out.println("ArrowButton j: 0 i: 3");
-				for (int index = 0; index < possibleInsertions.length; index++) {
-					possibleInsertions[index] = true;
-				}
-				//gegenüber auf false
-				possibleInsertions[4] = false;
-
-				tmpStorageTile = board.getTile(6, 3);
-
-				for (int index = 6; index > 0; index--) {
-					board.setTiles(index, 3, board.getTile(index - 1, 3));
-					boardSquares[index][3].setIcon(board.getTile(index, 3).getShape().getImage());
-				}
-				//moves Player if you place a stone
-				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,10);
-
-
-				board.setTiles(0, 3, board.getNextTile());
-				boardSquares[0][3].setIcon(board.getTile(0, 3).getShape().getImage());
-
-				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-			}
-			else{
-				System.err.println("Invalid -> ArrowButton j: 0 i: 3");
-			}
+// TODO arrowID 10
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(10,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
 
 		}
 		if(buttonArrow_0_5 == e.getSource()){
-
-
-
-
-			//ist zug möglich?
-			if(possibleInsertions[9]) {
-				System.out.println("ArrowButton j: 0 i: 5");
-				for (int index = 0; index < possibleInsertions.length; index++) {
-					possibleInsertions[index] = true;
-				}
-				//gegenüber auf false
-				possibleInsertions[5] = false;
-
-
-				tmpStorageTile = board.getTile(6, 5);
-
-				for (int index = 6; index > 0; index--) {
-					board.setTiles(index, 5, board.getTile(index - 1, 5));
-					boardSquares[index][5].setIcon(board.getTile(index, 5).getShape().getImage());
-				}
-				//moves Player if you place a stone
-				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,9);
-
-
-				board.setTiles(0, 5, board.getNextTile());
-				boardSquares[0][5].setIcon(board.getTile(0, 5).getShape().getImage());
-
-				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-			}
-			else{
-				System.err.println("Invalid -> ArrowButton j: 0 i: 5");
-			}
-
+// TODO arrowID 9
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(9,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
 
 
 
 		}
 		//rightArrowButton
 		if(buttonArrow_6_1 == e.getSource()){
+// TODO arrowID 3
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(3,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
 
-
-
-
-			//ist zug möglich?
-			if(possibleInsertions[3]) {
-				System.out.println("ArrowButton j: 6 i: 1");
-				for (int index = 0; index < possibleInsertions.length; index++) {
-					possibleInsertions[index] = true;
-				}
-				//gegenüber auf false
-				possibleInsertions[11] = false;
-
-				tmpStorageTile = board.getTile(0, 1);
-
-				for (int index = 0; index < 6; index++) {
-					board.setTiles(index, 1, board.getTile(index + 1, 1));
-					boardSquares[index][1].setIcon(board.getTile(index, 1).getShape().getImage());
-				}
-				//moves Player if you place a stone
-				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,3);
-
-				board.setTiles(6, 1, board.getNextTile());
-				boardSquares[6][1].setIcon(board.getTile(6, 1).getShape().getImage());
-
-				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-			}
-			else{
-				System.err.println("Invalid -> ArrowButton j: 6 i: 1");
-			}
 
 		}
 		if(buttonArrow_6_3 == e.getSource()){
+// TODO arrowID 4
+
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(4,board);
+			//Todo sende an server den button und id
+			// Todo -> bekomme ein board zurück
+
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
 
 
-			//ist zug möglich?
-			if(possibleInsertions[4]) {
-				System.out.println("ArrowButton j: 6 i: 3");
-				for (int index = 0; index < possibleInsertions.length; index++) {
-					possibleInsertions[index] = true;
-				}
-				//gegenüber auf false
-				possibleInsertions[10] = false;
-
-				tmpStorageTile = board.getTile(0, 3);
-
-				for (int index = 0; index < 6; index++) {
-					board.setTiles(index, 3, board.getTile(index + 1, 3));
-					boardSquares[index][3].setIcon(board.getTile(index, 3).getShape().getImage());
-				}
-				//moves Player if you place a stone
-				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,4);
-
-
-				board.setTiles(6, 3, board.getNextTile());
-				boardSquares[6][3].setIcon(board.getTile(6, 3).getShape().getImage());
-
-				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-			}
-			else{
-				System.err.println("Invalid -> ArrowButton j: 6 i: 3");
-			}
 
 		}
 		if(buttonArrow_6_5 == e.getSource()){
-
-
-			//ist zug möglich?
-			if(possibleInsertions[5]) {
-				System.out.println("ArrowButton j: 6 i: 5");
-				for (int index = 0; index < possibleInsertions.length; index++) {
-					possibleInsertions[index] = true;
-				}
-				//gegenüber auf false
-				possibleInsertions[9] = false;
-
-				tmpStorageTile = board.getTile(0, 5);
-
-				for (int index = 0; index < 6; index++) {
-					board.setTiles(index, 5, board.getTile(index + 1, 5));
-					boardSquares[index][5].setIcon(board.getTile(index, 5).getShape().getImage());
-				}
-				//moves Player if you place a stone
-				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,5);
-
-				board.setTiles(6, 5, board.getNextTile());
-				boardSquares[6][5].setIcon(board.getTile(6, 5).getShape().getImage());
-
-				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-			}
-			else{
-				System.err.println("Invalid -> ArrowButton j: 6 i: 5");
-			}
+// TODO arrowID 5
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(5,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
 
 
 		}
@@ -1151,6 +818,43 @@ public class playGround implements ActionListener {
 		catch (Exception e) { e.printStackTrace(); }
 		System.err.println("Closed client socket");
 	}
+
+
+    /**
+	 * drawGameField()
+	 * @param board
+	 * draws the whole gameField
+	 */
+
+	public void drawGameField(Board board){
+
+		//Spielfeld wird komplett neu gezeichnet
+		for(int j = 0; j < boardSquares.length; j++) {
+			for (int i = 0; i < boardSquares[j].length; i++) {
+				//draw images on the buttons
+				boardSquares[j][i].setIcon(board.getTile(j,i).getShape().getImage());
+				//set border from buttons on default
+				boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, colorBlack));
+
+				// checking if the players are on the the spot if yes draw a colored border
+				if((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)){
+					boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
+				}
+				if((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)){
+					boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(1).getColor()));
+				}
+				if((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i)){
+					boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(2).getColor()));
+				}
+				if((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)){
+					boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(3).getColor()));
+				}
+			}
+		}
+		//draw the NextStone image
+		labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
+	}
+
 
 }
 

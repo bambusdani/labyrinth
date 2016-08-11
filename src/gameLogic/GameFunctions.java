@@ -371,21 +371,161 @@ public class GameFunctions {
         if(isArrowMoveAllowed(arrowButtonID)){
 
             switch (arrowButtonID){
-
+            //TODO top
+                // todo stimmt
                 case 0:
                     tmpStorageTile = boardFromClient.getTile(1, 6);
                     //move all tiles one forward
                     for (int index = 6; index > 0; index--) {
                         boardFromClient.setTiles(1, index, boardFromClient.getTile(1, index - 1));
-                        //Ausgabe -> muss in GUI
-                        //boardSquares[1][index].setIcon(board.getTile(1, index).getShape().getImage());
                     }
-                    // TODO move all Players on the line if you place a stone
-
                     //place on the first spot the next tile
                     boardFromClient.setTiles(1, 0, boardFromClient.getNextTile());
                     //place the tmpStorageTile
                     boardFromClient.setNextTile(tmpStorageTile);
+
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+
+                    break;
+                // todo stimmt
+                case 1:
+                    tmpStorageTile = boardFromClient.getTile(3, 6);
+                    for (int index = 6; index > 0; index--) {
+                        boardFromClient.setTiles(3, index, boardFromClient.getTile(3, index - 1));
+                    }
+                    boardFromClient.setTiles(3, 0, boardFromClient.getNextTile());
+                    boardFromClient.setNextTile(tmpStorageTile);
+
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+
+                    break;
+                //todo stimmt
+                case 2:
+                    tmpStorageTile = boardFromClient.getTile(5, 6);
+                    for (int index = 6; index > 0; index--) {
+                        boardFromClient.setTiles(5, index, boardFromClient.getTile(5, index - 1));
+                    }
+                    boardFromClient.setNextTile(tmpStorageTile);
+                    boardFromClient.setTiles(5, 0, boardFromClient.getNextTile());
+
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+
+                    break;
+            //TODO right
+
+                //todo stimmt
+                case 8:
+                    tmpStorageTile = boardFromClient.getTile(1, 0);
+                    for (int index = 0; index < 6; index++) {
+                        boardFromClient.setTiles(1, index, boardFromClient.getTile(1, index + 1));
+                    }
+                    boardFromClient.setTiles(1, 6, boardFromClient.getNextTile());
+                    boardFromClient.setNextTile(tmpStorageTile);
+
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+
+                    break;
+                //todo stimmt
+                case 7:
+                    tmpStorageTile = boardFromClient.getTile(3, 0);
+                    for (int index = 0; index < 6; index++) {
+                        boardFromClient.setTiles(3, index, boardFromClient.getTile(3, index + 1));
+                    }
+                    boardFromClient.setTiles(3, 6, boardFromClient.getNextTile());
+                    boardFromClient.setNextTile(tmpStorageTile);
+
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+
+                    break;
+
+                //todo stimmt
+                case 6:
+                    tmpStorageTile = boardFromClient.getTile(5, 0);
+                    for (int index = 0; index < 6; index++) {
+                        boardFromClient.setTiles(5, index, boardFromClient.getTile(5, index + 1));
+                    }
+                    boardFromClient.setTiles(5, 6, boardFromClient.getNextTile());
+                    boardFromClient.setNextTile(tmpStorageTile);
+
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+
+                    break;
+                //TODO bottom
+                //todo stimmt
+                case 11:
+                    tmpStorageTile = boardFromClient.getTile(6, 1);
+                    for (int index = 6; index > 0; index--) {
+                        boardFromClient.setTiles(index, 1, boardFromClient.getTile(index - 1, 1));
+                    }
+                    boardFromClient.setTiles(0, 1, boardFromClient.getNextTile());
+                    boardFromClient.setNextTile(tmpStorageTile);
+
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+
+                    break;
+                //Todo stimmt
+                case 10:
+                    tmpStorageTile = boardFromClient.getTile(6, 3);
+                    for (int index = 6; index > 0; index--) {
+                        boardFromClient.setTiles(index, 3, boardFromClient.getTile(index - 1, 3));
+                    }
+                    boardFromClient.setTiles(0, 3, boardFromClient.getNextTile());
+                    boardFromClient.setNextTile(tmpStorageTile);
+
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+
+                    break;
+
+                case 9:
+
+                    tmpStorageTile = boardFromClient.getTile(6, 5);
+                    for (int index = 6; index > 0; index--) {
+                        boardFromClient.setTiles(index, 5, boardFromClient.getTile(index - 1, 5));
+                    }
+                    boardFromClient.setTiles(0, 5, boardFromClient.getNextTile());
+                    boardFromClient.setNextTile(tmpStorageTile);
+
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+
+                    break;
+                //TODO left
+                //todo stimmt
+                case 3:
+                    tmpStorageTile = boardFromClient.getTile(0, 1);
+
+                    for (int index = 0; index < 6; index++) {
+                        boardFromClient.setTiles(index, 1, boardFromClient.getTile(index + 1, 1));
+                    }
+
+                    boardFromClient.setTiles(6, 1, boardFromClient.getNextTile());
+                    boardFromClient.setNextTile(tmpStorageTile);
+
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+
+                    break;
+                //todo stimmt
+                case 4:
+                    tmpStorageTile = boardFromClient.getTile(0, 3);
+
+                    for (int index = 0; index < 6; index++) {
+                        boardFromClient.setTiles(index, 3, boardFromClient.getTile(index + 1, 3));
+                    }
+                    boardFromClient.setTiles(6, 3, boardFromClient.getNextTile());
+                    boardFromClient.setNextTile(tmpStorageTile);
+
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+
+                    break;
+
+                case 5:
+                    tmpStorageTile = boardFromClient.getTile(0, 5);
+                    for (int index = 0; index < 6; index++) {
+                        boardFromClient.setTiles(index, 5, boardFromClient.getTile(index + 1, 5));
+                    }
+                    boardFromClient.setTiles(6, 5, boardFromClient.getNextTile());
+                    boardFromClient.setNextTile(tmpStorageTile);
+
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
 
                     break;
 
@@ -394,19 +534,106 @@ public class GameFunctions {
 
 
 
-
-
-
-
-
-
-
-
-
         }
+
+
 
             return boardFromClient;
 
     }
+
+
+
+    /**
+     *  Move player on the maze if a stone is placed in the same line
+     *  int arrowNumber counts clockwise from 0 to 11
+     */
+    public Board movePlayerIfStoneIsPlacedInMaze(Board board, int arrowNumber){
+        int rownumber = 0;
+        switch (arrowNumber){
+            //top and bottom
+            case 0:
+            case 8:
+                rownumber = 1;
+                break;
+            case 1:
+            case 7:
+                rownumber = 3;
+                break;
+            case 2:
+            case 6:
+                rownumber = 5;
+                break;
+            //right and left
+            case 3:
+            case 11:
+                rownumber = 1;
+                break;
+            case 4:
+            case 10:
+                rownumber = 3;
+                break;
+            case 5:
+            case 9:
+                rownumber = 5;
+                break;
+        }
+
+        for (int playerID = 0 ; playerID < board.getAllPlayers().length ; playerID ++) {
+
+            // Für Pfeil 0 1 2 top
+            if (((arrowNumber==0) || (arrowNumber == 1) || (arrowNumber == 2)) && (board.getPlayer(playerID).getAcutalPosition().getX() == rownumber)) {
+                if (board.getPlayer(playerID).getAcutalPosition().getY() == 6) {
+                    // aus dem spielfeld schieben
+                    board.getPlayer(playerID).setActualPosition(new Position(rownumber, 0));
+                } else {
+                    //eins weiter schieben
+                    board.getPlayer(playerID).setActualPosition(new Position(rownumber, board.getPlayer(playerID).getAcutalPosition().getY() + 1));
+                }
+            }
+            //----------------------------
+            // Für Pfeil  6 7 8 bottom
+            if (((arrowNumber == 6) || (arrowNumber == 7) || (arrowNumber == 8)) && (board.getPlayer(playerID).getAcutalPosition().getX() == rownumber)) {
+                if (board.getPlayer(playerID).getAcutalPosition().getY() == 0) {
+                    // aus dem spielfeld schieben
+                    board.getPlayer(playerID).setActualPosition(new Position(rownumber, 6));
+                } else {
+                    //eins weiter schieben
+                    board.getPlayer(playerID).setActualPosition(new Position(rownumber, board.getPlayer(playerID).getAcutalPosition().getY() - 1));
+                }
+            }
+            //----------------------------
+            // Für Pfeil  3 4 5 right
+            if (((arrowNumber == 3) || (arrowNumber == 4) || (arrowNumber == 5)) && (board.getPlayer(playerID).getAcutalPosition().getY() == rownumber)) {
+                if (board.getPlayer(playerID).getAcutalPosition().getX() == 0) {
+                    // aus dem spielfeld schieben
+                    board.getPlayer(playerID).setActualPosition(new Position(6,rownumber));
+                } else {
+                    //eins weiter schieben
+                    board.getPlayer(playerID).setActualPosition(new Position(board.getPlayer(playerID).getAcutalPosition().getX() - 1, rownumber));
+                }
+            }
+            //----------------------------
+            // Für Pfeil  9 10 11 right
+            if (((arrowNumber == 9) || (arrowNumber == 10) || (arrowNumber == 11)) && (board.getPlayer(playerID).getAcutalPosition().getY() == rownumber)) {
+                //setze Farbe zurück
+                if (board.getPlayer(playerID).getAcutalPosition().getX() == 6) {
+                    // aus dem spielfeld schieben
+                    board.getPlayer(playerID).setActualPosition(new Position(0,rownumber));
+                } else {
+                    //eins weiter schieben
+                    board.getPlayer(playerID).setActualPosition(new Position(board.getPlayer(playerID).getAcutalPosition().getX() + 1, rownumber));
+                }
+            }
+        }
+        return board;
+    }
+    //==================================================================================================================
+/**
+ *
+ *
+ */
+
+
 
 }
