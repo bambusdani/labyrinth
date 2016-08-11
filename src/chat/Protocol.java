@@ -178,7 +178,7 @@ public class Protocol {
     }
 
     //================================================================================
-    // TODO test
+    // TODO
     //================================================================================
     public void setPlayerPoints(int playerPoints) {
         this.playerPoints = playerPoints;
@@ -192,11 +192,7 @@ public class Protocol {
         setPlayerPoints(gameFunctions.isPlayerGettingPoints(board, playerID));
     }
 
-    public boolean isDummy() {
-        return dummy;
-    }
-
-    public void setDummy(boolean dummy) {
-        this.dummy = dummy;
+    public Board updateBoard(Board board) {
+        return board;
     }
 }

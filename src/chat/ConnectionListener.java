@@ -79,12 +79,17 @@ public class ConnectionListener extends Thread {
                 }
 
                 //--------------------------------------------------------------------------------
-                //TODO Test
+                //TODO
                 for (Connection jth : connections) {
                     jth.isPlayerGettingPoints(board, playerID);
-                    LOGGER.warning("POINT");
                 }
-                LOGGER.warning("DRECK");
+
+                /*
+                THIS IS A TEST FOR RETURNING A UPDATED BOARD
+                for (Connection jth : connections) {
+                    jth.updateBoard(board);
+                }
+                 */
 
                 //--------------------------------------------------------------------------------
                 // Begin with server broadcasting to all clients
