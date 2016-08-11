@@ -17,11 +17,11 @@ public class ConnectionListener extends Thread {
 
 
     private final static Logger LOGGER = Logger.getLogger(ConnectionListener.class.getName());
-    static private int playerID;
+    private int playerID;
     private boolean mError, mException;
     private String sException;
     private Protocol protocol;
-    private Logic logic;
+    private GameFunctions gf;
 
     //--------------------------------------------------------------------------------
     // create a new board so we can get the player information needed
@@ -31,7 +31,7 @@ public class ConnectionListener extends Thread {
         this.connections = connections;
         //this.protocol = new Protocol();
         this.protocol = new Protocol();
-        this.logic = new Logic();
+        this.gf = new GameFunctions();
 
         //================================================================================
         // setup the logger
@@ -77,6 +77,14 @@ public class ConnectionListener extends Thread {
                     ith.println(sException);
                     mException = false;
                 }
+
+                //--------------------------------------------------------------------------------
+                //TODO Test
+                for (Connection jth : connections) {
+                    jth.isPlayerGettingPoints(board, playerID);
+                    LOGGER.warning("POINT");
+                }
+                LOGGER.warning("DRECK");
 
                 //--------------------------------------------------------------------------------
                 // Begin with server broadcasting to all clients

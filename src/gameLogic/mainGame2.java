@@ -11,13 +11,11 @@ public class mainGame2 {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		
-		Board board2 = new Board();
 
-		//playGround boardview2 = new playGround(board2);
+		Board board = new Board();
 
-		//ChatClient client2 = new ChatClient("Marvin", "localhost", boardview2.getTextArea(), boardview2.getTextField());
-		//client2.listen();
+		playGround boardview = new playGround(board, "localhost", "Daniel");
+		boardview.listen();
 	}
 
 }

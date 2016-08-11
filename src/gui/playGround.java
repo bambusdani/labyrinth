@@ -79,7 +79,6 @@ public class playGround implements ActionListener {
 
 	public Board board ;
 	private Protocol protocol;
-	private Logic logic;
 
 	// socket for connection to chat server
 	private Socket socket;
@@ -92,12 +91,9 @@ public class playGround implements ActionListener {
 	// Erstellen der Klasse mit wichtigen Funktionen
 	private GameFunctions gameFunctions = new GameFunctions();
 
-
-
 	public playGround(Board board, String hostName, String screenName) {
 		this.board = board;
 		this.protocol = new Protocol();
-		this.logic = new Logic();
 
 		// connect to server
 		try {
@@ -650,7 +646,8 @@ public class playGround implements ActionListener {
 					 * Zeichnen der Punkte
 					 */
 					//switch (gameFunctions.isPlayerGettingPoints(board , playerID)){
-					switch (logic.getPlayerPoints()){
+					protocol.isPlayerGettingPoints(board, playerID);
+					switch (protocol.getPlayerPoints()){
 						case 0:
 							//System.out.println("kein Punkt");
 							break;

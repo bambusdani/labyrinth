@@ -1,9 +1,11 @@
 package chat;
 
 import gameLogic.Board;
+import gameLogic.GameFunctions;
 
 public class Protocol {
     private Board board;
+    private GameFunctions gameFunctions;
 
     private String[] incMessage;
     private String username;
@@ -11,11 +13,14 @@ public class Protocol {
     private String outMessage;
     private String logMessage;
     private int playerID;
+    private int playerPoints;
+    private boolean dummy;
 
     public Protocol() {
         board = new Board();
+        this.gameFunctions = new GameFunctions();
         this.playerID = 0;
-
+        this.playerPoints = 0;
     }
 
     public void setIncMessage(String[] incMessage) {
@@ -170,5 +175,28 @@ public class Protocol {
 
         //log entry
         this.logMessage = "disconnect " + playerID;
+    }
+
+    //================================================================================
+    // TODO test
+    //================================================================================
+    public void setPlayerPoints(int playerPoints) {
+        this.playerPoints = playerPoints;
+    }
+
+    public int getPlayerPoints() {
+        return playerPoints;
+    }
+
+    public void isPlayerGettingPoints(Board board, int playerID) {
+        setPlayerPoints(gameFunctions.isPlayerGettingPoints(board, playerID));
+    }
+
+    public boolean isDummy() {
+        return dummy;
+    }
+
+    public void setDummy(boolean dummy) {
+        this.dummy = dummy;
     }
 }

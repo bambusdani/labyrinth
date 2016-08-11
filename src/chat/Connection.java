@@ -6,6 +6,7 @@
 package chat;
 
 import java.net.Socket;
+import gameLogic.*;
 
 public class Connection extends Thread {
     private Socket socket;
@@ -33,7 +34,7 @@ public class Connection extends Thread {
         try                 { socket.close();      }
         catch (Exception e) { e.printStackTrace(); }
         System.err.println("closing socket");
-    }
+    };
 
    /***************************************************************************
     *  The methods getMessage() and setMessage() are synchronized
@@ -54,5 +55,25 @@ public class Connection extends Thread {
             catch (Exception ex) { ex.printStackTrace(); }
         }
         message = s;
+    }
+
+    public synchronized void setPlayerPoints(int playerPoints) {
+        protocol.setPlayerPoints(playerPoints);
+    }
+
+    public synchronized void isPlayerGettingPoints(Board board, int playerID) {
+        protocol.isPlayerGettingPoints(board, playerID);
+    }
+
+    public synchronized int getPlayerPoints() {
+        return protocol.getPlayerPoints();
+    }
+
+    public void setDummy(boolean x) {
+        protocol.setDummy(x);
+    }
+
+    public boolean isDummy() {
+        return protocol.isDummy();
     }
 }
