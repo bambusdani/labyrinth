@@ -582,7 +582,11 @@ public class playGround implements ActionListener {
 	//=================================================================================
 	//actionListener
 	//=================================================================================
+
 	public void actionPerformed(ActionEvent e) {
+		//Abfrage ob Spieler dran ist
+		if(gameFunctions.getPlayersTurn().get(playerID)){
+
 		//chat text field
 		if(textField == e.getSource()) {
 			out.println(screenName + "chat " + textField.getText());
@@ -604,14 +608,6 @@ public class playGround implements ActionListener {
 			rotationAngle += 90;
 
 			int newRotation = board.getNextTile().getRotation()+90;
-
-			//Testausgabe der Rotation
-			//System.out.println("Rotation beträgt: " + newRotation);
-
-			//ystem.out.println(board.getNextTile().getShape().getPossiblePaths()[0]+" ");
-			//System.out.println(board.getNextTile().getShape().getPossiblePaths()[1]+" ");
-			//System.out.println(board.getNextTile().getShape().getPossiblePaths()[2]+" ");
-			//System.out.println(board.getNextTile().getShape().getPossiblePaths()[3]+" ");
 
 			labelNextStoneSymbol.setIcon(board.getNextTile().getShape().rotateImage(rotationAngle));
 			board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(rotationAngle));
@@ -665,16 +661,6 @@ public class playGround implements ActionListener {
 							gameEnd.createGui();
 							break;
 					}
-					//==================================================================================================
-
-					//////////////////////////////////////////////////////////////////////////////////
-					//gibt den array aus welchen weg man gehen kann bzw wo wände sind true=freier weg
-					//System.out.println("mögliche Wege zu gehen");
-					//System.out.print(board.getTile(j,i).getShape().getPossiblePaths()[0] + " " );
-					//System.out.print(board.getTile(j,i).getShape().getPossiblePaths()[1] + " ");
-					//System.out.print(board.getTile(j,i).getShape().getPossiblePaths()[2] + " ");
-					//System.out.print(board.getTile(j,i).getShape().getPossiblePaths()[3]);
-					///////////////////////////////////////////////////////////////////////////////////
 				}
 			}
 		}
@@ -714,51 +700,6 @@ public class playGround implements ActionListener {
 			labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 
 
-
-
-
-
-
-			//noch nicht funktionsfähig
-			//gameFunctions.placeStoneWithArrow( board, 0, boardSquares, labelNextStoneSymbol );
-			/*
-			//send to server that move was made
-
-			//pushing
-			out.println(screenName + "push 1 2 3 4");
-
-			//ist zug möglich?
-	//##################################################################################################################
-	/*		if(possibleInsertions[0]) {
-				System.out.println("ArrowButton j: 1 i: 0");
-
-				for(int index = 0; index < possibleInsertions.length; index++) {
-					possibleInsertions[index] = true;
-				}
-				//gegenüber auf false
-				possibleInsertions[8]=false;
-
-				tmpStorageTile = board.getTile(1, 6);
-
-				for (int index = 6; index > 0; index--) {
-					board.setTiles(1, index, board.getTile(1, index - 1));
-					//boardSquares[1][index].setText(board.getTile(1, index).getShape());
-					boardSquares[1][index].setIcon(board.getTile(1, index).getShape().getImage());
-				}
-				//moves Player if you place a stone
-				gameFunctions.movePlayerIfMazeIsChanged(board.getAllPlayers(),boardSquares,0);
-
-				board.setTiles(1, 0, board.getNextTile());
-				boardSquares[1][0].setIcon(board.getTile(1, 0).getShape().getImage());
-
-				board.setNextTile(tmpStorageTile);
-				labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
-			}
-			else {
-				System.err.print("Invalid -> ArrowButton j: 1 i: 0");
-			}
-		*/
-		//##############################################################################################################
 		}
 		if(buttonArrow_3_0 == e.getSource()){
 
@@ -1129,7 +1070,7 @@ public class playGround implements ActionListener {
 
 
 		}
-
+	}
 	}
 
 	public void setBoard(Board newBoard){

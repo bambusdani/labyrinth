@@ -2,7 +2,8 @@ package gameLogic;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.List;
 
 /**
  * Includes all the Functions which are used in the GUI
@@ -10,8 +11,8 @@ import java.util.ArrayList;
 public class GameFunctions {
 
     //playerManagement variables
-    private java.util.List<Boolean> activePlayers = new ArrayList<Boolean>();
-    private java.util.List<Boolean> playersTurn = new ArrayList<Boolean>();
+    private ArrayList<Boolean> activePlayers = new ArrayList<Boolean>();
+    private ArrayList<Boolean> playersTurn = new ArrayList<Boolean>();
 
     //wird für checkMazeIfMoveISPossible benötigt
     boolean[][] visited = new boolean[7][7];
@@ -449,16 +450,21 @@ public class GameFunctions {
     }
 
     public void nextPlayersTurn(){
-        for(int index = 0; index < playersTurn.size(); index++){
-            if(playersTurn.get(index)){
+        for(int index = 0; index < playersTurn.size(); index++) {
+            if (playersTurn.get(index)) {
 
                 //Zug des momentanen Spielers wird beendet
                 playersTurn.set(index, false);
 
                 //Nächster Spieler ist an der Reihe
-                playersTurn.set(index+1, true);
+                playersTurn.set(index + 1, true);
             }
         }
+    }
+
+    //Getter und Setter
+    public ArrayList<Boolean> getPlayersTurn(){
+        return playersTurn;
     }
 
 }
