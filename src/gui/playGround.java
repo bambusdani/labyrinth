@@ -686,96 +686,31 @@ public class playGround implements ActionListener {
 		// buttonArrow_1_0 means line j:1 i:0 on the field
 		// topArrowButtons
 		if(buttonArrow_1_0 == e.getSource()){
-			// TODO arrowID 0
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(0,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
-
-
 		}
 		if(buttonArrow_3_0 == e.getSource()){
-			// TODO arrowID 1
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(1,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
 		}
-
 		if(buttonArrow_5_0 == e.getSource()){
-			// TODO arrowID 2
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(2,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
-
 		}
-		// bottomArrowButtons
-		if(buttonArrow_1_6 == e.getSource()){
-			// TODO arrowID 8
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(8,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-
-		}
-		if(buttonArrow_3_6 == e.getSource()){
-// TODO arrowID 7
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(7,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-		}
-		if(buttonArrow_5_6 == e.getSource()){
-// TODO arrowID 6
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(6,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-		}
-		//leftArrowButton
-		if(buttonArrow_0_1 == e.getSource()){
-// TODO arrowID 11
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(11,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-		}
-		if(buttonArrow_0_3 == e.getSource()){
-// TODO arrowID 10
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(10,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-		}
-		if(buttonArrow_0_5 == e.getSource()){
-// TODO arrowID 9
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(9,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-
-
-		}
-		//rightArrowButton
+		//right arrows
 		if(buttonArrow_6_1 == e.getSource()){
-// TODO arrowID 3
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(3,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
-
-
 		}
 		if(buttonArrow_6_3 == e.getSource()){
-// TODO arrowID 4
-
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(4,board);
 			//Todo sende an server den button und id
@@ -783,18 +718,50 @@ public class playGround implements ActionListener {
 
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
-
-
-
 		}
 		if(buttonArrow_6_5 == e.getSource()){
-// TODO arrowID 5
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(5,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
-
-
+		}
+		//bottom arrows
+		if(buttonArrow_5_6 == e.getSource()){
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(6,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
+		}
+		if(buttonArrow_3_6 == e.getSource()){
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(7,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
+		}
+		if(buttonArrow_1_6 == e.getSource()){
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(8,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
+		}
+		// left arrows
+		if(buttonArrow_0_5 == e.getSource()){
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(9,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
+		}
+		if(buttonArrow_0_3 == e.getSource()){
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(10,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
+		}
+		if(buttonArrow_0_1 == e.getSource()){
+			//übergibt die ButtonID + Board und bekommt ein neues zurück
+			board = gameFunctions.placeNextStoneInMaze(11,board);
+			//zeichnet das komplette Spielfeld neu
+			drawGameField(board);
 		}
 
 	}
