@@ -585,7 +585,8 @@ public class playGround implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		//Abfrage ob Spieler dran ist
-		if(gameFunctions.getPlayersTurn().get(playerID)){
+		//if(gameFunctions.getPlayersTurn().get(playerID)){
+		if(true){
 
 		//chat text field
 		if(textField == e.getSource()) {
