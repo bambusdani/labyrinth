@@ -582,7 +582,11 @@ public class playGround implements ActionListener {
 	//=================================================================================
 	//actionListener
 	//=================================================================================
+
 	public void actionPerformed(ActionEvent e) {
+		//Abfrage ob Spieler dran ist
+		if(gameFunctions.getPlayersTurn().get(playerID)){
+
 		//chat text field
 		if(textField == e.getSource()) {
 			out.println(screenName + "chat " + textField.getText());
@@ -604,14 +608,6 @@ public class playGround implements ActionListener {
 			rotationAngle += 90;
 
 			int newRotation = board.getNextTile().getRotation()+90;
-
-			//Testausgabe der Rotation
-			//System.out.println("Rotation beträgt: " + newRotation);
-
-			//ystem.out.println(board.getNextTile().getShape().getPossiblePaths()[0]+" ");
-			//System.out.println(board.getNextTile().getShape().getPossiblePaths()[1]+" ");
-			//System.out.println(board.getNextTile().getShape().getPossiblePaths()[2]+" ");
-			//System.out.println(board.getNextTile().getShape().getPossiblePaths()[3]+" ");
 
 			labelNextStoneSymbol.setIcon(board.getNextTile().getShape().rotateImage(rotationAngle));
 			board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(rotationAngle));
@@ -665,16 +661,6 @@ public class playGround implements ActionListener {
 							gameEnd.createGui();
 							break;
 					}
-					//==================================================================================================
-
-					//////////////////////////////////////////////////////////////////////////////////
-					//gibt den array aus welchen weg man gehen kann bzw wo wände sind true=freier weg
-					//System.out.println("mögliche Wege zu gehen");
-					//System.out.print(board.getTile(j,i).getShape().getPossiblePaths()[0] + " " );
-					//System.out.print(board.getTile(j,i).getShape().getPossiblePaths()[1] + " ");
-					//System.out.print(board.getTile(j,i).getShape().getPossiblePaths()[2] + " ");
-					//System.out.print(board.getTile(j,i).getShape().getPossiblePaths()[3]);
-					///////////////////////////////////////////////////////////////////////////////////
 				}
 			}
 		}
@@ -688,8 +674,10 @@ public class playGround implements ActionListener {
 		if(buttonArrow_1_0 == e.getSource()){
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(0,board);
+
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
+
 		}
 		if(buttonArrow_3_0 == e.getSource()){
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
@@ -763,7 +751,7 @@ public class playGround implements ActionListener {
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
 		}
-
+	}
 	}
 
 	public void setBoard(Board newBoard){
