@@ -2,11 +2,17 @@ package gameLogic;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Includes all the Functions which are used in the GUI
  */
 public class GameFunctions {
+
+    //playerManagement variables
+    private java.util.List<Boolean> activePlayers = new ArrayList<Boolean>();
+    private java.util.List<Boolean> playersTurn = new ArrayList<Boolean>();
+
     //wird für checkMazeIfMoveISPossible benötigt
     boolean[][] visited = new boolean[7][7];
 
@@ -407,6 +413,52 @@ public class GameFunctions {
 
             return boardFromClient;
 
+    }
+
+    /**
+     * Player Management:
+     *      List only filled with active Players
+     *      Number of active players are counted
+     *      Number of active players created
+     * */
+
+    //only active Players are added playersTurn list
+    public void addActiveToPlayersTurn(){
+        //Nur die aktiven Spieler werden ausgelsen -> nur diese können Züge Machen
+        for(int index = 0; index < activePlayers.size(); index++){
+            if(activePlayers.get(index)){
+                playersTurn.add(true);
+            }
+        }
+    }
+
+    //Active players added to players list
+    public int numberOfActivePlayers(){
+        return(playersTurn.size());
+    }
+
+
+    public int playersTurn(){
+        for(int index = 0; index < playersTurn.size(); index++){
+            if(playersTurn.get(index)){
+                int playerID = index + 1;
+                return playerID;
+            }
+        }
+        return 0;
+    }
+
+    public void nextPlayersTurn(){
+        for(int index = 0; index < playersTurn.size(); index++){
+            if(playersTurn.get(index)){
+
+                //Zug des momentanen Spielers wird beendet
+                playersTurn.set(index, false);
+
+                //Nächster Spieler ist an der Reihe
+                playersTurn.set(index+1, true);
+            }
+        }
     }
 
 }
