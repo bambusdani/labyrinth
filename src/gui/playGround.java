@@ -22,6 +22,7 @@ public class playGround implements ActionListener {
 	//PlayerManagement
 	private int playerID = 0;
 	ArrayList<Boolean> playersTurn = new ArrayList<Boolean>();
+	private Boolean tileInsertionAllowed = true;
 	//------------------------
 
 
@@ -615,8 +616,6 @@ public class playGround implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		//Abfrage ob Spieler dran ist
-		//if(gameFunctions.getPlayersTurn().get(playerID)){
-		if(true){
 
 		//chat text field
 		if(textField == e.getSource()) {
@@ -701,6 +700,7 @@ public class playGround implements ActionListener {
 		// checks which button was pressed  to place the next stone
 		// buttonArrow_1_0 means line j:1 i:0 on the field
 		// topArrowButtons
+		if(tileInsertionAllowed){
 		if(buttonArrow_1_0 == e.getSource()){
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(0,board);
@@ -708,18 +708,31 @@ public class playGround implements ActionListener {
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
 
+			//TODO nacher ändern
+			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
+			tileInsertionAllowed = false;
+
 		}
 		if(buttonArrow_3_0 == e.getSource()){
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(1,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
+
+			//TODO nacher ändern
+			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
+			tileInsertionAllowed = false;
+
 		}
 		if(buttonArrow_5_0 == e.getSource()){
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(2,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
+
+			//TODO nacher ändern
+			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
+			tileInsertionAllowed = false;
 		}
 		//right arrows
 		if(buttonArrow_6_1 == e.getSource()){
@@ -727,6 +740,10 @@ public class playGround implements ActionListener {
 			board = gameFunctions.placeNextStoneInMaze(3,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
+
+			//TODO nacher ändern
+			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
+			tileInsertionAllowed = false;
 		}
 		if(buttonArrow_6_3 == e.getSource()){
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
@@ -736,12 +753,20 @@ public class playGround implements ActionListener {
 
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
+
+			//TODO nacher ändern
+			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
+			tileInsertionAllowed = false;
 		}
 		if(buttonArrow_6_5 == e.getSource()){
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(5,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
+
+			//TODO nacher ändern
+			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
+			tileInsertionAllowed = false;
 		}
 		//bottom arrows
 		if(buttonArrow_5_6 == e.getSource()){
@@ -749,18 +774,30 @@ public class playGround implements ActionListener {
 			board = gameFunctions.placeNextStoneInMaze(6,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
+
+			//TODO nacher ändern
+			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
+			tileInsertionAllowed = false;
 		}
 		if(buttonArrow_3_6 == e.getSource()){
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(7,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
+
+			//TODO nacher ändern
+			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
+			tileInsertionAllowed = false;
 		}
 		if(buttonArrow_1_6 == e.getSource()){
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(8,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
+
+			//TODO nacher ändern
+			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
+			tileInsertionAllowed = false;
 		}
 		// left arrows
 		if(buttonArrow_0_5 == e.getSource()){
@@ -768,22 +805,34 @@ public class playGround implements ActionListener {
 			board = gameFunctions.placeNextStoneInMaze(9,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
+
+			//TODO nacher ändern
+			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
+			tileInsertionAllowed = false;
 		}
 		if(buttonArrow_0_3 == e.getSource()){
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(10,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
+
+			//TODO nacher ändern
+			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
+			tileInsertionAllowed = false;
 		}
 		if(buttonArrow_0_1 == e.getSource()){
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(11,board);
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
-		}
-		}
+
+			//TODO nacher ändern
+			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
+			tileInsertionAllowed = false;
+			}
 		}
 	}
+}
 
 	public void setBoard(Board newBoard){
 		this.board = newBoard;
