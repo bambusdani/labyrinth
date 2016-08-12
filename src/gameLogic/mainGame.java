@@ -2,6 +2,7 @@ package gameLogic;
 
 import chat.ChatClient;
 import gui.playGround;
+import gui.startMenu;
 
 public class mainGame {
 
@@ -12,19 +13,13 @@ public class mainGame {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		
-		Board board = new Board();
+		//Board board = new Board();
 
-		playGround boardview = new playGround(board, "localhost", "Rehan");
-		boardview.listen();
+		//playGround boardview = new playGround(board, "localhost", "Rehan");
+		//boardview.listen();
 
-
-
-
-
-		//ChatClient client = new ChatClient("Rehan", "localhost", boardview.getTextArea(), boardview.getTextField());
-
-		//client.listen();
-
+		startMenu startMenu = new startMenu();
+		startMenu.createGui();
 
 
 	}

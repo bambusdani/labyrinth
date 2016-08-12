@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class GameFunctions {
 
-    //playerManagement variables
     private ArrayList<Boolean> activePlayers = new ArrayList<Boolean>();
     private ArrayList<Boolean> playersTurn = new ArrayList<Boolean>();
 

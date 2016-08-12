@@ -665,6 +665,7 @@ public class playGround implements ActionListener {
 
 				if( e.getActionCommand().equals("gameField: "+j+" "+i)){
 
+
 					//writes the command of the button
 					//System.out.println("Button j: "+j +", i: "+ i +" pressed");
 
@@ -679,6 +680,9 @@ public class playGround implements ActionListener {
 					// Ist der Zug möglich, falls ja ändere die Ränder
 					gameFunctions.movePlayerIfMovePossible(boardSquares,board.getAllPlayers(), playerID ,buttonPositionPressed,board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY(),board.getallTiles());
 					if(gameFunctions.isMovePossible(board.getallTiles(),buttonPositionPressed,board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY())){
+						nextPlayersTurn();
+					}
+					else{
 						nextPlayersTurn();
 					}
 					//TODO nacher anders
