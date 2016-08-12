@@ -102,15 +102,22 @@ public class playGround implements ActionListener {
 	//TODO des muss auch wieder weg
 	public void nextPlayersTurn(){
 		for(int index = 0; index < playersTurn.size(); index++) {
-			if (playersTurn.get(index)) {
-
-				//Zug des momentanen Spielers wird beendet
+			if (playersTurn.get(index) && index < playersTurn.size()-1) {
 				playersTurn.set(index, false);
-
-				//Nächster Spieler ist an der Reihe
 				playersTurn.set(index + 1, true);
+				break;
+
+			}
+			else if(playersTurn.get(index)){
+				playersTurn.set(index, false);
+				playersTurn.set(0, true);
+				break;
 			}
 		}
+		//playerID hochzählen
+		if(playerID < 3){ playerID++;}else{	playerID = 0; }
+		tileInsertionAllowed = true;
+		System.out.println("PlayerID:" + playerID);
 	}
 	//TODO weg mit dem Drüber :D
 
@@ -119,6 +126,8 @@ public class playGround implements ActionListener {
 	public playGround(Board board, String hostName, String screenName) {
 
 		//TODO Muss nacher wieder weg ist nur zum testen :)
+		playerID = 0;
+		System.out.println("PlayerID: " + playerID);
 		playersTurn.add(true);
 		playersTurn.add(false);
 		playersTurn.add(false);
@@ -649,10 +658,13 @@ public class playGround implements ActionListener {
 
 		//------------------------------------------------------------
 		// checks which button on the gameField is pressed
+		if(!tileInsertionAllowed){
+
 		for(int i = 0; i < boardSquares.length; i++){
 			for(int j = 0; j< boardSquares[i].length; j++){
 
 				if( e.getActionCommand().equals("gameField: "+j+" "+i)){
+
 					//writes the command of the button
 					//System.out.println("Button j: "+j +", i: "+ i +" pressed");
 
@@ -666,7 +678,16 @@ public class playGround implements ActionListener {
 					//TODO wurde bereits ein Stein reingeschoben???
 					// Ist der Zug möglich, falls ja ändere die Ränder
 					gameFunctions.movePlayerIfMovePossible(boardSquares,board.getAllPlayers(), playerID ,buttonPositionPressed,board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY(),board.getallTiles());
+					if(gameFunctions.isMovePossible(board.getallTiles(),buttonPositionPressed,board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY())){
+						nextPlayersTurn();
+					}
+					//TODO nacher anders
 
+
+
+
+
+					//TODO wieder löschen
 
 					//==================================================================================================
 					/**
@@ -694,6 +715,8 @@ public class playGround implements ActionListener {
 				}
 			}
 		}
+		}
+
 		//-------------------------------------------------------------
 			//TODO ID Abfrage übern server usw...
 		if(playersTurn.get(playerID)){
