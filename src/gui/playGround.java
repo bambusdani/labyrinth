@@ -13,10 +13,17 @@ import gameLogic.*;
 import gameLogic.Shape;
 
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class playGround implements ActionListener {
 	//TODO muss beim Konstruktor mit übergeben werden -> jeder Spieler bekommt sein eigenes Feld
+
+	//------------------------
+	//PlayerManagement
 	private int playerID = 0;
+	ArrayList<Boolean> playersTurn = new ArrayList<Boolean>();
+	//------------------------
+
 
 	private int fontSize = 20;
 	private int boxSizeX = 175;
@@ -91,9 +98,32 @@ public class playGround implements ActionListener {
 	// Erstellen der Klasse mit wichtigen Funktionen
 	private GameFunctions gameFunctions = new GameFunctions();
 
+	//TODO des muss auch wieder weg
+	public void nextPlayersTurn(){
+		for(int index = 0; index < playersTurn.size(); index++) {
+			if (playersTurn.get(index)) {
+
+				//Zug des momentanen Spielers wird beendet
+				playersTurn.set(index, false);
+
+				//Nächster Spieler ist an der Reihe
+				playersTurn.set(index + 1, true);
+			}
+		}
+	}
+	//TODO weg mit dem Drüber :D
+
 
 
 	public playGround(Board board, String hostName, String screenName) {
+
+		//TODO Muss nacher wieder weg ist nur zum testen :)
+		playersTurn.add(true);
+		playersTurn.add(false);
+		playersTurn.add(false);
+		playersTurn.add(false);
+		//TODO Bis hier
+
 		this.board = board;
 
 		// connect to server
@@ -219,7 +249,7 @@ public class playGround implements ActionListener {
 		constraintsInformation.gridy = 1;
 		// instead of Dragon it should use an image
 		JLabel labelReachedGoalsSymbol = setLabel("",fontSize, stoneSize, stoneSize, colorBlack );
-	//gibt nur das ziel des Players 0 aus sowie das erste ziel gibt ebenfalls falschen wert aus!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//gibt nur das ziel des Players 0 aus sowie das erste ziel gibt ebenfalls falschen wert aus!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 		labelReachedGoalsSymbol.setIcon(board.getAllPlayers()[1].getCreaturesNeeded().get(0).getSymbolImage());
 		labelReachedGoalsSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
@@ -582,8 +612,8 @@ public class playGround implements ActionListener {
 	//=================================================================================
 	//actionListener
 	//=================================================================================
-
 	public void actionPerformed(ActionEvent e) {
+
 		//Abfrage ob Spieler dran ist
 		//if(gameFunctions.getPlayersTurn().get(playerID)){
 		if(true){
@@ -666,9 +696,8 @@ public class playGround implements ActionListener {
 			}
 		}
 		//-------------------------------------------------------------
-
-
-
+			//TODO ID Abfrage übern server usw...
+		if(playersTurn.get(playerID)){
 		// checks which button was pressed  to place the next stone
 		// buttonArrow_1_0 means line j:1 i:0 on the field
 		// topArrowButtons
@@ -752,7 +781,8 @@ public class playGround implements ActionListener {
 			//zeichnet das komplette Spielfeld neu
 			drawGameField(board);
 		}
-	}
+		}
+		}
 	}
 
 	public void setBoard(Board newBoard){
