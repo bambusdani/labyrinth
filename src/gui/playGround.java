@@ -635,10 +635,9 @@ public class playGround implements ActionListener {
 					Position buttonPositionPressed = new Position(j, i);
 
 					//TODO wurde bereits ein Stein reingeschoben???
-					// Ist der Zug möglich, falls ja ändere die Ränder
-					gameFunctions.movePlayerIfMovePossible(boardSquares,board.getAllPlayers(), playerID ,buttonPositionPressed,board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY(),board.getallTiles());
 
-
+					board = gameFunctions.movePlayerIfMoveIsPossible(board,playerID,buttonPositionPressed);
+					drawGameField(board);
 					//==================================================================================================
 					/**
 					 * Zeichnen der Punkte
@@ -790,6 +789,7 @@ public class playGround implements ActionListener {
 				//draw images on the buttons
 				boardSquares[j][i].setIcon(board.getTile(j,i).getShape().getImage());
 				//set border from buttons on default
+				//TODO default color / border is different
 				boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, colorBlack));
 
 				// checking if the players are on the the spot if yes draw a colored border
