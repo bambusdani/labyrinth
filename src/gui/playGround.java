@@ -685,13 +685,6 @@ public class playGround implements ActionListener {
 					else{
 						nextPlayersTurn();
 					}
-					//TODO nacher anders
-
-
-
-
-
-					//TODO wieder löschen
 
 					//==================================================================================================
 					/**
