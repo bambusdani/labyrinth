@@ -13,9 +13,9 @@ public class MainGame {
 		
 
 		Board board = new Board();
-		HostGame hostGame = new HostGame(board);
+		HostGame hostGame = new HostGame();
 
-		JoinGame joinGame = new JoinGame(board);
+		JoinGame joinGame = new JoinGame();
 
 
 
