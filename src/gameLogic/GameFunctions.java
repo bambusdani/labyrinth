@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class GameFunctions {
 
-    //playerManagement variables
     private ArrayList<Boolean> activePlayers = new ArrayList<Boolean>();
     private ArrayList<Boolean> playersTurn = new ArrayList<Boolean>();
 
@@ -21,7 +20,6 @@ public class GameFunctions {
     //Im Uhrzeigersinn den Buttons(einschub/pfeilbuttons) zugewiesen
     public boolean[] possibleArrowInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
     Tiles tmpStorageTile;
-
 
     //konstruktor
     public GameFunctions(){
@@ -155,12 +153,13 @@ public class GameFunctions {
     }
     //==================================================================================================================
 
-    /**
+    /**==========================================================================================
      * isArrowMoveAllowed
      * looks if it is allowed to place a new stone on the field.
      * When one turn before a stone was placed on the opposite side it´s not allowed to place it
      * @param buttonID
      * @return boolean
+     * ==========================================================================================
      */
 
     public boolean isArrowMoveAllowed (int buttonID){

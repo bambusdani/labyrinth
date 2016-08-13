@@ -17,10 +17,11 @@ public class ConnectionListener extends Thread {
 
 
     private final static Logger LOGGER = Logger.getLogger(ConnectionListener.class.getName());
-    static private int playerID;
+    private int playerID;
     private boolean mError, mException;
     private String sException;
     private Protocol protocol;
+    private GameFunctions gf;
 
     //--------------------------------------------------------------------------------
     // create a new board so we can get the player information needed
@@ -30,6 +31,7 @@ public class ConnectionListener extends Thread {
         this.connections = connections;
         //this.protocol = new Protocol();
         this.protocol = new Protocol();
+        this.gf = new GameFunctions();
 
         //================================================================================
         // setup the logger
@@ -77,6 +79,19 @@ public class ConnectionListener extends Thread {
                 }
 
                 //--------------------------------------------------------------------------------
+                //TODO
+                for (Connection jth : connections) {
+                    jth.isPlayerGettingPoints(board, playerID);
+                }
+
+                /*
+                THIS IS A TEST FOR RETURNING A UPDATED BOARD
+                for (Connection jth : connections) {
+                    jth.updateBoard(board);
+                }
+                 */
+
+                //--------------------------------------------------------------------------------
                 // Begin with server broadcasting to all clients
                 // Begin with reading client messages
                 if (message != null)
@@ -93,7 +108,7 @@ public class ConnectionListener extends Thread {
                             //jth.println(protocol.getMessage());
                             jth.println(protocol.getOutMessage());
                             //add to log
-                            LOGGER.info("OUTGOING: " + protocol.getOutMessage());
+                            LOGGER.info("OUTGOING: " + protocol.getLogMessage());
                         }
                         catch (Exception e) {
                             //--------------------------------------------------------------------------------
