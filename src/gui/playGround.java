@@ -20,7 +20,7 @@ public class playGround implements ActionListener {
 
 	//------------------------
 	//PlayerManagement
-	private int playerID = 0;
+	private int playerID;
 	ArrayList<Boolean> playersTurn = new ArrayList<Boolean>();
 	private Boolean tileInsertionAllowed = true;
 	//------------------------
@@ -97,6 +97,8 @@ public class playGround implements ActionListener {
 	private String screenName;
 
 	// Erstellen der Klasse mit wichtigen Funktionen
+
+	//TODO muss weg
 	private GameFunctions gameFunctions = new GameFunctions();
 
 	//TODO des muss auch wieder weg
@@ -123,10 +125,11 @@ public class playGround implements ActionListener {
 
 
 
-	public playGround(Board board, String hostName, String screenName) {
+	public playGround(Board board, String hostName, String screenName, int playerID) {
 
+		System.out.println("hhahahahhaha");
 		//TODO Muss nacher wieder weg ist nur zum testen :)
-		playerID = 0;
+		this.playerID = playerID;
 		System.out.println("PlayerID: " + playerID);
 		playersTurn.add(true);
 		playersTurn.add(false);
@@ -680,8 +683,8 @@ public class playGround implements ActionListener {
 					//TODO wurde bereits ein Stein reingeschoben???
 
 					// Ist der Zug möglich, falls ja ändere die Ränder
-					gameFunctions.movePlayerIfMoveIsPossible(board,playerID, buttonPositionPressed);
-					if(gameFunctions.isMovePossible(board,buttonPositionPressed,board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY())){
+					gameFunctions.movePlayerIfMoveIsPossible(playerID, buttonPositionPressed);
+					if(gameFunctions.isMovePossible(buttonPositionPressed,board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY())){
 						nextPlayersTurn();
 					}
 					else{
@@ -689,7 +692,7 @@ public class playGround implements ActionListener {
 					}
 
 
-					board = gameFunctions.movePlayerIfMoveIsPossible(board,playerID,buttonPositionPressed);
+					board = gameFunctions.movePlayerIfMoveIsPossible(playerID,buttonPositionPressed);
 					drawGameField(board);
 					//==================================================================================================
 					/**

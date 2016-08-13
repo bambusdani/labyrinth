@@ -1,5 +1,7 @@
 package gameLogic;
 
+import gui.playGround;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -21,22 +23,29 @@ public class GameFunctions {
     public boolean[] possibleArrowInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
     Tiles tmpStorageTile;
 
+    private Board board;
+    private playGround playGroundPlayer1;
+
     //konstruktor
     public GameFunctions(){
+        board = new Board();
+        playGroundPlayer1 = new playGround(board, "localhost", "Rehan", 0);
+        playGroundPlayer1.listen();
+
+
 
     }
 
     /**
      * movePlayerIfMoveIsPossible
-     * @param board
      * @param playerID
      * @param buttonPositionPressed
      * @return
      * checks if the move is possible and returns a whole board with changed positions
      * uses: checkMazeIfMoveIsPossible
      */
-    public Board movePlayerIfMoveIsPossible(Board board, int playerID, Position buttonPositionPressed){
-        if(checkMazeIfMoveIsPossible(board, buttonPositionPressed, playerID)){
+    public Board movePlayerIfMoveIsPossible(int playerID, Position buttonPositionPressed){
+        if(checkMazeIfMoveIsPossible(buttonPositionPressed, playerID)){
             board.getPlayer(playerID).setActualPosition(buttonPositionPressed);
         }
         else{
@@ -52,7 +61,7 @@ public class GameFunctions {
      * visited = merkt sich wo man bereits war sonst durchläuft es eine dauerschleife
      * ================================================================================**/
 
-    public boolean checkMazeIfMoveIsPossible(Board board, Position buttonPositionPressed, int playerID){
+    public boolean checkMazeIfMoveIsPossible(Position buttonPositionPressed, int playerID){
         // setzt alle Werte auf false -> wurde noch nicht besucht
         for (int p=0; p<7;p++){
             for (int q= 0;q<7;q++){
@@ -61,13 +70,12 @@ public class GameFunctions {
         }
         int actualPosX = board.getPlayer(playerID).getAcutalPosition().getX();
         int actualPosY = board.getPlayer(playerID).getAcutalPosition().getY();
-        return isMovePossible(board, buttonPositionPressed, actualPosX,actualPosY);
+        return isMovePossible(buttonPositionPressed, actualPosX,actualPosY);
     }
     //==================================================================================================================
 
     /**
      * isMovePossible
-     * @param board
      * @param buttonPositionPressed
      * @param tilePositionX -> actual x-position of the player on the tiles
      * @param tilePositionY -> actual y-position of the player on the tiles
@@ -76,7 +84,7 @@ public class GameFunctions {
      * places booleans in visited and walks on the maze
      *
      */
-    public boolean isMovePossible (Board board, Position buttonPositionPressed,int tilePositionX , int tilePositionY){
+    public boolean isMovePossible (Position buttonPositionPressed,int tilePositionX , int tilePositionY){
 
         //Falls der Punkt erreichbar ist
         if( buttonPositionPressed.getX() == tilePositionX && buttonPositionPressed.getY() == tilePositionY){
@@ -91,25 +99,25 @@ public class GameFunctions {
 
         // nach links gehen
         if((tilePositionX != 0) && (board.getallTiles()[tilePositionX][tilePositionY].getShape().getPossiblePaths()[3]) && (board.getallTiles()[tilePositionX - 1][tilePositionY].getShape().getPossiblePaths()[1]) ){
-            if(isMovePossible(board ,buttonPositionPressed,tilePositionX - 1 , tilePositionY)){
+            if(isMovePossible(buttonPositionPressed,tilePositionX - 1 , tilePositionY)){
                 return true;
             }
         }
         // nach rechts gehen
         if((tilePositionX != 6) && (board.getallTiles()[tilePositionX][tilePositionY].getShape().getPossiblePaths()[1]) && (board.getallTiles()[tilePositionX + 1][tilePositionY].getShape().getPossiblePaths()[3]) ){
-            if(isMovePossible(board,buttonPositionPressed,tilePositionX + 1 , tilePositionY)){
+            if(isMovePossible(buttonPositionPressed,tilePositionX + 1 , tilePositionY)){
                 return true;
             }
         }
         // nach oben gehen
         if( (tilePositionY != 0)&& (board.getallTiles()[tilePositionX][tilePositionY].getShape().getPossiblePaths()[0]) && (board.getallTiles()[tilePositionX][tilePositionY - 1].getShape().getPossiblePaths()[2]) ){
-            if(isMovePossible(board,buttonPositionPressed,tilePositionX , tilePositionY - 1)){
+            if(isMovePossible(buttonPositionPressed,tilePositionX , tilePositionY - 1)){
                 return true;
             }
         }
         // nach unten gehen
         if((tilePositionY != 6) && (board.getallTiles()[tilePositionX][tilePositionY].getShape().getPossiblePaths()[2]) && (board.getallTiles()[tilePositionX][tilePositionY + 1].getShape().getPossiblePaths()[0]) ){
-            if(isMovePossible(board,buttonPositionPressed,tilePositionX , tilePositionY + 1)){
+            if(isMovePossible(buttonPositionPressed,tilePositionX , tilePositionY + 1)){
                 return true;
             }
         }
@@ -126,7 +134,7 @@ public class GameFunctions {
      * Return 1 = Punkt
      * return 2 = spiel beenden
      */
-    public int isPlayerGettingPoints(Board board, int playerID){
+    public int isPlayerGettingPoints(int playerID){
 
         if(board.getPlayer(playerID).getCreaturesNeeded().get(0).getCreature() == board.getTile(board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY()).getShape().getCreature()){
             //falls sie identisch sind
@@ -295,7 +303,7 @@ public class GameFunctions {
                     //place the tmpStorageTile
                     boardFromClient.setNextTile(tmpStorageTile);
 
-                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(arrowButtonID);
 
                     break;
 
@@ -307,7 +315,7 @@ public class GameFunctions {
                     boardFromClient.setTiles(3, 0, boardFromClient.getNextTile());
                     boardFromClient.setNextTile(tmpStorageTile);
 
-                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(arrowButtonID);
 
                     break;
 
@@ -320,7 +328,7 @@ public class GameFunctions {
                     boardFromClient.setNextTile(tmpStorageTile);
 
 
-                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(arrowButtonID);
 
                     break;
 
@@ -332,7 +340,7 @@ public class GameFunctions {
                     boardFromClient.setTiles(1, 6, boardFromClient.getNextTile());
                     boardFromClient.setNextTile(tmpStorageTile);
 
-                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(arrowButtonID);
 
                     break;
 
@@ -344,7 +352,7 @@ public class GameFunctions {
                     boardFromClient.setTiles(3, 6, boardFromClient.getNextTile());
                     boardFromClient.setNextTile(tmpStorageTile);
 
-                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(arrowButtonID);
 
                     break;
 
@@ -356,7 +364,7 @@ public class GameFunctions {
                     boardFromClient.setTiles(5, 6, boardFromClient.getNextTile());
                     boardFromClient.setNextTile(tmpStorageTile);
 
-                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(arrowButtonID);
 
                     break;
 
@@ -368,7 +376,7 @@ public class GameFunctions {
                     boardFromClient.setTiles(0, 1, boardFromClient.getNextTile());
                     boardFromClient.setNextTile(tmpStorageTile);
 
-                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(arrowButtonID);
 
                     break;
 
@@ -380,7 +388,7 @@ public class GameFunctions {
                     boardFromClient.setTiles(0, 3, boardFromClient.getNextTile());
                     boardFromClient.setNextTile(tmpStorageTile);
 
-                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(arrowButtonID);
 
                     break;
 
@@ -393,7 +401,7 @@ public class GameFunctions {
                     boardFromClient.setTiles(0, 5, boardFromClient.getNextTile());
                     boardFromClient.setNextTile(tmpStorageTile);
 
-                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(arrowButtonID);
 
                     break;
 
@@ -407,7 +415,7 @@ public class GameFunctions {
                     boardFromClient.setTiles(6, 1, boardFromClient.getNextTile());
                     boardFromClient.setNextTile(tmpStorageTile);
 
-                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(arrowButtonID);
 
                     break;
 
@@ -420,7 +428,7 @@ public class GameFunctions {
                     boardFromClient.setTiles(6, 3, boardFromClient.getNextTile());
                     boardFromClient.setNextTile(tmpStorageTile);
 
-                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(arrowButtonID);
 
                     break;
 
@@ -432,7 +440,7 @@ public class GameFunctions {
                     boardFromClient.setTiles(6, 5, boardFromClient.getNextTile());
                     boardFromClient.setNextTile(tmpStorageTile);
 
-                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(boardFromClient,  arrowButtonID);
+                    boardFromClient = movePlayerIfStoneIsPlacedInMaze(arrowButtonID);
 
                     break;
             }
@@ -446,7 +454,7 @@ public class GameFunctions {
      *  Move player on the maze if a stone is placed in the same line
      *  int arrowNumber counts clockwise from 0 to 11
      */
-    public Board movePlayerIfStoneIsPlacedInMaze(Board board, int arrowNumber){
+    public Board movePlayerIfStoneIsPlacedInMaze(int arrowNumber){
         int rownumber = 0;
         switch (arrowNumber){
             //top and bottom

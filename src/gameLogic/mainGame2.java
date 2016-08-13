@@ -14,8 +14,8 @@ public class mainGame2 {
 
 		Board board = new Board();
 
-		playGround boardview = new playGround(board, "localhost", "Daniel");
-		boardview.listen();
+		//playGround boardview = new playGround( "localhost", "Daniel");
+		//boardview.listen();
 	}
 
 }

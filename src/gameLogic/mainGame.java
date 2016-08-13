@@ -13,13 +13,14 @@ public class mainGame {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		
-		//Board board = new Board();
+
+		GameFunctions gameFunctions = new GameFunctions();
 
 		//playGround boardview = new playGround(board, "localhost", "Rehan");
 		//boardview.listen();
 
-		startMenu startMenu = new startMenu();
-		startMenu.createGui();
+		//startMenu startMenu = new startMenu();
+		//startMenu.createGui();
 
 
 	}

@@ -235,8 +235,8 @@ public class createNewGame implements ActionListener{
 			frame.dispose();
 		}
 		else if(ae.getSource() == this.start){
-			Board board = new Board();
-			playGround boardview = new playGround(board, "localhost", "Rehan");
+			//Board board = new Board();
+			//playGround boardview = new playGround("localhost", "Rehan",);
 
 			//actual frame is closed
 			frame.dispose();

@@ -17,8 +17,8 @@ public class guiCreator extends JPanel {
 		/*startMenu startMenu = new startMenu();
 		startMenu.createGui();*/
 
-		Board board = new Board();
-		playGround playGround = new playGround(board, "localhost", "Rehan");
+		//Board board = new Board();
+		//playGround playGround = new playGround(board, "localhost", "Rehan");
 
 
 

@@ -189,7 +189,7 @@ public class Protocol {
     }
 
     public void isPlayerGettingPoints(Board board, int playerID) {
-        setPlayerPoints(gameFunctions.isPlayerGettingPoints(board, playerID));
+        setPlayerPoints(gameFunctions.isPlayerGettingPoints( playerID));
     }
 
 }
