@@ -736,7 +736,8 @@ public class playGround implements ActionListener {
 			board = gameFunctions.placeNextStoneInMaze(0,board);
 
 			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
+			//drawGameField(board);
+            drawGameField(board);
 
 			//TODO nacher ändern
 			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");

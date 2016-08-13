@@ -192,7 +192,4 @@ public class Protocol {
         setPlayerPoints(gameFunctions.isPlayerGettingPoints(board, playerID));
     }
 
-    public Board updateBoard(Board board) {
-        return board;
-    }
 }
