@@ -1,12 +1,10 @@
 package gameLogic;
 
-import chat.ChatClient;
-import gui.playGround;
-import gui.startMenu;
+import network.Protocol;
 
-public class mainGame {
+public class MainGame {
 
-	public mainGame() {
+	public MainGame() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -14,13 +12,12 @@ public class mainGame {
 		// TODO Auto-generated method stub
 		
 
-		GameFunctions gameFunctions = new GameFunctions();
+		Board board = new Board();
+		HostGame hostGame = new HostGame(board);
 
-		//playGround boardview = new playGround(board, "localhost", "Rehan");
-		//boardview.listen();
+		JoinGame joinGame = new JoinGame(board);
 
-		//startMenu startMenu = new startMenu();
-		//startMenu.createGui();
+
 
 
 	}

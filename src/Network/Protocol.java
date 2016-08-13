@@ -1,4 +1,4 @@
-package chat;
+package network;
 
 import gameLogic.Board;
 import gameLogic.GameFunctions;
@@ -49,7 +49,7 @@ public class Protocol {
 
     public void validate() {
         // Be aware! Length of substring may differ
-        if(this.message.substring(0, 4).equalsIgnoreCase("chat")) {
+        if(this.message.substring(0, 4).equalsIgnoreCase("network")) {
             chat();
         } else if(this.message.substring(0, 4).equalsIgnoreCase("move")) {
             move();
@@ -63,8 +63,8 @@ public class Protocol {
     }
 
     //================================================================================
-    // Beginning with chat Protocol. Avaiable is
-    // 'chat message'
+    // Beginning with network Protocol. Avaiable is
+    // 'network message'
     // 'move x y'
     // 'pass'
     // 'push tileID rotation x y'
@@ -72,18 +72,18 @@ public class Protocol {
     //================================================================================
 
     //================================================================================
-    // parameter 'chat'
+    // parameter 'network'
     //================================================================================
     public void chat() {
         //--------------------------------------------------------------------------------
-        // get actual chat message:
+        // get actual network message:
         // message sent to server could look like:
-        // "chat hello"
+        // "network hello"
         // we broadcast message from substring 5 (counting from 0)
         this.outMessage = this.username + this.message.substring(5);
 
         //log entry
-        this.logMessage = "chat " + this.playerID + " " + this.message.substring(5);
+        this.logMessage = "network " + this.playerID + " " + this.message.substring(5);
     }
 
     //================================================================================

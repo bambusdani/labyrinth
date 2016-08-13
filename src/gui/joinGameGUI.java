@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 /*
 * THIS CLASS CREATES GUI TO JOIN A GAME
 * */
-public class joinGame implements ActionListener{
+public class JoinGameGUI implements ActionListener{
 
 	//=====================================================================
 	//create a new frame and a button
@@ -153,8 +153,8 @@ public class joinGame implements ActionListener{
 		// Buttons abgeglichen. Wenn die Quelle des ActionEvents einer
 		// der Buttons ist, wird der Text des JLabels entsprechend geändert
 		if(ae.getSource() == this.back){
-			startMenu startMenu = new startMenu();
-			startMenu.createGui();
+			StartMenu StartMenu = new StartMenu();
+			StartMenu.createGui();
 			frame.dispose();
 		}
 	}

@@ -6,7 +6,7 @@
  *
  ******************************************************************************/
 
-package chat;
+package network;
 
 import java.io.IOException;
 import java.io.FileOutputStream;

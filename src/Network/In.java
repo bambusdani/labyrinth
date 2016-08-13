@@ -7,7 +7,7 @@
  *
  ******************************************************************************/
 
-package chat;
+package network;
 
 import java.io.BufferedInputStream;
 import java.io.File;

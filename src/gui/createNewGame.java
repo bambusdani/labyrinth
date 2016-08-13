@@ -5,13 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import gameLogic.*;
-
 
 /*
 * THIS CLASS CREATES THE GUI TO SET A NEW GAMES, WHICH MEANS YOU CAN ADD AI PLAYERS or REAL PLAYERS TO THE GAME
 * */
-public class createNewGame implements ActionListener{
+public class CreateNewGame implements ActionListener{
 
 	//==========================================
 	//Variables are created
@@ -28,7 +26,7 @@ public class createNewGame implements ActionListener{
 
 
 	//=================================================================
-	//This method creates the GUI for the class createNewGame
+	//This method creates the GUI for the class CreateNewGame
 	public void createGui(){
 
 		//new Object of class Panel is created
@@ -179,7 +177,7 @@ public class createNewGame implements ActionListener{
 	//=======================================================
 	//creates a spezialized Frame
 	public JFrame createFrame(){
-		JFrame frame = new JFrame("createNewGame");
+		JFrame frame = new JFrame("CreateNewGame");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setSize(1200, 500);
@@ -228,15 +226,15 @@ public class createNewGame implements ActionListener{
 
 		//checks which Button is pressed and reacts with the Event
 		if(ae.getSource() == this.back){
-			startMenu startMenu = new startMenu();
-			startMenu.createGui();
+			StartMenu StartMenu = new StartMenu();
+			StartMenu.createGui();
 
 			//the actual frame is closed
 			frame.dispose();
 		}
 		else if(ae.getSource() == this.start){
 			//Board board = new Board();
-			//playGround boardview = new playGround("localhost", "Rehan",);
+			//PlayGround boardview = new PlayGround("localhost", "Rehan",);
 
 			//actual frame is closed
 			frame.dispose();

@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class startMenu implements ActionListener{
+public class StartMenu implements ActionListener{
 	//===================================================================
 	JFrame frame = createFrame();
 	JButton buttonRules = addButtons("Spielanleitung");
@@ -70,7 +70,7 @@ public class startMenu implements ActionListener{
 		//layout set to (x=2 ; y=1)
 		constraints.gridx++;
 
-		//actionlistener added to rules button
+		//actionlistener added to Rules button
 		buttonRules.addActionListener(this);
 
 		//add button to panel and set layout to it
@@ -84,7 +84,7 @@ public class startMenu implements ActionListener{
 		constraints.gridy=2;
 		constraints.gridwidth=1;
 
-		//actionlistener added to rules button
+		//actionlistener added to Rules button
 		about.addActionListener(this);
 
 		//add button to panel and set layout to it
@@ -119,18 +119,18 @@ public class startMenu implements ActionListener{
 		// Buttons abgeglichen. Wenn die Quelle des ActionEvents einer
 		// der Buttons ist, wird der Text des JLabels entsprechend geändert
 		if(ae.getSource() == this.buttonRules){
-			rules gameRules = new rules();
+			Rules gameRules = new Rules();
 			gameRules.createGui();
 			frame.dispose();
 		}
 		else if(ae.getSource() == this.buttonCreateGame){
-			createNewGame newGame = new createNewGame();
+			CreateNewGame newGame = new CreateNewGame();
 			newGame.createGui();
 			frame.dispose();
 		}
 		else if(ae.getSource() == this.buttonJoinGame){
-			joinGame joinGame = new joinGame();
-			joinGame.createGui();
+			JoinGameGUI JoinGameGUI = new JoinGameGUI();
+			JoinGameGUI.createGui();
 			frame.dispose();
 		}
 		else if(ae.getSource() == this.about){

@@ -1,12 +1,12 @@
 /******************************************************************************
- *  Compilation:  javac ChatServer.java 
- *  Execution:    java ChatServer
+ *  Compilation:  javac Server.java
+ *  Execution:    java Server
  *  Dependencies: In.java Out.java Connection.java ConnectionListener.java
  *
  *  Creates a server to listen for incoming connection requests on 
  *  port 4444.
  *
- *  % java ChatServer
+ *  % java Server
  *
  *  Remark
  *  -------
@@ -14,13 +14,13 @@
  *  
  ******************************************************************************/
 
-package chat;
+package network;
 
 import java.net.Socket;
 import java.net.ServerSocket;
 import java.util.Vector;
 
-public class ChatServer {
+public class Server {
 
     public static void main(String[] args) throws Exception {
         Vector<Connection> connections        = new Vector<Connection>();

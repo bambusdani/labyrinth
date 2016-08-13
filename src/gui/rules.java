@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class rules implements ActionListener{
+public class Rules implements ActionListener{
 
 	//=====================================================================
 	private String longText = "Test";
@@ -122,8 +122,8 @@ public class rules implements ActionListener{
 		// Buttons abgeglichen. Wenn die Quelle des ActionEvents einer
 		// der Buttons ist, wird der Text des JLabels entsprechend geändert
 		if(ae.getSource() == this.back){
-			startMenu startMenu = new startMenu();
-			startMenu.createGui();
+			StartMenu StartMenu = new StartMenu();
+			StartMenu.createGui();
 			frame.dispose();
 		}
 	}

@@ -111,7 +111,7 @@ public class About implements ActionListener {
     }
 
     //=========================================================
-    // Creates a specialized frame for the class addPlayer
+    // Creates a specialized frame for the class AddPlayer
     public JFrame createFrame(){
         JFrame frame = new JFrame("About Properties");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -162,8 +162,8 @@ public class About implements ActionListener {
         // Buttons abgeglichen. Wenn die Quelle des ActionEvents einer
         // der Buttons ist, wird der Text des JLabels entsprechend geändert
         if(ae.getSource() == this.back){
-            startMenu startMenu = new startMenu();
-            startMenu.createGui();
+            StartMenu StartMenu = new StartMenu();
+            StartMenu.createGui();
             frame.dispose();
         }
     }

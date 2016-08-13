@@ -3,20 +3,16 @@ package gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 import javax.swing.*;
 
-import chat.*;
+import network.*;
 import gameLogic.*;
-import gameLogic.Shape;
 
-import java.net.Socket;
 import java.util.ArrayList;
 
-public class playGround implements ActionListener {
-	//TODO muss beim Konstruktor mit übergeben werden -> jeder Spieler bekommt sein eigenes Feld
+public class PlayGround implements ActionListener {
 
 	//------------------------
 	//PlayerManagement
@@ -81,14 +77,14 @@ public class playGround implements ActionListener {
 	//label für das Nachste Ziel
 	private JLabel labelNextGoalSymbol;
 
-	//chat stuff
+	//network stuff
 	private JTextArea textArea;
 	private JTextField textField;
 
 	public Board board ;
 	private Protocol protocol;
 
-	// socket for connection to chat server
+	// socket for connection to network server
 	private Socket socket;
 
 	// for writing to and reading from the server
@@ -99,7 +95,7 @@ public class playGround implements ActionListener {
 	// Erstellen der Klasse mit wichtigen Funktionen
 
 	//TODO muss weg
-	private GameFunctions gameFunctions = new GameFunctions();
+	//private GameFunctions gameFunctions = new GameFunctions();
 
 	//TODO des muss auch wieder weg
 	public void nextPlayersTurn(){
@@ -125,9 +121,8 @@ public class playGround implements ActionListener {
 
 
 
-	public playGround(Board board, String hostName, String screenName, int playerID) {
+	public PlayGround(Board board, String hostName, String screenName, int playerID) {
 
-		System.out.println("hhahahahhaha");
 		//TODO Muss nacher wieder weg ist nur zum testen :)
 		this.playerID = playerID;
 		System.out.println("PlayerID: " + playerID);
@@ -138,7 +133,9 @@ public class playGround implements ActionListener {
 		//TODO Bis hier
 
 		this.board = board;
-		this.protocol = new Protocol();
+		//TODO ---------------------------------------------------------------------------------------------------------
+		// TODO wird das hier benötigt??????
+		//this.protocol = new Protocol();
 
 		// connect to server
 		try {
@@ -148,6 +145,7 @@ public class playGround implements ActionListener {
 		}
 		catch (Exception ex) { ex.printStackTrace(); }
 		this.screenName = "[" + screenName + "]: ";
+		//TODO _________________________________________________________________________________________________________
 
 		//--------------------------------------------------------------------------------------------------
 		//set size of images
@@ -321,7 +319,7 @@ public class playGround implements ActionListener {
 		panelInformation.add(this.buttonRotate, constraintsInformation);
 
 		//===================================================================================
-		// panel chat
+		// panel network
 		//===================================================================================
 		JPanel panelChat = new JPanel(new GridBagLayout());
 		GridBagConstraints constraintsChat = new GridBagConstraints();
@@ -626,13 +624,14 @@ public class playGround implements ActionListener {
 	//=================================================================================
 	//actionListener
 	//=================================================================================
+
 	public void actionPerformed(ActionEvent e) {
 
 		//Abfrage ob Spieler dran ist
 
-		//chat text field
+		//network text field
 		if(textField == e.getSource()) {
-			out.println(screenName + "chat " + textField.getText());
+			out.println(screenName + "network " + textField.getText());
 
 			textField.setText("");
 			textField.requestFocusInWindow();
@@ -643,7 +642,7 @@ public class playGround implements ActionListener {
 		}
 		if(buttonNewGame == e.getSource()){
 			frame.dispose();
-			createNewGame newGame = new createNewGame();
+			CreateNewGame newGame = new CreateNewGame();
 			newGame.createGui();
 		}
 		if(buttonRotate == e.getSource()){
@@ -659,7 +658,7 @@ public class playGround implements ActionListener {
 
 		}
 
-
+/*
 		//------------------------------------------------------------
 		// checks which button on the gameField is pressed
 		if(!tileInsertionAllowed){
@@ -699,7 +698,7 @@ public class playGround implements ActionListener {
 					 * Zeichnen der Punkte
 					 */
 					//switch (gameFunctions.isPlayerGettingPoints(board , playerID)){
-					protocol.isPlayerGettingPoints(board, playerID);
+/*					protocol.isPlayerGettingPoints(board, playerID);
 					switch (protocol.getPlayerPoints()){
 						case 0:
 							//System.out.println("kein Punkt");
@@ -715,8 +714,8 @@ public class playGround implements ActionListener {
 							break;
 						case 2:
 							//frame.dispose();
-							gameEnd gameEnd = new gameEnd();
-							gameEnd.createGui();
+							GameEnd GameEnd = new GameEnd();
+							GameEnd.createGui();
 							break;
 					}
 				}
@@ -863,6 +862,7 @@ public class playGround implements ActionListener {
 			}
 		}
 	}
+	*/
 }
 
 	public void setBoard(Board newBoard){

@@ -1448,27 +1448,27 @@ Package pdftex.def Info: aufgabe1/SequenzdiagrammPlay.jpeg used on input line 8
 (pdftex.def)             Requested size: 307.29114pt x 170.71672pt.
  [6
 
- <./aufgabe1/SequenzdiagrammPlay.jpeg>] <chat/chat_hi.png, id=206, 326.21875pt 
+ <./aufgabe1/SequenzdiagrammPlay.jpeg>] <network/chat_hi.png, id=206, 326.21875pt
 x 194.7275pt>
-File: chat/chat_hi.png Graphic file (type png)
- <use chat/chat_hi.png>
-Package pdftex.def Info: chat/chat_hi.png used on input line 100.
+File: network/chat_hi.png Graphic file (type png)
+ <use network/chat_hi.png>
+Package pdftex.def Info: network/chat_hi.png used on input line 100.
 (pdftex.def)             Requested size: 153.64493pt x 91.71803pt.
 
-<chat/move.png, id=208, 326.21875pt x 195.73125pt>
-File: chat/move.png Graphic file (type png)
- <use chat/move.png>
-Package pdftex.def Info: chat/move.png used on input line 100.
+<network/move.png, id=208, 326.21875pt x 195.73125pt>
+File: network/move.png Graphic file (type png)
+ <use network/move.png>
+Package pdftex.def Info: network/move.png used on input line 100.
 (pdftex.def)             Requested size: 153.64493pt x 92.19081pt.
 
-<chat/deal.png, id=209, 326.21875pt x 195.73125pt>
-File: chat/deal.png Graphic file (type png)
- <use chat/deal.png>
-Package pdftex.def Info: chat/deal.png used on input line 100.
+<network/deal.png, id=209, 326.21875pt x 195.73125pt>
+File: network/deal.png Graphic file (type png)
+ <use network/deal.png>
+Package pdftex.def Info: network/deal.png used on input line 100.
 (pdftex.def)             Requested size: 153.64493pt x 92.19081pt.
  [7
 
- <./chat/chat_hi.png> <./chat/move.png> <./chat/deal.png>]pdfTeX warning (ext4)
+ <./network/chat_hi.png> <./network/move.png> <./network/deal.png>]pdfTeX warning (ext4)
 : destination with the same identifier (name{Frame6}) has been already used, du
 plicate ignored
 <to be read again> 

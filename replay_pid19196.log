@@ -153,9 +153,9 @@ instanceKlass java/util/regex/Pattern$CharPropertyNames$CharPropertyFactory
 instanceKlass java/util/regex/Pattern$CharPropertyNames
 instanceKlass java/util/regex/Pattern$Node
 instanceKlass java/util/regex/Pattern
-instanceKlass chat/In
+instanceKlass network/In
 instanceKlass java/net/Socket$3
-instanceKlass chat/Out
+instanceKlass network/Out
 instanceKlass java/net/Proxy
 instanceKlass sun/net/spi/DefaultProxySelector$3
 instanceKlass sun/net/spi/DefaultProxySelector$NonProxyInfo

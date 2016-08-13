@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 /*
 * THIS CLASS CREATES A GUI TO ADD PLAYERS TO THE GAME
 * */
-public class addPlayer {
+public class AddPlayer {
 
 	//===============================================================================================================
 	//Method creates GUI to add players to the Game
@@ -124,7 +124,7 @@ public class addPlayer {
 	
 	
 	//=========================================================
-	// Creates a specialized frame for the class addPlayer
+	// Creates a specialized frame for the class AddPlayer
 	public JFrame createFrame(){
 		JFrame frame = new JFrame("DvL Spieler hinzuf�gen");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

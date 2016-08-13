@@ -1,11 +1,8 @@
 package gameLogic;
 
-import gui.playGround;
+import gui.PlayGround;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * Includes all the Functions which are used in the GUI
@@ -24,12 +21,12 @@ public class GameFunctions {
     Tiles tmpStorageTile;
 
     private Board board;
-    private playGround playGroundPlayer1;
+    private PlayGround playGroundPlayer1;
 
     //konstruktor
     public GameFunctions(){
         board = new Board();
-        playGroundPlayer1 = new playGround(board, "localhost", "Rehan", 0);
+        playGroundPlayer1 = new PlayGround(board, "localhost", "Rehan", 0);
         playGroundPlayer1.listen();
 
 
@@ -287,6 +284,7 @@ public class GameFunctions {
      * @return boardFromClient
      */
     //board from client -> later from server
+    //TODO board aus dem aufruf nehmen
     public Board placeNextStoneInMaze(int arrowButtonID, Board boardFromClient){
 
         if(isArrowMoveAllowed(arrowButtonID)){

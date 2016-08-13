@@ -15,10 +15,10 @@ import javax.swing.JPanel;
 /*
 * THIS CLASS CREATES THE GUI FOR THE GAME END
 * */
-public class gameEnd {
+public class GameEnd {
 
 	//======================================================================
-	//creates the GUI for the Class gameEnd
+	//creates the GUI for the Class GameEnd
 	public void createGui(){
 
 			//creats new panel with GridBagLayout
