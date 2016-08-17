@@ -64,6 +64,7 @@ public class ConnectionListener extends Thread {
                 //  ith.print...
                 //================================================================================
                 String message = ith.getMessage();
+                System.out.println(message);
 
                 //--------------------------------------------------------------------------------
                 // Broadcast to specific clients goes here before the jth-loop!
@@ -71,27 +72,17 @@ public class ConnectionListener extends Thread {
                     ith.println(sException);
                     mException = false;
                 }
-
-                //--------------------------------------------------------------------------------
-                //TODO
-                for (Connection jth : connections) {
-                    jth.isPlayerGettingPoints(board, playerID);
-                }
-
-                /*
-                THIS IS A TEST FOR RETURNING A UPDATED BOARD
-                for (Connection jth : connections) {
-                    jth.updateBoard(board);
-                }
-                 */
-
                 //--------------------------------------------------------------------------------
                 // Begin with server broadcasting to all clients
                 // Begin with reading client messages
                 if (message != null)
                     for (Connection jth : connections) {
                         try {
-
+                            /**
+                             * TODO hier werden logik funktionien aufgerufen
+                             * hier wird das board überprüft und wieder gesenet
+                             */
+                            jth.println(message);
                         }
                         catch (Exception e) {
                             //--------------------------------------------------------------------------------
