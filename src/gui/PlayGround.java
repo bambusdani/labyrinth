@@ -81,7 +81,7 @@ public class PlayGround implements ActionListener {
     private JTextArea textArea;
     private JTextField textField;
 
-    public Board board ;
+    public Board board;
 
     // socket for connection to network server
     private Socket socket;
@@ -873,9 +873,15 @@ public class PlayGround implements ActionListener {
     public void listen() {
         String s;
         while ((s = in.readLine()) != null) {
-            if(s.substring(0, 4).equalsIgnoreCase("init")) {
-                textArea.insert(s + " erfolgreich in listen", textArea.getText().length());
-            } else {
+            if(s.startsWith("initTile")) {
+                textArea.insert(s + " erfolgreich in listen\n", textArea.getText().length());
+            } else if(s.startsWith("initPlayer")) {
+                //TODO string splitten und zwischenspeichern
+                //split...
+                //TODO werte vom board umschreiben
+                //drawGameField();
+            }
+            else {
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
             }

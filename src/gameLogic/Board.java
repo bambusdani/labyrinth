@@ -331,6 +331,7 @@ public class Board {
         //new Tiless(id, moveable, position(x,y), shape(image,shapeOfImage, possibleWaysToMove, Symbol), rotation)
         //erste Reihe                                                                                                                               //fünfte Reihe
 
+        //TODO tileID von 0 beginnend
         tiles[0][0] = new Tiles(1,false,new Position(0,0), new Shape(tile30Image, "L" , new boolean[] {false,true,true,false},"green"),0);          tiles[4][0] = new Tiles(29,false,new Position(4,0),new Shape(tile16Image, "T" , new boolean[] {false,true,true,true},"map"),0);
         tiles[0][1] = new Tiles(2,true,new  Position(0,1),  new Shape(tile8Image, "L" ,  new boolean[] {true,true,false,false},"motte"),0);         tiles[4][1] = new Tiles(30,true,new  Position(4,1), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
         tiles[0][2] = new Tiles(3,false,new Position(0,2), new Shape(tile17Image, "T" , new boolean[] {true,true,true,false},"kerze"),0);           tiles[4][2] = new Tiles(31,false,new Position(4,2),new Shape(tile19Image, "T" , new boolean[] {false,true,true,true},"krone"),0);

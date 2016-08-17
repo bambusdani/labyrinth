@@ -27,6 +27,13 @@ public class ConnectionListener extends Thread {
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
 
+        /*
+        TODO
+        -board in string umwandeln
+        for getAllTiles.size
+            tile.getID() += string;
+         */
+
         //================================================================================
         // setup the logger
         //================================================================================
@@ -65,9 +72,10 @@ public class ConnectionListener extends Thread {
                 //================================================================================
                 String message = ith.getMessage();
 
-                //send init boards to clients (speficially)
+                //send init board strings to clients (speficially)
                 if(!connections.get(i).isInit()) {
-                    ith.println("init");
+                    ith.println("initTile");
+                    ith.println("initPlayer");
                     connections.get(i).setInit(true);
                 }
 
