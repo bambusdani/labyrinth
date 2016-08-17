@@ -65,7 +65,7 @@ public class ConnectionListener extends Thread {
                 //================================================================================
                 String message = ith.getMessage();
 
-                //
+                //send init boards to clients (speficially)
                 if(!connections.get(i).isInit()) {
                     ith.println("init");
                     connections.get(i).setInit(true);

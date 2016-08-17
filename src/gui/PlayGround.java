@@ -873,8 +873,12 @@ public class PlayGround implements ActionListener {
     public void listen() {
         String s;
         while ((s = in.readLine()) != null) {
-            textArea.insert(s + "\n", textArea.getText().length());
-            textArea.setCaretPosition(textArea.getText().length());
+            if(s.substring(0, 4).equalsIgnoreCase("init")) {
+                textArea.insert(s + " erfolgreich in listen", textArea.getText().length());
+            } else {
+                textArea.insert(s + "\n", textArea.getText().length());
+                textArea.setCaretPosition(textArea.getText().length());
+            }
         }
         out.close();
         in.close();
