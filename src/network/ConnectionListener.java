@@ -19,7 +19,6 @@ public class ConnectionListener extends Thread {
     private int playerID;
     private boolean mError, mException;
     private String sException;
-    private boolean init = false;
 
     //--------------------------------------------------------------------------------
     // create a new board so we can get the player information needed
@@ -67,9 +66,9 @@ public class ConnectionListener extends Thread {
                 String message = ith.getMessage();
 
                 //
-                if(!init) {
+                if(!connections.get(i).isInit()) {
                     ith.println("init");
-                    init = true;
+                    connections.get(i).setInit(true);
                 }
 
                 //--------------------------------------------------------------------------------

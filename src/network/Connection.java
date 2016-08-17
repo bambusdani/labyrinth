@@ -13,6 +13,7 @@ public class Connection extends Thread {
     private Out out;
     private In in;
     private String message;     // one line buffer
+    private boolean init=false;
 
     public Connection(Socket socket) {
         in  = new In(socket);
@@ -55,7 +56,11 @@ public class Connection extends Thread {
         message = s;
     }
 
+    public boolean isInit() {
+        return init;
+    }
 
-
-
+    public void setInit(boolean init) {
+        this.init = init;
+    }
 }
