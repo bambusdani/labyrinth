@@ -82,7 +82,6 @@ public class PlayGround implements ActionListener {
     private JTextField textField;
 
     public Board board ;
-    private Protocol protocol;
 
     // socket for connection to network server
     private Socket socket;
@@ -134,8 +133,6 @@ public class PlayGround implements ActionListener {
 
         this.board = board;
         //TODO ---------------------------------------------------------------------------------------------------------
-        // TODO wird das hier benötigt??????
-        //this.protocol = new Protocol();
 
         // connect to server
         try {

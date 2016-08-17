@@ -13,13 +13,11 @@ public class Connection extends Thread {
     private Out out;
     private In in;
     private String message;     // one line buffer
-    private Protocol protocol;
 
     public Connection(Socket socket) {
         in  = new In(socket);
         out = new Out(socket);
         this.socket = socket;
-        protocol = new Protocol();
     }
 
     public void println(String s) { out.println(s); }
@@ -57,9 +55,6 @@ public class Connection extends Thread {
         message = s;
     }
 
-    public synchronized void isPlayerGettingPoints(Board board, int playerID) {
-        protocol.isPlayerGettingPoints(board, playerID);
-    }
 
 
 
