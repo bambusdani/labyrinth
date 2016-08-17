@@ -121,6 +121,14 @@ public class PlayGround implements ActionListener {
 
 
     public PlayGround(Board board, String hostName, String screenName, int playerID) {
+        // connect to server
+        try {
+            socket = new Socket(hostName, 4444);
+            out    = new Out(socket);
+            in     = new In(socket);
+        }
+        catch (Exception ex) { ex.printStackTrace(); }
+        this.screenName = "[" + screenName + "]: ";
 
         //TODO Muss nacher wieder weg ist nur zum testen :)
         this.playerID = playerID;
@@ -134,14 +142,7 @@ public class PlayGround implements ActionListener {
         this.board = board;
         //TODO ---------------------------------------------------------------------------------------------------------
 
-        // connect to server
-        try {
-            socket = new Socket(hostName, 4444);
-            out    = new Out(socket);
-            in     = new In(socket);
-        }
-        catch (Exception ex) { ex.printStackTrace(); }
-        this.screenName = "[" + screenName + "]: ";
+
         //TODO _________________________________________________________________________________________________________
 
         //--------------------------------------------------------------------------------------------------
@@ -628,7 +629,7 @@ public class PlayGround implements ActionListener {
 
         //network text field
         if(textField == e.getSource()) {
-            out.println(screenName + "network " + textField.getText());
+            out.println(screenName + "chat " + textField.getText());
 
             textField.setText("");
             textField.requestFocusInWindow();

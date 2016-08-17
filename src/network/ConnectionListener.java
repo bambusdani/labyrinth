@@ -19,6 +19,7 @@ public class ConnectionListener extends Thread {
     private int playerID;
     private boolean mError, mException;
     private String sException;
+    private boolean init = false;
 
     //--------------------------------------------------------------------------------
     // create a new board so we can get the player information needed
@@ -64,7 +65,12 @@ public class ConnectionListener extends Thread {
                 //  ith.print...
                 //================================================================================
                 String message = ith.getMessage();
-                System.out.println(message);
+
+                //
+                if(!init) {
+                    ith.println("init");
+                    init = true;
+                }
 
                 //--------------------------------------------------------------------------------
                 // Broadcast to specific clients goes here before the jth-loop!
