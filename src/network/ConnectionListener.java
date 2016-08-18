@@ -77,13 +77,6 @@ public class ConnectionListener extends Thread {
                 //================================================================================
                 String message = ith.getMessage();
 
-                // filter and set playername (to specific connection)
-                if (message.startsWith("initName")) {
-                    ith.setPlayerName(message.substring(9));
-                    player += ith.getPlayerName() + " ";
-                    ith.println("initName " + player);
-                }
-
                 //send init board strings to clients (speficially)
                 if(ith.isAlive() && !connections.get(i).isInit()) {
                     connections.get(i).setpId(i);
@@ -123,11 +116,17 @@ public class ConnectionListener extends Thread {
                 if (message != null)
                     for (Connection jth : connections) {
                         try {
+                            // filter and set playername (to specific connection)
+                            if (message.startsWith("initName")) {
+                                //ith.setPlayerName(message.substring(9));
+                                player += message.substring(9) + " ";
+                                jth.println("initName " + player);
+                            }
                             /**
                              * TODO hier werden logik funktionien aufgerufen
                              * hier wird das board überprüft und wieder gesenet
                              */
-                            jth.println(message);
+                            //jth.println(message);
                         }
                         catch (Exception e) {
                             // error displaying

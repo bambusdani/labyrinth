@@ -867,7 +867,7 @@ public class PlayGround implements ActionListener {
 
                 //TODO AWESOOOME
                 for (int i = 0; i < tmpTileID.length; i++) {
-                    System.out.println(tmpTileID[i]);
+                    //System.out.println(tmpTileID[i]);
                 }
 
                 /*for (int i = 7; i <= s.length(); i=i+3) {
@@ -880,6 +880,7 @@ public class PlayGround implements ActionListener {
 
                 for (int i = 1; i < tmpPlayer.length; i++) {
                     board.getPlayer(i-1).setNameOfPlayer(tmpPlayer[i]);
+                    System.out.println(tmpPlayer[i]);
                 }
                 drawGameField(board);
             }
