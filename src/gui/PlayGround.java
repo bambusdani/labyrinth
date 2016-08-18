@@ -911,7 +911,7 @@ public class PlayGround implements ActionListener {
                 String[] tmpPlayer = s.split("\\s+");
 
                 for (int i = 0; i < tmpPlayer.length; i++) {
-                    //System.out.println(tmpPlayer[i]);
+                    System.out.println(tmpPlayer[i]);
                 }
 
                 //TODO string splitten und zwischenspeichern
