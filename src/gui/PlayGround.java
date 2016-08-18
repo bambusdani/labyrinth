@@ -176,41 +176,25 @@ public class PlayGround implements ActionListener {
         // Player 0
         constraintsPlayeroverview.gridx = 1;
         constraintsPlayeroverview.gridy = 0;
-        labelPlayer0 = setLabel(board.getPlayer(0).getNameOfPlayer()+ ": " + board.getPlayer(0).getScore() ,fontSize, boxSizeX, boxSizeY, board.getPlayer(0).getColor());
-        //shows which players turn it is
-        if(board.getPlayer(0).getTurn()){
-            labelPlayer0.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
-        }
+        labelPlayer0 = setLabel(" " , fontSize,boxSizeX, boxSizeY, colorBlack);
         panelPlayeroverview.add(labelPlayer0, constraintsPlayeroverview);
         //---------------------------------------------------------------------------------
         // Player 1
         constraintsPlayeroverview.gridx = 2;
         constraintsPlayeroverview.gridy = 0;
-        labelPlayer1 = setLabel(board.getPlayer(1).getNameOfPlayer()+ ": " + board.getPlayer(1).getScore()  ,fontSize, boxSizeX, boxSizeY , board.getPlayer(1).getColor());
-        //shows which players turn it is
-        if(board.getPlayer(1).getTurn()){
-            labelPlayer1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
-        }
+        labelPlayer1 = setLabel(" " , fontSize,boxSizeX, boxSizeY, colorBlack);
         panelPlayeroverview.add(labelPlayer1, constraintsPlayeroverview);
         //---------------------------------------------------------------------------------
         // Player 2
         constraintsPlayeroverview.gridx = 3;
         constraintsPlayeroverview.gridy = 0;
-        labelPlayer2 = setLabel(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore() ,fontSize, boxSizeX, boxSizeY , board.getPlayer(2).getColor());
-        //shows which players turn it is
-        if(board.getPlayer(2).getTurn()){
-            labelPlayer2.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
-        }
+        labelPlayer2 = setLabel(" " , fontSize,boxSizeX, boxSizeY, colorBlack);
         panelPlayeroverview.add(labelPlayer2, constraintsPlayeroverview);
         //---------------------------------------------------------------------------------
         // Player 3
         constraintsPlayeroverview.gridx = 4;
         constraintsPlayeroverview.gridy = 0;
-        labelPlayer3 = setLabel(board.getPlayer(3).getNameOfPlayer()+": " + board.getPlayer(3).getScore() ,fontSize, boxSizeX, boxSizeY , board.getPlayer(3).getColor() );
-        //shows which players turn it is
-        if(board.getPlayer(3).getTurn()){
-            labelPlayer3.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
-        }
+        labelPlayer3 = setLabel(" " , fontSize,boxSizeX, boxSizeY, colorBlack);
         panelPlayeroverview.add(labelPlayer3, constraintsPlayeroverview);
 
         //---------------------------------------------------------------------------------
@@ -261,7 +245,7 @@ public class PlayGround implements ActionListener {
         JLabel labelReachedGoalsSymbol = setLabel("",fontSize, stoneSize, stoneSize, colorBlack );
         //gibt nur das ziel des Players 0 aus sowie das erste ziel gibt ebenfalls falschen wert aus!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        labelReachedGoalsSymbol.setIcon(board.getAllPlayers()[1].getCreaturesNeeded().get(0).getSymbolImage());
+        //labelReachedGoalsSymbol.setIcon(board.getAllPlayers()[1].getCreaturesNeeded().get(0).getSymbolImage());
         labelReachedGoalsSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         panelInformation.add(labelReachedGoalsSymbol, constraintsInformation);
 
@@ -276,11 +260,7 @@ public class PlayGround implements ActionListener {
         // next goal symbol
         constraintsInformation.gridx = 0;
         constraintsInformation.gridy = 3;
-        // instead of Dragon it should use an image
-        labelNextGoalSymbol = setLabel("Dragon",fontSize, stoneSize, stoneSize, colorBlack );
-
-        labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
-
+        labelNextGoalSymbol= setLabel("", fontSize, stoneSize,stoneSize,colorBlack);
         labelNextGoalSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         panelInformation.add(labelNextGoalSymbol, constraintsInformation);
 
@@ -300,7 +280,6 @@ public class PlayGround implements ActionListener {
 
 
         this.labelNextStoneSymbol = setLabel("",fontSize, stoneSize, stoneSize, colorBlack );
-        this.labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
         this.labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         panelInformation.add(this.labelNextStoneSymbol, constraintsInformation);
 
@@ -481,22 +460,8 @@ public class PlayGround implements ActionListener {
                 constraintsGameField.gridy = i+1;
 
                 JButton buttonStone = setButtons("", fontSize, stoneSize, stoneSize);
-                buttonStone.setIcon(board.getTile(j,i).getShape().getImage());//drawing pic on it
 
-                //-------------------------
-                // checking if the players are on the the spot if yes draw a colored border
-                if((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)){
-                    buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
-                }
-                if((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)){
-                    buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(1).getColor()));
-                }
-                if((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i)){
-                    buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(2).getColor()));
-                }
-                if((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)){
-                    buttonStone.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(3).getColor()));
-                }
+
                 //-------------------------
                 // saves the field in a 2d array
                 boardSquares[j][i]= buttonStone;
@@ -885,6 +850,7 @@ public class PlayGround implements ActionListener {
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
             }
+
         }
         out.close();
         in.close();
@@ -928,6 +894,31 @@ public class PlayGround implements ActionListener {
         }
         //draw the NextStone image
         labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
+
+        //draw points of player
+        labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore());
+        labelPlayer1.setText(board.getPlayer(1).getNameOfPlayer() + ": " + board.getPlayer(1).getScore());
+        labelPlayer2.setText(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore());
+        labelPlayer3.setText(board.getPlayer(3).getNameOfPlayer() + ": " + board.getPlayer(3).getScore());
+
+        //draw next goalCard
+        labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
+
+        // draw a border around the player which turn it is
+        if(board.getPlayer(0).getTurn()){
+            labelPlayer0.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+        }
+        else if(board.getPlayer(1).getTurn()){
+            labelPlayer1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+        }
+        else if(board.getPlayer(2).getTurn()){
+            labelPlayer2.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+        }
+        else if(board.getPlayer(3).getTurn()){
+            labelPlayer3.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+        }
+
+
     }
 
 
