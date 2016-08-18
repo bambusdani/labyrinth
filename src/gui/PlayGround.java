@@ -890,8 +890,22 @@ public class PlayGround implements ActionListener {
         String s;
         while ((s = in.readLine()) != null) {
             if(s.startsWith("tileID")) {
-                textArea.insert(s + " erfolgreich in listen\n", textArea.getText().length());
+                //-----------------------------------------------------
+                // getting tileID's with substring
+                // first tileID substring is 7-9
+                // assuming we have a two digit tileID
+                int[] tmpTileID = new int[49];
+                int counter = 0;
+
+                for (int i = 7; i < 147; i=i+3) {
+                    tmpTileID[counter] = Integer.parseInt(s.substring(i,i+2));
+                    counter++;
+                }
+                System.out.println(s.substring(7,9));
+                textArea.insert(s + "\n", textArea.getText().length());
             } else if(s.startsWith("player")) {
+                boolean isWhitespace = s.matches("^\\s*$");
+
                 //TODO string splitten und zwischenspeichern
                 //split...
                 //TODO werte vom board umschreiben
