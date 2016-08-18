@@ -645,12 +645,18 @@ public class PlayGround implements ActionListener {
         }
         if(buttonRotate == e.getSource()){
 
-            rotationAngle += 90;
+            int nextTileRotation = board.getNextTile().getRotation();
 
-            int newRotation = board.getNextTile().getRotation()+90;
+            if(nextTileRotation==270){
+                nextTileRotation=0;
+            }else{
+                nextTileRotation += 90;
+            }
 
-            labelNextStoneSymbol.setIcon(board.getNextTile().getShape().rotateImage(rotationAngle));
-            board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(rotationAngle));
+            board.getNextTile().setRotation(nextTileRotation);
+
+            labelNextStoneSymbol.setIcon(board.getNextTile().getShape().rotateImage(nextTileRotation));
+            board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(nextTileRotation));
             board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());
 
 
