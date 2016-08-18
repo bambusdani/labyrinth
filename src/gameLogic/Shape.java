@@ -12,7 +12,6 @@ public class Shape {
 
     private ImageIcon buImg;
     private String shape;
-    //top right bottom left
     private boolean[] possiblePaths = new boolean[4]; //top right bottom left???
     private String creature;
 
@@ -35,15 +34,6 @@ public class Shape {
     /** Rotate Image Function */
 
     public ImageIcon rotateImage(double degrees){
-        /*boolean oben = this.possiblePaths[0];
-        boolean rechts = this.possiblePaths[1];
-        boolean unten = this.possiblePaths[2];
-        boolean links = this.possiblePaths[3];
-
-        this.possiblePaths[0] = links;
-        this.possiblePaths[1] = oben;
-        this.possiblePaths[2] = rechts;
-        this.possiblePaths[3] = unten;*/
 
         ImageIcon imageIcon = this.buImg;
         BufferedImage buImg = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -56,10 +46,7 @@ public class Shape {
         buImg = op.filter(buImg, null);
 
         ImageIcon imageI = new ImageIcon(buImg);
-
-
-
-
+        
         return imageI;
     }
 
