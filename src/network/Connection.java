@@ -14,8 +14,9 @@ public class Connection extends Thread {
     private Socket socket;
     private Out out;
     private In in;
-    private String message;     // one line buffer
-    private boolean init=false; // for init message
+    private String message;         // one line buffer
+    private boolean init = false;   // for init message
+    private int id;                 //connection ID (for logging)
 
     public final Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
