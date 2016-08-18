@@ -861,16 +861,47 @@ public class PlayGround implements ActionListener {
                 Tiles[] t = new Tiles[board.getAllTilesInOneArray().length-1];
 
 
-                for(int first= 1 ; first < tmpTileID.length; first++){
+                //for(int i=0;i<7;i++){
+                  //  for(int j=0;j<7;j++){
 
+
+                        for(int first= 1 ; first < tmpTileID.length; first++){
+                            for(int second = 0; second < board.getAllTilesInOneArray().length; second ++){
+
+                                if(Integer.parseInt(tmpTileID[first]) == board.getAllTilesInOneArray()[second].getId()){
+                                    t[first-1] = board.getAllTilesInOneArray()[second];
+                                    //board.setTiles(i,j,board.getAllTilesInOneArray()[second]);
+
+                                }
+                            }
+                        }
+
+              //      }
+                //}
+                int counter=0;
+                for(int i = 0; i< 7; i++){
+                    for(int j = 0; j< 7; j++){
+                        board.setTiles(i,j,t[counter]);
+                        counter++;
+                    }
+                }
+
+
+
+
+                drawGameField(board);
+                //funktioniert!!!!!!!
+                /*for(int first= 1 ; first < tmpTileID.length; first++){
                     for(int second = 0; second < board.getAllTilesInOneArray().length; second ++){
 
                         if(Integer.parseInt(tmpTileID[first]) == board.getAllTilesInOneArray()[second].getId()){
                             t[first-1] = board.getAllTilesInOneArray()[second];
                         }
-
                     }
                 }
+                //!!!!!!!!!
+
+
 
                 for (int i =0; i < tmpTileID.length; i++){
                     System.out.print(tmpTileID[i]);
@@ -881,7 +912,7 @@ public class PlayGround implements ActionListener {
                 }
 
 
-
+*/
 
 
                 /* textArea.insert(s + "\n", textArea.getText().length());
