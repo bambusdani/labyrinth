@@ -876,12 +876,22 @@ public class PlayGround implements ActionListener {
     //================================================================================
     // listen to socket and print everything that server broadcasts
     //================================================================================
+    //================================================================================
+    // +Listen to socket and print everything (chat) that server broadcasts
+    // +Converting String(s) -> Board
+    // Available incoming Strings:
+    // -tileID
+    // -tileRot
+    // -tileX
+    // -tileY
+    // -player
+    //================================================================================
     public void listen() {
         String s;
         while ((s = in.readLine()) != null) {
-            if(s.startsWith("initTile")) {
+            if(s.startsWith("tileID")) {
                 textArea.insert(s + " erfolgreich in listen\n", textArea.getText().length());
-            } else if(s.startsWith("initPlayer")) {
+            } else if(s.startsWith("player")) {
                 //TODO string splitten und zwischenspeichern
                 //split...
                 //TODO werte vom board umschreiben

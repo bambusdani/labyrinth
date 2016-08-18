@@ -14,7 +14,7 @@ import gameLogic.*;
 public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
     private String playerID;
-    private String tileID, tileRot, tileX, tileY, player;
+    private String tileID="", tileRot="", tileX="", tileY="", goal="", player="";
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -27,8 +27,11 @@ public class ConnectionListener extends Thread {
         // Converting Board -> String(s)
         // Available Strings:
         // -tileID
+        // -tileRot
         // -tileX
         // -tileY
+        // -goal
+        // -player
         //================================================================================
 
         //--------------------------------------------------------------------------------
@@ -41,6 +44,9 @@ public class ConnectionListener extends Thread {
                 tileY   += initBoard.getTile(i, j).getPosition().getY() + " ";
             }
         }
+
+        //--------------------------------------------------------------------------------
+        // goal
 
         //--------------------------------------------------------------------------------
         // players
@@ -73,7 +79,7 @@ public class ConnectionListener extends Thread {
 
                 //send init board strings to clients (speficially)
                 if(ith.isAlive() && !connections.get(i).isInit()) {
-                    ith.println("init " + tileID);
+                    ith.println("tileID " + tileID);
                     ith.println("tileRot " + tileRot);
                     ith.println("tileX " + tileX);
                     ith.println("tileY " + tileY);
