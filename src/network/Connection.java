@@ -6,6 +6,8 @@
 package network;
 
 import java.net.Socket;
+import java.util.logging.Logger;
+
 import gameLogic.*;
 
 public class Connection extends Thread {
@@ -13,7 +15,9 @@ public class Connection extends Thread {
     private Out out;
     private In in;
     private String message;     // one line buffer
-    private boolean init=false;
+    private boolean init=false; // for init message
+
+    public final Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
     public Connection(Socket socket) {
         in  = new In(socket);

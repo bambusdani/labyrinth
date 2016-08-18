@@ -13,40 +13,39 @@ import gameLogic.*;
 
 public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
-
-
-    private final static Logger LOGGER = Logger.getLogger(ConnectionListener.class.getName());
-    private int playerID;
-    private boolean mError, mException;
-    private String sException;
-
-    //--------------------------------------------------------------------------------
-    // create a new board so we can get the player information needed
-    private Board board = new Board();
+    private String playerID;
+    private String tileID, tileRot, tileX, tileY, player;
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
 
-        /*
-        TODO
-        -board in string umwandeln
-        for getAllTiles.size
-            tile.getID() += string;
-         */
+        //--------------------------------------------------------------------------------
+        // create an init board
+        Board initBoard = new Board();
 
         //================================================================================
-        // setup the logger
+        // Converting Board -> String(s)
+        // Available Strings:
+        // -tileID
+        // -tileX
+        // -tileY
         //================================================================================
-        try {
-            //================================================================================
-            // set log level
 
-            LOGGER.info("*****STARTING*****");
-        } catch (Exception e) {
-            //================================================================================
-            // catch error
-            LOGGER.warning(e.toString());
+        //--------------------------------------------------------------------------------
+        // tileID
+        for (int i = 0; i < initBoard.getallTiles().length; i++) {
+            for (int j = 0; j < initBoard.getallTiles()[0].length; j++) {
+                tileID  += initBoard.getTile(i, j).getId() + " ";
+                tileRot += initBoard.getTile(i, j).getRotation() + " ";
+                tileX   += initBoard.getTile(i, j).getPosition().getX() + " ";
+                tileY   += initBoard.getTile(i, j).getPosition().getY() + " ";
+            }
+        }
 
+        //--------------------------------------------------------------------------------
+        // players
+        for (int i = 0; i < initBoard.getAllPlayers().length; i++) {
+            player += initBoard.getPlayer(i).getNameOfPlayer() + " ";
         }
     }
 
@@ -73,21 +72,23 @@ public class ConnectionListener extends Thread {
                 String message = ith.getMessage();
 
                 //send init board strings to clients (speficially)
-                if(!connections.get(i).isInit()) {
-                    ith.println("initTile");
-                    ith.println("initPlayer");
+                if(ith.isAlive() && !connections.get(i).isInit()) {
+                    ith.println("init " + tileID);
+                    ith.println("tileRot " + tileRot);
+                    ith.println("tileX " + tileX);
+                    ith.println("tileY " + tileY);
+                    ith.println("player " + player);
+
+                    // start logging for earch client
+                    ith.LOGGER.info("*****STARTING*****");
+                    ith.LOGGER.info("init " + tileID);
+
                     connections.get(i).setInit(true);
                 }
 
                 //--------------------------------------------------------------------------------
-                // Broadcast to specific clients goes here before the jth-loop!
-                if(mException) {
-                    ith.println(sException);
-                    mException = false;
-                }
-                //--------------------------------------------------------------------------------
-                // Begin with server broadcasting to all clients
-                // Begin with reading client messages
+                // begin with server broadcasting to all clients
+                // begin with reading client messages
                 if (message != null)
                     for (Connection jth : connections) {
                         try {
@@ -98,15 +99,11 @@ public class ConnectionListener extends Thread {
                             jth.println(message);
                         }
                         catch (Exception e) {
-                            //--------------------------------------------------------------------------------
-                            // error will only be displayed in the client
-                            mException = true;
-                            sException = e.getMessage();
+                            // error displaying
+                            System.err.println(e.getMessage());
                         }
                     }
             }
-
-            //--------------------------------------------------------------------------------
             // don't monopolize processor
             try                 { Thread.sleep(100);   }
             catch (Exception e) { e.printStackTrace(); }
