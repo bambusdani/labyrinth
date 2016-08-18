@@ -40,7 +40,7 @@ public class Player {
     public Color getColor(){return color;}
     public boolean getTurn(){return turn;}                                  public void setTurn(boolean turn){this.turn = turn;}
     public int getScore(){return score;}                                    public void setScore(int score){this.score = score;}
-    public String getNameOfPlayer(){return nameOfPlayer;}
+    public String getNameOfPlayer(){return nameOfPlayer;}                   public void setNameOfPlayer(String name){nameOfPlayer = name;}
     public String getMessage() {return this.message;}                       public void setMessage(String message) {this.message = message;}
 
 }

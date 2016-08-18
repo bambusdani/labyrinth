@@ -14,7 +14,6 @@ public class Main {
 
         PlayGround test = new PlayGround(board, "localhost", "Daniel", 1);
         test.listen();
-
     }
 }
 

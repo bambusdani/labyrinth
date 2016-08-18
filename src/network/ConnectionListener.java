@@ -53,12 +53,6 @@ public class ConnectionListener extends Thread {
             goal2 += initBoard.getPlayer(2).getCreaturesNeeded().get(i).getGoalCardID() + " ";
             goal3 += initBoard.getPlayer(3).getCreaturesNeeded().get(i).getGoalCardID() + " ";
         }
-
-        //--------------------------------------------------------------------------------
-        // players
-        for (int i = 0; i < initBoard.getAllPlayers().length; i++) {
-            player += initBoard.getPlayer(i).getNameOfPlayer() + " ";
-        }
     }
 
     //--------------------------------------------------------------------------------
@@ -74,8 +68,6 @@ public class ConnectionListener extends Thread {
                 if (!ith.isAlive())
                     connections.remove(i);
 
-
-
                 //================================================================================
                 // Broadcasts to all clients oder to one specific client
                 // -broadcasting to all:
@@ -85,16 +77,21 @@ public class ConnectionListener extends Thread {
                 //================================================================================
                 String message = ith.getMessage();
 
+                // filter and set playername (to specific connection)
+                if (message.startsWith("initName")) {
+                    ith.setPlayerName(message.substring(9));
+                    player += ith.getPlayerName() + " ";
+                    ith.println("initName " + player);
+                }
+
                 //send init board strings to clients (speficially)
                 if(ith.isAlive() && !connections.get(i).isInit()) {
                     connections.get(i).setpId(i);
-                    System.out.println(connections.get(i).getpId());
 
                     ith.println("tileID " + tileID);
                     ith.println("tileRot " + tileRot);
                     ith.println("tileX " + tileX);
                     ith.println("tileY " + tileY);
-                    ith.println("player " + player);
 
                     // start logging for earch client
                     ith.LOGGER.info("*****STARTING*****");

@@ -90,6 +90,7 @@ public class PlayGround implements ActionListener {
     private Out out;
     private In in;
     private String screenName;
+    private String initName;
 
     // Erstellen der Klasse mit wichtigen Funktionen
 
@@ -129,6 +130,8 @@ public class PlayGround implements ActionListener {
         }
         catch (Exception ex) { ex.printStackTrace(); }
         this.screenName = "[" + screenName + "]: ";
+        this.initName = screenName;
+        out.println("initName " + initName);
 
         //TODO Muss nacher wieder weg ist nur zum testen :)
         this.playerID = playerID;
@@ -872,17 +875,13 @@ public class PlayGround implements ActionListener {
                     counter++;
                 }*/
                 textArea.insert(s + "\n", textArea.getText().length());
-            } else if(s.startsWith("player")) {
+            } else if(s.startsWith("initName")) {
                 String[] tmpPlayer = s.split("\\s+");
 
-                for (int i = 0; i < tmpPlayer.length; i++) {
-                    System.out.println(tmpPlayer[i]);
+                for (int i = 1; i < tmpPlayer.length; i++) {
+                    board.getPlayer(i-1).setNameOfPlayer(tmpPlayer[i]);
                 }
-
-                //TODO string splitten und zwischenspeichern
-                //split...
-                //TODO werte vom board umschreiben
-                //drawGameField();
+                drawGameField(board);
             }
             else {
                 textArea.insert(s + "\n", textArea.getText().length());
@@ -896,6 +895,10 @@ public class PlayGround implements ActionListener {
         catch (Exception e) { e.printStackTrace(); }
         System.err.println("Closed client socket");
     }
+
+    /**
+     * setname
+     */
 
 
     /**

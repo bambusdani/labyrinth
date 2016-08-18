@@ -17,6 +17,7 @@ public class Connection extends Thread {
     private String message;         // one line buffer
     private boolean init = false;   // for init message
     private int pId;                 //connection ID (for logging)
+    private String playerName;
 
     public final Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
@@ -75,5 +76,13 @@ public class Connection extends Thread {
 
     public void setpId(int pId) {
         this.pId = pId;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 }
