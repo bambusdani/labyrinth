@@ -19,6 +19,7 @@ public class BoardFromClient {
     private Tiles nextTile = null;
     private Tiles[] allTilesInOneArray = new Tiles[50];
     private List<GoalCard> creaturesNeeded = new ArrayList<>();
+    private GoalCard[] allGoalCards = new GoalCard[28];
 
     //=============================================================
 
@@ -180,35 +181,36 @@ public class BoardFromClient {
          * placeing all Cards into the list allCreaturesNeeded
          * shuffel all and place it in the player neededCreatures
          */
-        GoalCard mouse      = new GoalCard("mouse",     creatureImage1 , 0);
-        GoalCard krone      = new GoalCard("krone",     creatureImage2 , 1);
-        GoalCard spinne     = new GoalCard("spinne",    creatureImage3 , 2);
-        GoalCard kerze      = new GoalCard("kerze",     creatureImage4 , 3);
-        GoalCard rubin      = new GoalCard("rubin",     creatureImage5 , 4);
-        GoalCard geist      = new GoalCard("geist",     creatureImage6 , 5);
-        GoalCard eule       = new GoalCard("eule",      creatureImage7 , 6);
-        GoalCard fledermaus = new GoalCard("fledermaus",creatureImage8 , 7);
-        GoalCard drache     = new GoalCard("drache",    creatureImage9 , 8);
-        GoalCard motte      = new GoalCard("motte",     creatureImage10, 9);
-        GoalCard fgeist     = new GoalCard("fgeist",    creatureImage11,10);
-        GoalCard key        = new GoalCard("key",       creatureImage12,11);
-        GoalCard map        = new GoalCard("map",       creatureImage13,12);
-        GoalCard zauberer   = new GoalCard("zauberer",  creatureImage14,13);
-        GoalCard skull      = new GoalCard("skull",     creatureImage15,14);
-        GoalCard coins      = new GoalCard("coins",     creatureImage16,15);
-        GoalCard schatz     = new GoalCard("schatz",    creatureImage17,16);
-        GoalCard ring       = new GoalCard("ring",      creatureImage18,17);
-        GoalCard helm       = new GoalCard("helm",      creatureImage19,18);
-        GoalCard salamander = new GoalCard("salamander",creatureImage20,19);
-        GoalCard troll      = new GoalCard("troll",     creatureImage21,20);
-        GoalCard book       = new GoalCard("book",      creatureImage22,21);
-        GoalCard schwert    = new GoalCard("schwert",   creatureImage23,22);
-        GoalCard käfer      = new GoalCard("käfer",     creatureImage24,23);
+
+        allGoalCards[0]     = new GoalCard("mouse",     creatureImage1 , 0);
+        allGoalCards[1]     = new GoalCard("krone",     creatureImage2 , 1);
+        allGoalCards[2]     = new GoalCard("spinne",    creatureImage3 , 2);
+        allGoalCards[3]     = new GoalCard("kerze",     creatureImage4 , 3);
+        allGoalCards[4]     = new GoalCard("rubin",     creatureImage5 , 4);
+        allGoalCards[5]     = new GoalCard("geist",     creatureImage6 , 5);
+        allGoalCards[6]     = new GoalCard("eule",      creatureImage7 , 6);
+        allGoalCards[7]     = new GoalCard("fledermaus",creatureImage8 , 7);
+        allGoalCards[8]     = new GoalCard("drache",    creatureImage9 , 8);
+        allGoalCards[9]     = new GoalCard("motte",     creatureImage10, 9);
+        allGoalCards[10]    = new GoalCard("fgeist",    creatureImage11,10);
+        allGoalCards[11]    = new GoalCard("key",       creatureImage12,11);
+        allGoalCards[12]    = new GoalCard("map",       creatureImage13,12);
+        allGoalCards[13]    = new GoalCard("zauberer",  creatureImage14,13);
+        allGoalCards[14]    = new GoalCard("skull",     creatureImage15,14);
+        allGoalCards[15]    = new GoalCard("coins",     creatureImage16,15);
+        allGoalCards[16]    = new GoalCard("schatz",    creatureImage17,16);
+        allGoalCards[17]    = new GoalCard("ring",      creatureImage18,17);
+        allGoalCards[18]    = new GoalCard("helm",      creatureImage19,18);
+        allGoalCards[19]    = new GoalCard("salamander",creatureImage20,19);
+        allGoalCards[20]    = new GoalCard("troll",     creatureImage21,20);
+        allGoalCards[21]    = new GoalCard("book",      creatureImage22,21);
+        allGoalCards[22]    = new GoalCard("schwert",   creatureImage23,22);
+        allGoalCards[23]    = new GoalCard("käfer",     creatureImage24,23);
         //Startpositionen -> falsches Bild
-        GoalCard red        = new GoalCard("red",       creatureImageRed,24);
-        GoalCard yellow     = new GoalCard("yellow",    creatureImageYellow,25);
-        GoalCard green      = new GoalCard("green",     creatureImageGreen,26);
-        GoalCard blue       = new GoalCard("blue",      creatureImageBlue,27);
+        allGoalCards[24]    = new GoalCard("red",       creatureImageRed,24);
+        allGoalCards[25]    = new GoalCard("yellow",    creatureImageYellow,25);
+        allGoalCards[26]    = new GoalCard("green",     creatureImageGreen,26);
+        allGoalCards[27]    = new GoalCard("blue",      creatureImageBlue,27);
 
 
         /**
@@ -293,10 +295,10 @@ public class BoardFromClient {
 
     //TODO bei der Spielererstellung müssen die Daten aus dem Fenster davor übergeben werde
                                   //startPosition   , actualPosition   , ID, Color                      ,turn,score, name, cardsymbolNeeded
-        allPlayers[0] = new Player(new Position(6,6), new Position(1,5), 0 , new Color(255, 0 ,0),      true,   0, " ",  null );
-        allPlayers[1] = new Player(new Position(0,6), new Position(3,2), 1 , new Color(0, 0 ,255),      false,  6, " ",  null );
-        allPlayers[2] = new Player(new Position(6,0), new Position(5,3), 2 , new Color(252, 255, 0),    false,  6, " ",  null );
-        allPlayers[3] = new Player(new Position(0,0), new Position(2,5), 3 , new Color(53, 255 ,0),     false,  6, " " , null );
+        allPlayers[0] = new Player(new Position(6,6), new Position(1,5), 0 , new Color(255, 0 ,0),      true,   0, " ",  creaturesNeeded );
+        allPlayers[1] = new Player(new Position(0,6), new Position(3,2), 1 , new Color(0, 0 ,255),      false,  6, " ",  creaturesNeeded );
+        allPlayers[2] = new Player(new Position(6,0), new Position(5,3), 2 , new Color(252, 255, 0),    false,  6, " ",  creaturesNeeded );
+        allPlayers[3] = new Player(new Position(0,0), new Position(2,5), 3 , new Color(53, 255 ,0),     false,  6, " " , creaturesNeeded );
     }
     //===========================
 
@@ -338,6 +340,9 @@ public class BoardFromClient {
     }
     public List<GoalCard> getCreaturesNeeded(){
        return creaturesNeeded;
+    }
+    public GoalCard[] getAllGoalCards(){
+        return allGoalCards;
     }
 
 

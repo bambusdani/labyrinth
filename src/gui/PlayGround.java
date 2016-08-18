@@ -853,10 +853,11 @@ public class PlayGround implements ActionListener {
     public void listen() {
         String s;
         while ((s = in.readLine()) != null) {
+
+            //tileID
             if(s.startsWith("tileID")) {
 
                 String[] tmpTileID = s.split("\\s+");
-
                 Tiles[] tmpTiles = new Tiles[board.getAllTilesInOneArray().length-1];
 
                         //vergleicht jeden mit jedem in der liste und speichert es in
@@ -879,10 +880,11 @@ public class PlayGround implements ActionListener {
                 }
 
 
-                drawGameField(board);
+                //drawGameField(board);
 
 
             }
+            //tileNextID
             else if(s.startsWith("tileNextID")){
 
                 for (int index = 0 ; index < board.getAllTilesInOneArray().length ; index ++ ){
@@ -890,10 +892,32 @@ public class PlayGround implements ActionListener {
                         board.setNextTile(board.getAllTilesInOneArray()[index]);
                     }
                 }
+            }
+            //deal
+            else if(s.startsWith("deal")){
 
+                String[] dealID = s.split("\\s+");
+
+                for(int first = 1; first < dealID.length; first++){
+
+                    for(int second = 0; second < board.getAllGoalCards().length; second ++){
+
+                        if(Integer.parseInt(dealID[first]) == board.getAllGoalCards()[second].getGoalCardID()){
+                            board.getCreaturesNeeded().add(board.getAllGoalCards()[second]);
+
+                        }
+
+                    }
+                }
+
+                System.out.println(board.getCreaturesNeeded().get(0).getGoalCardID());
+                drawGameField(board);
 
 
             }
+
+
+            //initName
             else if(s.startsWith("initName")) {
                 String[] tmpPlayer = s.split("\\s+");
 
@@ -908,7 +932,7 @@ public class PlayGround implements ActionListener {
                 textArea.setCaretPosition(textArea.getText().length());
             }
 
-
+            //drawGameField(board);
         }
         out.close();
         in.close();
@@ -928,6 +952,8 @@ public class PlayGround implements ActionListener {
      * draws the whole gameField
      */
 
+    //TODO Important!!!
+    //TODO drawGameField darf erst aufgerufen werden wenn alle daten verteilt wurden!
     public void drawGameField(BoardFromClient board){
 
         //Spielfeld wird komplett neu gezeichnet
@@ -964,7 +990,7 @@ public class PlayGround implements ActionListener {
         labelPlayer3.setText(board.getPlayer(3).getNameOfPlayer() + ": " + board.getPlayer(3).getScore());
 
         //TODO draw next goalCard
-       // labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
+        labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
 
         // draw a border around the player which turn it is
         if(board.getPlayer(0).getTurn()){
