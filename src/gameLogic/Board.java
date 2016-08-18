@@ -87,7 +87,6 @@ public class Board {
     //liste aller player (maximal 4)
     private Player[] allPlayers = new Player[4];
     private Tiles[][] tiles = new Tiles[7][7];
-
     private Tiles nextTile = new Tiles(0 ,true, null, new Shape(tile2Image, "L", new boolean[] {true,false,false,true} , null ), 0);
 
     //=============================================================
@@ -178,35 +177,35 @@ public class Board {
          * placeing all Cards into the list allCreaturesNeeded
          * shuffel all and place it in the player neededCreatures
          */
-        GoalCard mouse      = new GoalCard("mouse",     creatureImage1);
-        GoalCard krone      = new GoalCard("krone",     creatureImage2);
-        GoalCard spinne     = new GoalCard("spinne",    creatureImage3);
-        GoalCard kerze      = new GoalCard("kerze",     creatureImage4);
-        GoalCard rubin      = new GoalCard("rubin",     creatureImage5);
-        GoalCard geist      = new GoalCard("geist",     creatureImage6);
-        GoalCard eule       = new GoalCard("eule",      creatureImage7);
-        GoalCard fledermaus = new GoalCard("fledermaus",creatureImage8);
-        GoalCard drache     = new GoalCard("drache",    creatureImage9);
-        GoalCard motte      = new GoalCard("motte",     creatureImage10);
-        GoalCard fgeist     = new GoalCard("fgeist",    creatureImage11);
-        GoalCard key        = new GoalCard("key",       creatureImage12);
-        GoalCard map        = new GoalCard("map",       creatureImage13);
-        GoalCard zauberer   = new GoalCard("zauberer",  creatureImage14);
-        GoalCard skull      = new GoalCard("skull",     creatureImage15);
-        GoalCard coins      = new GoalCard("coins",     creatureImage16);
-        GoalCard schatz     = new GoalCard("schatz",    creatureImage17);
-        GoalCard ring       = new GoalCard("ring",      creatureImage18);
-        GoalCard helm       = new GoalCard("helm",      creatureImage19);
-        GoalCard salamander = new GoalCard("salamander",creatureImage20);
-        GoalCard troll      = new GoalCard("troll",     creatureImage21);
-        GoalCard book       = new GoalCard("book",      creatureImage22);
-        GoalCard schwert    = new GoalCard("schwert",   creatureImage23);
-        GoalCard käfer      = new GoalCard("käfer",     creatureImage24);
+        GoalCard mouse      = new GoalCard("mouse",     creatureImage1 , 0);
+        GoalCard krone      = new GoalCard("krone",     creatureImage2 , 1);
+        GoalCard spinne     = new GoalCard("spinne",    creatureImage3 , 2);
+        GoalCard kerze      = new GoalCard("kerze",     creatureImage4 , 3);
+        GoalCard rubin      = new GoalCard("rubin",     creatureImage5 , 4);
+        GoalCard geist      = new GoalCard("geist",     creatureImage6 , 5);
+        GoalCard eule       = new GoalCard("eule",      creatureImage7 , 6);
+        GoalCard fledermaus = new GoalCard("fledermaus",creatureImage8 , 7);
+        GoalCard drache     = new GoalCard("drache",    creatureImage9 , 8);
+        GoalCard motte      = new GoalCard("motte",     creatureImage10, 9);
+        GoalCard fgeist     = new GoalCard("fgeist",    creatureImage11,10);
+        GoalCard key        = new GoalCard("key",       creatureImage12,11);
+        GoalCard map        = new GoalCard("map",       creatureImage13,12);
+        GoalCard zauberer   = new GoalCard("zauberer",  creatureImage14,13);
+        GoalCard skull      = new GoalCard("skull",     creatureImage15,14);
+        GoalCard coins      = new GoalCard("coins",     creatureImage16,15);
+        GoalCard schatz     = new GoalCard("schatz",    creatureImage17,16);
+        GoalCard ring       = new GoalCard("ring",      creatureImage18,17);
+        GoalCard helm       = new GoalCard("helm",      creatureImage19,18);
+        GoalCard salamander = new GoalCard("salamander",creatureImage20,19);
+        GoalCard troll      = new GoalCard("troll",     creatureImage21,20);
+        GoalCard book       = new GoalCard("book",      creatureImage22,21);
+        GoalCard schwert    = new GoalCard("schwert",   creatureImage23,22);
+        GoalCard käfer      = new GoalCard("käfer",     creatureImage24,23);
         //Startpositionen -> falsches Bild
-        GoalCard red        = new GoalCard("red",       creatureImageRed);
-        GoalCard yellow     = new GoalCard("yellow",    creatureImageYellow);
-        GoalCard green      = new GoalCard("green",     creatureImageGreen);
-        GoalCard blue       = new GoalCard("blue",      creatureImageBlue);
+        GoalCard red        = new GoalCard("red",       creatureImageRed,24);
+        GoalCard yellow     = new GoalCard("yellow",    creatureImageYellow,25);
+        GoalCard green      = new GoalCard("green",     creatureImageGreen,26);
+        GoalCard blue       = new GoalCard("blue",      creatureImageBlue,27);
 
         //creating a list off all cards
         List<GoalCard> allCreaturesNeeded = Arrays.asList(mouse, krone, spinne, kerze, rubin, geist, eule, fledermaus, drache, motte, fgeist, key, map, zauberer, skull, coins, schatz, ring, helm, salamander, troll, book, schwert, käfer);
