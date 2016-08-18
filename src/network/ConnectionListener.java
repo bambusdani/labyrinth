@@ -83,7 +83,7 @@ public class ConnectionListener extends Thread {
                 if(ith.isAlive() && !connections.get(i).isInit()) {
                     connections.get(i).setpId(i);
 
-                    ith.println("tileID " + tileID + "99");
+                    ith.println("tileID " + tileID );
                     //TODO
                     ith.println("tileNextID " + tileNextID);
 

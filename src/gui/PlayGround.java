@@ -79,7 +79,7 @@ public class PlayGround implements ActionListener {
     private JTextArea textArea;
     private JTextField textField;
 
-    public BoardFromClient board;
+    public BoardFromClient board = new BoardFromClient();
 
     // socket for connection to network server
     private Socket socket;
@@ -119,7 +119,7 @@ public class PlayGround implements ActionListener {
 
 
 
-    public PlayGround(BoardFromClient board, String hostName, String screenName, int playerID) {
+    public PlayGround(String hostName, String screenName, int playerID) {
         // connect to server
         try {
             socket = new Socket(hostName, 4444);
@@ -140,7 +140,6 @@ public class PlayGround implements ActionListener {
         playersTurn.add(false);
         //TODO Bis hier
 
-        this.board = board;
 
         //TODO ---------------------------------------------------------------------------------------------------------
 
@@ -858,119 +857,29 @@ public class PlayGround implements ActionListener {
 
                 String[] tmpTileID = s.split("\\s+");
 
-                Tiles[] t = new Tiles[board.getAllTilesInOneArray().length-1];
+                Tiles[] tmpTiles = new Tiles[board.getAllTilesInOneArray().length-1];
 
-
-                //for(int i=0;i<7;i++){
-                  //  for(int j=0;j<7;j++){
-
-
+                        //vergleicht jeden mit jedem in der liste und speichert es in
                         for(int first= 1 ; first < tmpTileID.length; first++){
                             for(int second = 0; second < board.getAllTilesInOneArray().length; second ++){
 
                                 if(Integer.parseInt(tmpTileID[first]) == board.getAllTilesInOneArray()[second].getId()){
-                                    t[first-1] = board.getAllTilesInOneArray()[second];
-                                    //board.setTiles(i,j,board.getAllTilesInOneArray()[second]);
-
+                                    tmpTiles[first-1] = board.getAllTilesInOneArray()[second];
                                 }
                             }
                         }
 
-              //      }
-                //}
+                //macht aus einer Liste ein 2d Array und speichert es in board
                 int counter=0;
                 for(int i = 0; i< 7; i++){
                     for(int j = 0; j< 7; j++){
-                        board.setTiles(i,j,t[counter]);
+                        board.setTiles(i,j,tmpTiles[counter]);
                         counter++;
                     }
                 }
 
 
-
-
                 drawGameField(board);
-                //funktioniert!!!!!!!
-                /*for(int first= 1 ; first < tmpTileID.length; first++){
-                    for(int second = 0; second < board.getAllTilesInOneArray().length; second ++){
-
-                        if(Integer.parseInt(tmpTileID[first]) == board.getAllTilesInOneArray()[second].getId()){
-                            t[first-1] = board.getAllTilesInOneArray()[second];
-                        }
-                    }
-                }
-                //!!!!!!!!!
-
-
-
-                for (int i =0; i < tmpTileID.length; i++){
-                    System.out.print(tmpTileID[i]);
-                }
-                System.out.println("\n");
-                for (int i =0; i < t.length; i++){
-                    System.out.print(t[i].getId());
-                }
-
-
-*/
-
-
-                /* textArea.insert(s + "\n", textArea.getText().length());
-                //-----------------------------------------------------
-                // getting tileID's with substring
-                // first tileID substring is 7-9
-                // assuming we have a two digit tileID
-                //int[] tmpTileID = new int[49];
-                String[] tmpTileID = s.split("\\s+");
-
-                int counterInput = 1;//-> first is string tileID
-                //int counterAllTiles = 0;
-
-                System.out.println("länge tmpTileID: " + tmpTileID.length);
-
-
-                Tiles[][] newTiles = new Tiles[7][7];
-                for(int j = 0 ; j < 7 ; j++){
-
-                    for(int i = 0; i < 7 ;i++){
-
-                        for (int counterAllTiles = 0; counterAllTiles < board.getAllTilesInOneArray().length; counterAllTiles++) {
-
-                            if (Integer.parseInt(tmpTileID[counterInput]) == board.getAllTilesInOneArray()[counterAllTiles].getId()) {
-                                //board.setTiles(j, i, board.getAllTilesInOneArray()[counterAllTiles]);
-                                newTiles[j][i] = board.getAllTilesInOneArray()[counterAllTiles];
-                                //System.out.println("counterInput: " +counterInput);
-                                counterInput++;
-                            }
-                            //System.out.println("counterAllTiles: " +counterAllTiles);
-
-                        }
-
-                    }
-
-                }
-                board.setAllTiles(newTiles);
-
-                //drawGameField(board);
-
-                for (int i = 0 ;i <tmpTileID.length ; i++){
-                    System.out.print(tmpTileID[i] +" ");
-                }
-                System.out.println("\n");
-
-                for(int j = 0 ; j < 7 ; j++){
-                    for(int i = 0; i < 7 ;i++) {
-
-                        System.out.print(board.getTile(i,j).getId()+ " ");
-                    }
-                }
-
-                System.out.println("\n");
-
-                */
-
-
-
 
 
             }
