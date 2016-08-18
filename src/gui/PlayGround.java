@@ -872,16 +872,12 @@ public class PlayGround implements ActionListener {
 
                 //macht aus einer Liste ein 2d Array und speichert es in board
                 int counter=0;
-                for(int i = 0; i< 7; i++){
-                    for(int j = 0; j< 7; j++){
-                        board.setTiles(i,j,tmpTiles[counter]);
+                for(int j = 0; j< 7; j++){
+                    for(int i = 0; i< 7; i++){
+                        board.setTiles(j,i,tmpTiles[counter]);
                         counter++;
                     }
                 }
-
-
-                //drawGameField(board);
-
 
             }
             //tileNextID
@@ -892,6 +888,34 @@ public class PlayGround implements ActionListener {
                         board.setNextTile(board.getAllTilesInOneArray()[index]);
                     }
                 }
+            }
+            else if(s.startsWith("tileRot")){
+                textArea.insert(s + "\n", textArea.getText().length());
+                textArea.setCaretPosition(textArea.getText().length());
+
+                String[] tmpRot = s.split("\\s+");
+
+                int counter = 1;
+                for(int j=0; j< 7;j++ ){
+                    for(int i=0; i<7;i++){
+                        board.getTile(j,i).setRotation(Integer.parseInt(tmpRot[counter]));
+                    }
+                }
+                //TODO setzt die Rotation muss aber noch überprüft werden ob das richtige Tile erwischt wird
+
+
+            }
+            else if(s.startsWith("tileX")){
+                //TODO initialisierung passt nicht von shuffel
+                textArea.insert(s + "\n", textArea.getText().length());
+                textArea.setCaretPosition(textArea.getText().length());
+
+            }
+            else if(s.startsWith("tileY")){
+                //TODO initialisierung von shuffel passt nicht
+                textArea.insert(s + "\n", textArea.getText().length());
+                textArea.setCaretPosition(textArea.getText().length());
+
             }
             //deal
             else if(s.startsWith("deal")){
@@ -904,13 +928,10 @@ public class PlayGround implements ActionListener {
 
                         if(Integer.parseInt(dealID[first]) == board.getAllGoalCards()[second].getGoalCardID()){
                             board.getCreaturesNeeded().add(board.getAllGoalCards()[second]);
-
                         }
-
                     }
                 }
 
-                System.out.println(board.getCreaturesNeeded().get(0).getGoalCardID());
                 drawGameField(board);
 
 
