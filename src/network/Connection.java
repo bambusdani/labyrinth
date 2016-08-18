@@ -16,7 +16,7 @@ public class Connection extends Thread {
     private In in;
     private String message;         // one line buffer
     private boolean init = false;   // for init message
-    private int id;                 //connection ID (for logging)
+    private int pId;                 //connection ID (for logging)
 
     public final Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
@@ -67,5 +67,13 @@ public class Connection extends Thread {
 
     public void setInit(boolean init) {
         this.init = init;
+    }
+
+    public int getpId() {
+        return pId;
+    }
+
+    public void setpId(int pId) {
+        this.pId = pId;
     }
 }

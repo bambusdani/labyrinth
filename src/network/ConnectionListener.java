@@ -14,7 +14,7 @@ import gameLogic.*;
 public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
     private String playerID;
-    private String tileID="", tileRot="", tileX="", tileY="", goal="", player="";
+    private String tileID="", tileRot="", tileX="", tileY="", goal="", player="", goal0="", goal1="", goal2="", goal3="";
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -47,6 +47,12 @@ public class ConnectionListener extends Thread {
 
         //--------------------------------------------------------------------------------
         // goal
+        for (int i = 0; i < initBoard.getPlayer(0).getCreaturesNeeded().size(); i++) {
+            goal0 += initBoard.getPlayer(0).getCreaturesNeeded().get(i).getGoalCardID() + " ";
+            goal1 += initBoard.getPlayer(1).getCreaturesNeeded().get(i).getGoalCardID() + " ";
+            goal2 += initBoard.getPlayer(2).getCreaturesNeeded().get(i).getGoalCardID() + " ";
+            goal3 += initBoard.getPlayer(3).getCreaturesNeeded().get(i).getGoalCardID() + " ";
+        }
 
         //--------------------------------------------------------------------------------
         // players
@@ -68,6 +74,8 @@ public class ConnectionListener extends Thread {
                 if (!ith.isAlive())
                     connections.remove(i);
 
+
+
                 //================================================================================
                 // Broadcasts to all clients oder to one specific client
                 // -broadcasting to all:
@@ -79,6 +87,9 @@ public class ConnectionListener extends Thread {
 
                 //send init board strings to clients (speficially)
                 if(ith.isAlive() && !connections.get(i).isInit()) {
+                    connections.get(i).setpId(i);
+                    System.out.println(connections.get(i).getpId());
+
                     ith.println("tileID " + tileID);
                     ith.println("tileRot " + tileRot);
                     ith.println("tileX " + tileX);
@@ -88,6 +99,23 @@ public class ConnectionListener extends Thread {
                     // start logging for earch client
                     ith.LOGGER.info("*****STARTING*****");
                     ith.LOGGER.info("init " + tileID);
+
+                    if (ith.getpId() == 0) {
+                        ith.println("deal " + goal0);
+                        ith.LOGGER.info("deal " + goal0);
+                    }
+                    if (ith.getpId() == 1) {
+                        ith.println("deal " + goal1);
+                        ith.LOGGER.info("deal " + goal1);
+                    }
+                    if (ith.getpId() == 2) {
+                        ith.println("deal " + goal2);
+                        ith.LOGGER.info("deal " + goal2);
+                    }
+                    if (ith.getpId() == 3) {
+                        ith.println("deal " + goal3);
+                        ith.LOGGER.info("deal " + goal3);
+                    }
 
                     connections.get(i).setInit(true);
                 }
