@@ -10,7 +10,7 @@ import gui.PlayGround;
 public class Main {
     public static void main(String[] args) {
 
-        Board board = new Board();
+        BoardFromClient board = new BoardFromClient();
 
         PlayGround test = new PlayGround(board, "localhost", "Daniel", 0);
         test.listen();

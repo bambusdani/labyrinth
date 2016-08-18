@@ -40,8 +40,6 @@ public class PlayGround implements ActionListener {
     public JLabel labelNextStoneSymbol;
     public int rotationAngle = 0 ;
 
-    //Im Uhrzeigersinn den Buttons(einschub/pfeilbuttons) zugewiesen
-    public boolean[] possibleInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
 
     // Images for the Arrrow buttons
     private ImageIcon imageArrowDown = new ImageIcon("src/resources/arrows/downArrow.png");
@@ -81,7 +79,7 @@ public class PlayGround implements ActionListener {
     private JTextArea textArea;
     private JTextField textField;
 
-    public Board board;
+    public BoardFromClient board;
 
     // socket for connection to network server
     private Socket socket;
@@ -121,7 +119,7 @@ public class PlayGround implements ActionListener {
 
 
 
-    public PlayGround(Board board, String hostName, String screenName, int playerID) {
+    public PlayGround(BoardFromClient board, String hostName, String screenName, int playerID) {
         // connect to server
         try {
             socket = new Socket(hostName, 4444);
@@ -143,6 +141,7 @@ public class PlayGround implements ActionListener {
         //TODO Bis hier
 
         this.board = board;
+
         //TODO ---------------------------------------------------------------------------------------------------------
 
 
@@ -837,9 +836,7 @@ public class PlayGround implements ActionListener {
 	*/
     }
 
-    public void setBoard(Board newBoard){
-        this.board = newBoard;
-    }
+
 
     //================================================================================
     // listen to socket and print everything that server broadcasts
@@ -858,6 +855,36 @@ public class PlayGround implements ActionListener {
         String s;
         while ((s = in.readLine()) != null) {
             if(s.startsWith("tileID")) {
+
+                String[] tmpTileID = s.split("\\s+");
+
+                Tiles[] t = new Tiles[board.getAllTilesInOneArray().length-1];
+
+
+                for(int first= 1 ; first < tmpTileID.length; first++){
+
+                    for(int second = 0; second < board.getAllTilesInOneArray().length; second ++){
+
+                        if(Integer.parseInt(tmpTileID[first]) == board.getAllTilesInOneArray()[second].getId()){
+                            t[first-1] = board.getAllTilesInOneArray()[second];
+                        }
+
+                    }
+                }
+
+                for (int i =0; i < tmpTileID.length; i++){
+                    System.out.print(tmpTileID[i]);
+                }
+                System.out.println("\n");
+                for (int i =0; i < t.length; i++){
+                    System.out.print(t[i].getId());
+                }
+
+
+
+
+
+                /* textArea.insert(s + "\n", textArea.getText().length());
                 //-----------------------------------------------------
                 // getting tileID's with substring
                 // first tileID substring is 7-9
@@ -865,29 +892,82 @@ public class PlayGround implements ActionListener {
                 //int[] tmpTileID = new int[49];
                 String[] tmpTileID = s.split("\\s+");
 
-                //TODO AWESOOOME
-                for (int i = 0; i < tmpTileID.length; i++) {
-                    //System.out.println(tmpTileID[i]);
+                int counterInput = 1;//-> first is string tileID
+                //int counterAllTiles = 0;
+
+                System.out.println("länge tmpTileID: " + tmpTileID.length);
+
+
+                Tiles[][] newTiles = new Tiles[7][7];
+                for(int j = 0 ; j < 7 ; j++){
+
+                    for(int i = 0; i < 7 ;i++){
+
+                        for (int counterAllTiles = 0; counterAllTiles < board.getAllTilesInOneArray().length; counterAllTiles++) {
+
+                            if (Integer.parseInt(tmpTileID[counterInput]) == board.getAllTilesInOneArray()[counterAllTiles].getId()) {
+                                //board.setTiles(j, i, board.getAllTilesInOneArray()[counterAllTiles]);
+                                newTiles[j][i] = board.getAllTilesInOneArray()[counterAllTiles];
+                                //System.out.println("counterInput: " +counterInput);
+                                counterInput++;
+                            }
+                            //System.out.println("counterAllTiles: " +counterAllTiles);
+
+                        }
+
+                    }
+
+                }
+                board.setAllTiles(newTiles);
+
+                //drawGameField(board);
+
+                for (int i = 0 ;i <tmpTileID.length ; i++){
+                    System.out.print(tmpTileID[i] +" ");
+                }
+                System.out.println("\n");
+
+                for(int j = 0 ; j < 7 ; j++){
+                    for(int i = 0; i < 7 ;i++) {
+
+                        System.out.print(board.getTile(i,j).getId()+ " ");
+                    }
                 }
 
-                /*for (int i = 7; i <= s.length(); i=i+3) {
-                    tmpTileID[counter] = Integer.parseInt(s.substring(i,i+2));
-                    counter++;
-                }*/
-                textArea.insert(s + "\n", textArea.getText().length());
-            } else if(s.startsWith("initName")) {
+                System.out.println("\n");
+
+                */
+
+
+
+
+
+            }
+            else if(s.startsWith("tileNextID")){
+
+                for (int index = 0 ; index < board.getAllTilesInOneArray().length ; index ++ ){
+                    if(Integer.parseInt(s.substring(11)) == board.getAllTilesInOneArray()[index].getId()){
+                        board.setNextTile(board.getAllTilesInOneArray()[index]);
+                    }
+                }
+
+
+
+            }
+            else if(s.startsWith("initName")) {
                 String[] tmpPlayer = s.split("\\s+");
 
                 for (int i = 1; i < tmpPlayer.length; i++) {
                     board.getPlayer(i-1).setNameOfPlayer(tmpPlayer[i]);
                     System.out.println(tmpPlayer[i]);
                 }
-                drawGameField(board);
+                //drawGameField(board);
             }
             else {
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
             }
+
 
         }
         out.close();
@@ -902,13 +982,13 @@ public class PlayGround implements ActionListener {
      */
 
 
-    /**
+    /*******************************************************************************************************************
      * drawGameField()
      * @param board
      * draws the whole gameField
      */
 
-    public void drawGameField(Board board){
+    public void drawGameField(BoardFromClient board){
 
         //Spielfeld wird komplett neu gezeichnet
         for(int j = 0; j < boardSquares.length; j++) {
@@ -943,8 +1023,8 @@ public class PlayGround implements ActionListener {
         labelPlayer2.setText(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore());
         labelPlayer3.setText(board.getPlayer(3).getNameOfPlayer() + ": " + board.getPlayer(3).getScore());
 
-        //draw next goalCard
-        labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
+        //TODO draw next goalCard
+       // labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
 
         // draw a border around the player which turn it is
         if(board.getPlayer(0).getTurn()){

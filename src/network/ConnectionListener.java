@@ -14,7 +14,7 @@ import gameLogic.*;
 public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
     private String playerID;
-    private String tileID="", tileRot="", tileX="", tileY="", goal="", player="", goal0="", goal1="", goal2="", goal3="";
+    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", goal="", player="", goal0="", goal1="", goal2="", goal3="";
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -44,6 +44,8 @@ public class ConnectionListener extends Thread {
                 tileY   += initBoard.getTile(i, j).getPosition().getY() + " ";
             }
         }
+        //TODO
+                tileNextID = initBoard.getNextTile().getId()+"";
 
         //--------------------------------------------------------------------------------
         // goal
@@ -81,7 +83,10 @@ public class ConnectionListener extends Thread {
                 if(ith.isAlive() && !connections.get(i).isInit()) {
                     connections.get(i).setpId(i);
 
-                    ith.println("tileID " + tileID);
+                    ith.println("tileID " + tileID + "99");
+                    //TODO
+                    ith.println("tileNextID " + tileNextID);
+
                     ith.println("tileRot " + tileRot);
                     ith.println("tileX " + tileX);
                     ith.println("tileY " + tileY);
@@ -126,7 +131,8 @@ public class ConnectionListener extends Thread {
                              * TODO hier werden logik funktionien aufgerufen
                              * hier wird das board überprüft und wieder gesenet
                              */
-                            //jth.println(message);
+                            // sendet alles was nicht über ifs abgefangen wird weiter (chat)
+                            jth.println(message);
                         }
                         catch (Exception e) {
                             // error displaying
