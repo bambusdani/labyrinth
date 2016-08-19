@@ -853,7 +853,6 @@ public class PlayGround implements ActionListener {
     public void listen() {
         String s;
         while ((s = in.readLine()) != null) {
-
             //tileID
             if(s.startsWith("tileID")) {
 
@@ -863,7 +862,6 @@ public class PlayGround implements ActionListener {
                         //vergleicht jeden mit jedem in der liste und speichert es in
                         for(int first= 1 ; first < tmpTileID.length; first++){
                             for(int second = 0; second < board.getAllTilesInOneArray().length; second ++){
-
                                 if(Integer.parseInt(tmpTileID[first]) == board.getAllTilesInOneArray()[second].getId()){
                                     tmpTiles[first-1] = board.getAllTilesInOneArray()[second];
                                 }
@@ -917,7 +915,6 @@ public class PlayGround implements ActionListener {
                 textArea.setCaretPosition(textArea.getText().length());
 
             }
-            //deal
             else if(s.startsWith("deal")){
 
                 String[] dealID = s.split("\\s+");
@@ -933,20 +930,15 @@ public class PlayGround implements ActionListener {
                 }
 
                 drawGameField(board);
-
-
             }
-
-
-            //initName
             else if(s.startsWith("initName")) {
                 String[] tmpPlayer = s.split("\\s+");
 
                 for (int i = 1; i < tmpPlayer.length; i++) {
                     board.getPlayer(i-1).setNameOfPlayer(tmpPlayer[i]);
-                    System.out.println(tmpPlayer[i]);
+                    //System.out.println(tmpPlayer[i]);
                 }
-                //drawGameField(board);
+                drawGameField(board);
             }
             else {
                 textArea.insert(s + "\n", textArea.getText().length());
@@ -1026,11 +1018,7 @@ public class PlayGround implements ActionListener {
         else if(board.getPlayer(3).getTurn()){
             labelPlayer3.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         }
-
-
     }
-
-
 }
 
 

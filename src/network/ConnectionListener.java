@@ -14,7 +14,7 @@ import gameLogic.*;
 public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
     private String playerID;
-    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", goal="", player="", goal0="", goal1="", goal2="", goal3="";
+    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", player="", goal0="", goal1="", goal2="", goal3="";
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -80,8 +80,16 @@ public class ConnectionListener extends Thread {
                 String message = ith.getMessage();
 
                 //send init board strings to clients (speficially)
-                if(ith.isAlive() && !connections.get(i).isInit()) {
+                if(ith.isAlive() && message != null && !connections.get(i).isInit()) {
                     connections.get(i).setpId(i);
+
+                    // set connection specific player name
+                    if (message.startsWith("initName")) {
+                        connections.get(i).setPlayerName(message.substring(9));
+                        if(!player.contains(connections.get(i).getPlayerName())) {
+                            player += message.substring(9) + " ";
+                        }
+                    }
 
                     ith.println("tileID " + tileID );
                     //TODO
@@ -121,10 +129,8 @@ public class ConnectionListener extends Thread {
                 if (message != null)
                     for (Connection jth : connections) {
                         try {
-                            // filter and set playername (to specific connection)
+                            // send playernames to all clients
                             if (message.startsWith("initName")) {
-                                //ith.setPlayerName(message.substring(9));
-                                player += message.substring(9) + " ";
                                 jth.println("initName " + player);
                             }
                             /**
@@ -132,7 +138,7 @@ public class ConnectionListener extends Thread {
                              * hier wird das board überprüft und wieder gesenet
                              */
                             // sendet alles was nicht über ifs abgefangen wird weiter (chat)
-                            jth.println(message);
+                            //jth.println(message);
                         }
                         catch (Exception e) {
                             // error displaying
