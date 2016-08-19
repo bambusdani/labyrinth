@@ -5,23 +5,121 @@ package gameLogic;
  */
 public class ServerFunctions {
 
-
+    private Tiles tmpTile;
     //todo noch nicht buttonIdabhängig muss in switch rein
     public Board insertTile (int buttonID, Board board){
+        switch (buttonID){
+            case 0:
+                tmpTile = board.getNextTile();
+                board.setNextTile(board.getTile(1,6));
+                for (int i = 6; i > 0 ; i--) {
+                    board.setTiles(1,i,board.getTile(1,i-1));
+                }
+                board.setTiles(1,0,tmpTile);
+                break;
 
-        Tiles tmpTile = board.getNextTile();
-        board.setNextTile(board.getTile(1,6));
+            case 1:
+                tmpTile = board.getNextTile();
+                board.setNextTile(board.getTile(3,6));
+                for (int i = 6; i > 0 ; i--) {
+                    board.setTiles(3,i,board.getTile(3,i-1));
+                }
+                board.setTiles(3,0,tmpTile);
+                break;
 
-        for (int i = 6; i > 0 ; i--) {
+            case 2:
+                tmpTile = board.getNextTile();
+                board.setNextTile(board.getTile(5,6));
+                for (int i = 6; i > 0 ; i--) {
+                    board.setTiles(5,i,board.getTile(5,i-1));
+                }
+                board.setTiles(5,0,tmpTile);
+                break;
 
-            board.setTiles(1,i,board.getTile(1,i-1));
+            case 3:
+                tmpTile = board.getNextTile();
+                board.setNextTile(board.getTile(0,1));
+                for (int i = 0; i < 6; i++) {
+                    board.setTiles(i,1,board.getTile(i+1,1));
+                }
+                board.setTiles(6,1,tmpTile);
+                break;
+
+            case 4:
+                tmpTile = board.getNextTile();
+                board.setNextTile(board.getTile(0,3));
+                for (int i = 0; i < 6; i++) {
+                    board.setTiles(i,3,board.getTile(i+1,3));
+                }
+                board.setTiles(6,3,tmpTile);
+                break;
+
+            case 5:
+                tmpTile = board.getNextTile();
+                board.setNextTile(board.getTile(0,5));
+                for (int i = 0; i < 6; i++) {
+                    board.setTiles(i,5,board.getTile(i+1,5));
+                }
+                board.setTiles(6,5,tmpTile);
+                break;
+
+            case 6:
+                tmpTile = board.getNextTile();
+                board.setNextTile(board.getTile(5,0));
+                for (int i = 0; i < 6 ; i++) {
+                    board.setTiles(5, i, board.getTile(5,i+1));
+                }
+                board.setTiles(5,6,tmpTile);
+                break;
+
+            case 7:
+                tmpTile = board.getNextTile();
+                board.setNextTile(board.getTile(3,0));
+                for (int i = 0; i < 6 ; i++) {
+                    board.setTiles(3, i, board.getTile(3,i+1));
+                }
+                board.setTiles(3,6,tmpTile);
+                break;
+
+            case 8:
+                tmpTile = board.getNextTile();
+                board.setNextTile(board.getTile(1,0));
+                for (int i = 0; i < 6 ; i++) {
+                    board.setTiles(1, i, board.getTile(1,i+1));
+                }
+                board.setTiles(1,6,tmpTile);
+                break;
+
+            case 9:
+                tmpTile = board.getNextTile();
+                board.setNextTile(board.getTile(6,5));
+                for (int i = 6; i > 0; i--) {
+                    board.setTiles(i,5,board.getTile(i-1,5));
+                }
+                board.setTiles(0,5,tmpTile);
+                break;
+
+            case 10:
+                tmpTile = board.getNextTile();
+                board.setNextTile(board.getTile(6,3));
+                for (int i = 6; i > 0; i--) {
+                    board.setTiles(i,3,board.getTile(i-1,3));
+                }
+                board.setTiles(0,3,tmpTile);
+                break;
+
+            case 11:
+                tmpTile = board.getNextTile();
+                board.setNextTile(board.getTile(6,1));
+                for (int i = 6; i > 0; i--) {
+                    board.setTiles(i,1,board.getTile(i-1,1));
+                }
+                board.setTiles(0,1,tmpTile);
+                break;
+
+
+
         }
-        board.setTiles(1,0,tmpTile);
-
-
-
-
-
         return board;
     }
 
