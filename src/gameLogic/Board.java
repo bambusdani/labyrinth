@@ -95,8 +95,9 @@ public class Board {
     //liste aller player (maximal 4)
     private Player[] allPlayers = new Player[4];
     private Tiles[][] tiles = new Tiles[7][7];
-    private Tiles nextTile = new Tiles(0 ,true, null, new Shape(tile2Image, "L", new boolean[] {true,false,false,true} , null ), 0);
-    private Tiles tmpTile = new Tiles(1,false,new Position(0,0), new Shape(tile1Image, "L" , new boolean[] {false,true,true,false},"green"),0);
+    private Tiles nextTile = new Tiles(0 ,true, new Position(9 ,9), new Shape(tile2Image, "L", new boolean[] {true,false,false,true} , null ), 0);
+
+
     //=============================================================
 
 
@@ -387,10 +388,4 @@ public class Board {
     }
     //=================================================================================
 
-    public Tiles getTmpTile(){
-        return tmpTile;
-    }
-    public void setTmpTile(Tiles tmpTile){
-        this.tmpTile = tmpTile;
-    }
 }
