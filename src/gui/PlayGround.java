@@ -856,36 +856,16 @@ public class PlayGround implements ActionListener {
             //tileID
             if(s.startsWith("tileID")) {
 
-                String[] tmpTileID = s.split("\\s+");
-                Tiles[] tmpTiles = new Tiles[board.getAllTilesInOneArray().length-1];
+                saveTileIDStingInBoard(s);
 
-                        //vergleicht jeden mit jedem in der liste und speichert es in
-                        for(int first= 1 ; first < tmpTileID.length; first++){
-                            for(int second = 0; second < board.getAllTilesInOneArray().length; second ++){
-                                if(Integer.parseInt(tmpTileID[first]) == board.getAllTilesInOneArray()[second].getId()){
-                                    tmpTiles[first-1] = board.getAllTilesInOneArray()[second];
-                                }
-                            }
-                        }
-
-                //macht aus einer Liste ein 2d Array und speichert es in board
-                int counter=0;
-                for(int j = 0; j< 7; j++){
-                    for(int i = 0; i< 7; i++){
-                        board.setTiles(j,i,tmpTiles[counter]);
-                        counter++;
-                    }
-                }
 
             }
             //tileNextID
             else if(s.startsWith("tileNextID")){
 
-                for (int index = 0 ; index < board.getAllTilesInOneArray().length ; index ++ ){
-                    if(Integer.parseInt(s.substring(11)) == board.getAllTilesInOneArray()[index].getId()){
-                        board.setNextTile(board.getAllTilesInOneArray()[index]);
-                    }
-                }
+                saveNextTileIDInBoard(s);
+
+
             }
             //ileRot
             else if(s.startsWith("tileRot")){
@@ -920,18 +900,15 @@ public class PlayGround implements ActionListener {
             else if(s.startsWith("deal")){
 
                 String[] dealID = s.split("\\s+");
-
                 for(int first = 1; first < dealID.length; first++){
-
                     for(int second = 0; second < board.getAllGoalCards().length; second ++){
-
                         if(Integer.parseInt(dealID[first]) == board.getAllGoalCards()[second].getGoalCardID()){
                             board.getCreaturesNeeded().add(board.getAllGoalCards()[second]);
                         }
                     }
                 }
 
-                drawGameField(board);
+                //drawGameField(board);
             }
 
 
@@ -949,14 +926,13 @@ public class PlayGround implements ActionListener {
                     board.getPlayer(i-1).setNameOfPlayer(tmpPlayer[i]);
                     //System.out.println(tmpPlayer[i]);
                 }
-                drawGameField(board);
+                //drawGameField(board);
             }
             else {
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
             }
 
-            //drawGameField(board);
         }
         out.close();
         in.close();
@@ -1013,7 +989,6 @@ public class PlayGround implements ActionListener {
         labelPlayer2.setText(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore());
         labelPlayer3.setText(board.getPlayer(3).getNameOfPlayer() + ": " + board.getPlayer(3).getScore());
 
-        //TODO draw next goalCard
         labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
 
         // draw a border around the player which turn it is
@@ -1028,6 +1003,36 @@ public class PlayGround implements ActionListener {
         }
         else if(board.getPlayer(3).getTurn()){
             labelPlayer3.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+        }
+    }
+
+    public void saveTileIDStingInBoard(String s){
+        String[] tmpTileID = s.split("\\s+");
+        Tiles[] tmpTiles = new Tiles[board.getAllTilesInOneArray().length-1];
+
+        //vergleicht jeden mit jedem in der liste und speichert es in
+        for(int first= 1 ; first < tmpTileID.length; first++){
+            for(int second = 0; second < board.getAllTilesInOneArray().length; second ++){
+                if(Integer.parseInt(tmpTileID[first]) == board.getAllTilesInOneArray()[second].getId()){
+                    tmpTiles[first-1] = board.getAllTilesInOneArray()[second];
+                }
+            }
+        }
+        //macht aus einer Liste ein 2d Array und speichert es in board
+        int counter=0;
+        for(int j = 0; j< 7; j++){
+            for(int i = 0; i< 7; i++){
+                board.setTiles(j,i,tmpTiles[counter]);
+                counter++;
+            }
+        }
+    }
+
+    public void saveNextTileIDInBoard(String s){
+        for (int index = 0 ; index < board.getAllTilesInOneArray().length ; index ++ ){
+            if(Integer.parseInt(s.substring(11)) == board.getAllTilesInOneArray()[index].getId()){
+                board.setNextTile(board.getAllTilesInOneArray()[index]);
+            }
         }
     }
 }

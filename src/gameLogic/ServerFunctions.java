@@ -5,8 +5,34 @@ package gameLogic;
  */
 public class ServerFunctions {
 
+
+    //todo noch nicht buttonIdabhängig muss in switch rein
+    public Board insertTile (int buttonID, Board board){
+
+        Tiles tmpTile = board.getNextTile();
+        board.setNextTile(board.getTile(1,6));
+
+        for (int i = 6; i > 0 ; i--) {
+
+            board.setTiles(1,i,board.getTile(1,i-1));
+        }
+        board.setTiles(1,0,tmpTile);
+
+
+
+
+
+        return board;
+    }
+
+
+
+    /*******************************************************************************************************************
+     *
+     */
+    //from old gameFunctions
     public boolean[] possibleArrowInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
-    Tiles tmpStorageTile;
+
 
     public boolean isArrowMoveAllowed (int buttonID){
 
@@ -125,7 +151,7 @@ public class ServerFunctions {
      * @return boardFromClient
      */
     //board from client -> later from server
-    public void placeNextStoneInMaze(int arrowButtonID, Board boardFromClient){
+    public void placeNextStoneInMaze(int arrowButtonID, Board boardFromClient, Tiles tmpStorageTile){
 
         if(isArrowMoveAllowed(arrowButtonID)){
         //if(true){
@@ -293,6 +319,8 @@ public class ServerFunctions {
     public void setRotation(int rot, Board board){
         board.getTile(0,0).setRotation(rot);
     }
+
+
     public void setSpecialTile (Board board){
 
         board.setTiles(1,1,board.getTile(0,0));

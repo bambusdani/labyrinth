@@ -18,6 +18,7 @@ public class ConnectionListener extends Thread {
     private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", goal="", player="", goal0="", goal1="", goal2="", goal3="";
     private ServerFunctions serverFunctions = new ServerFunctions();
     private Board initBoard = new Board();
+    private Tiles tmpTile;
 
 
     public ConnectionListener(Vector<Connection> connections) {
@@ -90,12 +91,12 @@ public class ConnectionListener extends Thread {
                     // set connection specific player name
                     if (message.startsWith("initName")) {
                         connections.get(i).setPlayerName(message.substring(9));
-                        if(!player.contains(connections.get(i).getPlayerName())) {
+                        if (!player.contains(connections.get(i).getPlayerName())) {
                             player += message.substring(9) + " ";
                         }
                     }
 
-                    ith.println("tileID " + tileID );
+                    ith.println("tileID " + tileID);
                     //TODO rotation nextTileID
                     ith.println("tileNextID " + tileNextID);
 
@@ -123,10 +124,29 @@ public class ConnectionListener extends Thread {
                         ith.println("deal " + goal3);
                         ith.LOGGER.info("deal " + goal3);
                     }
-
+                    //move to draw the field should be the last thing at init
+                    ith.println("draw ");
                     connections.get(i).setInit(true);
                 }
 
+                if(ith.isAlive() && message != null) {
+                    //test vl ist es besser hier
+                    if (message.startsWith("insertTile ")) {
+                        //TODO hier wird berechnet
+
+
+                        //System.out.println("1: " + tileID);
+
+                        //hier wird berechnet
+                        Board newBoard = serverFunctions.insertTile(0, initBoard);
+                        boardToString(newBoard);
+
+                        //System.out.println("2: " +tileID);
+
+                        //ith.println("tileID " + tileID);
+                        //ith.println("draw ");
+                    }
+                }
                 //--------------------------------------------------------------------------------
                 // begin with server broadcasting to all clients
                 // begin with reading client messages
@@ -143,17 +163,20 @@ public class ConnectionListener extends Thread {
                              */
 
                             //
-                            else if(message.startsWith("insertTile")){
+                            else if (message.startsWith("insertTile ")) {
+                                //TODO wird nur broadcast gesendet!!!!!
                                 String[] tmpInsertTile = message.split("\\s+");
                                 int buttonID = Integer.parseInt(tmpInsertTile[1]);
                                 int clientID = Integer.parseInt(tmpInsertTile[2]);
 
+/*
+                                System.out.println("1: " +tileID);
+                                Board newBoard = serverFunctions.insertTile(buttonID, initBoard);
 
-                                serverFunctions.setSpecialTile(initBoard);
-                                boardToString();
+                                boardToString(newBoard);
+                                System.out.println("2: "+ tileID);
+*/
 
-                                //serverFunctions.placeNextStoneInMaze(buttonID, initBoard);
-                                //boardToString();
 
                                 jth.println("tileID " + tileID );
                                 jth.println("tileNextID " + tileNextID);
@@ -162,10 +185,13 @@ public class ConnectionListener extends Thread {
                                 jth.println("tileY " + tileY);
                                 jth.println("draw ");
 
+
                             }
 
-                            // sendet alles was nicht über ifs abgefangen wird weiter (chat)
-                            //jth.println(message);
+                            else {
+                                // sendet alles was nicht über ifs abgefangen wird weiter (chat)
+                                jth.println(message);
+                            }
                         }
                         catch (Exception e) {
                             // error displaying
@@ -179,12 +205,12 @@ public class ConnectionListener extends Thread {
         }
     }
 
-    public void boardToString(){
+    public void boardToString(Board initBoard){
 
-        tileID = "";
-        tileRot ="";
-        tileX = "";
-        tileY = "";
+        tileID  = "";
+        tileRot = "";
+        tileX   = "";
+        tileY   = "";
         for (int i = 0; i < initBoard.getallTiles().length; i++) {
             for (int j = 0; j < initBoard.getallTiles()[0].length; j++) {
                 tileID  += initBoard.getTile(i, j).getId() + " ";
