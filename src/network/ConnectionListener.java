@@ -18,7 +18,7 @@ public class ConnectionListener extends Thread {
     private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", goal="", player="", goal0="", goal1="", goal2="", goal3="";
     private ServerFunctions serverFunctions = new ServerFunctions();
     private Board initBoard = new Board();
-    private Tiles tmpTile;
+    private int nextTileID;
 
 
     public ConnectionListener(Vector<Connection> connections) {
@@ -144,13 +144,20 @@ public class ConnectionListener extends Thread {
                              */
 
                             //
+                            else if(message.startsWith("nextTileID")){
+                                String[] nextTileIDs = message.split("\\s+");
+                                nextTileID = Integer.parseInt(nextTileIDs[1]);
+                            }
                             else if(message.startsWith("insertTile")){
                                 String[] tmpInsertTile = message.split("\\s+");
                                 int buttonID = Integer.parseInt(tmpInsertTile[1]);
                                 int clientID = Integer.parseInt(tmpInsertTile[2]);
 
 
-                                serverFunctions.insertTile(buttonID,initBoard);
+                                /**
+                                 * Die Funktion insertet das nextTile durch den Pfeil links oben
+                                 * */
+                                serverFunctions.insertTile(buttonID,initBoard, nextTileID);
                                 boardToString();
 
                                 //serverFunctions.placeNextStoneInMaze(buttonID, initBoard);

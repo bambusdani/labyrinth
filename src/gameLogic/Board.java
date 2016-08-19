@@ -9,19 +9,16 @@ import java.util.List;
 
 public class Board {
 
-    private Tiles tmpTile;
-    public Tiles getTmpTile(){
-        return tmpTile;
-    }
-    public void setTmpTile(Tiles tmpTile){
-        this.tmpTile = tmpTile;
-    }
+
 
     //=============================================================
     //Save Images in Variables
     // Tiles
     //"I"
     private ImageIcon tile1Image   = new ImageIcon("src/resources/tiles/tile1.jpg");
+
+
+
     //"L"
     private ImageIcon tile2Image   = new ImageIcon("src/resources/tiles/tile2.jpg");
     //movable
@@ -55,6 +52,9 @@ public class Board {
     private ImageIcon tile28Image  = new ImageIcon("src/resources/tiles/tile28.jpg");
     private ImageIcon tile29Image  = new ImageIcon("src/resources/tiles/tile29.jpg");
     private ImageIcon tile30Image  = new ImageIcon("src/resources/tiles/tile30.jpg");
+
+    // TmpTile zum zeug zwischenspeichern
+
 
     // Creatures
     private ImageIcon creatureImage1 = new ImageIcon("src/resources/creatures/creature1.png");
@@ -96,7 +96,7 @@ public class Board {
     private Player[] allPlayers = new Player[4];
     private Tiles[][] tiles = new Tiles[7][7];
     private Tiles nextTile = new Tiles(0 ,true, null, new Shape(tile2Image, "L", new boolean[] {true,false,false,true} , null ), 0);
-
+    private Tiles tmpTile = new Tiles(1,false,new Position(0,0), new Shape(tile1Image, "L" , new boolean[] {false,true,true,false},"green"),0);
     //=============================================================
 
 
@@ -386,4 +386,11 @@ public class Board {
         }
     }
     //=================================================================================
+
+    public Tiles getTmpTile(){
+        return tmpTile;
+    }
+    public void setTmpTile(Tiles tmpTile){
+        this.tmpTile = tmpTile;
+    }
 }

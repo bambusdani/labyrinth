@@ -706,6 +706,7 @@ public class PlayGround implements ActionListener {
         //buttonArrow1_0 pressed -> an Server übergeben
 		if(buttonArrow_1_0 == e.getSource()){
 			out.println("insertTile 0 "+ playerID);
+            out.println("nextTileID "+ board.getNextTile().getId());
 
 		/*}
 
