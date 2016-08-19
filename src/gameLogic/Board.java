@@ -9,6 +9,14 @@ import java.util.List;
 
 public class Board {
 
+    private Tiles tmpTile;
+    public Tiles getTmpTile(){
+        return tmpTile;
+    }
+    public void setTmpTile(Tiles tmpTile){
+        this.tmpTile = tmpTile;
+    }
+
     //=============================================================
     //Save Images in Variables
     // Tiles

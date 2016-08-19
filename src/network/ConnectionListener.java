@@ -18,6 +18,7 @@ public class ConnectionListener extends Thread {
     private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", goal="", player="", goal0="", goal1="", goal2="", goal3="";
     private ServerFunctions serverFunctions = new ServerFunctions();
     private Board initBoard = new Board();
+    private Tiles tmpTile;
 
 
     public ConnectionListener(Vector<Connection> connections) {
@@ -149,7 +150,7 @@ public class ConnectionListener extends Thread {
                                 int clientID = Integer.parseInt(tmpInsertTile[2]);
 
 
-                                serverFunctions.setSpecialTile(initBoard);
+                                serverFunctions.insertTile(buttonID,initBoard);
                                 boardToString();
 
                                 //serverFunctions.placeNextStoneInMaze(buttonID, initBoard);
