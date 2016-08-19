@@ -187,7 +187,9 @@ public class ConnectionListener extends Thread {
 
 
                             }
-
+                            else if (message.contains("leave")) {
+                                ith.LOGGER.info("disconnect player_0" + ith.getpId());
+                            }
                             else {
                                 // sendet alles was nicht über ifs abgefangen wird weiter (chat)
                                 jth.println(message);

@@ -602,8 +602,10 @@ public class PlayGround implements ActionListener {
         }
 
         if(buttonEndGame == e.getSource()){
-            frame.dispose();
+            out.println(screenName + "leave");
+            System.exit(0);
         }
+
         if(buttonNewGame == e.getSource()){
             frame.dispose();
             CreateNewGame newGame = new CreateNewGame();
