@@ -628,12 +628,12 @@ public class PlayGround implements ActionListener {
 
         }
 
-/*
+
 		//------------------------------------------------------------
 		// checks which button on the gameField is pressed
-		if(!tileInsertionAllowed){
+		//if(!tileInsertionAllowed){
 
-		for(int i = 0; i < boardSquares.length; i++){
+		/*for(int i = 0; i < boardSquares.length; i++){
 			for(int j = 0; j< boardSquares[i].length; j++){
 
 				if( e.getActionCommand().equals("gameField: "+j+" "+i)){
@@ -662,13 +662,13 @@ public class PlayGround implements ActionListener {
 
 
 					board = gameFunctions.movePlayerIfMoveIsPossible(playerID,buttonPositionPressed);
-					drawGameField(board);
+					drawGameField(board);*/
 					//==================================================================================================
 					/**
 					 * Zeichnen der Punkte
 					 */
-        //switch (gameFunctions.isPlayerGettingPoints(board , playerID)){
-/*					protocol.isPlayerGettingPoints(board, playerID);
+        /*switch (gameFunctions.isPlayerGettingPoints(board , playerID)){
+				protocol.isPlayerGettingPoints(board, playerID);
 					switch (protocol.getPlayerPoints()){
 						case 0:
 							//System.out.println("kein Punkt");
@@ -693,26 +693,26 @@ public class PlayGround implements ActionListener {
 		}
 		}
 
+
+
 		//-------------------------------------------------------------
 			//TODO ID Abfrage übern server usw...
-		if(playersTurn.get(playerID)){
+
 		// checks which button was pressed  to place the next stone
 		// buttonArrow_1_0 means line j:1 i:0 on the field
 		// topArrowButtons
-		if(tileInsertionAllowed){
+		{*/
+
+        //buttonArrow1_0 pressed -> an Server übergeben
 		if(buttonArrow_1_0 == e.getSource()){
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(0,board);
+			out.println("insertTile 0 "+ playerID);
 
-			//zeichnet das komplette Spielfeld neu
-			//drawGameField(board);
-            drawGameField(board);
+		/*}
 
-			//TODO nacher ändern
-			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
-			tileInsertionAllowed = false;
 
-		}
+
+
+
 		if(buttonArrow_3_0 == e.getSource()){
 			//übergibt die ButtonID + Board und bekommt ein neues zurück
 			board = gameFunctions.placeNextStoneInMaze(1,board);
@@ -833,7 +833,7 @@ public class PlayGround implements ActionListener {
 		}
 	}
 	*/
-    }
+    }}
 
 
 
@@ -889,6 +889,7 @@ public class PlayGround implements ActionListener {
                     }
                 }
             }
+            //ileRot
             else if(s.startsWith("tileRot")){
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
@@ -902,6 +903,7 @@ public class PlayGround implements ActionListener {
                     }
                 }
                 //TODO setzt die Rotation muss aber noch überprüft werden ob das richtige Tile erwischt wird
+                System.out.println(board.getTile(0,0).getRotation());
 
 
             }
@@ -935,6 +937,10 @@ public class PlayGround implements ActionListener {
                 drawGameField(board);
 
 
+            }
+
+            else if(s.startsWith("draw")){
+                drawGameField(board);
             }
 
 

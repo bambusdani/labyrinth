@@ -15,13 +15,15 @@ public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
     private String playerID;
     private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", goal="", player="", goal0="", goal1="", goal2="", goal3="";
+    private ServerFunctions serverFunctions = new ServerFunctions();
+    private Board initBoard = new Board();
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
 
         //--------------------------------------------------------------------------------
         // create an init board
-        Board initBoard = new Board();
+        //Board initBoard = new Board();
 
         //================================================================================
         // Converting Board -> String(s)
@@ -84,7 +86,7 @@ public class ConnectionListener extends Thread {
                     connections.get(i).setpId(i);
 
                     ith.println("tileID " + tileID );
-                    //TODO
+                    //TODO rotation nextTileID
                     ith.println("tileNextID " + tileNextID);
 
                     ith.println("tileRot " + tileRot);
@@ -131,6 +133,29 @@ public class ConnectionListener extends Thread {
                              * TODO hier werden logik funktionien aufgerufen
                              * hier wird das board überprüft und wieder gesenet
                              */
+
+                            //
+                            else if(message.startsWith("insertTile")){
+                                String[] tmpInsertTile = message.split("\\s+");
+                                int buttonID = Integer.parseInt(tmpInsertTile[1]);
+                                int clientID = Integer.parseInt(tmpInsertTile[2]);
+
+
+                                serverFunctions.setSpecialTile(initBoard);
+                                boardToString();
+
+                                //serverFunctions.placeNextStoneInMaze(buttonID, initBoard);
+                                //boardToString();
+
+                                jth.println("tileID " + tileID );
+                                jth.println("tileNextID " + tileNextID);
+                                jth.println("tileRot " + tileRot);
+                                jth.println("tileX " + tileX);
+                                jth.println("tileY " + tileY);
+                                jth.println("draw ");
+
+                            }
+
                             // sendet alles was nicht über ifs abgefangen wird weiter (chat)
                             jth.println(message);
                         }
@@ -145,4 +170,23 @@ public class ConnectionListener extends Thread {
             catch (Exception e) { e.printStackTrace(); }
         }
     }
+
+    public void boardToString(){
+
+        tileID = "";
+        tileRot ="";
+        tileX = "";
+        tileY = "";
+        for (int i = 0; i < initBoard.getallTiles().length; i++) {
+            for (int j = 0; j < initBoard.getallTiles()[0].length; j++) {
+                tileID  += initBoard.getTile(i, j).getId() + " ";
+                tileRot += initBoard.getTile(i, j).getRotation() + " ";
+                tileX   += initBoard.getTile(i, j).getPosition().getX() + " ";
+                tileY   += initBoard.getTile(i, j).getPosition().getY() + " ";
+            }
+        }
+        //TODO
+        tileNextID = initBoard.getNextTile().getId()+"";
+    }
+
 }
