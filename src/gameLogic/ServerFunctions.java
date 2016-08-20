@@ -12,7 +12,25 @@ public class ServerFunctions {
     private boolean[][] visited = new boolean[7][7];
     private Tiles tmpTile;
 
-    /**========================================================================
+    /**=================================================================================
+     * Rotation of next Tile by Pressing the Rotate Button
+     * */
+    public Board rotNextTile (int rotation, Board board){
+        //Set rotation of the tile -> rotation > 360° -> set to 0°
+        System.out.println(board.getNextTile().getRotation());
+        System.out.println(board.getNextTile().getShape());
+
+        if(board.getNextTile().getRotation()+rotation<=270){
+            board.getNextTile().setRotation(board.getNextTile().getRotation()+rotation);
+        }else{
+            board.getNextTile().setRotation(0);
+        }
+        board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(rotation));
+        board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());
+        return board;
+    }
+
+    /**==================================================================================
      * PUSH Functions
      * */
     public Board insertTile (int buttonID, Board board){

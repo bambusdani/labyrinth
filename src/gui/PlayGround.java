@@ -611,7 +611,7 @@ public class PlayGround implements ActionListener {
         }
         if(buttonRotate == e.getSource()){
 
-            int nextTileRotation = board.getNextTile().getRotation();
+           /* int nextTileRotation = board.getNextTile().getRotation();
 
             if(nextTileRotation==270){
                 nextTileRotation=0;
@@ -623,7 +623,9 @@ public class PlayGround implements ActionListener {
 
             labelNextStoneSymbol.setIcon(board.getNextTile().getShape().rotateImage(nextTileRotation));
             board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(nextTileRotation));
-            board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());
+            board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());*/
+            out.println("rotateTile 90 "+ playerID);
+            out.println("nextTileID "+board.getNextTile().getId());
 
 
         }
