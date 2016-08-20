@@ -817,6 +817,23 @@ public class PlayGround implements ActionListener {
                 textArea.setCaretPosition(textArea.getText().length());
 
             }
+            else if(s.startsWith("playerPosX")){
+                String[] playerPosX = s.split("\\s+");
+
+                for (int i = 0; i < board.getAllPlayers().length; i++) {
+                    board.getPlayer(i).setActualPosition(new Position(Integer.parseInt(playerPosX[i+1]),board.getPlayer(i).getAcutalPosition().getY()));
+
+                }
+            }
+            else if(s.startsWith("playerPosY")){
+                String[] playerPosY = s.split("\\s+");
+                for (int i = 0; i < board.getAllPlayers().length; i++) {
+                    board.getPlayer(i).setActualPosition(new Position(board.getPlayer(i).getAcutalPosition().getY(),Integer.parseInt(playerPosY[i+1])));
+
+                }
+            }
+
+
             else if(s.startsWith("deal")){
 
                 String[] dealID = s.split("\\s+");
@@ -942,7 +959,7 @@ public class PlayGround implements ActionListener {
         int counter=0;
         for(int j = 0; j< 7; j++){
             for(int i = 0; i< 7; i++){
-                board.setTiles(j,i,tmpTiles[counter]);
+                board.setTiles(i,j,tmpTiles[counter]);
                 counter++;
             }
         }

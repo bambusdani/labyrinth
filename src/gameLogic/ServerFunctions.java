@@ -363,12 +363,14 @@ public class ServerFunctions {
 
 
     public Board movePlayerIfStoneIsPlacedInMaze(Board board, int arrowNumber){
+        System.out.println("movePlayerIfStoneIsPlacedInMaze");
         int rownumber = 0;
         switch (arrowNumber){
             //top and bottom
             case 0:
             case 8:
                 rownumber = 1;
+                System.out.println("Button = 0 oder 8");
                 break;
             case 1:
             case 7:
@@ -397,6 +399,7 @@ public class ServerFunctions {
 
             // Für Pfeil 0 1 2 top
             if (((arrowNumber==0) || (arrowNumber == 1) || (arrowNumber == 2)) && (board.getPlayer(playerID).getAcutalPosition().getX() == rownumber)) {
+                System.out.println("if in pfeil  0 1 2");
                 if (board.getPlayer(playerID).getAcutalPosition().getY() == 6) {
                     // aus dem spielfeld schieben
                     board.getPlayer(playerID).setActualPosition(new Position(rownumber, 0));

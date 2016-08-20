@@ -15,7 +15,7 @@ public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
     private String playerID;
 
-    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", goal="", player="", goal0="", goal1="", goal2="", goal3="";
+    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", goal="", player="", playerPosX="", playerPosY="", goal0="", goal1="", goal2="", goal3="";
     private ServerFunctions serverFunctions = new ServerFunctions();
     private Board initBoard = new Board();
     private Tiles tmpTile;
@@ -44,10 +44,10 @@ public class ConnectionListener extends Thread {
         // tileID
         for (int i = 0; i < initBoard.getallTiles().length; i++) {
             for (int j = 0; j < initBoard.getallTiles()[0].length; j++) {
-                tileID  += initBoard.getTile(i, j).getId() + " ";
-                tileRot += initBoard.getTile(i, j).getRotation() + " ";
-                tileX   += initBoard.getTile(i, j).getPosition().getX() + " ";
-                tileY   += initBoard.getTile(i, j).getPosition().getY() + " ";
+                tileID  += initBoard.getTile(j, i).getId() + " ";
+                tileRot += initBoard.getTile(j, i).getRotation() + " ";
+                tileX   += initBoard.getTile(j, i).getPosition().getX() + " ";
+                tileY   += initBoard.getTile(j, i).getPosition().getY() + " ";
             }
         }
         //TODO
@@ -143,6 +143,7 @@ public class ConnectionListener extends Thread {
                         //hier wird berechnet
                         Board newBoard = serverFunctions.insertTile(buttonID, initBoard);
                         boardToString(newBoard);
+                        playerPosToString(newBoard);
 
                         //System.out.println("2: " +tileID);
 
@@ -188,6 +189,9 @@ public class ConnectionListener extends Thread {
                                 jth.println("tileRot " + tileRot);
                                 jth.println("tileX " + tileX);
                                 jth.println("tileY " + tileY);
+                                jth.println("playerPosX " + playerPosX);
+                                jth.println("playerPosY " + playerPosY);
+
                                 jth.println("draw ");
 
 
@@ -218,14 +222,24 @@ public class ConnectionListener extends Thread {
         tileY   = "";
         for (int i = 0; i < initBoard.getallTiles().length; i++) {
             for (int j = 0; j < initBoard.getallTiles()[0].length; j++) {
-                tileID  += initBoard.getTile(i, j).getId() + " ";
-                tileRot += initBoard.getTile(i, j).getRotation() + " ";
-                tileX   += initBoard.getTile(i, j).getPosition().getX() + " ";
-                tileY   += initBoard.getTile(i, j).getPosition().getY() + " ";
+                tileID  += initBoard.getTile(j, i).getId() + " ";
+                tileRot += initBoard.getTile(j, i).getRotation() + " ";
+                tileX   += initBoard.getTile(j, i).getPosition().getX() + " ";
+                tileY   += initBoard.getTile(j, i).getPosition().getY() + " ";
             }
         }
-        //TODO
         tileNextID = initBoard.getNextTile().getId()+"";
+    }
+
+    public void playerPosToString(Board board){
+        playerPosX="";
+        playerPosY="";
+        for (int i = 0; i < board.getAllPlayers().length; i++) {
+
+            playerPosX += board.getPlayer(i).getAcutalPosition().getX() + " ";
+            playerPosY += board.getPlayer(i).getAcutalPosition().getY() + " ";
+        }
+
     }
 
 }
