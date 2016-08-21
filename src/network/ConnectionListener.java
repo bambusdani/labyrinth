@@ -21,6 +21,7 @@ public class ConnectionListener extends Thread {
     private Tiles tmpTile;
 
 
+
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
 
@@ -133,12 +134,14 @@ public class ConnectionListener extends Thread {
                     //test vl ist es besser hier
                     if (message.startsWith("insertTile ")) {
                         //TODO hier wird berechnet
-
+                        String[] tmpInsertTile = message.split("\\s+");
+                        int buttonID = Integer.parseInt(tmpInsertTile[1]);
+                        //int clientID = Integer.parseInt(tmpInsertTile[2]);
 
                         //System.out.println("1: " + tileID);
 
                         //hier wird berechnet
-                        Board newBoard = serverFunctions.insertTile(0, initBoard);
+                        Board newBoard = serverFunctions.insertTile(buttonID, initBoard);
                         boardToString(newBoard);
 
                         //System.out.println("2: " +tileID);
@@ -163,19 +166,21 @@ public class ConnectionListener extends Thread {
                              */
 
                             //
+
                             else if (message.startsWith("insertTile ")) {
                                 //TODO wird nur broadcast gesendet!!!!!
-                                String[] tmpInsertTile = message.split("\\s+");
-                                int buttonID = Integer.parseInt(tmpInsertTile[1]);
-                                int clientID = Integer.parseInt(tmpInsertTile[2]);
+
+
 
 /*
                                 System.out.println("1: " +tileID);
                                 Board newBoard = serverFunctions.insertTile(buttonID, initBoard);
 
+
                                 boardToString(newBoard);
                                 System.out.println("2: "+ tileID);
 */
+
 
 
                                 jth.println("tileID " + tileID );

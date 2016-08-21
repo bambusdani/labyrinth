@@ -703,139 +703,59 @@ public class PlayGround implements ActionListener {
 		// checks which button was pressed  to place the next stone
 		// buttonArrow_1_0 means line j:1 i:0 on the field
 		// topArrowButtons
-		{*/
-
-        //buttonArrow1_0 pressed -> an Server übergeben
-		if(buttonArrow_1_0 == e.getSource()){
-			out.println("insertTile 0 "+ playerID);
-
-		/*}
-
-
-
-
-
+*/
+		if(buttonArrow_1_0 == e.getSource()) {
+            out.println("insertTile 0 " + playerID);
+            out.println("nextTileID " + board.getNextTile().getId());
+        }
 		if(buttonArrow_3_0 == e.getSource()){
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(1,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-			//TODO nacher ändern
-			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
-			tileInsertionAllowed = false;
-
+			out.println("insertTile 1 "+ playerID);
+            out.println("nextTileID "+board.getNextTile().getId());
 		}
 		if(buttonArrow_5_0 == e.getSource()){
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(2,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-			//TODO nacher ändern
-			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
-			tileInsertionAllowed = false;
+            out.println("insertTile 2 "+ playerID);
+            out.println("nextTileID "+board.getNextTile().getId());
 		}
-		//right arrows
 		if(buttonArrow_6_1 == e.getSource()){
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(3,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-			//TODO nacher ändern
-			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
-			tileInsertionAllowed = false;
+            out.println("insertTile 3 "+ playerID);
+            out.println("nextTileID "+board.getNextTile().getId());
 		}
 		if(buttonArrow_6_3 == e.getSource()){
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(4,board);
-			//Todo sende an server den button und id
-			// Todo -> bekomme ein board zurück
-
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-			//TODO nacher ändern
-			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
-			tileInsertionAllowed = false;
+            out.println("insertTile 4 "+ playerID);
+            out.println("nextTileID "+board.getNextTile().getId());
 		}
 		if(buttonArrow_6_5 == e.getSource()){
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(5,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-			//TODO nacher ändern
-			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
-			tileInsertionAllowed = false;
+            out.println("insertTile 5 "+ playerID);
+            out.println("nextTileID "+board.getNextTile().getId());
 		}
-		//bottom arrows
 		if(buttonArrow_5_6 == e.getSource()){
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(6,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-			//TODO nacher ändern
-			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
-			tileInsertionAllowed = false;
+            out.println("insertTile 6 "+ playerID);
+            out.println("nextTileID "+board.getNextTile().getId());
 		}
 		if(buttonArrow_3_6 == e.getSource()){
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(7,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-			//TODO nacher ändern
-			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
-			tileInsertionAllowed = false;
+            out.println("insertTile 7 "+ playerID);
+            out.println("nextTileID "+board.getNextTile().getId());
 		}
 		if(buttonArrow_1_6 == e.getSource()){
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(8,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-			//TODO nacher ändern
-			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
-			tileInsertionAllowed = false;
+            out.println("insertTile 8 "+ playerID);
+            out.println("nextTileID "+board.getNextTile().getId());
 		}
-		// left arrows
 		if(buttonArrow_0_5 == e.getSource()){
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(9,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-			//TODO nacher ändern
-			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
-			tileInsertionAllowed = false;
+            out.println("insertTile 9 "+ playerID);
+            out.println("nextTileID "+board.getNextTile().getId());
 		}
 		if(buttonArrow_0_3 == e.getSource()){
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(10,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
-
-			//TODO nacher ändern
-			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
-			tileInsertionAllowed = false;
+            out.println("insertTile 10 "+ playerID);
+            out.println("nextTileID "+board.getNextTile().getId());
 		}
 		if(buttonArrow_0_1 == e.getSource()){
-			//übergibt die ButtonID + Board und bekommt ein neues zurück
-			board = gameFunctions.placeNextStoneInMaze(11,board);
-			//zeichnet das komplette Spielfeld neu
-			drawGameField(board);
+            out.println("insertTile 11 "+ playerID);
+            out.println("nextTileID "+board.getNextTile().getId());
+        }
+    }
 
-			//TODO nacher ändern
-			System.out.println("Tile insertion isnt allowed -> This player already inserted tile");
-			tileInsertionAllowed = false;
-			}
-		}
-	}
-	*/
-    }}
+
+
 
 
 
