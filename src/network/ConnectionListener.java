@@ -190,6 +190,7 @@ public class ConnectionListener extends Thread {
                                 jth.println("tileRot " + tileRot);
                                 jth.println("tileX " + tileX);
                                 jth.println("tileY " + tileY);
+                                jth.println("rotateTile ");
                                 jth.println("draw ");
                             }
 
@@ -213,7 +214,7 @@ public class ConnectionListener extends Thread {
     public void boardToString(Board initBoard){
 
         tileID  = "";
-        tileRot = "";
+        tileRot = initBoard.getNextTile().getRotation() + " " ;
         tileX   = "";
         tileY   = "";
         for (int i = 0; i < initBoard.getallTiles().length; i++) {

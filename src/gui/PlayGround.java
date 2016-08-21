@@ -789,14 +789,16 @@ public class PlayGround implements ActionListener {
 
 
             }
-            //ileRot
+            //TileRot
             else if(s.startsWith("tileRot")){
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
 
                 String[] tmpRot = s.split("\\s+");
+                //get nextTileRotation
+                board.getNextTile().setRotation(Integer.parseInt(tmpRot[1]));
 
-                int counter = 1;
+                int counter = 2;
                 for(int j=0; j< 7;j++ ){
                     for(int i=0; i<7;i++){
                         board.getTile(j,i).setRotation(Integer.parseInt(tmpRot[counter]));
@@ -804,6 +806,15 @@ public class PlayGround implements ActionListener {
                 }
                 //TODO setzt die Rotation muss aber noch überprüft werden ob das richtige Tile erwischt wird
                 System.out.println(board.getTile(0,0).getRotation());
+
+                System.out.println("tile rotation " + tmpRot[1]);
+
+                board.getNextTile().getShape().rotateImage(Integer.parseInt(tmpRot[1]));
+
+            }
+            else if(s.startsWith("rotateTile ")){
+                board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(90));
+                board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());
 
 
             }
@@ -903,7 +914,10 @@ public class PlayGround implements ActionListener {
             }
         }
         //draw the NextStone image
+
+
         labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
+
 
         //draw points of player
         labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore());
