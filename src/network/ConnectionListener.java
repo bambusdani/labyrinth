@@ -188,7 +188,6 @@ public class ConnectionListener extends Thread {
                                 jth.println("playerPosY " + playerPosY);
                                 jth.println("draw ");
 
-
                             }
 
                             else if(message.startsWith("rotateTile ")){
