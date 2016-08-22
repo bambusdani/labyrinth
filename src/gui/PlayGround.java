@@ -869,7 +869,7 @@ public class PlayGround implements ActionListener {
 
 
             else if(s.startsWith("draw")){
-                drawGameField(board);
+               drawGameField(board);
             }
 
 
@@ -882,13 +882,12 @@ public class PlayGround implements ActionListener {
                     board.getPlayer(i-1).setNameOfPlayer(tmpPlayer[i]);
                     //System.out.println(tmpPlayer[i]);
                 }
-                //drawGameField(board);
+                drawGameField(board);
             }
             else {
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
             }
-
         }
         out.close();
         in.close();
@@ -943,6 +942,7 @@ public class PlayGround implements ActionListener {
 
 
         //draw points of player
+        //TODO spilernamen farbig machen
         labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore());
         labelPlayer1.setText(board.getPlayer(1).getNameOfPlayer() + ": " + board.getPlayer(1).getScore());
         labelPlayer2.setText(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore());
