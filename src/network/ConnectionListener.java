@@ -144,14 +144,22 @@ public class ConnectionListener extends Thread {
                 }
 
                 if(ith.isAlive() && message != null) {
-                    //test vl ist es besser hier
                     if (message.startsWith("insertTile ")) {
-                        //TODO hier wird berechnet
+                        // push buttonID clientID tileID rotation x y
                         String[] tmpInsertTile = message.split("\\s+");
                         int buttonID = Integer.parseInt(tmpInsertTile[1]);
                         int clientID = Integer.parseInt(tmpInsertTile[2]);
+                        int tileID   = Integer.parseInt(tmpInsertTile[3]);
+                        int rotation = Integer.parseInt(tmpInsertTile[4]);
+                        int x        = Integer.parseInt(tmpInsertTile[5]);
+                        int y        = Integer.parseInt(tmpInsertTile[6]);
 
+                        //log
+                        ith.LOGGER.info("push " + tileID + " " + rotation + " " + x + " " + y);
+                        // calculate
                         serverFunctions.insertTile(buttonID, initBoard);
+                        // log
+                        ith.LOGGER.info("movevalid " + serverFunctions.isArrowMoveAllowed(buttonID));
 
                         boardToString(initBoard);
                         playerPosToString(initBoard);
