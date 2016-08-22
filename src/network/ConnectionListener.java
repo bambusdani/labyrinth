@@ -84,8 +84,10 @@ public class ConnectionListener extends Thread {
 
                 //--------------------------------------------------------------------------------
                 // if connection terminated, remove from list of active connections
-                if (!ith.isAlive())
+                if (!ith.isAlive()) {
                     connections.remove(i);
+                    ith.LOGGER.info("disconnect player_0" + ith.getpId());
+                }
 
                 //================================================================================
                 // Broadcasts to all clients oder to one specific client
