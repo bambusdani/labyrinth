@@ -75,8 +75,10 @@ public class ConnectionListener extends Thread {
 
                 //--------------------------------------------------------------------------------
                 // if connection terminated, remove from list of active connections
-                if (!ith.isAlive())
+                if (!ith.isAlive()) {
                     connections.remove(i);
+                    ith.LOGGER.info("disconnect player_0" + ith.getpId());
+                }
 
                 //================================================================================
                 // Broadcasts to all clients oder to one specific client
@@ -89,10 +91,14 @@ public class ConnectionListener extends Thread {
 
                 //send init board strings to clients (speficially)
                 if(ith.isAlive() && message != null && !connections.get(i).isInit()) {
+                    //set unique playerID
                     connections.get(i).setpId(i);
+                    //send playerID to playGround
+                    ith.println("initPlayerID " + connections.get(i).getpId());
 
                     // set connection specific player name
                     if (message.startsWith("initName")) {
+                        //player name
                         connections.get(i).setPlayerName(message.substring(9));
                         if (!player.contains(connections.get(i).getPlayerName())) {
                             player += message.substring(9) + " ";
@@ -131,14 +137,22 @@ public class ConnectionListener extends Thread {
                 }
 
                 if(ith.isAlive() && message != null) {
-                    //test vl ist es besser hier
                     if (message.startsWith("insertTile ")) {
-                        //TODO hier wird berechnet
+                        // push buttonID clientID tileID rotation x y
                         String[] tmpInsertTile = message.split("\\s+");
                         int buttonID = Integer.parseInt(tmpInsertTile[1]);
                         int clientID = Integer.parseInt(tmpInsertTile[2]);
+                        int tileID   = Integer.parseInt(tmpInsertTile[3]);
+                        int rotation = Integer.parseInt(tmpInsertTile[4]);
+                        int x        = Integer.parseInt(tmpInsertTile[5]);
+                        int y        = Integer.parseInt(tmpInsertTile[6]);
 
+                        //log
+                        ith.LOGGER.info("push " + tileID + " " + rotation + " " + x + " " + y);
+                        // calculate
                         serverFunctions.insertTile(buttonID, initBoard);
+                        // log
+                        ith.LOGGER.info("movevalid " + serverFunctions.isArrowMoveAllowed(buttonID));
 
                         boardToString(initBoard);
                         playerPosToString(initBoard);
@@ -156,23 +170,30 @@ public class ConnectionListener extends Thread {
                     }
 
                     else if(message.startsWith("move ")){
+                        // move x y playerID
                         String[] moveString = message.split("\\s+");
 
                         int playerID = Integer.parseInt(moveString[3]);
-                        Position buttonPositionPressed = new Position(Integer.parseInt(moveString[1]),Integer.parseInt(moveString[2]));
+                        int x        = Integer.parseInt(moveString[1]);
+                        int y        = Integer.parseInt(moveString[2]);
+                        Position buttonPositionPressed = new Position(x, y);
 
+                        // log
+                        ith.LOGGER.info("move " + x + " " + y + " " + playerID);
+                        // calculate
                         serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
+                        // log
+                        ith.LOGGER.info("movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
 
                         playerPosToString(initBoard);
-
-                        //
-                        if(playersTurnID == connections.size()-1){
-                            playersTurnID = 0;
+                        if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
+                            if(playersTurnID == connections.size()-1){
+                             playersTurnID = 0;
+                            }
+                            else{
+                             playersTurnID++;
+                            }
                         }
-                        else{
-                            playersTurnID++;
-                        }
-
 
 
                     }
