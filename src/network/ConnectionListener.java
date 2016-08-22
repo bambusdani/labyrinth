@@ -17,7 +17,7 @@ public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
     private String playerID;
 
-    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", goal="", player="", playerPosX="", playerPosY="", goal0="", goal1="", goal2="", goal3="";
+    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", player="", playerPosX="", playerPosY="", goal0="", goal1="", goal2="", goal3="" ,playerPoints =" 0 0 0 0";
     private ServerFunctions serverFunctions = new ServerFunctions();
     private Board initBoard = new Board();
     //PlayerTurn
@@ -169,10 +169,55 @@ public class ConnectionListener extends Thread {
 
                         int playerID = Integer.parseInt(moveString[3]);
                         Position buttonPositionPressed = new Position(Integer.parseInt(moveString[1]),Integer.parseInt(moveString[2]));
-
                         serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
-
                         playerPosToString(initBoard);
+
+
+
+                        switch (serverFunctions.isPlayerGettingPoints(initBoard , playerID)){
+
+                                case 0:
+                                    //System.out.println("kein Punkt");
+                                    break;
+                                case 1:
+                                    playerPoints ="";
+                                    // neu zeichnen der Punkte
+                                    for (int j = 0; j < initBoard.getAllPlayers().length ; j++) {
+                                        playerPoints += initBoard.getPlayer(j).getScore() +" ";
+                                    }
+
+
+                                    //TODO Daniel hier muss das protokol rein
+                                    if (ith.getpId() == 0) {
+
+                                        ith.println("deal " + goalListToString(goal0,playerID));
+                                        //ith.LOGGER.info("deal " + goal0);
+                                    }
+                                    if (ith.getpId() == 1) {
+                                        ith.println("deal " + goalListToString(goal1,playerID));                                        //ith.LOGGER.info("deal " + goal1);
+                                    }
+                                    if (ith.getpId() == 2) {
+                                        ith.println("deal " + goalListToString(goal2,playerID));                                        //ith.LOGGER.info("deal " + goal2);
+                                    }
+                                    if (ith.getpId() == 3) {
+                                        ith.println("deal " + goalListToString(goal3,playerID));                                        //ith.LOGGER.info("deal " + goal3);
+                                    }
+                                    break;
+                                case 2:
+                                   // spiel ist zu ende
+
+                                    //todo sperre das komplette feld
+
+                                    break;
+                        }
+
+
+
+
+
+
+
+
 
 
                         //next playersTurn
@@ -258,10 +303,10 @@ public class ConnectionListener extends Thread {
 
                                 jth.println("playerPosX " + playerPosX);
                                 jth.println("playerPosY " + playerPosY);
-                                jth.println("draw ");
 
-
+                                jth.println("points " + playerPoints);
                                 jth.println("playersTurnID "+ playersTurndID);
+                                jth.println("draw ");
 
                             }
                             else if (message.contains("leave")) {
@@ -311,5 +356,15 @@ public class ConnectionListener extends Thread {
         }
 
     }
+
+    public String goalListToString (String goal,int playerID){
+        goal = "";
+        for (int j = 0; j < initBoard.getPlayer(playerID).getCreaturesNeeded().size(); j++) {
+            goal += initBoard.getPlayer(playerID).getCreaturesNeeded().get(j).getGoalCardID() + " ";
+        }
+        return goal;
+    }
+
+
 
 }

@@ -844,6 +844,7 @@ public class PlayGround implements ActionListener {
 
 
             else if(s.startsWith("deal")){
+                board.getCreaturesNeeded().clear();
 
                 String[] dealID = s.split("\\s+");
                 for(int first = 1; first < dealID.length; first++){
@@ -855,6 +856,15 @@ public class PlayGround implements ActionListener {
                 }
 
                 //drawGameField(board);
+            }
+
+            else if(s.startsWith("points ")){
+                String[] points = s.split("\\s+");
+                System.out.println(points.length);
+                System.out.println("points: " + points[0] + " " +points[1] + " " + points[2] +" "+ points[3] + " "+points[4]);
+                for (int i = 1; i < board.getAllPlayers().length ; i++) {
+                    board.getPlayer(i).setScore(Integer.parseInt(points[i]));
+                }
             }
 
 
