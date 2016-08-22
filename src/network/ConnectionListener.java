@@ -166,14 +166,14 @@ public class ConnectionListener extends Thread {
                     else if(message.startsWith("move ")){
                         String[] moveString = message.split("\\s+");
 
-                        int playerID = Integer.parseInt(moveString[2]);
+                        int playerID = Integer.parseInt(moveString[3]);
                         Position buttonPositionPressed = new Position(Integer.parseInt(moveString[1]),Integer.parseInt(moveString[2]));
 
                         serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
 
-                        boardToString(initBoard);
+                        playerPosToString(initBoard);
 
-                        //-> versenden
+
 
 
 

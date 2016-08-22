@@ -637,11 +637,16 @@ public class PlayGround implements ActionListener {
 		// checks which button on the gameField is pressed
 		//if(!tileInsertionAllowed){
 
-		/*for(int i = 0; i < boardSquares.length; i++){
-			for(int j = 0; j< boardSquares[i].length; j++){
+		for(int i = 0; i < boardSquares.length; i++) {
+            for (int j = 0; j < boardSquares[i].length; j++) {
 
-				if( e.getActionCommand().equals("gameField: "+j+" "+i)){
+                if (e.getActionCommand().equals("gameField: " + j + " " + i)) {
 
+                    out.println("move " + j +" " + i +" " + playerID);
+
+                }
+            }
+        }
 
 					//writes the command of the button
 					//System.out.println("Button j: "+j +", i: "+ i +" pressed");
@@ -651,12 +656,12 @@ public class PlayGround implements ActionListener {
 					// Aufruf ob der Zug möglich ist
 
 					// erstellt aus j und i eine neue Position
-					Position buttonPositionPressed = new Position(j, i);
+					//Position buttonPositionPressed = new Position(j, i);
 
 					//TODO wurde bereits ein Stein reingeschoben???
 
 					// Ist der Zug möglich, falls ja ändere die Ränder
-					gameFunctions.movePlayerIfMoveIsPossible(playerID, buttonPositionPressed);
+				/*	gameFunctions.movePlayerIfMoveIsPossible(playerID, buttonPositionPressed);
 					if(gameFunctions.isMovePossible(buttonPositionPressed,board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY())){
 						nextPlayersTurn();
 					}
@@ -845,6 +850,7 @@ public class PlayGround implements ActionListener {
                     board.getPlayer(i).setActualPosition(new Position(board.getPlayer(i).getAcutalPosition().getX(),Integer.parseInt(playerPosY[i+1])));
                 }
             }
+
 
 
             else if(s.startsWith("deal")){
