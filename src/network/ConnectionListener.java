@@ -23,6 +23,9 @@ public class ConnectionListener extends Thread {
     //PlayerTurn
     private int playersTurnID=0;
 
+    private boolean gameEnd = false;
+    private String gameEndPlayerName = "";
+
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -100,6 +103,7 @@ public class ConnectionListener extends Thread {
                     if (message.startsWith("initName")) {
                         //player name
                         connections.get(i).setPlayerName(message.substring(9));
+                        initBoard.getPlayer(i).setNameOfPlayer(message.substring(9));
                         if (!player.contains(connections.get(i).getPlayerName())) {
                             player += message.substring(9) + " ";
                         }
@@ -220,7 +224,8 @@ public class ConnectionListener extends Thread {
                                    // spiel ist zu ende
 
                                     //todo sperre das komplette feld
-
+                                    gameEnd = true;
+                                    gameEndPlayerName = initBoard.getPlayer(playerID).getNameOfPlayer();
                                     break;
                         }
 
@@ -306,6 +311,12 @@ public class ConnectionListener extends Thread {
                                 jth.println("playerPosY " + playerPosY);
 
                                 jth.println("points " + playerPoints);
+
+                                if(gameEnd){
+                                    jth.println("gameEnd " + gameEndPlayerName );
+                                    System.out.println(gameEndPlayerName +" gameEnde!!! server ");
+                                }
+
                                 jth.println("draw ");
 
                             }

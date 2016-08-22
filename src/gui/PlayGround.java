@@ -866,7 +866,6 @@ public class PlayGround implements ActionListener {
                     }
                 }
 
-                //drawGameField(board);
             }
 
             else if(s.startsWith("points ")){
@@ -874,15 +873,13 @@ public class PlayGround implements ActionListener {
                 System.out.println(points.length);
                 System.out.println("points: " + points[0] + " " +points[1] + " " + points[2] +" "+ points[3] + " "+points[4]);
                 for (int i = 1; i < board.getAllPlayers().length ; i++) {
-                    board.getPlayer(i).setScore(Integer.parseInt(points[i]));
+                    board.getPlayer(i-1).setScore(Integer.parseInt(points[i]));
                 }
             }
-
 
             else if(s.startsWith("draw")){
                drawGameField(board);
             }
-
 
             //initName
 
@@ -901,6 +898,16 @@ public class PlayGround implements ActionListener {
 
                 //set playerID
                 playerID = Integer.parseInt(tmpPlayerID[1]);
+            }
+            else if(s.startsWith("gameEnd")){
+                //TODO kein name wird übemittelt
+
+                System.out.println( " name: " + s.substring(7) );
+
+                //-> 100 is never used so nobody can press anything
+                playersTurnID = 100 ;
+                GameEnd gameEnd = new GameEnd();
+                gameEnd.createGui(s.substring(7));
             }
             else {
                 textArea.insert(s + "\n", textArea.getText().length());
@@ -924,9 +931,6 @@ public class PlayGround implements ActionListener {
      * @param board
      * draws the whole gameField
      */
-
-    //TODO Important!!!
-    //TODO drawGameField darf erst aufgerufen werden wenn alle daten verteilt wurden!
     public void drawGameField(BoardFromClient board){
 
         //Spielfeld wird komplett neu gezeichnet
