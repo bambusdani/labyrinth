@@ -939,7 +939,6 @@ public class PlayGround implements ActionListener {
                 //draw images on the buttons
                 boardSquares[j][i].setIcon(board.getTile(j,i).getShape().getImage());
                 //set border from buttons on default
-                //TODO default color / border is different
                 boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, colorBlack));
 
                 // checking if the players are on the the spot if yes draw a colored border
@@ -958,31 +957,39 @@ public class PlayGround implements ActionListener {
             }
         }
         //draw the NextStone image
-
-
         labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 
 
         //draw points of player
         //TODO spilernamen farbig machen
         labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore());
+        labelPlayer0.setForeground(board.getPlayer(0).getColor());
         labelPlayer1.setText(board.getPlayer(1).getNameOfPlayer() + ": " + board.getPlayer(1).getScore());
+        labelPlayer1.setForeground(board.getPlayer(1).getColor());
         labelPlayer2.setText(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore());
+        labelPlayer2.setForeground(board.getPlayer(2).getColor());
         labelPlayer3.setText(board.getPlayer(3).getNameOfPlayer() + ": " + board.getPlayer(3).getScore());
+        labelPlayer3.setForeground(board.getPlayer(3).getColor());
 
         labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
 
+
+        //resets the borders
+        labelPlayer0.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, colorBlack));
+        labelPlayer1.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, colorBlack));
+        labelPlayer2.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, colorBlack));
+        labelPlayer3.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, colorBlack));
         // draw a border around the player which turn it is
-        if(board.getPlayer(0).getTurn()){
+        if(board.getPlayer(0).getPlayerID() == playersTurnID){
             labelPlayer0.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         }
-        else if(board.getPlayer(1).getTurn()){
+        else if(board.getPlayer(1).getPlayerID() == playersTurnID){
             labelPlayer1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         }
-        else if(board.getPlayer(2).getTurn()){
+        else if(board.getPlayer(2).getPlayerID() == playersTurnID){
             labelPlayer2.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         }
-        else if(board.getPlayer(3).getTurn()){
+        else if(board.getPlayer(3).getPlayerID() == playersTurnID){
             labelPlayer3.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         }
     }
