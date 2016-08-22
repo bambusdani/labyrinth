@@ -98,10 +98,14 @@ public class ConnectionListener extends Thread {
 
                 //send init board strings to clients (speficially)
                 if(ith.isAlive() && message != null && !connections.get(i).isInit()) {
+                    //set unique playerID
                     connections.get(i).setpId(i);
+                    //send playerID to playGround
+                    ith.println("initPlayerID " + connections.get(i).getpId());
 
                     // set connection specific player name
                     if (message.startsWith("initName")) {
+                        //player name
                         connections.get(i).setPlayerName(message.substring(9));
                         if (!player.contains(connections.get(i).getPlayerName())) {
                             player += message.substring(9) + " ";

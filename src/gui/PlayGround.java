@@ -119,7 +119,7 @@ public class PlayGround implements ActionListener {
 
 
 
-    public PlayGround(String hostName, String screenName, int playerID) {
+    public PlayGround(String hostName, String screenName) {
         // connect to server
         try {
             socket = new Socket(hostName, 4444);
@@ -131,9 +131,6 @@ public class PlayGround implements ActionListener {
         this.initName = screenName;
         out.println("initName " + initName);
 
-        //TODO Muss nacher wieder weg ist nur zum testen :)
-        this.playerID = playerID;
-        System.out.println("PlayerID: " + playerID);
         playersTurn.add(true);
         playersTurn.add(false);
         playersTurn.add(false);
@@ -872,7 +869,13 @@ public class PlayGround implements ActionListener {
                     board.getPlayer(i-1).setNameOfPlayer(tmpPlayer[i]);
                     //System.out.println(tmpPlayer[i]);
                 }
-                //drawGameField(board);
+                drawGameField(board);
+            }
+            else if(s.startsWith("initPlayerID")) {
+                String[] tmpPlayerID = s.split("\\s+");
+
+                //set playerID
+                playerID = Integer.parseInt(tmpPlayerID[1]);
             }
             else {
                 textArea.insert(s + "\n", textArea.getText().length());
