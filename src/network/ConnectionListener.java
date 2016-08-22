@@ -102,6 +102,10 @@ public class ConnectionListener extends Thread {
                     connections.get(i).setpId(i);
                     //send playerID to playGround
                     ith.println("initPlayerID " + connections.get(i).getpId());
+                    //init Logger
+                    try {
+                        ith.initLogger(connections.get(i).getpId());
+                    } catch (Exception e) {};
 
                     // set connection specific player name
                     if (message.startsWith("initName")) {

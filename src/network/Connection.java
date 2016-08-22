@@ -20,7 +20,7 @@ public class Connection extends Thread {
     private int pId;                 //connection ID (for logging)
     private String playerName;
 
-    public final Logger LOGGER = Logger.getLogger(Connection.class.getName());
+    public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
     public Connection(Socket socket) {
         in = new In(socket);
@@ -95,5 +95,10 @@ public class Connection extends Thread {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+
+    public void initLogger(int playerID) throws Exception {
+        FileHandler fileHandler = new FileHandler("player_0" + playerID + ".log");
+        LOGGER.addHandler(fileHandler);
     }
 }
