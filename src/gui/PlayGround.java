@@ -613,19 +613,6 @@ public class PlayGround implements ActionListener {
         }
         if(buttonRotate == e.getSource()){
 
-           /* int nextTileRotation = board.getNextTile().getRotation();
-
-            if(nextTileRotation==270){
-                nextTileRotation=0;
-            }else{
-                nextTileRotation += 90;
-            }
-
-            board.getNextTile().setRotation(nextTileRotation);
-
-            labelNextStoneSymbol.setIcon(board.getNextTile().getShape().rotateImage(nextTileRotation));
-            board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(nextTileRotation));
-            board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());*/
             out.println("rotateTile 90 "+ playerID);
             out.println("nextTileID "+board.getNextTile().getId());
 
@@ -643,7 +630,6 @@ public class PlayGround implements ActionListener {
                 if (e.getActionCommand().equals("gameField: " + j + " " + i)) {
 
                     out.println("move " + j +" " + i +" " + playerID);
-
                 }
             }
         }
