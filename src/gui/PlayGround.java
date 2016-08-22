@@ -960,8 +960,7 @@ public class PlayGround implements ActionListener {
         labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 
 
-        //draw points of player
-        //TODO spilernamen farbig machen
+        //draw points of player with color
         labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore());
         labelPlayer0.setForeground(board.getPlayer(0).getColor());
         labelPlayer1.setText(board.getPlayer(1).getNameOfPlayer() + ": " + board.getPlayer(1).getScore());
