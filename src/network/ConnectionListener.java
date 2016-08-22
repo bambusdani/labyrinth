@@ -21,20 +21,11 @@ public class ConnectionListener extends Thread {
     private ServerFunctions serverFunctions = new ServerFunctions();
     private Board initBoard = new Board();
     //PlayerTurn
-    private ArrayList<Boolean> playersTurn = new ArrayList<>();
-    private int nextPlayersTurn=0;
-    private String playersTurndID ="";
+    private int playersTurnID=0;
 
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
-
-        //First player set to true cause he has the first turn
-        if(connections.size()==1){
-            playersTurn.add(true);
-        }else{
-            playersTurn.add(false);
-        }
 
         //--------------------------------------------------------------------------------
         // create an init board
@@ -84,8 +75,10 @@ public class ConnectionListener extends Thread {
 
                 //--------------------------------------------------------------------------------
                 // if connection terminated, remove from list of active connections
-                if (!ith.isAlive())
+                if (!ith.isAlive()) {
                     connections.remove(i);
+                    ith.LOGGER.info("disconnect player_0" + ith.getpId());
+                }
 
                 //================================================================================
                 // Broadcasts to all clients oder to one specific client
@@ -98,10 +91,14 @@ public class ConnectionListener extends Thread {
 
                 //send init board strings to clients (speficially)
                 if(ith.isAlive() && message != null && !connections.get(i).isInit()) {
+                    //set unique playerID
                     connections.get(i).setpId(i);
+                    //send playerID to playGround
+                    ith.println("initPlayerID " + connections.get(i).getpId());
 
                     // set connection specific player name
                     if (message.startsWith("initName")) {
+                        //player name
                         connections.get(i).setPlayerName(message.substring(9));
                         if (!player.contains(connections.get(i).getPlayerName())) {
                             player += message.substring(9) + " ";
@@ -140,14 +137,22 @@ public class ConnectionListener extends Thread {
                 }
 
                 if(ith.isAlive() && message != null) {
-                    //test vl ist es besser hier
                     if (message.startsWith("insertTile ")) {
-                        //TODO hier wird berechnet
+                        // push buttonID clientID tileID rotation x y
                         String[] tmpInsertTile = message.split("\\s+");
                         int buttonID = Integer.parseInt(tmpInsertTile[1]);
                         int clientID = Integer.parseInt(tmpInsertTile[2]);
+                        int tileID   = Integer.parseInt(tmpInsertTile[3]);
+                        int rotation = Integer.parseInt(tmpInsertTile[4]);
+                        int x        = Integer.parseInt(tmpInsertTile[5]);
+                        int y        = Integer.parseInt(tmpInsertTile[6]);
 
+                        //log
+                        ith.LOGGER.info("push " + tileID + " " + rotation + " " + x + " " + y);
+                        // calculate
                         serverFunctions.insertTile(buttonID, initBoard);
+                        // log
+                        ith.LOGGER.info("movevalid " + serverFunctions.isArrowMoveAllowed(buttonID));
 
                         boardToString(initBoard);
                         playerPosToString(initBoard);
@@ -165,10 +170,18 @@ public class ConnectionListener extends Thread {
                     }
 
                     else if(message.startsWith("move ")){
+                        // move x y playerID
                         String[] moveString = message.split("\\s+");
 
                         int playerID = Integer.parseInt(moveString[3]);
-                        Position buttonPositionPressed = new Position(Integer.parseInt(moveString[1]),Integer.parseInt(moveString[2]));
+
+
+                        int x        = Integer.parseInt(moveString[1]);
+                        int y        = Integer.parseInt(moveString[2]);
+                        Position buttonPositionPressed = new Position(x, y);
+                        // log
+                        ith.LOGGER.info("move " + x + " " + y + " " + playerID);
+
                         serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
                         playerPosToString(initBoard);
 
@@ -220,31 +233,23 @@ public class ConnectionListener extends Thread {
 
 
 
-                        //next playersTurn
-                        for (int index = 0; index < playersTurn.size() ; index++) {
-                            if(playersTurn.get(index)){
-                                if(index == 3){
-                                    playersTurn.set(3,false);
-                                    playersTurn.set(0,true);
-                                    nextPlayersTurn = 0;
-                                            /*break muss rein, da der nächste Spieler auf true gesetzt wird und
-                                            * dieser mit der if überprüft wird*/
-                                    break;
-                                }
-                                else{
-                                            /*break muss rein, da der nächste Spieler auf true gesetzt wird und
-                                            * dieser mit der if überprüft wird*/
-                                    playersTurn.set(index,false);
-                                    playersTurn.set(index+1,true);
-                                    nextPlayersTurn = index + 1;
-                                    break;
-                                }
-                            }
-                        }
 
-                        for (int index = 0; index < playersTurn.size(); index++) {
-                            if(playersTurn.get(index)){
-                                playersTurndID = index+"";
+
+
+
+                        // calculate
+                        serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
+                        // log
+                        ith.LOGGER.info("movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
+
+                        playerPosToString(initBoard);
+                        if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
+                            if(playersTurnID == connections.size()-1){
+                             playersTurnID = 0;
+
+                            }
+                            else{
+                             playersTurnID++;
                             }
                         }
 
@@ -290,22 +295,17 @@ public class ConnectionListener extends Thread {
                                 jth.println("tileRot " + tileRot);
                                 jth.println("tileX " + tileX);
                                 jth.println("tileY " + tileY);
-
-
-
-
                                 jth.println("rotateTile ");
 
                                 jth.println("draw ");
                             }
                             //Hier kommt die spielerbewegung noch dazu
                             else if (message.startsWith("move")){
-
+                                jth.println("playersTurnID " + playersTurnID);
                                 jth.println("playerPosX " + playerPosX);
                                 jth.println("playerPosY " + playerPosY);
 
                                 jth.println("points " + playerPoints);
-                                jth.println("playersTurnID "+ playersTurndID);
                                 jth.println("draw ");
 
                             }
