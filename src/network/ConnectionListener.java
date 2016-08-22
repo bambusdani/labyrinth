@@ -6,9 +6,11 @@
 
 package network;
 
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.*;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import gameLogic.*;
 
 public class ConnectionListener extends Thread {
@@ -19,11 +21,18 @@ public class ConnectionListener extends Thread {
     private ServerFunctions serverFunctions = new ServerFunctions();
     private Board initBoard = new Board();
     private Tiles tmpTile;
-
+    private ArrayList<Boolean> playersTurn = new ArrayList<>();
 
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
+
+        //First player set to true cause he has the first turn
+        if(connections.size()==1){
+            playersTurn.add(true);
+        }else{
+            playersTurn.add(false);
+        }
 
         //--------------------------------------------------------------------------------
         // create an init board
@@ -160,9 +169,17 @@ public class ConnectionListener extends Thread {
                 if (message != null)
                     for (Connection jth : connections) {
                         try {
+
                             // send playernames to all clients
                             if (message.startsWith("initName")) {
                                 jth.println("initName " + player);
+
+                                String stringPlayersTurn="";
+                                for (int index = 0; index  < playersTurn.size(); index ++) {
+                                    stringPlayersTurn += playersTurn.get(index)+ " ";
+                                }
+
+                                jth.println("playersTurn" + stringPlayersTurn);
                             }
                             /**
                              * TODO hier werden logik funktionien aufgerufen
@@ -192,6 +209,36 @@ public class ConnectionListener extends Thread {
                                 jth.println("tileY " + tileY);
                                 jth.println("rotateTile ");
                                 jth.println("draw ");
+                            }
+                            //Hier kommt die spielerbewegung noch dazu
+                            else if (message.startsWith("move")){
+
+
+                                //nochmal schauen wie man das umgehen kann, aber nextPlayersTurn muss initial gesetzt werden
+                                int nextPlayersTurn=0;
+                                for (int index = 0; index < playersTurn.size() ; index++) {
+                                    if(playersTurn.get(index)){
+                                        if(index == 3){
+                                            playersTurn.set(3,false);
+                                            playersTurn.set(0,true);
+                                            nextPlayersTurn = 0;
+                                            /*break muss rein, da der nächste Spieler auf true gesetzt wird und
+                                            * dieser mit der if überprüft wird*/
+                                            break;
+                                        }
+                                        else{
+                                            /*break muss rein, da der nächste Spieler auf true gesetzt wird und
+                                            * dieser mit der if überprüft wird*/
+                                            playersTurn.set(index,false);
+                                            playersTurn.set(index+1,true);
+                                            nextPlayersTurn = index + 1;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                jth.println("playersTurn " + nextPlayersTurn);
+
                             }
                             else if (message.contains("leave")) {
                                 ith.LOGGER.info("disconnect player_0" + ith.getpId());
