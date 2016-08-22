@@ -279,11 +279,6 @@ public class ServerFunctions {
 
 
 
-    public void setRotation(int rot, Board board){
-        board.getTile(0,0).setRotation(rot);
-    }
-
-
 
 
     public Board movePlayerIfMoveIsPossible(Board board, int playerID, Position buttonPositionPressed){

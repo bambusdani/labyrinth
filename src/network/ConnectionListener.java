@@ -20,8 +20,9 @@ public class ConnectionListener extends Thread {
     private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", goal="", player="", playerPosX="", playerPosY="", goal0="", goal1="", goal2="", goal3="";
     private ServerFunctions serverFunctions = new ServerFunctions();
     private Board initBoard = new Board();
-    private Tiles tmpTile;
+    //PlayerTurn
     private ArrayList<Boolean> playersTurn = new ArrayList<>();
+    private int nextPlayersTurn=0;
 
 
     public ConnectionListener(Vector<Connection> connections) {
@@ -107,9 +108,7 @@ public class ConnectionListener extends Thread {
                     }
 
                     ith.println("tileID " + tileID);
-                    //TODO rotation nextTileID
                     ith.println("tileNextID " + tileNextID);
-
                     ith.println("tileRot " + tileRot);
                     ith.println("tileX " + tileX);
                     ith.println("tileY " + tileY);
@@ -147,15 +146,10 @@ public class ConnectionListener extends Thread {
                         int buttonID = Integer.parseInt(tmpInsertTile[1]);
                         int clientID = Integer.parseInt(tmpInsertTile[2]);
 
-                        //Calculation
-                        //System.out.println("y1: " + initBoard.getPlayer(0).getAcutalPosition().getY()+" x1:  "+ initBoard.getPlayer(0).getAcutalPosition().getX());
                         serverFunctions.insertTile(buttonID, initBoard);
-                        //System.out.println("y2: " + initBoard.getPlayer(0).getAcutalPosition().getY()+" x2:  "+ initBoard.getPlayer(0).getAcutalPosition().getX());
 
                         boardToString(initBoard);
-                        //System.out.println("1: " + playerPosX + " : " + playerPosY);
                         playerPosToString(initBoard);
-                        //System.out.println("2: " + playerPosX + " : " + playerPosY);
 
                     }
 
@@ -167,6 +161,51 @@ public class ConnectionListener extends Thread {
                         //Calculation
                         serverFunctions.rotNextTile(nextTileRot,initBoard);
                         boardToString(initBoard);
+                    }
+
+                    else if(message.startsWith("move ")){
+                        String[] moveString = message.split("\\s+");
+
+                        int playerID = Integer.parseInt(moveString[2]);
+                        Position buttonPositionPressed = new Position(Integer.parseInt(moveString[1]),Integer.parseInt(moveString[2]));
+
+                        serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
+
+                        boardToString(initBoard);
+
+                        //-> versenden
+
+
+
+
+
+
+
+
+                            //nochmal schauen wie man das umgehen kann, aber nextPlayersTurn muss initial gesetzt werden
+
+                        for (int index = 0; index < playersTurn.size() ; index++) {
+                            if(playersTurn.get(index)){
+                                if(index == 3){
+                                    playersTurn.set(3,false);
+                                    playersTurn.set(0,true);
+                                    nextPlayersTurn = 0;
+                                            /*break muss rein, da der nächste Spieler auf true gesetzt wird und
+                                            * dieser mit der if überprüft wird*/
+                                    break;
+                                }
+                                else{
+                                            /*break muss rein, da der nächste Spieler auf true gesetzt wird und
+                                            * dieser mit der if überprüft wird*/
+                                    playersTurn.set(index,false);
+                                    playersTurn.set(index+1,true);
+                                    nextPlayersTurn = index + 1;
+                                    break;
+                                }
+                            }
+                        }
+
+
                     }
                 }
                 //--------------------------------------------------------------------------------
@@ -225,29 +264,10 @@ public class ConnectionListener extends Thread {
                             //Hier kommt die spielerbewegung noch dazu
                             else if (message.startsWith("move")){
 
+                                jth.println("playerPosX " + playerPosX);
+                                jth.println("playerPosY " + playerPosY);
+                                jth.println("draw ");
 
-                                //nochmal schauen wie man das umgehen kann, aber nextPlayersTurn muss initial gesetzt werden
-                                int nextPlayersTurn=0;
-                                for (int index = 0; index < playersTurn.size() ; index++) {
-                                    if(playersTurn.get(index)){
-                                        if(index == 3){
-                                            playersTurn.set(3,false);
-                                            playersTurn.set(0,true);
-                                            nextPlayersTurn = 0;
-                                            /*break muss rein, da der nächste Spieler auf true gesetzt wird und
-                                            * dieser mit der if überprüft wird*/
-                                            break;
-                                        }
-                                        else{
-                                            /*break muss rein, da der nächste Spieler auf true gesetzt wird und
-                                            * dieser mit der if überprüft wird*/
-                                            playersTurn.set(index,false);
-                                            playersTurn.set(index+1,true);
-                                            nextPlayersTurn = index + 1;
-                                            break;
-                                        }
-                                    }
-                                }
 
                                 jth.println("playersTurn " + nextPlayersTurn);
 
