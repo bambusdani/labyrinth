@@ -790,8 +790,8 @@ public class PlayGround implements ActionListener {
             }
             //TileRot
             else if(s.startsWith("tileRot")){
-                textArea.insert(s + "\n", textArea.getText().length());
-                textArea.setCaretPosition(textArea.getText().length());
+                //textArea.insert(s + "\n", textArea.getText().length());
+                //textArea.setCaretPosition(textArea.getText().length());
 
                 String[] tmpRot = s.split("\\s+");
                 //get nextTileRotation
@@ -814,19 +814,17 @@ public class PlayGround implements ActionListener {
             else if(s.startsWith("rotateTile ")){
                 board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(90));
                 board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());
-
-
             }
             else if(s.startsWith("tileX")){
                 //TODO initialisierung passt nicht von shuffel
-                textArea.insert(s + "\n", textArea.getText().length());
-                textArea.setCaretPosition(textArea.getText().length());
+                //textArea.insert(s + "\n", textArea.getText().length());
+                //textArea.setCaretPosition(textArea.getText().length());
 
             }
             else if(s.startsWith("tileY")){
                 //TODO initialisierung von shuffel passt nicht
-                textArea.insert(s + "\n", textArea.getText().length());
-                textArea.setCaretPosition(textArea.getText().length());
+                //textArea.insert(s + "\n", textArea.getText().length());
+                //textArea.setCaretPosition(textArea.getText().length());
 
             }
             else if(s.startsWith("playerPosX")){

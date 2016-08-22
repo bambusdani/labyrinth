@@ -118,7 +118,7 @@ public class ConnectionListener extends Thread {
                     ith.println("tileX " + tileX);
                     ith.println("tileY " + tileY);
 
-                    // start logging for earch client
+                    // start logging for each client
                     ith.LOGGER.info("*****STARTING*****");
                     ith.LOGGER.info("init " + tileID);
 

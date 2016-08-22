@@ -6,6 +6,7 @@
 package network;
 
 import java.net.Socket;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 import gameLogic.*;
@@ -22,12 +23,14 @@ public class Connection extends Thread {
     public final Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
     public Connection(Socket socket) {
-        in  = new In(socket);
+        in = new In(socket);
         out = new Out(socket);
         this.socket = socket;
     }
 
-    public void println(String s) { out.println(s); }
+    public void println(String s) {
+        out.println(s);
+    }
 
     public void run() {
         String s;
@@ -36,16 +39,21 @@ public class Connection extends Thread {
         }
         out.close();
         in.close();
-        try                 { socket.close();      }
-        catch (Exception e) { e.printStackTrace(); }
+        try {
+            socket.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.err.println("closing socket");
-    };
+    }
 
-   /***************************************************************************
-    *  The methods getMessage() and setMessage() are synchronized
-    *  so that the thread in Connection doesn't call setMessage()
-    *  while the ConnectionListener thread is calling getMessage().
-    ***************************************************************************/
+    ;
+
+    /***************************************************************************
+     *  The methods getMessage() and setMessage() are synchronized
+     *  so that the thread in Connection doesn't call setMessage()
+     *  while the ConnectionListener thread is calling getMessage().
+     ***************************************************************************/
     public synchronized String getMessage() {
         if (message == null) return null;
         String temp = message;
@@ -56,8 +64,11 @@ public class Connection extends Thread {
 
     public synchronized void setMessage(String s) {
         if (message != null) {
-            try                  { wait();               }
-            catch (Exception ex) { ex.printStackTrace(); }
+            try {
+                wait();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         message = s;
     }
