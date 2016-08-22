@@ -177,12 +177,20 @@ public class ConnectionListener extends Thread {
                     }
 
                     else if(message.startsWith("move ")){
+                        // move x y playerID
                         String[] moveString = message.split("\\s+");
 
                         int playerID = Integer.parseInt(moveString[3]);
-                        Position buttonPositionPressed = new Position(Integer.parseInt(moveString[1]),Integer.parseInt(moveString[2]));
+                        int x        = Integer.parseInt(moveString[1]);
+                        int y        = Integer.parseInt(moveString[2]);
+                        Position buttonPositionPressed = new Position(x, y);
 
+                        // log
+                        ith.LOGGER.info("move " + x + " " + y + " " + playerID);
+                        // calculate
                         serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
+                        // log
+                        ith.LOGGER.info("movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
 
                         playerPosToString(initBoard);
 
