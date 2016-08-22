@@ -24,6 +24,8 @@ public class ServerFunctions {
         }else{
             board.getNextTile().setRotation(0);
         }
+        board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(90));
+        board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());
 
     }
 

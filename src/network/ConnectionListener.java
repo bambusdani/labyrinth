@@ -23,6 +23,7 @@ public class ConnectionListener extends Thread {
     //PlayerTurn
     private ArrayList<Boolean> playersTurn = new ArrayList<>();
     private int nextPlayersTurn=0;
+    private String playersTurndID ="";
 
 
     public ConnectionListener(Vector<Connection> connections) {
@@ -174,16 +175,7 @@ public class ConnectionListener extends Thread {
                         playerPosToString(initBoard);
 
 
-
-
-
-
-
-
-
-
-                            //nochmal schauen wie man das umgehen kann, aber nextPlayersTurn muss initial gesetzt werden
-
+                        //next playersTurn
                         for (int index = 0; index < playersTurn.size() ; index++) {
                             if(playersTurn.get(index)){
                                 if(index == 3){
@@ -205,6 +197,12 @@ public class ConnectionListener extends Thread {
                             }
                         }
 
+                        for (int index = 0; index < playersTurn.size(); index++) {
+                            if(playersTurn.get(index)){
+                                playersTurndID = index+"";
+                            }
+                        }
+
 
                     }
                 }
@@ -219,12 +217,6 @@ public class ConnectionListener extends Thread {
                             if (message.startsWith("initName")) {
                                 jth.println("initName " + player);
 
-                                String stringPlayersTurn="";
-                                for (int index = 0; index  < playersTurn.size(); index ++) {
-                                    stringPlayersTurn += playersTurn.get(index)+ " ";
-                                }
-
-                                jth.println("playersTurn" + stringPlayersTurn);
                             }
                             /**
                              * TODO hier werden logik funktionien aufgerufen
@@ -269,7 +261,7 @@ public class ConnectionListener extends Thread {
                                 jth.println("draw ");
 
 
-                                jth.println("playersTurn " + nextPlayersTurn);
+                                jth.println("playersTurnID "+ playersTurndID);
 
                             }
                             else if (message.contains("leave")) {
