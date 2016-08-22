@@ -599,7 +599,7 @@ public class PlayGround implements ActionListener {
         }
 
         if(buttonEndGame == e.getSource()){
-            out.println(screenName + "leave");
+            out.println("leave " + playerID);
             System.exit(0);
         }
 
@@ -626,7 +626,12 @@ public class PlayGround implements ActionListener {
 
                 if (e.getActionCommand().equals("gameField: " + j + " " + i)) {
 
-                    out.println("move " + j +" " + i +" " + playerID);
+                    // if player clicks on current position then player passes
+                    if (j == board.getPlayer(playerID).getAcutalPosition().getX() && i == board.getPlayer(playerID).getAcutalPosition().getY()) {
+                        out.println("pass " + playerID);
+                    } else {
+                        out.println("move " + j +" " + i +" " + playerID);
+                    }
                 }
             }
         }

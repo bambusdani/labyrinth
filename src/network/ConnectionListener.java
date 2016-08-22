@@ -84,10 +84,8 @@ public class ConnectionListener extends Thread {
 
                 //--------------------------------------------------------------------------------
                 // if connection terminated, remove from list of active connections
-                if (!ith.isAlive()) {
+                if (!ith.isAlive())
                     connections.remove(i);
-                    ith.LOGGER.info("disconnect player_0" + ith.getpId());
-                }
 
                 //================================================================================
                 // Broadcasts to all clients oder to one specific client
@@ -286,8 +284,13 @@ public class ConnectionListener extends Thread {
                                 jth.println("playersTurnID "+ playersTurndID);
 
                             }
-                            else if (message.contains("leave")) {
-                                ith.LOGGER.info("disconnect player_0" + ith.getpId());
+                            else if (message.startsWith("leave")) {
+                                String[] tmpLeave = message.split("\\s+");
+                                ith.LOGGER.info("disconnect player_0" + tmpLeave[1]);
+                            }
+                            else if (message.startsWith("pass")) {
+                                String[] tmpPass = message.split("\\s+");
+                                ith.LOGGER.info("pass player_0" + tmpPass[1]);
                             }
                             else {
                                 // sendet alles was nicht über ifs abgefangen wird weiter (chat)
