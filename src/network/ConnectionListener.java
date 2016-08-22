@@ -139,9 +139,14 @@ public class ConnectionListener extends Thread {
                         int clientID = Integer.parseInt(tmpInsertTile[2]);
 
                         //Calculation
-                        Board newBoard = serverFunctions.insertTile(buttonID, initBoard);
-                        boardToString(newBoard);
-                        playerPosToString(newBoard);
+                        //System.out.println("y1: " + initBoard.getPlayer(0).getAcutalPosition().getY()+" x1:  "+ initBoard.getPlayer(0).getAcutalPosition().getX());
+                        serverFunctions.insertTile(buttonID, initBoard);
+                        //System.out.println("y2: " + initBoard.getPlayer(0).getAcutalPosition().getY()+" x2:  "+ initBoard.getPlayer(0).getAcutalPosition().getX());
+
+                        boardToString(initBoard);
+                        //System.out.println("1: " + playerPosX + " : " + playerPosY);
+                        playerPosToString(initBoard);
+                        //System.out.println("2: " + playerPosX + " : " + playerPosY);
 
                     }
 
@@ -151,8 +156,8 @@ public class ConnectionListener extends Thread {
                         int clientID = Integer.parseInt(tmpRotateTile[2]);
 
                         //Calculation
-                        Board newBoard = serverFunctions.rotNextTile(nextTileRot,initBoard);
-                        boardToString(newBoard);
+                        serverFunctions.rotNextTile(nextTileRot,initBoard);
+                        boardToString(initBoard);
                     }
                 }
                 //--------------------------------------------------------------------------------

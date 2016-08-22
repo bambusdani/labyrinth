@@ -807,9 +807,9 @@ public class PlayGround implements ActionListener {
                     }
                 }
                 //TODO setzt die Rotation muss aber noch überprüft werden ob das richtige Tile erwischt wird
-                System.out.println(board.getTile(0,0).getRotation());
+                //System.out.println(board.getTile(0,0).getRotation());
 
-                System.out.println("tile rotation " + tmpRot[1]);
+                //System.out.println("tile rotation " + tmpRot[1]);
 
                 board.getNextTile().getShape().rotateImage(Integer.parseInt(tmpRot[1]));
 
@@ -837,14 +837,12 @@ public class PlayGround implements ActionListener {
 
                 for (int i = 0; i < board.getAllPlayers().length; i++) {
                     board.getPlayer(i).setActualPosition(new Position(Integer.parseInt(playerPosX[i+1]),board.getPlayer(i).getAcutalPosition().getY()));
-
                 }
             }
             else if(s.startsWith("playerPosY")){
                 String[] playerPosY = s.split("\\s+");
                 for (int i = 0; i < board.getAllPlayers().length; i++) {
-                    board.getPlayer(i).setActualPosition(new Position(board.getPlayer(i).getAcutalPosition().getY(),Integer.parseInt(playerPosY[i+1])));
-
+                    board.getPlayer(i).setActualPosition(new Position(board.getPlayer(i).getAcutalPosition().getX(),Integer.parseInt(playerPosY[i+1])));
                 }
             }
 

@@ -15,25 +15,22 @@ public class ServerFunctions {
     /**=================================================================================
      * Rotation of next Tile by Pressing the Rotate Button
      * */
-    public Board rotNextTile (int rotation, Board board){
+    public void rotNextTile (int rotation, Board board){
         //Set rotation of the tile -> rotation > 360° -> set to 0°
-        System.out.println(board.getNextTile().getRotation());
-        System.out.println(board.getNextTile().getShape());
+
 
         if(board.getNextTile().getRotation()+rotation<=270){
             board.getNextTile().setRotation(board.getNextTile().getRotation()+rotation);
         }else{
             board.getNextTile().setRotation(0);
         }
-        //board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(rotation));
-        //board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());
-        return board;
+
     }
 
     /**==================================================================================
      * PUSH Functions
      * */
-    public Board insertTile (int buttonID, Board board){
+    public void insertTile (int buttonID, Board board){
         if(isArrowMoveAllowed(buttonID)){
             switch (buttonID){
                 case 0:
@@ -43,7 +40,7 @@ public class ServerFunctions {
                         board.setTiles(1,i,board.getTile(1,i-1));
                     }
                     board.setTiles(1,0,tmpTile);
-                    board = movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
+                    movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
                     break;
 
                 case 1:
@@ -53,7 +50,7 @@ public class ServerFunctions {
                         board.setTiles(3,i,board.getTile(3,i-1));
                     }
                     board.setTiles(3,0,tmpTile);
-                    board = movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
+                    movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
                     break;
 
                 case 2:
@@ -63,7 +60,7 @@ public class ServerFunctions {
                         board.setTiles(5,i,board.getTile(5,i-1));
                     }
                     board.setTiles(5,0,tmpTile);
-                    board = movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
+                    movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
                     break;
 
                 case 3:
@@ -73,7 +70,7 @@ public class ServerFunctions {
                         board.setTiles(i,1,board.getTile(i+1,1));
                     }
                     board.setTiles(6,1,tmpTile);
-                    board = movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
+                    movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
                     break;
 
                 case 4:
@@ -83,7 +80,7 @@ public class ServerFunctions {
                         board.setTiles(i,3,board.getTile(i+1,3));
                     }
                     board.setTiles(6,3,tmpTile);
-                    board = movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
+                    movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
                     break;
 
                 case 5:
@@ -93,7 +90,7 @@ public class ServerFunctions {
                         board.setTiles(i,5,board.getTile(i+1,5));
                     }
                     board.setTiles(6,5,tmpTile);
-                    board = movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
+                    movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
                     break;
 
                 case 6:
@@ -103,7 +100,7 @@ public class ServerFunctions {
                         board.setTiles(5, i, board.getTile(5,i+1));
                     }
                     board.setTiles(5,6,tmpTile);
-                    board = movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
+                    movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
                     break;
 
                 case 7:
@@ -113,7 +110,7 @@ public class ServerFunctions {
                         board.setTiles(3, i, board.getTile(3,i+1));
                     }
                     board.setTiles(3,6,tmpTile);
-                    board = movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
+                    movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
                     break;
 
                 case 8:
@@ -123,7 +120,7 @@ public class ServerFunctions {
                         board.setTiles(1, i, board.getTile(1,i+1));
                     }
                     board.setTiles(1,6,tmpTile);
-                    board = movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
+                    movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
                     break;
 
                 case 9:
@@ -133,7 +130,7 @@ public class ServerFunctions {
                         board.setTiles(i,5,board.getTile(i-1,5));
                     }
                     board.setTiles(0,5,tmpTile);
-                    board = movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
+                    movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
                     break;
 
                 case 10:
@@ -143,7 +140,7 @@ public class ServerFunctions {
                         board.setTiles(i,3,board.getTile(i-1,3));
                     }
                     board.setTiles(0,3,tmpTile);
-                    board = movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
+                    movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
                     break;
 
                 case 11:
@@ -153,7 +150,7 @@ public class ServerFunctions {
                         board.setTiles(i,1,board.getTile(i-1,1));
                     }
                     board.setTiles(0,1,tmpTile);
-                    board = movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
+                    movePlayerIfStoneIsPlacedInMaze(board,  buttonID);
                     break;
                 default:
                     System.err.println("Button ID ist nicht Korrekt");
@@ -162,7 +159,6 @@ public class ServerFunctions {
         }else{
             System.out.println("This insertion is not allowed");
         }
-        return board;
     }
     /**========================================================================================*/
 
@@ -178,7 +174,6 @@ public class ServerFunctions {
         switch (buttonID){
             case 0:
                 if(possibleArrowInsertions[8]){
-                    System.err.println("is allowed");
                     resetAllPossibleArrowInsertrions();
                     possibleArrowInsertions[0]= false;
                     return true;
@@ -289,13 +284,7 @@ public class ServerFunctions {
     }
 
 
-    public void setSpecialTile (Board board){
 
-        board.setTiles(1,1,board.getTile(0,0));
-
-
-
-    }
 
     public Board movePlayerIfMoveIsPossible(Board board, int playerID, Position buttonPositionPressed){
         if(checkMazeIfMoveIsPossible(board, buttonPositionPressed, playerID)){
@@ -381,14 +370,12 @@ public class ServerFunctions {
 
 
     public Board movePlayerIfStoneIsPlacedInMaze(Board board, int arrowNumber){
-        System.out.println("movePlayerIfStoneIsPlacedInMaze");
         int rownumber = 0;
         switch (arrowNumber){
             //top and bottom
             case 0:
             case 8:
                 rownumber = 1;
-                System.out.println("Button = 0 oder 8");
                 break;
             case 1:
             case 7:
@@ -417,7 +404,6 @@ public class ServerFunctions {
 
             // Für Pfeil 0 1 2 top
             if (((arrowNumber==0) || (arrowNumber == 1) || (arrowNumber == 2)) && (board.getPlayer(playerID).getAcutalPosition().getX() == rownumber)) {
-                System.out.println("if in pfeil  0 1 2");
                 if (board.getPlayer(playerID).getAcutalPosition().getY() == 6) {
                     // aus dem spielfeld schieben
                     board.getPlayer(playerID).setActualPosition(new Position(rownumber, 0));
