@@ -175,7 +175,7 @@ public class ConnectionListener extends Thread {
                         boardToString(initBoard);
                     }
 
-                    else if(message.startsWith("move ")){
+                    else if(message.startsWith("move ") || message.startsWith("pass ")){
                         // move x y playerID
                         String[] moveString = message.split("\\s+");
 
@@ -186,7 +186,11 @@ public class ConnectionListener extends Thread {
                         int y        = Integer.parseInt(moveString[2]);
                         Position buttonPositionPressed = new Position(x, y);
                         // log
-                        ith.LOGGER.info("move " + x + " " + y + " " + playerID);
+                        if (message.startsWith("move ")) {
+                            ith.LOGGER.info("move " + x + " " + y + " " + playerID);
+                        } else {
+                            ith.LOGGER.info("pass player_0" + playerID);
+                        }
 
                         serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
                         playerPosToString(initBoard);
@@ -310,7 +314,7 @@ public class ConnectionListener extends Thread {
                                 jth.println("draw ");
                             }
                             //Hier kommt die spielerbewegung noch dazu
-                            else if (message.startsWith("move")){
+                            else if (message.startsWith("move") || message.startsWith("pass")){
                                 jth.println("playersTurnID " + playersTurnID);
                                 jth.println("playerPosX " + playerPosX);
                                 jth.println("playerPosY " + playerPosY);
@@ -328,10 +332,6 @@ public class ConnectionListener extends Thread {
                             else if (message.startsWith("leave")) {
                                 String[] tmpLeave = message.split("\\s+");
                                 ith.LOGGER.info("disconnect player_0" + tmpLeave[1]);
-                            }
-                            else if (message.startsWith("pass")) {
-                                String[] tmpPass = message.split("\\s+");
-                                ith.LOGGER.info("pass player_0" + tmpPass[1]);
                             }
                             else {
                                 // sendet alles was nicht über ifs abgefangen wird weiter (chat)
