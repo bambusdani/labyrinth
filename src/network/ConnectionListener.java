@@ -26,6 +26,8 @@ public class ConnectionListener extends Thread {
     private boolean gameEnd = false;
     private String gameEndPlayerName = "";
 
+    private boolean moveValid;
+
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -239,33 +241,24 @@ public class ConnectionListener extends Thread {
                         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
                         // calculate
                         serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
                         // log
                         ith.LOGGER.info("movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
 
                         playerPosToString(initBoard);
-                        if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
+
+                        moveValid = serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID);
+                        if(moveValid){
                             if(playersTurnID == connections.size()-1){
-                             playersTurnID = 0;
+                                playersTurnID = 0;
 
                             }
                             else{
-                             playersTurnID++;
+                                playersTurnID++;
                             }
                         }
+
 
 
                     }
@@ -315,9 +308,11 @@ public class ConnectionListener extends Thread {
                             }
                             //Hier kommt die spielerbewegung noch dazu
                             else if (message.startsWith("move") || message.startsWith("pass")){
+                                jth.println("moveValid " + moveValid);
                                 jth.println("playersTurnID " + playersTurnID);
                                 jth.println("playerPosX " + playerPosX);
                                 jth.println("playerPosY " + playerPosY);
+
 
                                 jth.println("points " + playerPoints);
 
