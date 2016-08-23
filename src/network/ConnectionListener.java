@@ -277,6 +277,12 @@ public class ConnectionListener extends Thread {
                                 playersTurnID = connections.get(0).getpId();
                                 playersTurnCounter = 0;
                             }
+                            else if(connections.get(playersTurnCounter) == null){
+                                //need it if the third person is leaving
+                                //not shure if we need it -> had a error alert
+                                playersTurnCounter = 0;
+                                playersTurnID = connections.get(playersTurnID).getpId();
+                            }
                             else{
                                 playersTurnCounter+=1;
                                 playersTurnID = connections.get(playersTurnCounter).getpId();

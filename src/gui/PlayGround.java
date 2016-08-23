@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.net.Socket;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 
 import network.*;
 import gameLogic.*;
@@ -75,6 +77,25 @@ public class PlayGround implements ActionListener {
     private JLabel labelPlayer1;
     private JLabel labelPlayer2;
     private JLabel labelPlayer3;
+    //to draw borders
+    private Border border0 ;
+    private Border border1;
+    private Border border2;
+    private Border border3;
+    //two colors
+    Border border01;
+    Border border02;
+    Border border03;
+    Border border12;
+    Border border13;
+    Border border23;
+    //three colors
+    Border border012;
+    Border border123;
+    Border border230;
+    Border border013;
+    //four colors
+    Border border0123;
 
     //label für das Nachste Ziel
     private JLabel labelNextGoalSymbol;
@@ -143,6 +164,26 @@ public class PlayGround implements ActionListener {
 
 
         //TODO ---------------------------------------------------------------------------------------------------------
+
+        //to draw the borders
+        border0 = BorderFactory.createLineBorder(board.getAllPlayers()[0].getColor(), 3);
+        border1 = BorderFactory.createLineBorder(board.getAllPlayers()[1].getColor(), 3);
+        border2 = BorderFactory.createLineBorder(board.getAllPlayers()[2].getColor(), 3);
+        border3 = BorderFactory.createLineBorder(board.getAllPlayers()[3].getColor(), 3);
+        //two colors
+        border01 = new CompoundBorder(border0, border1);
+        border02 = new CompoundBorder(border0, border2);
+        border03 = new CompoundBorder(border0, border3);
+        border12 = new CompoundBorder(border1, border2);
+        border13 = new CompoundBorder(border1, border3);
+        border23 = new CompoundBorder(border2, border3);
+        //three colors
+        border012 = new CompoundBorder(border01,border2);
+        border123 = new CompoundBorder(border12,border3);
+        border230 = new CompoundBorder(border23,border0);
+        border013 = new CompoundBorder(border01,border3);
+        //four colors
+        border0123 = new CompoundBorder(border01,border23);
 
 
         //TODO _________________________________________________________________________________________________________
@@ -622,7 +663,8 @@ public class PlayGround implements ActionListener {
             if (buttonRotate == e.getSource()) {
 
                 out.println("rotateTile 90 " + playerID);
-                out.println("nextTileID " + board.getNextTile().getId());
+                //todo was soll hier gesendet werden??????? -> "nextTileID" gibts nicht
+                //out.println("nextTileID " + board.getNextTile().getId());
 
 
             }
@@ -962,18 +1004,68 @@ public class PlayGround implements ActionListener {
                 boardSquares[j][i].setIcon(board.getTile(j,i).getShape().getImage());
                 //set border from buttons on default
                 boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, colorBlack));
-
-                // checking if the players are on the the spot if yes draw a colored border
-                if((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)){
+                //check how many player are on the field and draw the borders
+                if(((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i))       &&
+                        ((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i))  &&
+                        ((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i))  &&
+                        ((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border0123);
+                }
+                //three on one field
+                else if(((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i))  &&
+                        ((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border012);                }
+                else if(((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i))  &&
+                        ((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border123);
+                }
+                else if(((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i))  &&
+                        ((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border230);
+                }
+                else if(((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i))  &&
+                        ((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border013);
+                }
+                //two on one field
+                else if(((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border01);
+                }
+                else if(((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border02);
+                }
+                else if(((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border03);
+                }
+                else if(((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border12);
+                }
+                else if(((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border13);
+                }
+                else if(((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border23);
+                }
+                else if((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)){
                     boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
                 }
-                if((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)){
+                else if((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)){
                     boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(1).getColor()));
                 }
-                if((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i)){
+                else if((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i)){
                     boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(2).getColor()));
                 }
-                if((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)){
+                else if((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)){
                     boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(3).getColor()));
                 }
             }
