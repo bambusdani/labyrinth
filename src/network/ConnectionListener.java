@@ -22,6 +22,7 @@ public class ConnectionListener extends Thread {
     private Board initBoard = new Board();
     //PlayerTurn
     private int playersTurnID=0;
+    private int playersTurnCounter = 0;
 
     private boolean gameEnd = false;
     private String gameEndPlayerName = "";
@@ -257,13 +258,28 @@ public class ConnectionListener extends Thread {
                         ith.LOGGER.info("movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
 
                         playerPosToString(initBoard);
-                        if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
+                        /*if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
                             if(playersTurnID == connections.size()-1){
                              playersTurnID = 0;
 
                             }
                             else{
                              playersTurnID++;
+                            }
+                        }*/
+
+                        // changes the player -> if a person leaves the game goes on
+                        // Todo if it´s players turn and he leaves we have a problem
+                        // bei leave muss playersTurnCounter um 1 erhöht werden und pass ausgeführt werden
+                        // sowie ein stein random plaziert werden oder übersprungen werden
+                        if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
+                            if(playersTurnID == connections.get(connections.size()-1).getpId()){
+                                playersTurnID = connections.get(0).getpId();
+                                playersTurnCounter = 0;
+                            }
+                            else{
+                                playersTurnCounter+=1;
+                                playersTurnID = connections.get(playersTurnCounter).getpId();
                             }
                         }
 

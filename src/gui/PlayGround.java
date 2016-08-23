@@ -544,6 +544,10 @@ public class PlayGround implements ActionListener {
     public JFrame createFrame(){
         JFrame frame = new JFrame("Join Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //entfernt die obere leiste
+        //frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        //frame.setUndecorated(true);
+        //frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         frame.setVisible(true);
         frame.setSize(1200, 900);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
