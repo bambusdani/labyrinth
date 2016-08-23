@@ -1,27 +1,23 @@
 package gameLogic;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Created by Marvin Röck, Daniel Deutscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
+ */
 public class Board {
 
-
-
-    //=============================================================
-    //Save Images in Variables
-    // Tiles
-    //"I"
+    /**
+    *
+     * */
     private ImageIcon tile1Image   = new ImageIcon("src/resources/tiles/tile1.jpg");
-
-
-
-    //"L"
     private ImageIcon tile2Image   = new ImageIcon("src/resources/tiles/tile2.jpg");
-    //movable
     private ImageIcon tile3Image   = new ImageIcon("src/resources/tiles/tile3.jpg");
     private ImageIcon tile4Image   = new ImageIcon("src/resources/tiles/tile4.jpg");
     private ImageIcon tile5Image   = new ImageIcon("src/resources/tiles/tile5.jpg");

@@ -21,6 +21,8 @@ public class PlayGround implements ActionListener {
     private Boolean tileInsertionAllowed = true;
 
     private int playersTurnID = 0;
+
+    private boolean tileInserted = false;
     //------------------------
 
 
@@ -623,15 +625,14 @@ public class PlayGround implements ActionListener {
 
 
             //------------------------------------------------------------
-            // checks which button on the gameField is pressed
-            //if(!tileInsertionAllowed){
+            if(tileInserted){
+                for (int i = 0; i < boardSquares.length; i++) {
+                    for (int j = 0; j < boardSquares[i].length; j++) {
 
-            for (int i = 0; i < boardSquares.length; i++) {
-                for (int j = 0; j < boardSquares[i].length; j++) {
-
-                    if (e.getActionCommand().equals("gameField: " + j + " " + i)) {
-
-                        out.println("move " + j + " " + i + " " + playerID);
+                        if (e.getActionCommand().equals("gameField: " + j + " " + i)) {
+                            out.println("move " + j + " " + i + " " + playerID);
+                            tileInserted = false;
+                        }
                     }
                 }
             }
@@ -701,50 +702,62 @@ public class PlayGround implements ActionListener {
 		// topArrowButtons
 */
             if (buttonArrow_1_0 == e.getSource()) {
+                tileInserted = true;
                 out.println("insertTile 0 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 0");
                 out.println("nextTileID " + board.getNextTile().getId());
             }
             if (buttonArrow_3_0 == e.getSource()) {
+                tileInserted = true;
                 out.println("insertTile 1 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 0");
                 out.println("nextTileID " + board.getNextTile().getId());
             }
             if (buttonArrow_5_0 == e.getSource()) {
+                tileInserted = true;
                 out.println("insertTile 2 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 0");
                 out.println("nextTileID " + board.getNextTile().getId());
             }
             if (buttonArrow_6_1 == e.getSource()) {
+                tileInserted = true;
                 out.println("insertTile 3 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 1");
                 out.println("nextTileID " + board.getNextTile().getId());
             }
             if (buttonArrow_6_3 == e.getSource()) {
+                tileInserted = true;
                 out.println("insertTile 4 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 3");
                 out.println("nextTileID " + board.getNextTile().getId());
             }
             if (buttonArrow_6_5 == e.getSource()) {
+                tileInserted = true;
                 out.println("insertTile 5 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 5");
                 out.println("nextTileID " + board.getNextTile().getId());
             }
             if (buttonArrow_5_6 == e.getSource()) {
+                tileInserted = true;
                 out.println("insertTile 6 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 6");
                 out.println("nextTileID " + board.getNextTile().getId());
             }
             if (buttonArrow_3_6 == e.getSource()) {
+                tileInserted = true;
                 out.println("insertTile 7 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 6");
                 out.println("nextTileID " + board.getNextTile().getId());
             }
             if (buttonArrow_1_6 == e.getSource()) {
+                tileInserted = true;
                 out.println("insertTile 8 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 6");
                 out.println("nextTileID " + board.getNextTile().getId());
             }
             if (buttonArrow_0_5 == e.getSource()) {
+                tileInserted = true;
                 out.println("insertTile 9 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 5");
                 out.println("nextTileID " + board.getNextTile().getId());
             }
             if (buttonArrow_0_3 == e.getSource()) {
+                tileInserted = true;
                 out.println("insertTile 10 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 3");
                 out.println("nextTileID " + board.getNextTile().getId());
             }
             if (buttonArrow_0_1 == e.getSource()) {
+                tileInserted = true;
                 out.println("insertTile 11 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 1");
                 out.println("nextTileID " + board.getNextTile().getId());
             }
