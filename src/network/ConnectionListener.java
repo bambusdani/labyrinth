@@ -335,7 +335,6 @@ public class ConnectionListener extends Thread {
                             }
                             else {
                                 // sendet alles was nicht über ifs abgefangen wird weiter (chat)
-
                                 jth.println(message.substring(5));
                                 ith.LOGGER.info(message);
                             }
