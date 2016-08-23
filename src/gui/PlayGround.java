@@ -631,7 +631,7 @@ public class PlayGround implements ActionListener {
 
                         if (e.getActionCommand().equals("gameField: " + j + " " + i)) {
                             if (j == board.getPlayer(playerID).getAcutalPosition().getX() && i == board.getPlayer(playerID).getAcutalPosition().getY()) {
-                                out.println("pass " + playerID);
+                                out.println("pass " + j + " " + i + " " + playerID);
                             } else {
                                 out.println("move " + j + " " + i + " " + playerID);
                             }
