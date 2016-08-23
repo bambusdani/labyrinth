@@ -97,7 +97,7 @@ public class GameEnd {
     //creates a specialized frame for this class
     public JFrame createFrame(){
         JFrame frame = new JFrame("DvL Spiel beendet");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
         frame.setSize(800, 400);
         frame.setLocation(300, 200);

@@ -15,9 +15,11 @@ import java.beans.PropertyChangeListener;
 public class StartScreen implements ActionListener {
 
     private ImageIcon titleimage   = new ImageIcon("src/resources/titel/titelImage.jpg");
-    private JButton buttonSubmit = new JButton();
+    private JButton buttonSubmit   = new JButton();
+    private JLabel labelText       = new JLabel();
     private JTextArea textAreaName = new JTextArea();
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
+    private int textSize = 20;
 
 
     public StartScreen(){
@@ -28,13 +30,11 @@ public class StartScreen implements ActionListener {
 
         GridBagConstraints constraintsContent = new GridBagConstraints();
 
-        //==============================================================================================================
+        /***************************************************************************************************************
+         * logo
+         */
         JLabel labelLogo = new JLabel();
-        //labelLogo.setText("Das Verrückte Labyrinth später ein Bild" );
-       // labelLogo.setMinimumSize(new Dimension(600, 200));
-       // labelLogo.setPreferredSize(new Dimension(600, 300));
         labelLogo.setIcon(titleimage);
-
         constraintsContent.anchor = GridBagConstraints.NORTH;
         constraintsContent.weightx = 2;
         constraintsContent.weighty = 2;
@@ -45,10 +45,14 @@ public class StartScreen implements ActionListener {
         constraintsContent.gridy = 0;
         panelContent.add(labelLogo, constraintsContent);
 
-        //==============================================================================================================
-        JLabel labelText = new JLabel();
+        /***************************************************************************************************************
+         * player name insert
+         */
         labelText.setText("Bitte geben Sie ihren Namen ein.");
-        labelText.setFont(new Font("Serif",Font.PLAIN,20));
+        labelText.setFont(new Font("Serif",Font.PLAIN,textSize));
+        labelText.setHorizontalAlignment(SwingConstants.CENTER);
+        labelText.setVerticalAlignment(SwingConstants.CENTER);
+
         constraintsContent.anchor = GridBagConstraints.CENTER;
         constraintsContent.weightx = 2;
         constraintsContent.weighty = 2;
@@ -59,11 +63,9 @@ public class StartScreen implements ActionListener {
         constraintsContent.gridy = 4;
         panelContent.add(labelText, constraintsContent);
 
-        //==============================================================================================================
         textAreaName.setMinimumSize(new Dimension(200,50));
         textAreaName.setPreferredSize(new Dimension(250,50));
-        textAreaName.setFont(new Font("Serif",Font.PLAIN,30));
-
+        textAreaName.setFont(new Font("Serif",Font.PLAIN,textSize + 10));
         constraintsContent.anchor = GridBagConstraints.CENTER;
         constraintsContent.weightx = 2;
         constraintsContent.weighty = 2;
@@ -74,13 +76,11 @@ public class StartScreen implements ActionListener {
         constraintsContent.gridy = 5;
         panelContent.add(textAreaName, constraintsContent);
 
-        //==============================================================================================================
-       // JButton buttonSubmit = new JButton();
         buttonSubmit.setText("Submit");
         buttonSubmit.setMinimumSize(new Dimension(100, 50));
         buttonSubmit.setPreferredSize(new Dimension(100,50));
+        buttonSubmit.setFont(new Font("Serif",Font.PLAIN,textSize));
         buttonSubmit.addActionListener(this);
-
         constraintsContent.anchor = GridBagConstraints.SOUTH;
         constraintsContent.weightx = 2;
         constraintsContent.weighty = 2;
@@ -91,7 +91,9 @@ public class StartScreen implements ActionListener {
         constraintsContent.gridy = 6;
         panelContent.add(buttonSubmit, constraintsContent);
 
-        //==============================================================================================================
+        /***************************************************************************************************************
+         * frame
+         */
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panelContent,BorderLayout.NORTH);
         frame.setVisible(true);
@@ -106,7 +108,7 @@ public class StartScreen implements ActionListener {
                 frame.dispose();
             }
             else{
-                textAreaName.setText("Name wird benötigt.");
+                labelText.setForeground(Color.red);
             }
         }
     }

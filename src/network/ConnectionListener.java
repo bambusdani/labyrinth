@@ -78,10 +78,8 @@ public class ConnectionListener extends Thread {
 
                 //--------------------------------------------------------------------------------
                 // if connection terminated, remove from list of active connections
-                if (!ith.isAlive()) {
+                if (!ith.isAlive())
                     connections.remove(i);
-                    ith.LOGGER.info("disconnect player_0" + ith.getpId());
-                }
 
                 //================================================================================
                 // Broadcasts to all clients oder to one specific client
@@ -98,6 +96,10 @@ public class ConnectionListener extends Thread {
                     connections.get(i).setpId(i);
                     //send playerID to playGround
                     ith.println("initPlayerID " + connections.get(i).getpId());
+                    //init Logger
+                    try {
+                        ith.initLogger(connections.get(i).getpId());
+                    } catch (Exception e) {};
 
                     // set connection specific player name
                     if (message.startsWith("initName")) {
@@ -115,7 +117,7 @@ public class ConnectionListener extends Thread {
                     ith.println("tileX " + tileX);
                     ith.println("tileY " + tileY);
 
-                    // start logging for earch client
+                    // start logging for each client
                     ith.LOGGER.info("*****STARTING*****");
                     ith.LOGGER.info("init " + tileID);
 
@@ -208,16 +210,19 @@ public class ConnectionListener extends Thread {
                                     if (ith.getpId() == 0) {
 
                                         ith.println("deal " + goalListToString(goal0,playerID));
-                                        //ith.LOGGER.info("deal " + goal0);
+                                        ith.LOGGER.info("goal " + playerID + " " + x + " " + y);
                                     }
                                     if (ith.getpId() == 1) {
                                         ith.println("deal " + goalListToString(goal1,playerID));                                        //ith.LOGGER.info("deal " + goal1);
+                                        ith.LOGGER.info("goal " + playerID + " " + x + " " + y);
                                     }
                                     if (ith.getpId() == 2) {
                                         ith.println("deal " + goalListToString(goal2,playerID));                                        //ith.LOGGER.info("deal " + goal2);
+                                        ith.LOGGER.info("goal " + playerID + " " + x + " " + y);
                                     }
                                     if (ith.getpId() == 3) {
                                         ith.println("deal " + goalListToString(goal3,playerID));                                        //ith.LOGGER.info("deal " + goal3);
+                                        ith.LOGGER.info("goal " + playerID + " " + x + " " + y);
                                     }
                                     break;
                                 case 2:
@@ -320,12 +325,19 @@ public class ConnectionListener extends Thread {
                                 jth.println("draw ");
 
                             }
-                            else if (message.contains("leave")) {
-                                ith.LOGGER.info("disconnect player_0" + ith.getpId());
+                            else if (message.startsWith("leave")) {
+                                String[] tmpLeave = message.split("\\s+");
+                                ith.LOGGER.info("disconnect player_0" + tmpLeave[1]);
+                            }
+                            else if (message.startsWith("pass")) {
+                                String[] tmpPass = message.split("\\s+");
+                                ith.LOGGER.info("pass player_0" + tmpPass[1]);
                             }
                             else {
                                 // sendet alles was nicht über ifs abgefangen wird weiter (chat)
-                                jth.println(message);
+
+                                jth.println(message.substring(5));
+                                ith.LOGGER.info(message);
                             }
                         }
                         catch (Exception e) {
