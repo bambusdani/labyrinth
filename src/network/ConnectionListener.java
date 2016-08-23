@@ -210,16 +210,19 @@ public class ConnectionListener extends Thread {
                                     if (ith.getpId() == 0) {
 
                                         ith.println("deal " + goalListToString(goal0,playerID));
-                                        //ith.LOGGER.info("deal " + goal0);
+                                        ith.LOGGER.info("goal " + playerID + " " + x + " " + y);
                                     }
                                     if (ith.getpId() == 1) {
                                         ith.println("deal " + goalListToString(goal1,playerID));                                        //ith.LOGGER.info("deal " + goal1);
+                                        ith.LOGGER.info("goal " + playerID + " " + x + " " + y);
                                     }
                                     if (ith.getpId() == 2) {
                                         ith.println("deal " + goalListToString(goal2,playerID));                                        //ith.LOGGER.info("deal " + goal2);
+                                        ith.LOGGER.info("goal " + playerID + " " + x + " " + y);
                                     }
                                     if (ith.getpId() == 3) {
                                         ith.println("deal " + goalListToString(goal3,playerID));                                        //ith.LOGGER.info("deal " + goal3);
+                                        ith.LOGGER.info("goal " + playerID + " " + x + " " + y);
                                     }
                                     break;
                                 case 2:
@@ -332,7 +335,9 @@ public class ConnectionListener extends Thread {
                             }
                             else {
                                 // sendet alles was nicht über ifs abgefangen wird weiter (chat)
-                                jth.println(message);
+
+                                jth.println(message.substring(5));
+                                ith.LOGGER.info(message);
                             }
                         }
                         catch (Exception e) {

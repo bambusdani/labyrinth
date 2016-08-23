@@ -596,7 +596,7 @@ public class PlayGround implements ActionListener {
 
         //network text field
         if (textField == e.getSource()) {
-            out.println(screenName + "chat " + textField.getText());
+            out.println("chat " + screenName + textField.getText());
 
             textField.setText("");
             textField.requestFocusInWindow();
