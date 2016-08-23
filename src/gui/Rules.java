@@ -15,7 +15,7 @@ public class Rules implements ActionListener{
     //=====================================================================
     private String longText = "Test";
     JFrame frame = createFrame();
-    JButton back = addButtons("zurück");
+    JButton back = addButtons("close");
     //=====================================================================
 
     public void createGui(){
@@ -75,7 +75,8 @@ public class Rules implements ActionListener{
 
     public JFrame createFrame(){
         JFrame frame = new JFrame("DvL Spielregeln");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
         frame.setSize(1200, 700);
         frame.setLocation(300, 200);
@@ -122,8 +123,8 @@ public class Rules implements ActionListener{
         // Buttons abgeglichen. Wenn die Quelle des ActionEvents einer
         // der Buttons ist, wird der Text des JLabels entsprechend geändert
         if(ae.getSource() == this.back){
-            StartMenu StartMenu = new StartMenu();
-            StartMenu.createGui();
+            //StartMenu StartMenu = new StartMenu();
+            //StartMenu.createGui();
             frame.dispose();
         }
     }
