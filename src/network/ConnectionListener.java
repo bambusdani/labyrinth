@@ -17,24 +17,18 @@ public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
     private String playerID;
 
-    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", goal="", player="", playerPosX="", playerPosY="", goal0="", goal1="", goal2="", goal3="";
+    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", player="", playerPosX="", playerPosY="", goal0="", goal1="", goal2="", goal3="" ,playerPoints =" 0 0 0 0";
     private ServerFunctions serverFunctions = new ServerFunctions();
     private Board initBoard = new Board();
     //PlayerTurn
-    private ArrayList<Boolean> playersTurn = new ArrayList<>();
-    private int nextPlayersTurn=0;
-    private String playersTurndID ="";
+    private int playersTurnID=0;
+
+    private boolean gameEnd = false;
+    private String gameEndPlayerName = "";
 
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
-
-        //First player set to true cause he has the first turn
-        if(connections.size()==1){
-            playersTurn.add(true);
-        }else{
-            playersTurn.add(false);
-        }
 
         //--------------------------------------------------------------------------------
         // create an init board
@@ -111,6 +105,7 @@ public class ConnectionListener extends Thread {
                     if (message.startsWith("initName")) {
                         //player name
                         connections.get(i).setPlayerName(message.substring(9));
+                        initBoard.getPlayer(i).setNameOfPlayer(message.substring(9));
                         if (!player.contains(connections.get(i).getPlayerName())) {
                             player += message.substring(9) + " ";
                         }
@@ -185,45 +180,83 @@ public class ConnectionListener extends Thread {
                         String[] moveString = message.split("\\s+");
 
                         int playerID = Integer.parseInt(moveString[3]);
+
+
                         int x        = Integer.parseInt(moveString[1]);
                         int y        = Integer.parseInt(moveString[2]);
                         Position buttonPositionPressed = new Position(x, y);
-
                         // log
                         ith.LOGGER.info("move " + x + " " + y + " " + playerID);
+
+                        serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
+                        playerPosToString(initBoard);
+
+
+
+                        switch (serverFunctions.isPlayerGettingPoints(initBoard , playerID)){
+
+                                case 0:
+                                    //System.out.println("kein Punkt");
+                                    break;
+                                case 1:
+                                    playerPoints ="";
+                                    // neu zeichnen der Punkte
+                                    for (int j = 0; j < initBoard.getAllPlayers().length ; j++) {
+                                        playerPoints += initBoard.getPlayer(j).getScore() +" ";
+                                    }
+
+
+                                    //TODO Daniel hier muss das protokol rein
+                                    if (ith.getpId() == 0) {
+
+                                        ith.println("deal " + goalListToString(goal0,playerID));
+                                        //ith.LOGGER.info("deal " + goal0);
+                                    }
+                                    if (ith.getpId() == 1) {
+                                        ith.println("deal " + goalListToString(goal1,playerID));                                        //ith.LOGGER.info("deal " + goal1);
+                                    }
+                                    if (ith.getpId() == 2) {
+                                        ith.println("deal " + goalListToString(goal2,playerID));                                        //ith.LOGGER.info("deal " + goal2);
+                                    }
+                                    if (ith.getpId() == 3) {
+                                        ith.println("deal " + goalListToString(goal3,playerID));                                        //ith.LOGGER.info("deal " + goal3);
+                                    }
+                                    break;
+                                case 2:
+                                   // spiel ist zu ende
+
+                                    //todo sperre das komplette feld
+                                    gameEnd = true;
+                                    gameEndPlayerName = initBoard.getPlayer(playerID).getNameOfPlayer();
+                                    break;
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         // calculate
                         serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
                         // log
                         ith.LOGGER.info("movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
 
                         playerPosToString(initBoard);
+                        if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
+                            if(playersTurnID == connections.size()-1){
+                             playersTurnID = 0;
 
-
-                        //next playersTurn
-                        for (int index = 0; index < playersTurn.size() ; index++) {
-                            if(playersTurn.get(index)){
-                                if(index == 3){
-                                    playersTurn.set(3,false);
-                                    playersTurn.set(0,true);
-                                    nextPlayersTurn = 0;
-                                            /*break muss rein, da der nächste Spieler auf true gesetzt wird und
-                                            * dieser mit der if überprüft wird*/
-                                    break;
-                                }
-                                else{
-                                            /*break muss rein, da der nächste Spieler auf true gesetzt wird und
-                                            * dieser mit der if überprüft wird*/
-                                    playersTurn.set(index,false);
-                                    playersTurn.set(index+1,true);
-                                    nextPlayersTurn = index + 1;
-                                    break;
-                                }
                             }
-                        }
-
-                        for (int index = 0; index < playersTurn.size(); index++) {
-                            if(playersTurn.get(index)){
-                                playersTurndID = index+"";
+                            else{
+                             playersTurnID++;
                             }
                         }
 
@@ -269,23 +302,24 @@ public class ConnectionListener extends Thread {
                                 jth.println("tileRot " + tileRot);
                                 jth.println("tileX " + tileX);
                                 jth.println("tileY " + tileY);
-
-
-
-
                                 jth.println("rotateTile ");
 
                                 jth.println("draw ");
                             }
                             //Hier kommt die spielerbewegung noch dazu
                             else if (message.startsWith("move")){
-
+                                jth.println("playersTurnID " + playersTurnID);
                                 jth.println("playerPosX " + playerPosX);
                                 jth.println("playerPosY " + playerPosY);
+
+                                jth.println("points " + playerPoints);
+
+                                if(gameEnd){
+                                    jth.println("gameEnd " + gameEndPlayerName );
+                                    System.out.println(gameEndPlayerName +" gameEnde!!! server ");
+                                }
+
                                 jth.println("draw ");
-
-
-                                jth.println("playersTurnID "+ playersTurndID);
 
                             }
                             else if (message.startsWith("leave")) {
@@ -340,5 +374,15 @@ public class ConnectionListener extends Thread {
         }
 
     }
+
+    public String goalListToString (String goal,int playerID){
+        goal = "";
+        for (int j = 0; j < initBoard.getPlayer(playerID).getCreaturesNeeded().size(); j++) {
+            goal += initBoard.getPlayer(playerID).getCreaturesNeeded().get(j).getGoalCardID() + " ";
+        }
+        return goal;
+    }
+
+
 
 }

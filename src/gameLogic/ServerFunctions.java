@@ -450,4 +450,45 @@ public class ServerFunctions {
 
 
 
+
+
+
+
+    /*******************************************************************************************************************
+     * //TODO
+     * IsPlayerGettingPoints
+     * Funktion, welche überprüft, ob der Spieler auf dem gesuchten Symbol steht. Falls ja wird ein Punkt dazu addiert
+     * return 0 = kein Punkt
+     * Return 1 = Punkt
+     * return 2 = spiel beenden
+     */
+    public int isPlayerGettingPoints(Board board, int playerID){
+
+        System.out.println("player is getting points");
+
+        if(board.getPlayer(playerID).getCreaturesNeeded().get(0).getCreature() == board.getTile(board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY()).getShape().getCreature()){
+            //falls sie identisch sind
+            //erstes Element wird entfernt
+            board.getPlayer(playerID).getCreaturesNeeded().remove(0);
+
+            if(board.getPlayer(playerID).getCreaturesNeeded().isEmpty()){
+                //falls die Liste der NeededCreatures leer ist -> Spieler hat gewonnen
+                return 2;
+            }
+            else{
+                System.out.println(board.getPlayer(playerID).getCreaturesNeeded().get(0).getCreature());
+                //Wert beim Spieler um 1 erhöhen
+                board.getPlayer(playerID).setScore(board.getPlayer(playerID).getScore() + 1);
+                return 1;
+            }
+        }
+        else{
+            // kein Punkt erziehlt
+            return 0;
+        }
+    }
+    //==================================================================================================================
+
+
+
 }

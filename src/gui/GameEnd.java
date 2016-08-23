@@ -19,7 +19,7 @@ public class GameEnd {
 
     //======================================================================
     //creates the GUI for the Class GameEnd
-    public void createGui(){
+    public void createGui(String nameOfPlayer){
 
         //creats new panel with GridBagLayout
         JPanel panel = new JPanel(new GridBagLayout());
@@ -47,7 +47,7 @@ public class GameEnd {
         constraints.gridy = 1;
 
         //create new Label and set to defined Layout
-        panel.add(setLabel("Spieler 1 hat gewonnen!", 30), constraints);
+        panel.add(setLabel(nameOfPlayer + " hat gewonnen!", 30), constraints);
         //-------------------------------------------------------------
 
 
@@ -97,7 +97,7 @@ public class GameEnd {
     //creates a specialized frame for this class
     public JFrame createFrame(){
         JFrame frame = new JFrame("DvL Spiel beendet");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
         frame.setSize(800, 400);
         frame.setLocation(300, 200);
