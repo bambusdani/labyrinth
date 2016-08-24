@@ -15,9 +15,9 @@ import gameLogic.*;
 
 public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
-    private String playerID;
 
-    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", player="", playerPosX="", playerPosY="", goal0="", goal1="", goal2="", goal3="" ,playerPoints =" 0 0 0 0";
+    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", player="", playerPosX="", playerPosY="", goal0="", goal1="", goal2="", goal3="" , playerPoints =" 0 0 0 0",
+    logMessage;
     private ServerFunctions serverFunctions = new ServerFunctions();
     private Board initBoard = new Board();
     //PlayerTurn
@@ -29,13 +29,10 @@ public class ConnectionListener extends Thread {
 
     private final Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
-
-
-
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
 
-        //init Logger
+        // init Logger
         try {
             FileHandler fileHandler = new FileHandler("gameServer.log");
             LOGGER.addHandler(fileHandler);
@@ -59,7 +56,7 @@ public class ConnectionListener extends Thread {
         //================================================================================
 
         //--------------------------------------------------------------------------------
-        // tileID
+        // tileID, tileRot, tileX, tileY initialization
         for (int i = 0; i < initBoard.getallTiles().length; i++) {
             for (int j = 0; j < initBoard.getallTiles()[0].length; j++) {
                 tileID  += initBoard.getTile(j, i).getId() + " ";
@@ -72,7 +69,7 @@ public class ConnectionListener extends Thread {
                 tileNextID = initBoard.getNextTile().getId()+"";
 
         //--------------------------------------------------------------------------------
-        // goal
+        // goal initialization
         for (int i = 0; i < initBoard.getPlayer(0).getCreaturesNeeded().size(); i++) {
             goal0 += initBoard.getPlayer(0).getCreaturesNeeded().get(i).getGoalCardID() + " ";
             goal1 += initBoard.getPlayer(1).getCreaturesNeeded().get(i).getGoalCardID() + " ";
@@ -103,16 +100,16 @@ public class ConnectionListener extends Thread {
                 //================================================================================
                 String message = ith.getMessage();
 
-                //send init board strings to clients (speficially)
+                // send init board strings to clients (specifically)
                 if(ith.isAlive() && message != null && !connections.get(i).isInit()) {
-                    //set unique playerID
+                    // set unique playerID
                     connections.get(i).setpId(i);
-                    //send playerID to playGround
+                    // send playerID to playGround
                     ith.println("initPlayerID " + connections.get(i).getpId());
 
                     // set connection specific player name
                     if (message.startsWith("initName")) {
-                        //player name
+                        // set player names
                         connections.get(i).setPlayerName(message.substring(9));
                         initBoard.getPlayer(i).setNameOfPlayer(message.substring(9));
                         if (!player.contains(connections.get(i).getPlayerName())) {
@@ -120,38 +117,43 @@ public class ConnectionListener extends Thread {
                         }
                     }
 
+                    // send init board to client
                     ith.println("tileID " + tileID);
                     ith.println("tileNextID " + tileNextID);
                     ith.println("tileRot " + tileRot);
                     ith.println("tileX " + tileX);
                     ith.println("tileY " + tileY);
 
-                    // start logging for each client
-                    LOGGER.info("*****STARTING*****");
+                    // start server logging
+                    LOGGER.info("*****STARTING GAMESERVER*****");
                     LOGGER.info("init " + tileID);
 
+                    // send goal cards to clients and log it on server
                     if (ith.getpId() == 0) {
                         ith.println("deal " + goal0);
-                        LOGGER.info("Player_00 deal " + goal0);
+                        LOGGER.info("OUTGOING deal " + goal0);
                     }
                     if (ith.getpId() == 1) {
                         ith.println("deal " + goal1);
-                        LOGGER.info("Player_01 deal " + goal1);
+                        LOGGER.info("OUTGOING deal " + goal1);
                     }
                     if (ith.getpId() == 2) {
                         ith.println("deal " + goal2);
-                        LOGGER.info("Player_02 deal " + goal2);
+                        LOGGER.info("OUTGOING deal " + goal2);
                     }
                     if (ith.getpId() == 3) {
                         ith.println("deal " + goal3);
-                        LOGGER.info("Player_03 deal " + goal3);
+                        LOGGER.info("OUTGOING deal " + goal3);
                     }
-                    //move to draw the field should be the last thing at init
+                    // move to draw the field should be the last thing at init
                     ith.println("draw ");
                     connections.get(i).setInit(true);
                 }
 
                 if(ith.isAlive() && message != null) {
+                    //--------------------------------------------------------------------------------
+                    // 'push' parameter
+                    //--------------------------------------------------------------------------------
                     if (message.startsWith("insertTile ")) {
                         // push buttonID clientID tileID rotation x y
                         String[] tmpInsertTile = message.split("\\s+");
@@ -162,36 +164,47 @@ public class ConnectionListener extends Thread {
                         int x        = Integer.parseInt(tmpInsertTile[5]);
                         int y        = Integer.parseInt(tmpInsertTile[6]);
 
-                        //log
+                        // log (incoming message)
                         LOGGER.info("INCOMING push " + tileID + " " + rotation + " " + x + " " + y);
                         // calculate
                         serverFunctions.insertTile(buttonID, initBoard);
-                        // log
-                        LOGGER.info("OUTGOING movevalid " + serverFunctions.isArrowMoveAllowed(buttonID));
+                        // validate move and send to client
                         if (serverFunctions.isArrowMoveAllowed(buttonID)) {
+                            // log (outgoing move validation)
+                            LOGGER.info("OUTGOING movevalid " + true);
+                            // send move validation to client
                             ith.println("moveValid " + true);
+                            // log (outgoing push message)
                             LOGGER.info("OUTGOING pushed " + tileID + " " + rotation + " " + x + " " + y);
+                            // set logMessage to send to all clients
+                            logMessage = "pushed " + tileID + " " + rotation + " " + x + " " + y;
                         } else {
+                            // log (outgoing move validation)
+                            LOGGER.info("OUTGOING movevalid " + false);
+                            // send move validation to client
                             ith.println("moveValid " + false);
                         }
 
                         boardToString(initBoard);
                         playerPosToString(initBoard);
-
                     }
-
+                    //--------------------------------------------------------------------------------
+                    // rotate Tile
+                    //--------------------------------------------------------------------------------
                     else if(message.startsWith("rotateTile ")){
                         String[] tmpRotateTile = message.split("\\s+");
                         int nextTileRot = Integer.parseInt(tmpRotateTile[1]);
                         int clientID = Integer.parseInt(tmpRotateTile[2]);
 
-                        //Calculation
+                        // calculation
                         serverFunctions.rotNextTile(nextTileRot,initBoard);
                         boardToString(initBoard);
                     }
-
+                    //--------------------------------------------------------------------------------
+                    // 'move' and 'pass' parameter
+                    //--------------------------------------------------------------------------------
                     else if(message.startsWith("move ") || message.startsWith("pass ")){
-                        // move x y playerID
+                        // incoming message is: move x y playerID
                         String[] moveString = message.split("\\s+");
 
                         int playerID = Integer.parseInt(moveString[3]);
@@ -199,11 +212,12 @@ public class ConnectionListener extends Thread {
                         int y        = Integer.parseInt(moveString[2]);
                         Position buttonPositionPressed = new Position(x, y);
 
-                        // log
                         if (message.startsWith("move ")) {
+                            // log (incoming message)
                             LOGGER.info("INCOMING move " + x + " " + y);
-                        } else {
-                            LOGGER.info("OUTGOING pass player_0" + playerID);
+                        } else { // else == message.startsWith("pass")
+                            // log (incoming message)
+                            LOGGER.info("INCOMING pass");
                         }
                         LOGGER.info("OUTGOING movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
                         if (serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID)) {
@@ -253,40 +267,29 @@ public class ConnectionListener extends Thread {
                                     if (ith.getpId() == 0) {
 
                                         ith.println("deal " + goalListToString(goal0,playerID));
-                                        LOGGER.info("Player_00 goal " + playerID + " " + x + " " + y);
+                                        LOGGER.info("OUTGOING goal " + playerID + " " + x + " " + y);
                                     }
                                     if (ith.getpId() == 1) {
                                         ith.println("deal " + goalListToString(goal1,playerID));                                        //ith.LOGGER.info("deal " + goal1);
-                                        LOGGER.info("Player_01 goal " + playerID + " " + x + " " + y);
+                                        LOGGER.info("OUTGOING goal " + playerID + " " + x + " " + y);
                                     }
                                     if (ith.getpId() == 2) {
                                         ith.println("deal " + goalListToString(goal2,playerID));                                        //ith.LOGGER.info("deal " + goal2);
-                                        LOGGER.info("Player_02 goal " + playerID + " " + x + " " + y);
+                                        LOGGER.info("OUTGOING goal " + playerID + " " + x + " " + y);
                                     }
                                     if (ith.getpId() == 3) {
                                         ith.println("deal " + goalListToString(goal3,playerID));                                        //ith.LOGGER.info("deal " + goal3);
-                                        LOGGER.info("Player_03 goal " + playerID + " " + x + " " + y);
+                                        LOGGER.info("OUTGOING goal " + playerID + " " + x + " " + y);
                                     }
                                     break;
                                 case 2:
-                                   // spiel ist zu ende
-
-                                    //todo sperre das komplette feld
+                                    // game ends; sperre das komplette feld
                                     gameEnd = true;
                                     gameEndPlayerName = initBoard.getPlayer(playerID).getNameOfPlayer();
                                     break;
                         }
 
-
-
-                        // calculate
-                        //wurde davor bereits gemacht
-                        //serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
-                        // log
-                        LOGGER.info("movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
                         playerPosToString(initBoard);
-
-
                     }
                 }
                 //--------------------------------------------------------------------------------
@@ -306,10 +309,15 @@ public class ConnectionListener extends Thread {
                              * hier wird das board überprüft und wieder gesenet
                              */
 
-                            //
+                            // send logMessage for all clients
+                            if (logMessage != null) {
+                                jth.println(logMessage);
+                                logMessage = null;
+                            }
 
                             else if (message.startsWith("insertTile ")) {
 
+                                LOGGER.info("hi");
                                 jth.println("tileID " + tileID );
                                 jth.println("tileNextID " + tileNextID);
                                 jth.println("tileRot " + tileRot);

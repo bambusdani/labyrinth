@@ -974,6 +974,10 @@ public class PlayGround implements ActionListener {
                 GameEnd gameEnd = new GameEnd();
                 gameEnd.createGui(s.substring(7));
             }
+            // incoming pushed message
+            else if(s.startsWith("pushed")) {
+                LOGGER.info("INCOMING " + s);
+            }
             else {
                 // in case of chat
                 textArea.insert(s + "\n", textArea.getText().length());
