@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import network.*;
 import gameLogic.*;
 
@@ -26,6 +27,8 @@ public class PlayGround implements ActionListener {
 
     private boolean tileInserted = false;
     //------------------------
+
+    private boolean moveValid;
 
 
     private int fontSize = 20;
@@ -669,147 +672,89 @@ public class PlayGround implements ActionListener {
 
             }
 
-
             //------------------------------------------------------------
             if(tileInserted){
                 for (int i = 0; i < boardSquares.length; i++) {
                     for (int j = 0; j < boardSquares[i].length; j++) {
-
                         if (e.getActionCommand().equals("gameField: " + j + " " + i)) {
                             if (j == board.getPlayer(playerID).getAcutalPosition().getX() && i == board.getPlayer(playerID).getAcutalPosition().getY()) {
                                 out.println("pass " + j + " " + i + " " + playerID);
                             } else {
                                 out.println("move " + j + " " + i + " " + playerID);
                             }
-                            tileInserted = false;
                         }
                     }
                 }
             }
 
 
-            //writes the command of the button
-            //System.out.println("Button j: "+j +", i: "+ i +" pressed");
-
-
-            //=====================================================
-            // Aufruf ob der Zug möglich ist
-
-            // erstellt aus j und i eine neue Position
-            //Position buttonPositionPressed = new Position(j, i);
-
-            //TODO wurde bereits ein Stein reingeschoben???
-
-            // Ist der Zug möglich, falls ja ändere die Ränder
-				/*	gameFunctions.movePlayerIfMoveIsPossible(playerID, buttonPositionPressed);
-					if(gameFunctions.isMovePossible(buttonPositionPressed,board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY())){
-						nextPlayersTurn();
-					}
-					else{
-						nextPlayersTurn();
-					}
-
-
-					board = gameFunctions.movePlayerIfMoveIsPossible(playerID,buttonPositionPressed);
-					drawGameField(board);*/
-            //==================================================================================================
-            /**
-             * Zeichnen der Punkte
-             */
-        /*switch (gameFunctions.isPlayerGettingPoints(board , playerID)){
-				protocol.isPlayerGettingPoints(board, playerID);
-					switch (protocol.getPlayerPoints()){
-						case 0:
-							//System.out.println("kein Punkt");
-							break;
-						case 1:
-							// neu zeichnen der Punkte
-							labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore() );
-							labelPlayer1.setText(board.getPlayer(1).getNameOfPlayer() + ": " + board.getPlayer(1).getScore() );
-							labelPlayer2.setText(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore() );
-							labelPlayer3.setText(board.getPlayer(3).getNameOfPlayer() + ": " + board.getPlayer(3).getScore() );
-							//neu zeichnen des NextNeededSymbol
-							labelNextGoalSymbol.setIcon(board.getPlayer(playerID).getCreaturesNeeded().get(0).getSymbolImage());
-							break;
-						case 2:
-							//frame.dispose();
-							GameEnd GameEnd = new GameEnd();
-							GameEnd.createGui();
-							break;
-					}
-				}
-			}
-		}
-		}
-
-
-
-		//-------------------------------------------------------------
-			//TODO ID Abfrage übern server usw...
-
-		// checks which button was pressed  to place the next stone
-		// buttonArrow_1_0 means line j:1 i:0 on the field
-		// topArrowButtons
-*/
-            if (buttonArrow_1_0 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 0 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 0");
-                out.println("nextTileID " + board.getNextTile().getId());
+		/* checks which button was pressed  to place the next stone
+		 buttonArrow_1_0 means line j:1 i:0 on the field
+		 topArrowButtons*/
+        if(!tileInserted){
+                if (buttonArrow_1_0 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 0 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 0");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_3_0 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 1 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 0");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_5_0 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 2 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 0");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_6_1 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 3 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 1");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_6_3 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 4 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 3");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_6_5 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 5 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 5");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_5_6 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 6 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 6");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_3_6 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 7 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 6");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_1_6 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 8 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 6");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_0_5 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 9 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 5");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_0_3 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 10 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 3");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_0_1 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 11 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 1");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
             }
-            if (buttonArrow_3_0 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 1 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 0");
-                out.println("nextTileID " + board.getNextTile().getId());
-            }
-            if (buttonArrow_5_0 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 2 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 0");
-                out.println("nextTileID " + board.getNextTile().getId());
-            }
-            if (buttonArrow_6_1 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 3 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 1");
-                out.println("nextTileID " + board.getNextTile().getId());
-            }
-            if (buttonArrow_6_3 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 4 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 3");
-                out.println("nextTileID " + board.getNextTile().getId());
-            }
-            if (buttonArrow_6_5 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 5 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 5");
-                out.println("nextTileID " + board.getNextTile().getId());
-            }
-            if (buttonArrow_5_6 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 6 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 6");
-                out.println("nextTileID " + board.getNextTile().getId());
-            }
-            if (buttonArrow_3_6 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 7 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 6");
-                out.println("nextTileID " + board.getNextTile().getId());
-            }
-            if (buttonArrow_1_6 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 8 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 6");
-                out.println("nextTileID " + board.getNextTile().getId());
-            }
-            if (buttonArrow_0_5 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 9 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 5");
-                out.println("nextTileID " + board.getNextTile().getId());
-            }
-            if (buttonArrow_0_3 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 10 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 3");
-                out.println("nextTileID " + board.getNextTile().getId());
-            }
-            if (buttonArrow_0_1 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 11 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 1");
-                out.println("nextTileID " + board.getNextTile().getId());
+            else{
+                System.err.println("A TILE WAS ALREADY INSERTED! NO MORE INSERTION ALLOWED");
             }
         }
     }
@@ -842,16 +787,19 @@ public class PlayGround implements ActionListener {
                 saveTileIDStingInBoard(s);
 
             }
+            else if(s.startsWith("moveValid ")){
+                moveValid = Boolean.parseBoolean(s.substring(10));
+                if(moveValid){
+                    tileInserted = false;
+                }else{
+                    tileInserted = true;
+                }
+            }
+
             //acutal playersTurnID
             else if(s.startsWith("playersTurnID")){
                 String[] tmpTurnID = s.split("\\s+");
-                System.out.println("davor " +playersTurnID);
-                System.out.println(tmpTurnID[1]);
-
                 playersTurnID = Integer.parseInt(tmpTurnID[1]);
-
-                System.out.println("danach " +playersTurnID);
-                System.out.println(tmpTurnID[1]);
             }
 
             //tileNextID

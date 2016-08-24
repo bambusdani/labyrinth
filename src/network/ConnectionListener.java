@@ -28,6 +28,9 @@ public class ConnectionListener extends Thread {
     private String gameEndPlayerName = "";
 
 
+
+
+
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
 
@@ -181,11 +184,10 @@ public class ConnectionListener extends Thread {
                         String[] moveString = message.split("\\s+");
 
                         int playerID = Integer.parseInt(moveString[3]);
-
-
                         int x        = Integer.parseInt(moveString[1]);
                         int y        = Integer.parseInt(moveString[2]);
                         Position buttonPositionPressed = new Position(x, y);
+
                         // log
                         if (message.startsWith("move ")) {
                             ith.LOGGER.info("move " + x + " " + y + " " + playerID);
@@ -193,10 +195,32 @@ public class ConnectionListener extends Thread {
                             ith.LOGGER.info("pass player_0" + playerID);
                         }
 
-                        serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
-                        playerPosToString(initBoard);
 
-
+                        // changes the player -> if a person leaves the game goes on
+                        // Todo if it´s players turn and he leaves we have a problem
+                        // bei leave muss playersTurnCounter um 1 erhöht werden und pass ausgeführt werden
+                        // sowie ein stein random plaziert werden oder übersprungen werden
+                        if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
+                            serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
+                            ith.println("moveValid " + true);
+                            if(playersTurnID == connections.get(connections.size()-1).getpId()){
+                                playersTurnID = connections.get(0).getpId();
+                                playersTurnCounter = 0;
+                            }
+                            else if(connections.get(playersTurnCounter) == null){
+                                //need it if the third person is leaving
+                                //not shure if we need it -> had a error alert
+                                playersTurnCounter = 0;
+                                playersTurnID = connections.get(playersTurnID).getpId();
+                            }
+                            else{
+                                playersTurnCounter+=1;
+                                playersTurnID = connections.get(playersTurnCounter).getpId();
+                            }
+                        }
+                        else{
+                            ith.println("moveValid " + false);
+                        }
 
                         switch (serverFunctions.isPlayerGettingPoints(initBoard , playerID)){
 
@@ -240,54 +264,12 @@ public class ConnectionListener extends Thread {
                         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
                         // calculate
-                        serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
+                        //wurde davor bereits gemacht
+                        //serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
                         // log
                         ith.LOGGER.info("movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
-
                         playerPosToString(initBoard);
-                        /*if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
-                            if(playersTurnID == connections.size()-1){
-                             playersTurnID = 0;
-
-                            }
-                            else{
-                             playersTurnID++;
-                            }
-                        }*/
-
-                        // changes the player -> if a person leaves the game goes on
-                        // Todo if it´s players turn and he leaves we have a problem
-                        // bei leave muss playersTurnCounter um 1 erhöht werden und pass ausgeführt werden
-                        // sowie ein stein random plaziert werden oder übersprungen werden
-                        if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
-                            if(playersTurnID == connections.get(connections.size()-1).getpId()){
-                                playersTurnID = connections.get(0).getpId();
-                                playersTurnCounter = 0;
-                            }
-                            else if(connections.get(playersTurnCounter) == null){
-                                //need it if the third person is leaving
-                                //not shure if we need it -> had a error alert
-                                playersTurnCounter = 0;
-                                playersTurnID = connections.get(playersTurnID).getpId();
-                            }
-                            else{
-                                playersTurnCounter+=1;
-                                playersTurnID = connections.get(playersTurnCounter).getpId();
-                            }
-                        }
 
 
                     }
@@ -340,12 +322,10 @@ public class ConnectionListener extends Thread {
                                 jth.println("playersTurnID " + playersTurnID);
                                 jth.println("playerPosX " + playerPosX);
                                 jth.println("playerPosY " + playerPosY);
-
                                 jth.println("points " + playerPoints);
 
                                 if(gameEnd){
                                     jth.println("gameEnd " + gameEndPlayerName );
-                                    System.out.println(gameEndPlayerName +" gameEnde!!! server ");
                                 }
 
                                 jth.println("draw ");
