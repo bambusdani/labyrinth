@@ -27,7 +27,7 @@ public class ConnectionListener extends Thread {
     private boolean gameEnd = false;
     private String gameEndPlayerName = "";
 
-    public Logger LOGGER = Logger.getLogger(Connection.class.getName());
+    private final Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
 
 
@@ -37,9 +37,11 @@ public class ConnectionListener extends Thread {
 
         //init Logger
         try {
-            FileHandler fileHandler = new FileHandler("gameLog.log");
+            FileHandler fileHandler = new FileHandler("gameServer.log");
             LOGGER.addHandler(fileHandler);
-        } catch (Exception e) {};
+        } catch (Exception e) {
+            System.err.println(e);
+        }
 
         //--------------------------------------------------------------------------------
         // create an init board
