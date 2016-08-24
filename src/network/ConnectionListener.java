@@ -315,6 +315,7 @@ public class ConnectionListener extends Thread {
                             // send logMessage for all clients
                             if (logMessage != null) {
                                 jth.println(logMessage);
+                                jth.println("draw ");
                                 logMessage = null;
                             }
 
