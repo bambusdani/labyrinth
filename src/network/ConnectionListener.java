@@ -26,9 +26,16 @@ public class ConnectionListener extends Thread {
     private boolean gameEnd = false;
     private String gameEndPlayerName = "";
 
+    public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
+
+        //init Logger
+        try {
+            FileHandler fileHandler = new FileHandler("gameLog.log");
+            LOGGER.addHandler(fileHandler);
+        } catch (Exception e) {};
 
         //--------------------------------------------------------------------------------
         // create an init board
@@ -96,10 +103,6 @@ public class ConnectionListener extends Thread {
                     connections.get(i).setpId(i);
                     //send playerID to playGround
                     ith.println("initPlayerID " + connections.get(i).getpId());
-                    //init Logger
-                    try {
-                        ith.initLogger(connections.get(i).getpId());
-                    } catch (Exception e) {};
 
                     // set connection specific player name
                     if (message.startsWith("initName")) {
@@ -118,24 +121,24 @@ public class ConnectionListener extends Thread {
                     ith.println("tileY " + tileY);
 
                     // start logging for each client
-                    ith.LOGGER.info("*****STARTING*****");
-                    ith.LOGGER.info("init " + tileID);
+                    LOGGER.info("*****STARTING*****");
+                    LOGGER.info("init " + tileID);
 
                     if (ith.getpId() == 0) {
                         ith.println("deal " + goal0);
-                        ith.LOGGER.info("deal " + goal0);
+                        LOGGER.info("Player_00 deal " + goal0);
                     }
                     if (ith.getpId() == 1) {
                         ith.println("deal " + goal1);
-                        ith.LOGGER.info("deal " + goal1);
+                        LOGGER.info("Player_01 deal " + goal1);
                     }
                     if (ith.getpId() == 2) {
                         ith.println("deal " + goal2);
-                        ith.LOGGER.info("deal " + goal2);
+                        LOGGER.info("Player_02 deal " + goal2);
                     }
                     if (ith.getpId() == 3) {
                         ith.println("deal " + goal3);
-                        ith.LOGGER.info("deal " + goal3);
+                        LOGGER.info("Player_03 deal " + goal3);
                     }
                     //move to draw the field should be the last thing at init
                     ith.println("draw ");
@@ -154,11 +157,14 @@ public class ConnectionListener extends Thread {
                         int y        = Integer.parseInt(tmpInsertTile[6]);
 
                         //log
-                        ith.LOGGER.info("push " + tileID + " " + rotation + " " + x + " " + y);
+                        LOGGER.info("INCOMING push " + tileID + " " + rotation + " " + x + " " + y);
                         // calculate
                         serverFunctions.insertTile(buttonID, initBoard);
                         // log
-                        ith.LOGGER.info("movevalid " + serverFunctions.isArrowMoveAllowed(buttonID));
+                        LOGGER.info("OUTGOING movevalid " + serverFunctions.isArrowMoveAllowed(buttonID));
+                        if (serverFunctions.isArrowMoveAllowed(buttonID)) {
+                            LOGGER.info("OUTGOING pushed " + tileID + " " + rotation + " " + x + " " + y);
+                        }
 
                         boardToString(initBoard);
                         playerPosToString(initBoard);
@@ -187,15 +193,17 @@ public class ConnectionListener extends Thread {
                         Position buttonPositionPressed = new Position(x, y);
                         // log
                         if (message.startsWith("move ")) {
-                            ith.LOGGER.info("move " + x + " " + y + " " + playerID);
+                            LOGGER.info("INCOMING move " + x + " " + y);
                         } else {
-                            ith.LOGGER.info("pass player_0" + playerID);
+                            LOGGER.info("OUTGOING pass player_0" + playerID);
+                        }
+                        LOGGER.info("OUTGOING movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
+                        if (serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID)) {
+                            LOGGER.info("OUTGOING move " + playerID + " " + x + " " + y);
                         }
 
                         serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
                         playerPosToString(initBoard);
-
-
 
                         switch (serverFunctions.isPlayerGettingPoints(initBoard , playerID)){
 
@@ -214,19 +222,19 @@ public class ConnectionListener extends Thread {
                                     if (ith.getpId() == 0) {
 
                                         ith.println("deal " + goalListToString(goal0,playerID));
-                                        ith.LOGGER.info("goal " + playerID + " " + x + " " + y);
+                                        LOGGER.info("Player_00 goal " + playerID + " " + x + " " + y);
                                     }
                                     if (ith.getpId() == 1) {
                                         ith.println("deal " + goalListToString(goal1,playerID));                                        //ith.LOGGER.info("deal " + goal1);
-                                        ith.LOGGER.info("goal " + playerID + " " + x + " " + y);
+                                        LOGGER.info("Player_01 goal " + playerID + " " + x + " " + y);
                                     }
                                     if (ith.getpId() == 2) {
                                         ith.println("deal " + goalListToString(goal2,playerID));                                        //ith.LOGGER.info("deal " + goal2);
-                                        ith.LOGGER.info("goal " + playerID + " " + x + " " + y);
+                                        LOGGER.info("Player_02 goal " + playerID + " " + x + " " + y);
                                     }
                                     if (ith.getpId() == 3) {
                                         ith.println("deal " + goalListToString(goal3,playerID));                                        //ith.LOGGER.info("deal " + goal3);
-                                        ith.LOGGER.info("goal " + playerID + " " + x + " " + y);
+                                        LOGGER.info("Player_03 goal " + playerID + " " + x + " " + y);
                                     }
                                     break;
                                 case 2:
@@ -238,23 +246,8 @@ public class ConnectionListener extends Thread {
                                     break;
                         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                         // calculate
                         serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
-                        // log
-                        ith.LOGGER.info("movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
 
                         playerPosToString(initBoard);
                         if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
@@ -331,12 +324,15 @@ public class ConnectionListener extends Thread {
                             }
                             else if (message.startsWith("leave")) {
                                 String[] tmpLeave = message.split("\\s+");
-                                ith.LOGGER.info("disconnect player_0" + tmpLeave[1]);
+                                LOGGER.info("INCOMING leave");
+                                LOGGER.info("OUTGOING disconnect player_0" + tmpLeave[1]);
                             }
                             else {
                                 // sendet alles was nicht über ifs abgefangen wird weiter (chat)
+                                String[] tmpMessage = message.split(": ");
+                                LOGGER.info("INCOMING chat " + tmpMessage[1]);
                                 jth.println(message.substring(5));
-                                ith.LOGGER.info(message);
+                                LOGGER.info("OUTGOING chat " + connections.get(i).getpId() + " " + tmpMessage[1]);
                             }
                         }
                         catch (Exception e) {

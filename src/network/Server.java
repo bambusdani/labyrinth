@@ -21,7 +21,6 @@ import java.net.ServerSocket;
 import java.util.Vector;
 
 public class Server {
-
     public static void main(String[] args) throws Exception {
         Vector<Connection> connections        = new Vector<Connection>();
         ServerSocket serverSocket             = new ServerSocket(4444);
@@ -43,4 +42,4 @@ public class Server {
             connection.start();
         }
     }
-    }
+}

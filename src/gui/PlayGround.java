@@ -53,6 +53,7 @@ public class PlayGround implements ActionListener {
     private ImageIcon imageRotate	 = new ImageIcon("src/resources/arrows/rotateArrow.png");
 
     //Buttons for the arrows to place the next stone
+    private JButton[] buttonArrow_Array;
     //top
     private JButton buttonArrow_1_0;
     private JButton buttonArrow_3_0;
@@ -141,9 +142,20 @@ public class PlayGround implements ActionListener {
         playersTurn.add(false);
         //TODO Bis hier
 
-
-        //TODO ---------------------------------------------------------------------------------------------------------
-
+        // add arrow buttons to array
+        buttonArrow_Array = new JButton[12];
+        buttonArrow_Array[0] = buttonArrow_1_0;
+        buttonArrow_Array[1] = buttonArrow_3_0;
+        buttonArrow_Array[2] = buttonArrow_5_0;
+        buttonArrow_Array[3] = buttonArrow_1_6;
+        buttonArrow_Array[4] = buttonArrow_3_6;
+        buttonArrow_Array[5] = buttonArrow_5_6;
+        buttonArrow_Array[6] = buttonArrow_0_1;
+        buttonArrow_Array[7] = buttonArrow_0_3;
+        buttonArrow_Array[8] = buttonArrow_0_5;
+        buttonArrow_Array[9] = buttonArrow_6_1;
+        buttonArrow_Array[10] = buttonArrow_6_3;
+        buttonArrow_Array[11] = buttonArrow_6_5;
 
         //TODO _________________________________________________________________________________________________________
 
@@ -596,14 +608,14 @@ public class PlayGround implements ActionListener {
 
         //network text field
         if (textField == e.getSource()) {
-            out.println(screenName + "chat " + textField.getText());
+            out.println("chat " + screenName + textField.getText());
 
             textField.setText("");
             textField.requestFocusInWindow();
         }
 
         if (buttonEndGame == e.getSource()) {
-            out.println(screenName + "leave");
+            out.println("leave " + playerID);
             System.exit(0);
         }
 
@@ -705,70 +717,100 @@ public class PlayGround implements ActionListener {
 		// buttonArrow_1_0 means line j:1 i:0 on the field
 		// topArrowButtons
 */
-            if (buttonArrow_1_0 == e.getSource()) {
+            if (buttonArrow_1_0.isEnabled() && buttonArrow_1_0 == e.getSource()) {
                 tileInserted = true;
                 out.println("insertTile 0 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 0");
                 out.println("nextTileID " + board.getNextTile().getId());
+                buttonArrow_1_6.setEnabled(false);
+                System.out.println("1_0");
             }
-            if (buttonArrow_3_0 == e.getSource()) {
+            if (buttonArrow_3_0.isEnabled() && buttonArrow_3_0 == e.getSource()) {
                 tileInserted = true;
                 out.println("insertTile 1 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 0");
                 out.println("nextTileID " + board.getNextTile().getId());
+                buttonArrow_3_6.setEnabled(false);
+                System.out.println("3_0");
             }
-            if (buttonArrow_5_0 == e.getSource()) {
+            if (buttonArrow_5_0.isEnabled() && buttonArrow_5_0 == e.getSource()) {
                 tileInserted = true;
                 out.println("insertTile 2 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 0");
                 out.println("nextTileID " + board.getNextTile().getId());
+                buttonArrow_5_6.setEnabled(false);
+                System.out.println("5_0");
             }
-            if (buttonArrow_6_1 == e.getSource()) {
+            if (buttonArrow_6_1.isEnabled() && buttonArrow_6_1 == e.getSource()) {
                 tileInserted = true;
                 out.println("insertTile 3 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 1");
                 out.println("nextTileID " + board.getNextTile().getId());
+                buttonArrow_0_1.setEnabled(false);
+                System.out.println("6_1");
             }
-            if (buttonArrow_6_3 == e.getSource()) {
+            if (buttonArrow_6_3.isEnabled() && buttonArrow_6_3 == e.getSource()) {
                 tileInserted = true;
                 out.println("insertTile 4 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 3");
                 out.println("nextTileID " + board.getNextTile().getId());
+                buttonArrow_0_3.setEnabled(false);
+                System.out.println("6_3");
             }
-            if (buttonArrow_6_5 == e.getSource()) {
+            if (buttonArrow_6_5.isEnabled() && buttonArrow_6_5 == e.getSource()) {
                 tileInserted = true;
                 out.println("insertTile 5 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 5");
                 out.println("nextTileID " + board.getNextTile().getId());
+                buttonArrow_0_5.setEnabled(false);
+                System.out.println("6_5");
             }
-            if (buttonArrow_5_6 == e.getSource()) {
+            if (buttonArrow_5_6.isEnabled() && buttonArrow_5_6 == e.getSource()) {
                 tileInserted = true;
                 out.println("insertTile 6 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 6");
                 out.println("nextTileID " + board.getNextTile().getId());
+                buttonArrow_5_0.setEnabled(false);
+                System.out.println("5_6");
             }
-            if (buttonArrow_3_6 == e.getSource()) {
+            if (buttonArrow_3_6.isEnabled() && buttonArrow_3_6 == e.getSource()) {
                 tileInserted = true;
                 out.println("insertTile 7 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 6");
                 out.println("nextTileID " + board.getNextTile().getId());
+                buttonArrow_3_0.setEnabled(false);
+                System.out.println("3_6");
             }
-            if (buttonArrow_1_6 == e.getSource()) {
+            if (buttonArrow_1_6.isEnabled() && buttonArrow_1_6 == e.getSource()) {
                 tileInserted = true;
                 out.println("insertTile 8 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 6");
                 out.println("nextTileID " + board.getNextTile().getId());
+                buttonArrow_1_0.setEnabled(false);
+                System.out.println("1_6");
             }
-            if (buttonArrow_0_5 == e.getSource()) {
+            if (buttonArrow_0_5.isEnabled() && buttonArrow_0_5 == e.getSource()) {
                 tileInserted = true;
                 out.println("insertTile 9 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 5");
                 out.println("nextTileID " + board.getNextTile().getId());
+                buttonArrow_6_5.setEnabled(false);
+                System.out.println("0_5");
             }
-            if (buttonArrow_0_3 == e.getSource()) {
+            if (buttonArrow_0_3.isEnabled() && buttonArrow_0_3 == e.getSource()) {
                 tileInserted = true;
                 out.println("insertTile 10 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 3");
                 out.println("nextTileID " + board.getNextTile().getId());
+                buttonArrow_6_3.setEnabled(false);
+                System.out.println("0_3");
             }
-            if (buttonArrow_0_1 == e.getSource()) {
+            if (buttonArrow_0_1.isEnabled() && buttonArrow_0_1 == e.getSource()) {
                 tileInserted = true;
                 out.println("insertTile 11 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 1");
                 out.println("nextTileID " + board.getNextTile().getId());
+                buttonArrow_6_1.setEnabled(false);
+                System.out.println("0_1");
             }
         }
     }
 
-
+    public void checkButtons() {
+        for (int i = 0; i < buttonArrow_Array.length; i++) {
+            if(!buttonArrow_Array[i].isEnabled()) {
+                buttonArrow_Array[i].setEnabled(true);
+            }
+        }
+    }
 
 
 

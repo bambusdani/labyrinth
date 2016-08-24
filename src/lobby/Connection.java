@@ -1,9 +1,9 @@
 /******************************************************************************
  *  Compilation:  javac Connection.java
- * 
+ *
  ******************************************************************************/
 
-package network;
+package lobby;
 
 import java.net.Socket;
 import java.util.logging.FileHandler;

@@ -7,6 +7,7 @@
 #Chatlog
 chatLog.log
 player_*
+gameLog.log
 
 #mac
 .DS_Store
