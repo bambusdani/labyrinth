@@ -169,7 +169,10 @@ public class ConnectionListener extends Thread {
                         // log
                         LOGGER.info("OUTGOING movevalid " + serverFunctions.isArrowMoveAllowed(buttonID));
                         if (serverFunctions.isArrowMoveAllowed(buttonID)) {
+                            ith.println("moveValid " + true);
                             LOGGER.info("OUTGOING pushed " + tileID + " " + rotation + " " + x + " " + y);
+                        } else {
+                            ith.println("moveValid " + false);
                         }
 
                         boardToString(initBoard);

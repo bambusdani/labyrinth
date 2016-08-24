@@ -649,7 +649,10 @@ public class PlayGround implements ActionListener {
 
         //network text field
         if (textField == e.getSource()) {
+            // send to server
             out.println("chat " + screenName + textField.getText());
+            // log
+            LOGGER.info("OUTGOING chat " + textField.getText());
 
             textField.setText("");
             textField.requestFocusInWindow();
@@ -827,8 +830,12 @@ public class PlayGround implements ActionListener {
                 moveValid = Boolean.parseBoolean(s.substring(10));
                 if(moveValid){
                     tileInserted = false;
+                    // log
+                    LOGGER.info("INCOMING movevalid true");
                 }else{
                     tileInserted = true;
+                    // log
+                    LOGGER.info("INCOMING movevalid false");
                 }
             }
 
@@ -967,8 +974,11 @@ public class PlayGround implements ActionListener {
                 gameEnd.createGui(s.substring(7));
             }
             else {
+                // in case of chat
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
+                // log
+                LOGGER.info("INCOMING " + s);
             }
         }
         out.close();
