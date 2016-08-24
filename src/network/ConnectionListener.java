@@ -344,6 +344,7 @@ public class ConnectionListener extends Thread {
                             else if (message.startsWith("leave")) {
                                 String[] tmpLeave = message.split("\\s+");
                                 LOGGER.info("INCOMING leave");
+                                jth.println("Player_0" + tmpLeave[1] + " left the game.");
                                 LOGGER.info("OUTGOING disconnect player_0" + tmpLeave[1]);
                             }
                             else {
