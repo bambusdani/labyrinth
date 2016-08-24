@@ -219,18 +219,24 @@ public class ConnectionListener extends Thread {
                             // log (incoming message)
                             LOGGER.info("INCOMING pass");
                         }
-                        LOGGER.info("OUTGOING movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
-                        if (serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID)) {
-                            LOGGER.info("OUTGOING move " + playerID + " " + x + " " + y);
-                        }
 
                         // changes the player -> if a person leaves the game goes on
                         // Todo if it´s players turn and he leaves we have a problem
                         // bei leave muss playersTurnCounter um 1 erhöht werden und pass ausgeführt werden
                         // sowie ein stein random plaziert werden oder übersprungen werden
                         if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
+                            // calculate
                             serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
+                            // log (outgoing move validation)
+                            LOGGER.info("OUTGOING movevalid " + true);
+                            // send move validation to client
                             ith.println("moveValid " + true);
+                            // log (outgoing move message)
+                            LOGGER.info("OUTGOING move " + playerID + " " + x + " " + y);
+                            // set log message to send to all clients
+                            String tt = "OUTGOING move " + playerID + " " + x + " " + y;
+                            broadcast(tt);
+
                             if(playersTurnID == connections.get(connections.size()-1).getpId()){
                                 playersTurnID = connections.get(0).getpId();
                                 playersTurnCounter = 0;
@@ -262,10 +268,7 @@ public class ConnectionListener extends Thread {
                                         playerPoints += initBoard.getPlayer(j).getScore() +" ";
                                     }
 
-
-                                    //TODO Daniel hier muss das protokol rein
                                     if (ith.getpId() == 0) {
-
                                         ith.println("deal " + goalListToString(goal0,playerID));
                                         LOGGER.info("OUTGOING goal " + playerID + " " + x + " " + y);
                                     }
@@ -316,8 +319,6 @@ public class ConnectionListener extends Thread {
                             }
 
                             else if (message.startsWith("insertTile ")) {
-
-                                LOGGER.info("hi");
                                 jth.println("tileID " + tileID );
                                 jth.println("tileNextID " + tileNextID);
                                 jth.println("tileRot " + tileRot);
@@ -416,6 +417,9 @@ public class ConnectionListener extends Thread {
         return goal;
     }
 
-
-
+    public void broadcast(String s) {
+        for (Connection jth : connections) {
+            jth.println(s);
+        }
+    }
 }
