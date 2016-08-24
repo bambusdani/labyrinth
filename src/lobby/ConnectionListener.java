@@ -27,6 +27,7 @@ public class ConnectionListener extends Thread {
         try {
             FileHandler fileHandler = new FileHandler("lobbyLog.log");
             LOGGER.addHandler(fileHandler);
+            LOGGER.info("*****STARTING LOBBY*****");
         } catch (Exception e) {};
     }
 
