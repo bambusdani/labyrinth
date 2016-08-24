@@ -90,7 +90,7 @@ public class ConnectionListener extends Thread {
                                 String[] tmpMessage = message.split(": ");
                                 LOGGER.info("INCOMING chat " + tmpMessage[1]);
                                 jth.println(message.substring(5));
-                                LOGGER.info("OUTGOING chat " + connections.get(i).getpId() + " " + tmpMessage[1]);
+                                LOGGER.info("OUTGOING chat player_0" + connections.get(i).getpId() + " " + tmpMessage[1]);
                             }
                         }
                         catch (Exception e) {
