@@ -1,17 +1,14 @@
 package lobby;
 
-import network.*;
-import network.Connection;
-
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
 
 public class Server {
     public static void main(String[] args) throws Exception {
-        Vector<network.Connection> connections        = new Vector<network.Connection>();
+        Vector<Connection> connections        = new Vector<Connection>();
         ServerSocket serverSocket             = new ServerSocket(4444);
-        network.ConnectionListener connectionListener = new network.ConnectionListener(connections);
+        ConnectionListener connectionListener = new ConnectionListener(connections);
 
         //thread that broadcasts messages to clients
         connectionListener.start();
@@ -24,7 +21,7 @@ public class Server {
             System.err.println("Created socket with client");
 
             //listen to client in a separate thread
-            network.Connection connection = new Connection(clientSocket);
+            Connection connection = new Connection(clientSocket);
             connections.add(connection);
             connection.start();
         }
