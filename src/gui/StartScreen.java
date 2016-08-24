@@ -15,6 +15,7 @@ import java.beans.PropertyChangeListener;
 public class StartScreen implements ActionListener {
 
     private ImageIcon titleimage   = new ImageIcon("src/resources/titel/titelImage.jpg");
+    private ImageIcon background = new ImageIcon("src/resources/backgroundImages/farbverlauf.png");
     private JButton buttonSubmit   = new JButton();
     private JLabel labelText       = new JLabel();
     private JTextArea textAreaName = new JTextArea();
@@ -27,6 +28,13 @@ public class StartScreen implements ActionListener {
         titleimage.setImage(titleimage.getImage().getScaledInstance(480,351 ,Image.SCALE_DEFAULT));
 
         JPanel panelContent = new JPanel(new GridBagLayout());
+        JLabel backgroundLabel = new JLabel();
+
+        backgroundLabel.setIcon(background);
+
+
+
+
 
         GridBagConstraints constraintsContent = new GridBagConstraints();
 
@@ -91,6 +99,7 @@ public class StartScreen implements ActionListener {
         constraintsContent.gridy = 6;
         panelContent.add(buttonSubmit, constraintsContent);
 
+
         /***************************************************************************************************************
          * frame
          */
@@ -125,7 +134,7 @@ public class StartScreen implements ActionListener {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
 
-        //UIManager.getLookAndFeelDefaults().put("Panel.background", new Color(68, 180, 255));
+
 
 
 

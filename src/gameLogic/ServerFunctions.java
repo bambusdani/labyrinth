@@ -11,14 +11,13 @@ public class ServerFunctions {
     private ArrayList<Boolean> playersTurn = new ArrayList<Boolean>();
     private boolean[][] visited = new boolean[7][7];
     private Tiles tmpTile;
+    private boolean[] possibleArrowInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
 
     /**=================================================================================
      * Rotation of next Tile by Pressing the Rotate Button
      * */
     public void rotNextTile (int rotation, Board board){
         //Set rotation of the tile -> rotation > 360° -> set to 0°
-
-
         if(board.getNextTile().getRotation()+rotation<=270){
             board.getNextTile().setRotation(board.getNextTile().getRotation()+rotation);
         }else{
@@ -169,8 +168,6 @@ public class ServerFunctions {
     /*******************************************************************************************************************
      *Is the insertion(PUSH) allowed
      */
-
-    public boolean[] possibleArrowInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
     public boolean isArrowMoveAllowed (int buttonID){
 
         switch (buttonID){
@@ -488,6 +485,10 @@ public class ServerFunctions {
         }
     }
     //==================================================================================================================
+
+    public boolean[] getPossibleArrowInsertions(){
+        return possibleArrowInsertions;
+    }
 
 
 
