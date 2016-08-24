@@ -23,13 +23,13 @@ import java.util.Vector;
 public class Server {
     public static void main(String[] args) throws Exception {
         Vector<Connection> connections        = new Vector<Connection>();
-        ServerSocket serverSocket             = new ServerSocket(4444);
+        ServerSocket serverSocket             = new ServerSocket(4445);
         ConnectionListener connectionListener = new ConnectionListener(connections);
 
         //thread that broadcasts messages to clients
         connectionListener.start();
 
-        System.err.println("Chatserver started");
+        System.err.println("Gameserver started");
 
         while(true) {
             //wait for next client connection request

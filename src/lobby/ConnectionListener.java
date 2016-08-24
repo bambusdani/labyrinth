@@ -18,6 +18,8 @@ public class ConnectionListener extends Thread {
 
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
+    private String players;
+
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
 
@@ -50,13 +52,46 @@ public class ConnectionListener extends Thread {
                 //================================================================================
                 String message = ith.getMessage();
 
+                //send init board strings to clients (speficially)
+                if(ith.isAlive() && message != null && !connections.get(i).isInit()) {
+                    // set unique playerID
+                    connections.get(i).setpId(i);
+                    // send welcome message
+                    ith.println("welcome " + connections.get(i).getpId());
+
+                    // append to player var. (TODO add player name)
+                    if (!players.contains(connections.get(i).getpId()+"")) {
+                        players += connections.get(i).getpId()+"";
+                    }
+                }
+
                 //--------------------------------------------------------------------------------
                 // begin with server broadcasting to all clients
                 // begin with reading client messages
                 if (message != null)
                     for (Connection jth : connections) {
                         try {
-                            jth.println(message);
+                            if (message.startsWith("connect")) {
+                                jth.println(players);
+                            }
+                            else if (message.startsWith("connect") ||
+                                     message.startsWith("host")    ||
+                                     message.startsWith("join")    ||
+                                     message.startsWith("leave")) {
+                                jth.println("rooms");
+                            }
+                            else if (message.startsWith("ready")) {
+                                String[] tmpMessage = message.split("\\s+");
+                                // tmpMessage[1] contains playerID
+                                jth.println("ready " + tmpMessage[1]);
+                            }
+                            // if chat
+                            else {
+                                String[] tmpMessage = message.split(": ");
+                                LOGGER.info("INCOMING chat " + tmpMessage[1]);
+                                jth.println(message.substring(5));
+                                LOGGER.info("OUTGOING chat " + connections.get(i).getpId() + " " + tmpMessage[1]);
+                            }
                         }
                         catch (Exception e) {
                             // error displaying

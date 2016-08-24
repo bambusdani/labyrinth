@@ -127,7 +127,7 @@ public class PlayGround implements ActionListener {
     public PlayGround(String hostName, String screenName) {
         // connect to server
         try {
-            socket = new Socket(hostName, 4444);
+            socket = new Socket(hostName, 4445);
             out    = new Out(socket);
             in     = new In(socket);
         }

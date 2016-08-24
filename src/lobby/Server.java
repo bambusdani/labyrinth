@@ -16,7 +16,7 @@ public class Server {
         //thread that broadcasts messages to clients
         connectionListener.start();
 
-        System.err.println("Chatserver started");
+        System.err.println("Lobbyserver started");
 
         while(true) {
             //wait for next client connection request
