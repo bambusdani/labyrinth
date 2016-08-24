@@ -920,7 +920,8 @@ public class PlayGround implements ActionListener {
                         }
                     }
                 }
-
+                // log
+                LOGGER.info("INCOMING deal " + s.substring(5));
             }
 
             else if(s.startsWith("points ")){
