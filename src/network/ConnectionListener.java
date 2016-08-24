@@ -27,6 +27,8 @@ public class ConnectionListener extends Thread {
     private boolean gameEnd = false;
     private String gameEndPlayerName = "";
 
+    private boolean isPushAllowed;
+
 
 
 
@@ -156,6 +158,10 @@ public class ConnectionListener extends Thread {
                         int rotation = Integer.parseInt(tmpInsertTile[4]);
                         int x        = Integer.parseInt(tmpInsertTile[5]);
                         int y        = Integer.parseInt(tmpInsertTile[6]);
+
+                        //testet ob der Push erlaubt ist
+                        isPushAllowed = serverFunctions.isArrowMoveAllowed(buttonID);
+                        ith.println("pushAllowed " + isPushAllowed);
 
                         //log
                         ith.LOGGER.info("push " + tileID + " " + rotation + " " + x + " " + y);
@@ -294,7 +300,6 @@ public class ConnectionListener extends Thread {
                             //
 
                             else if (message.startsWith("insertTile ")) {
-
                                 jth.println("tileID " + tileID );
                                 jth.println("tileNextID " + tileNextID);
                                 jth.println("tileRot " + tileRot);

@@ -29,7 +29,7 @@ public class PlayGround implements ActionListener {
     //------------------------
 
     private boolean moveValid;
-
+    private boolean isPushAllowed;
 
     private int fontSize = 20;
     private int boxSizeX = 175;
@@ -691,6 +691,7 @@ public class PlayGround implements ActionListener {
 		/* checks which button was pressed  to place the next stone
 		 buttonArrow_1_0 means line j:1 i:0 on the field
 		 topArrowButtons*/
+        System.out.println();
         if(!tileInserted){
                 if (buttonArrow_1_0 == e.getSource()) {
                     tileInserted = true;
@@ -786,6 +787,15 @@ public class PlayGround implements ActionListener {
 
                 saveTileIDStingInBoard(s);
 
+            }
+            else if(s.startsWith("pushAllowed ")){
+                isPushAllowed = Boolean.parseBoolean(s.substring(12));
+                System.out.println("push allowed: " + isPushAllowed);
+                if(isPushAllowed){
+                    tileInserted = true;
+                }else{
+                    tileInserted = false;
+                }
             }
             else if(s.startsWith("moveValid ")){
                 moveValid = Boolean.parseBoolean(s.substring(10));
