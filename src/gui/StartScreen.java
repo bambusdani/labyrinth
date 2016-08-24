@@ -4,11 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
- * Created by m on 22.08.2016.
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
  */
-
 public class StartScreen implements ActionListener {
 
     private ImageIcon titleimage   = new ImageIcon("src/resources/titel/titelImage.jpg");
@@ -18,10 +21,13 @@ public class StartScreen implements ActionListener {
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
     private int textSize = 20;
 
+
     public StartScreen(){
+
         titleimage.setImage(titleimage.getImage().getScaledInstance(480,351 ,Image.SCALE_DEFAULT));
 
         JPanel panelContent = new JPanel(new GridBagLayout());
+
         GridBagConstraints constraintsContent = new GridBagConstraints();
 
         /***************************************************************************************************************
@@ -108,6 +114,20 @@ public class StartScreen implements ActionListener {
     }
 
     public static void main(String[] args) {
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        }
+
+        //UIManager.getLookAndFeelDefaults().put("Panel.background", new Color(68, 180, 255));
+
+
 
         StartScreen startScreen = new StartScreen();
     }

@@ -13,7 +13,8 @@ public class Main {
         BoardFromClient board = new BoardFromClient();
 
 
-        PlayGround test = new PlayGround("localhost", "Daniel");
+
+        PlayGround test = new PlayGround("localhost", "aaaa");
         test.listen();
     }
 }

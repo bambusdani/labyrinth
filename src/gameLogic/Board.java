@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Created by Marvin Röck, Daniel Deutscher, Rehan App
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
  * Programmierprojekt Sommersemester 2016
  * Das Verrückte Labyrinth
  */

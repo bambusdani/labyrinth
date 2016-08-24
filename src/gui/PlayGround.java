@@ -6,7 +6,10 @@ import java.awt.event.ActionListener;
 import java.net.Socket;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import network.*;
 import gameLogic.*;
 
@@ -24,6 +27,8 @@ public class PlayGround implements ActionListener {
 
     private boolean tileInserted = false;
     //------------------------
+
+    private boolean moveValid;
 
 
     private int fontSize = 20;
@@ -76,6 +81,25 @@ public class PlayGround implements ActionListener {
     private JLabel labelPlayer1;
     private JLabel labelPlayer2;
     private JLabel labelPlayer3;
+    //to draw borders
+    private Border border0 ;
+    private Border border1;
+    private Border border2;
+    private Border border3;
+    //two colors
+    Border border01;
+    Border border02;
+    Border border03;
+    Border border12;
+    Border border13;
+    Border border23;
+    //three colors
+    Border border012;
+    Border border123;
+    Border border230;
+    Border border013;
+    //four colors
+    Border border0123;
 
     //label für das Nachste Ziel
     private JLabel labelNextGoalSymbol;
@@ -142,20 +166,30 @@ public class PlayGround implements ActionListener {
         playersTurn.add(false);
         //TODO Bis hier
 
-        // add arrow buttons to array
-        buttonArrow_Array = new JButton[12];
-        buttonArrow_Array[0] = buttonArrow_1_0;
-        buttonArrow_Array[1] = buttonArrow_3_0;
-        buttonArrow_Array[2] = buttonArrow_5_0;
-        buttonArrow_Array[3] = buttonArrow_1_6;
-        buttonArrow_Array[4] = buttonArrow_3_6;
-        buttonArrow_Array[5] = buttonArrow_5_6;
-        buttonArrow_Array[6] = buttonArrow_0_1;
-        buttonArrow_Array[7] = buttonArrow_0_3;
-        buttonArrow_Array[8] = buttonArrow_0_5;
-        buttonArrow_Array[9] = buttonArrow_6_1;
-        buttonArrow_Array[10] = buttonArrow_6_3;
-        buttonArrow_Array[11] = buttonArrow_6_5;
+
+
+        //TODO ---------------------------------------------------------------------------------------------------------
+
+        //to draw the borders
+        border0 = BorderFactory.createLineBorder(board.getAllPlayers()[0].getColor(), 3);
+        border1 = BorderFactory.createLineBorder(board.getAllPlayers()[1].getColor(), 3);
+        border2 = BorderFactory.createLineBorder(board.getAllPlayers()[2].getColor(), 3);
+        border3 = BorderFactory.createLineBorder(board.getAllPlayers()[3].getColor(), 3);
+        //two colors
+        border01 = new CompoundBorder(border0, border1);
+        border02 = new CompoundBorder(border0, border2);
+        border03 = new CompoundBorder(border0, border3);
+        border12 = new CompoundBorder(border1, border2);
+        border13 = new CompoundBorder(border1, border3);
+        border23 = new CompoundBorder(border2, border3);
+        //three colors
+        border012 = new CompoundBorder(border01,border2);
+        border123 = new CompoundBorder(border12,border3);
+        border230 = new CompoundBorder(border23,border0);
+        border013 = new CompoundBorder(border01,border3);
+        //four colors
+        border0123 = new CompoundBorder(border01,border23);
+
 
         //TODO _________________________________________________________________________________________________________
 
@@ -556,6 +590,10 @@ public class PlayGround implements ActionListener {
     public JFrame createFrame(){
         JFrame frame = new JFrame("Join Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //entfernt die obere leiste
+        //frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        //frame.setUndecorated(true);
+        //frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         frame.setVisible(true);
         frame.setSize(1200, 900);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -630,176 +668,96 @@ public class PlayGround implements ActionListener {
             if (buttonRotate == e.getSource()) {
 
                 out.println("rotateTile 90 " + playerID);
-                out.println("nextTileID " + board.getNextTile().getId());
+                //todo was soll hier gesendet werden??????? -> "nextTileID" gibts nicht
+                //out.println("nextTileID " + board.getNextTile().getId());
 
 
             }
-
 
             //------------------------------------------------------------
             if(tileInserted){
                 for (int i = 0; i < boardSquares.length; i++) {
                     for (int j = 0; j < boardSquares[i].length; j++) {
-
                         if (e.getActionCommand().equals("gameField: " + j + " " + i)) {
                             if (j == board.getPlayer(playerID).getAcutalPosition().getX() && i == board.getPlayer(playerID).getAcutalPosition().getY()) {
                                 out.println("pass " + j + " " + i + " " + playerID);
                             } else {
                                 out.println("move " + j + " " + i + " " + playerID);
                             }
-                            tileInserted = false;
                         }
                     }
                 }
             }
 
 
-            //writes the command of the button
-            //System.out.println("Button j: "+j +", i: "+ i +" pressed");
 
-
-            //=====================================================
-            // Aufruf ob der Zug möglich ist
-
-            // erstellt aus j und i eine neue Position
-            //Position buttonPositionPressed = new Position(j, i);
-
-            //TODO wurde bereits ein Stein reingeschoben???
-
-            // Ist der Zug möglich, falls ja ändere die Ränder
-				/*	gameFunctions.movePlayerIfMoveIsPossible(playerID, buttonPositionPressed);
-					if(gameFunctions.isMovePossible(buttonPositionPressed,board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY())){
-						nextPlayersTurn();
-					}
-					else{
-						nextPlayersTurn();
-					}
-
-
-					board = gameFunctions.movePlayerIfMoveIsPossible(playerID,buttonPositionPressed);
-					drawGameField(board);*/
-            //==================================================================================================
-            /**
-             * Zeichnen der Punkte
-             */
-        /*switch (gameFunctions.isPlayerGettingPoints(board , playerID)){
-				protocol.isPlayerGettingPoints(board, playerID);
-					switch (protocol.getPlayerPoints()){
-						case 0:
-							//System.out.println("kein Punkt");
-							break;
-						case 1:
-							// neu zeichnen der Punkte
-							labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore() );
-							labelPlayer1.setText(board.getPlayer(1).getNameOfPlayer() + ": " + board.getPlayer(1).getScore() );
-							labelPlayer2.setText(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore() );
-							labelPlayer3.setText(board.getPlayer(3).getNameOfPlayer() + ": " + board.getPlayer(3).getScore() );
-							//neu zeichnen des NextNeededSymbol
-							labelNextGoalSymbol.setIcon(board.getPlayer(playerID).getCreaturesNeeded().get(0).getSymbolImage());
-							break;
-						case 2:
-							//frame.dispose();
-							GameEnd GameEnd = new GameEnd();
-							GameEnd.createGui();
-							break;
-					}
-				}
-			}
-		}
-		}
-
-
-
-		//-------------------------------------------------------------
-			//TODO ID Abfrage übern server usw...
-
-		// checks which button was pressed  to place the next stone
-		// buttonArrow_1_0 means line j:1 i:0 on the field
-		// topArrowButtons
-*/
-            if (buttonArrow_1_0.isEnabled() && buttonArrow_1_0 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 0 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 0");
-                out.println("nextTileID " + board.getNextTile().getId());
-                buttonArrow_1_6.setEnabled(false);
-                System.out.println("1_0");
+		/* checks which button was pressed  to place the next stone
+		 buttonArrow_1_0 means line j:1 i:0 on the field
+		 topArrowButtons*/
+        if(!tileInserted){
+                if (buttonArrow_1_0 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 0 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 0");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_3_0 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 1 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 0");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_5_0 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 2 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 0");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_6_1 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 3 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 1");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_6_3 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 4 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 3");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_6_5 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 5 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 5");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_5_6 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 6 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 6");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_3_6 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 7 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 6");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_1_6 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 8 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 6");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_0_5 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 9 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 5");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_0_3 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 10 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 3");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
+                if (buttonArrow_0_1 == e.getSource()) {
+                    tileInserted = true;
+                    out.println("insertTile 11 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 1");
+                    out.println("nextTileID " + board.getNextTile().getId());
+                }
             }
-            if (buttonArrow_3_0.isEnabled() && buttonArrow_3_0 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 1 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 0");
-                out.println("nextTileID " + board.getNextTile().getId());
-                buttonArrow_3_6.setEnabled(false);
-                System.out.println("3_0");
-            }
-            if (buttonArrow_5_0.isEnabled() && buttonArrow_5_0 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 2 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 0");
-                out.println("nextTileID " + board.getNextTile().getId());
-                buttonArrow_5_6.setEnabled(false);
-                System.out.println("5_0");
-            }
-            if (buttonArrow_6_1.isEnabled() && buttonArrow_6_1 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 3 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 1");
-                out.println("nextTileID " + board.getNextTile().getId());
-                buttonArrow_0_1.setEnabled(false);
-                System.out.println("6_1");
-            }
-            if (buttonArrow_6_3.isEnabled() && buttonArrow_6_3 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 4 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 3");
-                out.println("nextTileID " + board.getNextTile().getId());
-                buttonArrow_0_3.setEnabled(false);
-                System.out.println("6_3");
-            }
-            if (buttonArrow_6_5.isEnabled() && buttonArrow_6_5 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 5 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 5");
-                out.println("nextTileID " + board.getNextTile().getId());
-                buttonArrow_0_5.setEnabled(false);
-                System.out.println("6_5");
-            }
-            if (buttonArrow_5_6.isEnabled() && buttonArrow_5_6 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 6 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 6");
-                out.println("nextTileID " + board.getNextTile().getId());
-                buttonArrow_5_0.setEnabled(false);
-                System.out.println("5_6");
-            }
-            if (buttonArrow_3_6.isEnabled() && buttonArrow_3_6 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 7 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 6");
-                out.println("nextTileID " + board.getNextTile().getId());
-                buttonArrow_3_0.setEnabled(false);
-                System.out.println("3_6");
-            }
-            if (buttonArrow_1_6.isEnabled() && buttonArrow_1_6 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 8 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 6");
-                out.println("nextTileID " + board.getNextTile().getId());
-                buttonArrow_1_0.setEnabled(false);
-                System.out.println("1_6");
-            }
-            if (buttonArrow_0_5.isEnabled() && buttonArrow_0_5 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 9 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 5");
-                out.println("nextTileID " + board.getNextTile().getId());
-                buttonArrow_6_5.setEnabled(false);
-                System.out.println("0_5");
-            }
-            if (buttonArrow_0_3.isEnabled() && buttonArrow_0_3 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 10 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 3");
-                out.println("nextTileID " + board.getNextTile().getId());
-                buttonArrow_6_3.setEnabled(false);
-                System.out.println("0_3");
-            }
-            if (buttonArrow_0_1.isEnabled() && buttonArrow_0_1 == e.getSource()) {
-                tileInserted = true;
-                out.println("insertTile 11 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 1");
-                out.println("nextTileID " + board.getNextTile().getId());
-                buttonArrow_6_1.setEnabled(false);
-                System.out.println("0_1");
+            else{
+                System.err.println("A TILE WAS ALREADY INSERTED! NO MORE INSERTION ALLOWED");
             }
         }
     }
@@ -838,16 +796,19 @@ public class PlayGround implements ActionListener {
                 saveTileIDStingInBoard(s);
 
             }
+            else if(s.startsWith("moveValid ")){
+                moveValid = Boolean.parseBoolean(s.substring(10));
+                if(moveValid){
+                    tileInserted = false;
+                }else{
+                    tileInserted = true;
+                }
+            }
+
             //acutal playersTurnID
             else if(s.startsWith("playersTurnID")){
                 String[] tmpTurnID = s.split("\\s+");
-                System.out.println("davor " +playersTurnID);
-                System.out.println(tmpTurnID[1]);
-
                 playersTurnID = Integer.parseInt(tmpTurnID[1]);
-
-                System.out.println("danach " +playersTurnID);
-                System.out.println(tmpTurnID[1]);
             }
 
             //tileNextID
@@ -1000,18 +961,68 @@ public class PlayGround implements ActionListener {
                 boardSquares[j][i].setIcon(board.getTile(j,i).getShape().getImage());
                 //set border from buttons on default
                 boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, colorBlack));
-
-                // checking if the players are on the the spot if yes draw a colored border
-                if((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)){
+                //check how many player are on the field and draw the borders
+                if(((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i))       &&
+                        ((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i))  &&
+                        ((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i))  &&
+                        ((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border0123);
+                }
+                //three on one field
+                else if(((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i))  &&
+                        ((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border012);                }
+                else if(((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i))  &&
+                        ((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border123);
+                }
+                else if(((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i))  &&
+                        ((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border230);
+                }
+                else if(((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i))  &&
+                        ((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border013);
+                }
+                //two on one field
+                else if(((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border01);
+                }
+                else if(((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border02);
+                }
+                else if(((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border03);
+                }
+                else if(((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border12);
+                }
+                else if(((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border13);
+                }
+                else if(((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i)) &&
+                        ((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i))){
+                    boardSquares[j][i].setBorder(border23);
+                }
+                else if((board.getPlayer(0).getAcutalPosition().getX() == j) && (board.getPlayer(0).getAcutalPosition().getY() == i)){
                     boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(0).getColor()));
                 }
-                if((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)){
+                else if((board.getPlayer(1).getAcutalPosition().getX() == j) && (board.getPlayer(1).getAcutalPosition().getY() == i)){
                     boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(1).getColor()));
                 }
-                if((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i)){
+                else if((board.getPlayer(2).getAcutalPosition().getX() == j) && (board.getPlayer(2).getAcutalPosition().getY() == i)){
                     boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(2).getColor()));
                 }
-                if((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)){
+                else if((board.getPlayer(3).getAcutalPosition().getX() == j) && (board.getPlayer(3).getAcutalPosition().getY() == i)){
                     boardSquares[j][i].setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, board.getPlayer(3).getColor()));
                 }
             }
