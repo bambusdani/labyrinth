@@ -17,6 +17,8 @@ public class StartScreen implements ActionListener {
     private ImageIcon titleimage   = new ImageIcon("src/resources/titel/titelImage.jpg");
     private JButton buttonSubmit   = new JButton();
     private JLabel labelText       = new JLabel();
+    private JLabel labelIP         = new JLabel();
+    private JTextArea textAreaIP   = new JTextArea();
     private JTextArea textAreaName = new JTextArea();
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
     private int textSize = 20;
@@ -58,7 +60,7 @@ public class StartScreen implements ActionListener {
         constraintsContent.weighty = 2;
         constraintsContent.gridwidth = 5;
         constraintsContent.gridheight= 1;
-        constraintsContent.insets = new Insets(0, 0, 10, 0);
+        constraintsContent.insets = new Insets(0, 0, 5, 0);
         constraintsContent.gridx = 0;
         constraintsContent.gridy = 4;
         panelContent.add(labelText, constraintsContent);
@@ -76,6 +78,43 @@ public class StartScreen implements ActionListener {
         constraintsContent.gridy = 5;
         panelContent.add(textAreaName, constraintsContent);
 
+
+
+
+        /***************************************************************************************************************
+         * IP address insert
+         */
+        labelIP.setText("Bitte geben Sie die Server-IP an.");
+        labelIP.setFont(new Font("Serif",Font.PLAIN,textSize));
+        labelIP.setHorizontalAlignment(SwingConstants.CENTER);
+        labelIP.setVerticalAlignment(SwingConstants.CENTER);
+
+        constraintsContent.anchor = GridBagConstraints.CENTER;
+        constraintsContent.weightx = 2;
+        constraintsContent.weighty = 2;
+        constraintsContent.gridwidth = 5;
+        constraintsContent.gridheight= 1;
+        constraintsContent.insets = new Insets(0, 0, 5, 0);
+        constraintsContent.gridx = 0;
+        constraintsContent.gridy = 6;
+        panelContent.add(labelIP, constraintsContent);
+
+        textAreaIP.setMinimumSize(new Dimension(200,50));
+        textAreaIP.setPreferredSize(new Dimension(250,50));
+        textAreaIP.setFont(new Font("Serif",Font.PLAIN,textSize + 10));
+        constraintsContent.anchor = GridBagConstraints.CENTER;
+        constraintsContent.weightx = 2;
+        constraintsContent.weighty = 2;
+        constraintsContent.gridwidth = 5;
+        constraintsContent.gridheight= 1;
+        constraintsContent.insets = new Insets(0, 0, 0, 0);
+        constraintsContent.gridx = 0;
+        constraintsContent.gridy = 7;
+        panelContent.add(textAreaIP, constraintsContent);
+
+        /***************************************************************************************************************
+         * Submit Button
+         */
         buttonSubmit.setText("Submit");
         buttonSubmit.setMinimumSize(new Dimension(100, 50));
         buttonSubmit.setPreferredSize(new Dimension(100,50));
@@ -88,7 +127,7 @@ public class StartScreen implements ActionListener {
         constraintsContent.gridheight = 1; //<-
         constraintsContent.insets = new Insets(20, 0, 20, 0);
         constraintsContent.gridx = 0;
-        constraintsContent.gridy = 6;
+        constraintsContent.gridy = 8;
         panelContent.add(buttonSubmit, constraintsContent);
 
         /***************************************************************************************************************
@@ -97,13 +136,13 @@ public class StartScreen implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panelContent,BorderLayout.NORTH);
         frame.setVisible(true);
-        frame.setMinimumSize(new Dimension(900, 600));
+        frame.setMinimumSize(new Dimension(900, 700));
         frame.setLocation(300, 200);
 }
     public void actionPerformed (ActionEvent e){
 
         if(e.getSource() == buttonSubmit){
-            if(!textAreaName.getText().isEmpty()){
+            if((!textAreaName.getText().isEmpty())&&(!textAreaIP.getText().isEmpty())){
                 Lobby lobby = new Lobby(textAreaName.getText());
                 frame.dispose();
             }
