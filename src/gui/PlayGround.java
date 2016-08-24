@@ -31,7 +31,9 @@ public class PlayGround implements ActionListener {
 
     private boolean moveValid;
     private boolean isPushAllowed;
-    private boolean[] possibleArrowInsertions = new boolean[12];
+    private int disabledButtonID;
+
+
 
 
     private int fontSize = 20;
@@ -816,24 +818,15 @@ public class PlayGround implements ActionListener {
                 System.out.println(s);
                 saveTileIDStingInBoard(s);
             }
-            else if(s.startsWith("possibleArrowInsertions")){
-                String[] tmpArrowInsertions = s.split("\\s+");
-                int counter = 0;
-                for (int i = 1; i < tmpArrowInsertions.length ; i++) {
-                    possibleArrowInsertions[counter] = Boolean.parseBoolean(tmpArrowInsertions[i]);
-                    counter++;
-                }
+            else if(s.startsWith("disabledButtonID ")){
+                disabledButtonID = Integer.parseInt(s.substring(17));
 
-                //alle zurücksetzen
                 for (int i = 0; i < buttonArrow_Array.length ; i++) {
                     buttonArrow_Array[i].setEnabled(true);
                 }
-                
-                for (int i = 0; i < possibleArrowInsertions.length ; i++) {
-                    if(!possibleArrowInsertions[i]){
-                            buttonArrow_Array[i].setEnabled(false);
-                        }
-                    }
+
+                buttonArrow_Array[disabledButtonID].setEnabled(false);
+
             }
             else if(s.startsWith("pushAllowed ")){
                 isPushAllowed = Boolean.parseBoolean(s.substring(12));

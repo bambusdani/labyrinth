@@ -29,7 +29,8 @@ public class ConnectionListener extends Thread {
     private boolean isPushAllowed;
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
-    private String possibleArrowInsertions = "";
+
+    private String disabledButtonID;
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -161,12 +162,8 @@ public class ConnectionListener extends Thread {
 
                         //testet ob der Push erlaubt ist
                         isPushAllowed = serverFunctions.isArrowMoveAllowed(buttonID);
-                        //Liste von möglichen Insertions in String umwandeln
-                        possibleArrowInsertions="";
-                        for (int j = 0; j < serverFunctions.getPossibleArrowInsertions().length ; j++) {
-                            possibleArrowInsertions += serverFunctions.getPossibleArrowInsertions()[j] +" ";
-                        }
 
+                        disabledButtonID = serverFunctions.disabledArrowID(buttonID)+"";
 
 
                         ith.println("pushAllowed " + isPushAllowed);
@@ -315,7 +312,7 @@ public class ConnectionListener extends Thread {
                             //
 
                             else if (message.startsWith("insertTile ")) {
-                                jth.println("possibleArrowInsertions " + possibleArrowInsertions);
+                                jth.println("disabledButtonID " + disabledButtonID);
                                 jth.println("tileID " + tileID );
                                 jth.println("tileNextID " + tileNextID);
                                 jth.println("tileRot " + tileRot);
