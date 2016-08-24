@@ -1,35 +1,19 @@
-/******************************************************************************
- *  Compilation:  javac Server.java
- *  Execution:    java Server
- *  Dependencies: In.java Out.java Connection.java ConnectionListener.java
- *
- *  Creates a server to listen for incoming connection requests on 
- *  port 4444.
- *
- *  % java Server
- *
- *  Remark
- *  -------
- *    - Use Vector instead of ArrayList since it's synchronized.
- *  
- ******************************************************************************/
+package lobby;
 
-package network;
-
-import java.net.Socket;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Vector;
 
 public class Server {
     public static void main(String[] args) throws Exception {
         Vector<Connection> connections        = new Vector<Connection>();
-        ServerSocket serverSocket             = new ServerSocket(4445);
+        ServerSocket serverSocket             = new ServerSocket(4444);
         ConnectionListener connectionListener = new ConnectionListener(connections);
 
         //thread that broadcasts messages to clients
         connectionListener.start();
 
-        System.err.println("Gameserver started");
+        System.err.println("Lobbyserver started");
 
         while(true) {
             //wait for next client connection request

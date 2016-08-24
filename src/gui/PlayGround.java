@@ -58,6 +58,7 @@ public class PlayGround implements ActionListener {
     private ImageIcon imageRotate	 = new ImageIcon("src/resources/arrows/rotateArrow.png");
 
     //Buttons for the arrows to place the next stone
+    private JButton[] buttonArrow_Array;
     //top
     private JButton buttonArrow_1_0;
     private JButton buttonArrow_3_0;
@@ -150,7 +151,7 @@ public class PlayGround implements ActionListener {
     public PlayGround(String hostName, String screenName) {
         // connect to server
         try {
-            socket = new Socket(hostName, 4444);
+            socket = new Socket(hostName, 4445);
             out    = new Out(socket);
             in     = new In(socket);
         }
@@ -164,6 +165,7 @@ public class PlayGround implements ActionListener {
         playersTurn.add(false);
         playersTurn.add(false);
         //TODO Bis hier
+
 
 
         //TODO ---------------------------------------------------------------------------------------------------------
@@ -644,14 +646,14 @@ public class PlayGround implements ActionListener {
 
         //network text field
         if (textField == e.getSource()) {
-            out.println(screenName + "chat " + textField.getText());
+            out.println("chat " + screenName + textField.getText());
 
             textField.setText("");
             textField.requestFocusInWindow();
         }
 
         if (buttonEndGame == e.getSource()) {
-            out.println(screenName + "leave");
+            out.println("leave " + playerID);
             System.exit(0);
         }
 
@@ -686,6 +688,7 @@ public class PlayGround implements ActionListener {
                     }
                 }
             }
+
 
 
 		/* checks which button was pressed  to place the next stone
@@ -760,7 +763,13 @@ public class PlayGround implements ActionListener {
         }
     }
 
-
+    public void checkButtons() {
+        for (int i = 0; i < buttonArrow_Array.length; i++) {
+            if(!buttonArrow_Array[i].isEnabled()) {
+                buttonArrow_Array[i].setEnabled(true);
+            }
+        }
+    }
 
 
 

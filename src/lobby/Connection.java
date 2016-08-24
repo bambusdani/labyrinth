@@ -1,9 +1,9 @@
 /******************************************************************************
  *  Compilation:  javac Connection.java
- * 
+ *
  ******************************************************************************/
 
-package network;
+package lobby;
 
 import java.net.Socket;
 import java.util.logging.FileHandler;
@@ -16,7 +16,7 @@ public class Connection extends Thread {
     private Out out;
     private In in;
     private String message;         // one line buffer
-    private boolean init = false;   // for init message
+    private boolean init = true;   // for init message
     private int pId;                 //connection ID (for logging)
     private String playerName;
 
