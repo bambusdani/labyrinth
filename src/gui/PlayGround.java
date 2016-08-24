@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 
+import com.sun.org.apache.xerces.internal.impl.dv.xs.BooleanDV;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import network.*;
 import gameLogic.*;
@@ -31,6 +32,8 @@ public class PlayGround implements ActionListener {
     //------------------------
 
     private boolean moveValid;
+    private boolean isPushAllowed;
+    private boolean[] possibleArrowInsertions = new boolean[12];
 
 
     private int fontSize = 20;
@@ -60,7 +63,7 @@ public class PlayGround implements ActionListener {
     private ImageIcon imageRotate	 = new ImageIcon("src/resources/arrows/rotateArrow.png");
 
     //Buttons for the arrows to place the next stone
-    private JButton[] buttonArrow_Array;
+    private JButton[] buttonArrow_Array = new JButton[12];
     //top
     private JButton buttonArrow_1_0;
     private JButton buttonArrow_3_0;
@@ -585,6 +588,24 @@ public class PlayGround implements ActionListener {
         //adding to frame
         this.frame = createFrame();
         this.frame.add(panelContent);
+
+
+        //Alle buttons in das array schreiben
+        //Im uhrzeigersinn von links oben beginnend
+        buttonArrow_Array[0]  = buttonArrow_1_0;
+        buttonArrow_Array[1]  = buttonArrow_3_0;
+        buttonArrow_Array[2]  = buttonArrow_5_0;
+        buttonArrow_Array[3]  = buttonArrow_6_1;
+        buttonArrow_Array[4]  = buttonArrow_6_3;
+        buttonArrow_Array[5]  = buttonArrow_6_5;
+        buttonArrow_Array[6]  = buttonArrow_5_6;
+        buttonArrow_Array[7]  = buttonArrow_3_6;
+        buttonArrow_Array[8]  = buttonArrow_1_6;
+        buttonArrow_Array[9]  = buttonArrow_0_5;
+        buttonArrow_Array[10] = buttonArrow_0_3;
+        buttonArrow_Array[11] = buttonArrow_0_1;
+
+
     }
 
     //====================================================================
@@ -709,6 +730,7 @@ public class PlayGround implements ActionListener {
 		/* checks which button was pressed  to place the next stone
 		 buttonArrow_1_0 means line j:1 i:0 on the field
 		 topArrowButtons*/
+        System.out.println();
         if(!tileInserted){
                 if (buttonArrow_1_0 == e.getSource()) {
                     tileInserted = true;
@@ -822,9 +844,35 @@ public class PlayGround implements ActionListener {
             //tileID
             if(s.startsWith("tileID")) {
                 System.out.println(s);
-
                 saveTileIDStingInBoard(s);
+            }
+            else if(s.startsWith("possibleArrowInsertions")){
+                String[] tmpArrowInsertions = s.split("\\s+");
+                int counter = 0;
+                for (int i = 1; i < tmpArrowInsertions.length ; i++) {
+                    possibleArrowInsertions[counter] = Boolean.parseBoolean(tmpArrowInsertions[i]);
+                    counter++;
+                }
 
+                //alle zurücksetzen
+                for (int i = 0; i < buttonArrow_Array.length ; i++) {
+                    buttonArrow_Array[i].setEnabled(true);
+                }
+                
+                for (int i = 0; i < possibleArrowInsertions.length ; i++) {
+                    if(!possibleArrowInsertions[i]){
+                            buttonArrow_Array[i].setEnabled(false);
+                        }
+                    }
+            }
+            else if(s.startsWith("pushAllowed ")){
+                isPushAllowed = Boolean.parseBoolean(s.substring(12));
+                System.out.println("push allowed: " + isPushAllowed);
+                if(isPushAllowed){
+                    tileInserted = true;
+                }else{
+                    tileInserted = false;
+                }
             }
             else if(s.startsWith("moveValid ")){
                 moveValid = Boolean.parseBoolean(s.substring(10));
