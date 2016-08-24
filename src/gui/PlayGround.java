@@ -7,6 +7,7 @@ import java.net.Socket;
 
 import javax.swing.*;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import network.*;
 import gameLogic.*;
 
@@ -25,7 +26,8 @@ public class PlayGround implements ActionListener {
     private boolean tileInserted = false;
     //------------------------
 
-    private Boolean moveValid;
+    private boolean moveValid;
+
 
     private int fontSize = 20;
     private int boxSizeX = 175;
@@ -626,28 +628,16 @@ public class PlayGround implements ActionListener {
             if(tileInserted){
                 for (int i = 0; i < boardSquares.length; i++) {
                     for (int j = 0; j < boardSquares[i].length; j++) {
-
                         if (e.getActionCommand().equals("gameField: " + j + " " + i)) {
                             if (j == board.getPlayer(playerID).getAcutalPosition().getX() && i == board.getPlayer(playerID).getAcutalPosition().getY()) {
                                 out.println("pass " + j + " " + i + " " + playerID);
                             } else {
                                 out.println("move " + j + " " + i + " " + playerID);
                             }
-
-                            if(moveValid) {
-                                System.out.println("Test if: " + moveValid);
-                                tileInserted = false;
-                            }
-                            else{
-                                System.out.println("Test else: " + moveValid);
-                                tileInserted = true;
-                            }
                         }
                     }
                 }
             }
-
-
 
 
 		/* checks which button was pressed  to place the next stone
@@ -750,10 +740,12 @@ public class PlayGround implements ActionListener {
 
             }
             else if(s.startsWith("moveValid ")){
-                String[] tmpMoveValid = s.split("\\s+");
-                System.out.println("davor: " + tmpMoveValid[1]);
-                moveValid = Boolean.parseBoolean(tmpMoveValid[1]);
-                System.out.println("danach: " + tmpMoveValid[1]);
+                moveValid = Boolean.parseBoolean(s.substring(10));
+                if(moveValid){
+                    tileInserted = false;
+                }else{
+                    tileInserted = true;
+                }
             }
 
             //acutal playersTurnID
