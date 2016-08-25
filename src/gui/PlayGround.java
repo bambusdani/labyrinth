@@ -706,10 +706,8 @@ public class PlayGround implements ActionListener {
                         if (e.getActionCommand().equals("gameField: " + j + " " + i)) {
                             if (j == board.getPlayer(playerID).getAcutalPosition().getX() && i == board.getPlayer(playerID).getAcutalPosition().getY()) {
                                 out.println("pass " + j + " " + i + " " + playerID);
-                                buttonRotate.setEnabled(true);
                             } else {
                                 out.println("move " + j + " " + i + " " + playerID);
-                                buttonRotate.setEnabled(true);
                             }
                         }
                     }
@@ -857,6 +855,7 @@ public class PlayGround implements ActionListener {
                 moveValid = Boolean.parseBoolean(s.substring(10));
                 if(moveValid){
                     tileInserted = false;
+                    buttonRotate.setEnabled(true);
                 }else{
                     tileInserted = true;
                 }

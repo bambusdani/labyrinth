@@ -3,19 +3,26 @@ package gameLogic;
 import java.util.ArrayList;
 
 /**
- * Created by rehan on 19.08.16.
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
  */
 public class ServerFunctions {
 
+    /**
+     * Attributes
+     */
     private ArrayList<Boolean> activePlayers = new ArrayList<Boolean>();
     private ArrayList<Boolean> playersTurn = new ArrayList<Boolean>();
     private boolean[][] visited = new boolean[7][7];
     private Tiles tmpTile;
     private boolean[] possibleArrowInsertions = {true, true, true, true, true, true, true, true, true, true, true, true};
 
-    /**=================================================================================
-     * Rotation of next Tile by Pressing the Rotate Button
-     * */
+    /**********************
+     * Rotates the nextTile
+     * @param rotation
+     * @param board
+     */
     public void rotNextTile (int rotation, Board board){
         //Set rotation of the tile -> rotation > 360° -> set to 0°
         if(board.getNextTile().getRotation()+rotation<=270){
@@ -28,9 +35,11 @@ public class ServerFunctions {
 
     }
 
-    /**==================================================================================
-     * PUSH Functions
-     * */
+    /****************+++++***********************************************************
+     * Insert(push) function, nextTile is inserted to gameField + new nextTile is set
+     * @param buttonID
+     * @param board
+     */
     public void insertTile (int buttonID, Board board){
         if(isArrowMoveAllowed(buttonID)){
             switch (buttonID){
@@ -161,12 +170,12 @@ public class ServerFunctions {
             System.out.println("This insertion is not allowed");
         }
     }
-    /**========================================================================================*/
 
 
-
-    /*******************************************************************************************************************
-     *Is the insertion(PUSH) allowed
+    /**
+     * Checks if the insertion(push) is allowed
+     * @param buttonID
+     * @return
      */
     public boolean isArrowMoveAllowed (int buttonID){
 
@@ -261,7 +270,7 @@ public class ServerFunctions {
         }
         return false;
     }
-    //==================================================================================================================
+
 
     /**
      * resetAllPossibleArrowInsertrions

@@ -5,15 +5,22 @@ import gui.PlayGround;
 import javax.swing.*;
 
 /**
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
+ *
  * runs the game
  * if you press host at the lobby it will create hostGame
  * if you press join at the lobby it will create joinGame
+ *
  */
 public class Main {
+
     public static void main(String[] args) {
 
-
-
+        /**
+         * Set a better appearance -> Nimbus
+         */
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -22,14 +29,8 @@ public class Main {
                 }
             }
         } catch (Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look and feel.
+            System.out.println("LAF not possible");
         }
-
-
-
-            BoardFromClient board = new BoardFromClient();
-
-
 
         PlayGround test = new PlayGround("localhost", "Rehan");
         test.listen();
