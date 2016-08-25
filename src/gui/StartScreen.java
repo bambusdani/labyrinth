@@ -12,7 +12,7 @@ import java.beans.PropertyChangeListener;
  * Programmierprojekt Sommersemester 2016
  * Das Verrückte Labyrinth
  */
-public class StartScreen implements ActionListener {
+public class StartScreen extends JPanel implements ActionListener {
 
     private ImageIcon titleimage   = new ImageIcon("src/resources/titel/titelImage.jpg");
     private ImageIcon background = new ImageIcon("src/resources/backgroundImages/farbverlauf.png");
@@ -28,9 +28,10 @@ public class StartScreen implements ActionListener {
         titleimage.setImage(titleimage.getImage().getScaledInstance(480,351 ,Image.SCALE_DEFAULT));
 
         JPanel panelContent = new JPanel(new GridBagLayout());
-        JLabel backgroundLabel = new JLabel();
 
-        backgroundLabel.setIcon(background);
+
+
+
 
 
 
