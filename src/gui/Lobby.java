@@ -181,7 +181,7 @@ public class Lobby implements ActionListener{
         /***************************************************************************************************************
          * player names
          */
-        textAreaPlayer.setText("Players in Lobby:\n");
+        textAreaPlayer.setText("Players in Lobby:");
         textAreaPlayer.setFont(new Font("Serif",Font.PLAIN,textSize));
         textAreaPlayer.setMinimumSize(new Dimension(280,450));
         textAreaPlayer.setPreferredSize(new Dimension(280,450));

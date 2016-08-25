@@ -65,8 +65,12 @@ public class ConnectionListener extends Thread {
                         String[] tmpMessage = message.split("\\s+");
                         // set player name from message
                         connections.get(i).setPlayerName(tmpMessage[1]);
+                        // log incoming connection
+                        LOGGER.info("INCOMING connection " + tmpMessage[1]);
                         // send welcome message to client
                         ith.println("Welcome " + connections.get(i).getpId() + " " + connections.get(i).getPlayerName());
+                        // log outgoing welcome message
+                        LOGGER.info("welcome " + connections.get(i).getpId() + " " + connections.get(i).getPlayerName());
                     }
 
                     // append to player var. and broadcast to all clients
@@ -85,28 +89,11 @@ public class ConnectionListener extends Thread {
                 if (message != null)
                     for (Connection jth : connections) {
                         try {
-                            // broadcast players to all clients on new connection
-                            // if (message.startsWith("connect")) {
-                                // jth.println("players" + players);
-                            // }
-                            /*if (message.startsWith("connect") ||
-                                     message.startsWith("host")    ||
-                                     message.startsWith("join")    ||
-                                     message.startsWith("leave")) {
-                                jth.println("rooms");
-                            }
-                            else if (message.startsWith("ready")) {
-                                String[] tmpMessage = message.split("\\s+");
-                                // tmpMessage[1] contains playerID
-                                jth.println("ready " + tmpMessage[1]);
-                            }
-                            // if chat
-                            else {
-                                String[] tmpMessage = message.split(": ");
-                                LOGGER.info("INCOMING chat " + tmpMessage[1]);
-                                jth.println(message.substring(5));
-                                LOGGER.info("OUTGOING chat player_0" + connections.get(i).getpId() + " " + tmpMessage[1]);
-                            }*/
+                            // in case of chat
+                            String[] tmpMessage = message.split(": ");
+                            LOGGER.info("INCOMING chat " + tmpMessage[1]);
+                            jth.println(message.substring(5));
+                            LOGGER.info("OUTGOING chat player_0" + connections.get(i).getpId() + " " + tmpMessage[1]);
                         }
                         catch (Exception e) {
                             // error displaying
