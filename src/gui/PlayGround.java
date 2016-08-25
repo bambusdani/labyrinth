@@ -1026,6 +1026,14 @@ public class PlayGround implements ActionListener {
             else if(s.startsWith("pushed")) {
                 LOGGER.info("INCOMING " + s);
             }
+            // incoming pass message
+            else if(s.startsWith("pass")) {
+                LOGGER.info("INCOMING passed");
+            }
+            // incoming move message
+            else if(s.startsWith("move")) {
+                LOGGER.info("INCOMING " + s);
+            }
             else {
                 // in case of chat
                 textArea.insert(s + "\n", textArea.getText().length());
