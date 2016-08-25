@@ -3,7 +3,10 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.net.Socket;
 import java.awt.event.ActionListener;
+import network.In;
+import network.Out;
 /**
  * Created by m on 23.08.2016.
  */
@@ -32,13 +35,28 @@ public class Lobby implements ActionListener{
 
     private int textSize = 20;
 
+    private Socket socket;
+    private In in;
+    private Out out;
+
     private String nameOfPlayer;
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
 
 
-    public Lobby(String name){
+    public Lobby(String hostName, String name){
 
-        nameOfPlayer= name;
+        /***************************************************************************************************************
+         * create connection with lobbyServer
+         */
+        try {
+            socket = new Socket(hostName, 4444);
+            out    = new Out(socket);
+            in     = new In(socket);
+        } catch (Exception e) {}
+
+        nameOfPlayer= "[" + name + "]: ";
+        // send name to server
+        out.println("connect " + name);
         titleimage.setImage(titleimage.getImage().getScaledInstance(480,350 , Image.SCALE_DEFAULT));
 
         JPanel panelContent = new JPanel(new GridBagLayout());
@@ -131,6 +149,7 @@ public class Lobby implements ActionListener{
         textFieldChat.setMinimumSize(new Dimension(480,100));
         textFieldChat.setPreferredSize(new Dimension(480,100));
         textFieldChat.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black) );
+        textFieldChat.addActionListener(this);
         constraintsContent.anchor = GridBagConstraints.NORTH;
         constraintsContent.weightx = 0;
         constraintsContent.weighty = 0;
@@ -162,7 +181,7 @@ public class Lobby implements ActionListener{
         /***************************************************************************************************************
          * player names
          */
-        textAreaPlayer.setText("player games");
+        textAreaPlayer.setText("Players in Lobby:\n");
         textAreaPlayer.setFont(new Font("Serif",Font.PLAIN,textSize));
         textAreaPlayer.setMinimumSize(new Dimension(280,450));
         textAreaPlayer.setPreferredSize(new Dimension(280,450));
@@ -392,8 +411,15 @@ public class Lobby implements ActionListener{
     }
 
     public void actionPerformed (ActionEvent e){
+        if(e.getSource() == textFieldChat) {
+            // send message to server
+            out.println("chat " + nameOfPlayer + textFieldChat.getText());
 
-        if(e.getSource() == buttonHost){
+            // clear textField
+            textFieldChat.setText("");
+            textFieldChat.requestFocusInWindow();
+        }
+        else if(e.getSource() == buttonHost){
             panelButtons.setVisible(false);
             panelHostGame.setVisible(true);
         }
@@ -430,6 +456,39 @@ public class Lobby implements ActionListener{
 
     }
 
+    public void listen() {
+        String s;
+        while ((s = in.readLine()) != null) {
+            // player names and id's (sent on with every new connection)
+            if (s.startsWith("players")) {
+                /*****************************************
+                 * after split:
+                 * tmpMessage[0] = "players"
+                 * tmpMessage[uneven number] = playerID
+                 * tmpMessage[even number] = player name
+                 *****************************************/
+                String[] tmpMessage = s.split("\\s+");
+                String tmpNames="";
+
+                for (int i = 2; i < tmpMessage.length; i=i+2) {
+                    tmpNames += tmpMessage[i] + "\n";
+                }
+
+                textAreaPlayer.setText("Players in Lobby:\n" + tmpNames);
+            }
+            // 'chat' parameter
+            else {
+                textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
+                textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
+            }
+        }
+        out.close();
+        in.close();
+        try                 { socket.close();      }
+        catch (Exception e) { e.printStackTrace(); }
+        System.err.println("Closed client socket");
+    }
+
     public static void main(String[] args) {
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -443,7 +502,8 @@ public class Lobby implements ActionListener{
         }
 
         //StartScreen startScreen = new StartScreen();
-        Lobby lobby = new Lobby("marvin");
+        Lobby lobby = new Lobby("localhost", "Daniel");
+        lobby.listen();
     }
 
 }

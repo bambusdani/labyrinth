@@ -113,7 +113,7 @@ public class StartScreen implements ActionListener {
 
         if(e.getSource() == buttonSubmit){
             if(!textAreaName.getText().isEmpty()){
-                Lobby lobby = new Lobby(textAreaName.getText());
+                Lobby lobby = new Lobby("localhost", textAreaName.getText());
                 frame.dispose();
             }
             else{

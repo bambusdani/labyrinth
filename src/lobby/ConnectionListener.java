@@ -18,7 +18,7 @@ public class ConnectionListener extends Thread {
 
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
-    private String players;
+    private String players="";
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -28,7 +28,9 @@ public class ConnectionListener extends Thread {
             FileHandler fileHandler = new FileHandler("lobbyLog.log");
             LOGGER.addHandler(fileHandler);
             LOGGER.info("*****STARTING LOBBY*****");
-        } catch (Exception e) {};
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 
     //--------------------------------------------------------------------------------
@@ -53,17 +55,28 @@ public class ConnectionListener extends Thread {
                 //================================================================================
                 String message = ith.getMessage();
 
-                //send init board strings to clients (speficially)
-                if(ith.isAlive() && message != null && !connections.get(i).isInit()) {
+                //send init board strings to clients (specifically)
+                if(ith.isAlive() && message != null && connections.get(i).isInit()) {
                     // set unique playerID
                     connections.get(i).setpId(i);
-                    // send welcome message
-                    ith.println("welcome " + connections.get(i).getpId());
-
-                    // append to player var. (TODO add player name)
-                    if (!players.contains(connections.get(i).getpId()+"")) {
-                        players += connections.get(i).getpId()+"";
+                    // set unique playerName
+                    if (message.startsWith("connect")) {
+                        // split message @space
+                        String[] tmpMessage = message.split("\\s+");
+                        // set player name from message
+                        connections.get(i).setPlayerName(tmpMessage[1]);
+                        // send welcome message to client
+                        ith.println("Welcome " + connections.get(i).getpId() + " " + connections.get(i).getPlayerName());
                     }
+
+                    // append to player var. and broadcast to all clients
+                    if (!players.contains(connections.get(i).getpId()+"")) {
+                        players += connections.get(i).getpId() + " " + connections.get(i).getPlayerName() + " ";
+                        broadcast("players " + players);
+                    }
+
+                    // set connection init false
+                    connections.get(i).setInit(false);
                 }
 
                 //--------------------------------------------------------------------------------
@@ -72,10 +85,11 @@ public class ConnectionListener extends Thread {
                 if (message != null)
                     for (Connection jth : connections) {
                         try {
-                            if (message.startsWith("connect")) {
-                                jth.println(players);
-                            }
-                            else if (message.startsWith("connect") ||
+                            // broadcast players to all clients on new connection
+                            // if (message.startsWith("connect")) {
+                                // jth.println("players" + players);
+                            // }
+                            /*if (message.startsWith("connect") ||
                                      message.startsWith("host")    ||
                                      message.startsWith("join")    ||
                                      message.startsWith("leave")) {
@@ -92,7 +106,7 @@ public class ConnectionListener extends Thread {
                                 LOGGER.info("INCOMING chat " + tmpMessage[1]);
                                 jth.println(message.substring(5));
                                 LOGGER.info("OUTGOING chat player_0" + connections.get(i).getpId() + " " + tmpMessage[1]);
-                            }
+                            }*/
                         }
                         catch (Exception e) {
                             // error displaying
@@ -103,6 +117,12 @@ public class ConnectionListener extends Thread {
             // don't monopolize processor
             try                 { Thread.sleep(100);   }
             catch (Exception e) { e.printStackTrace(); }
+        }
+    }
+
+    public void broadcast(String s) {
+        for (Connection jth : connections) {
+            jth.println(s);
         }
     }
 }

@@ -8,7 +8,8 @@ package lobby;
 import java.net.Socket;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
-
+import network.In;
+import network.Out;
 import gameLogic.*;
 
 public class Connection extends Thread {
