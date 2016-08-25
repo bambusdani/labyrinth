@@ -22,6 +22,7 @@ public class StartScreen extends JPanel implements ActionListener {
     private JTextArea textAreaIP   = new JTextArea();
     private JTextArea textAreaName = new JTextArea();
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
+
     private int textSize = 20;
 
 
@@ -29,11 +30,12 @@ public class StartScreen extends JPanel implements ActionListener {
 
         titleimage.setImage(titleimage.getImage().getScaledInstance(480,351 ,Image.SCALE_DEFAULT));
 
-        GradientPanel panelContent = new GradientPanel();
+        JPanel panelContent = new JPanel();
         panelContent.setLayout(new GridBagLayout());
+        panelContent.setOpaque(false);
+
         GridBagConstraints constraintsContent = new GridBagConstraints();
 
-        panelContent.setPreferredSize(new Dimension(1000,1000));
 
         /***************************************************************************************************************
          * logo
@@ -137,8 +139,11 @@ public class StartScreen extends JPanel implements ActionListener {
         /***************************************************************************************************************
          * frame
          */
+        GradientPanel panelBackground = new GradientPanel();
+        panelBackground.add(panelContent);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panelContent,BorderLayout.NORTH);
+        //frame.add(panelContent,BorderLayout.NORTH);
+        frame.add(panelBackground);
         frame.setVisible(true);
         frame.setMinimumSize(new Dimension(900, 700));
         frame.setLocation(300, 200);

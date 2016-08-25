@@ -417,8 +417,12 @@ public class Lobby implements ActionListener{
         /***************************************************************************************************************
          * frame
          */
+        GradientPanel panelBackground = new GradientPanel();
+        panelContent.setOpaque(false);
+        panelBackground.add(panelContent);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panelContent,BorderLayout.NORTH);
+        frame.add(panelBackground,BorderLayout.NORTH);
         frame.setVisible(true);
         frame.setMinimumSize(new Dimension(1300, 900));
         frame.setLocation(300, 10);

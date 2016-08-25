@@ -530,6 +530,8 @@ public class PlayGround implements ActionListener {
         //====================================================================================
 
         JPanel panelContent = new JPanel(new GridBagLayout());
+        //GradientPanel panelContent = new GradientPanel();
+        //panelContent.setLayout(new GridBagLayout());
         GridBagConstraints constraintsContent = new GridBagConstraints();
 
         //Play overview
@@ -578,7 +580,21 @@ public class PlayGround implements ActionListener {
         //---------
         //adding to frame
         this.frame = createFrame();
-        this.frame.add(panelContent);
+
+
+        // sets the Opaque
+        panelPlayeroverview.setOpaque(false);
+        panelInformation.setOpaque(false);
+        panelGameField.setOpaque(false);
+        panelChat.setOpaque(true);
+        panelContent.setOpaque(false);
+
+        //places the panelContent on the panelBackground
+        GradientPanel panelBackground = new GradientPanel();
+        panelBackground.setLayout(new GridBagLayout());
+        panelBackground.add(panelContent);
+
+        this.frame.add(panelBackground);
 
 
         //Alle buttons in das array schreiben
@@ -1080,22 +1096,35 @@ public class PlayGround implements ActionListener {
         labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 
 
+
+
+
+
+
         //draw points of player with color
         if(!board.getPlayer(0).getNameOfPlayer().isEmpty()){
             labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore() + " / 6");
             labelPlayer0.setForeground(board.getPlayer(0).getColor());
+            labelPlayer0.setOpaque(true);
+            labelPlayer0.setBackground(Color.white);
         }
         if(!board.getPlayer(1).getNameOfPlayer().isEmpty()) {
             labelPlayer1.setText(board.getPlayer(1).getNameOfPlayer() + ": " + board.getPlayer(1).getScore() + " / 6");
-        labelPlayer1.setForeground(board.getPlayer(1).getColor());
+            labelPlayer1.setForeground(board.getPlayer(1).getColor());
+            labelPlayer1.setOpaque(true);
+            labelPlayer1.setBackground(Color.white);
         }
         if(!board.getPlayer(2).getNameOfPlayer().isEmpty()) {
             labelPlayer2.setText(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore() + " / 6");
             labelPlayer2.setForeground(board.getPlayer(2).getColor());
+            labelPlayer2.setOpaque(true);
+            labelPlayer2.setBackground(Color.white);
         }
         if(!board.getPlayer(3).getNameOfPlayer().isEmpty()) {
             labelPlayer3.setText(board.getPlayer(3).getNameOfPlayer() + ": " + board.getPlayer(3).getScore() + " / 6");
             labelPlayer3.setForeground(board.getPlayer(3).getColor());
+            labelPlayer3.setOpaque(true);
+            labelPlayer3.setBackground(Color.white);
         }
 
         labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
