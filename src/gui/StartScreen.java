@@ -15,7 +15,7 @@ import java.beans.PropertyChangeListener;
 public class StartScreen extends JPanel implements ActionListener {
 
     private ImageIcon titleimage   = new ImageIcon("src/resources/titel/titelImage.jpg");
-    private ImageIcon background = new ImageIcon("src/resources/backgroundImages/farbverlauf.png");
+    private ImageIcon background = new ImageIcon("src/resources/backgroundImages/farbverlaufBig.png");
     private JButton buttonSubmit   = new JButton();
     private JLabel labelText       = new JLabel();
     private JTextArea textAreaName = new JTextArea();
@@ -27,17 +27,11 @@ public class StartScreen extends JPanel implements ActionListener {
 
         titleimage.setImage(titleimage.getImage().getScaledInstance(480,351 ,Image.SCALE_DEFAULT));
 
-        JPanel panelContent = new JPanel(new GridBagLayout());
-
-
-
-
-
-
-
-
-
+        GradientPanel panelContent = new GradientPanel();
+        panelContent.setLayout(new GridBagLayout());
         GridBagConstraints constraintsContent = new GridBagConstraints();
+
+        panelContent.setPreferredSize(new Dimension(1000,1000));
 
         /***************************************************************************************************************
          * logo
@@ -143,3 +137,8 @@ public class StartScreen extends JPanel implements ActionListener {
     }
 
 }
+
+
+
+
+
