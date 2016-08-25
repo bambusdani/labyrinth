@@ -20,7 +20,7 @@ public class Connection extends Thread {
     private boolean init = true;   // for init message
     private int pId;                 //connection ID (for logging)
     private String playerName;
-    private boolean ready;
+    private boolean ready=false;
 
     public Connection(Socket socket) {
         in = new In(socket);

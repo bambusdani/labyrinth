@@ -55,7 +55,7 @@ public class ConnectionListener extends Thread {
                 //================================================================================
                 String message = ith.getMessage();
 
-                //send init board strings to clients (specifically)
+                // send init board strings to clients (specifically)
                 if(ith.isAlive() && message != null && connections.get(i).isInit()) {
                     // set unique playerID
                     connections.get(i).setpId(i);
@@ -83,6 +83,21 @@ public class ConnectionListener extends Thread {
 
                     // set connection init false
                     connections.get(i).setInit(false);
+                }
+
+                // not init
+                if (ith.isAlive() && message != null) {
+                    // 'ready' parameter (ready playerID)
+                    if (message.startsWith("ready")) {
+                        // set players connection to ready=true
+                        connections.get(i).setReady(true);
+                        // log incoming message
+                        LOGGER.info("INCOMING ready");
+                        // send 'ready playerID' to all clients
+                        broadcast("ready " + connections.get(i).getpId());
+                        // log outgoing ready message
+                        LOGGER.info("OUTGOING ready "+ connections.get(i).getpId());
+                    }
                 }
 
                 //--------------------------------------------------------------------------------

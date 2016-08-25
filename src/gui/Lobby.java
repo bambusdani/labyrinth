@@ -46,6 +46,7 @@ public class Lobby implements ActionListener{
     private final Logger LOGGER = Logger.getLogger(Lobby.class.getName());
 
     private String nameOfPlayer;
+    private String playerID;
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
 
     public Lobby(String hostName, String name){
@@ -453,7 +454,10 @@ public class Lobby implements ActionListener{
         }
 
         else if (e.getSource()== buttonReady){
-            //TODO ready?
+            // send 'ready playerID' to server
+            out.println("ready");
+            // log outgoing message
+            LOGGER.info("OUTGOING ready");
             System.out.println("ready");
         }
 
@@ -466,12 +470,18 @@ public class Lobby implements ActionListener{
 
     }
 
+    /*******************************************************************************************************************
+     * incoming messages from server
+     */
     public void listen() {
         String s;
         while ((s = in.readLine()) != null) {
-            // init playerID (mainly to init logger file)
+            // init playerID
             if (s.startsWith("initPlayerID")) {
                 String[] tmpPlayerID = s.split("\\s+");
+
+                // set playerID
+                playerID = tmpPlayerID[1];
 
                 // init logger
                 try {
@@ -505,6 +515,11 @@ public class Lobby implements ActionListener{
             // 'welcome' parameter
             else if (s.startsWith("welcome")) {
                 // log incoming welcome message
+                LOGGER.info("INCOMING " + s);
+            }
+            // 'ready playerID' parameter
+            else if (s.startsWith("ready")) {
+                // log incoming ready message
                 LOGGER.info("INCOMING " + s);
             }
             // 'chat' parameter
