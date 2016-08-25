@@ -5,8 +5,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.net.Socket;
 import java.awt.event.ActionListener;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+
 import network.In;
 import network.Out;
+import lobby.Server;
 /**
  * Created by m on 23.08.2016.
  */
@@ -39,9 +43,10 @@ public class Lobby implements ActionListener{
     private In in;
     private Out out;
 
+    private final Logger LOGGER = Logger.getLogger(Lobby.class.getName());
+
     private String nameOfPlayer;
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
-
 
     public Lobby(String hostName, String name){
 
@@ -132,6 +137,7 @@ public class Lobby implements ActionListener{
         textAreaChatText.setMinimumSize(new Dimension(480,700));
         textAreaChatText.setPreferredSize(new Dimension(480,700));
         textAreaChatText.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black) );
+        textAreaChatText.setEditable(false);
         constraintsContent.anchor = GridBagConstraints.NORTH;
         constraintsContent.weightx = 0;
         constraintsContent.weighty = 0;
@@ -168,6 +174,7 @@ public class Lobby implements ActionListener{
         textAreaOpenGames.setMinimumSize(new Dimension(280,350));
         textAreaOpenGames.setPreferredSize(new Dimension(280,350));
         textAreaOpenGames.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black) );
+        textAreaOpenGames.setEditable(false);
         constraintsContent.anchor = GridBagConstraints.NORTH;
         constraintsContent.weightx = 0;
         constraintsContent.weighty = 0;
@@ -186,6 +193,7 @@ public class Lobby implements ActionListener{
         textAreaPlayer.setMinimumSize(new Dimension(280,450));
         textAreaPlayer.setPreferredSize(new Dimension(280,450));
         textAreaPlayer.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black) );
+        textAreaPlayer.setEditable(false);
         constraintsContent.anchor = GridBagConstraints.NORTH;
         constraintsContent.weightx = 0;
         constraintsContent.weighty = 0;
@@ -414,6 +422,8 @@ public class Lobby implements ActionListener{
         if(e.getSource() == textFieldChat) {
             // send message to server
             out.println("chat " + nameOfPlayer + textFieldChat.getText());
+            // log outgoing chat message
+            LOGGER.info("OUTGOING chat " + textFieldChat.getText());
 
             // clear textField
             textFieldChat.setText("");
@@ -459,8 +469,21 @@ public class Lobby implements ActionListener{
     public void listen() {
         String s;
         while ((s = in.readLine()) != null) {
+            // init playerID (mainly to init logger file)
+            if (s.startsWith("initPlayerID")) {
+                String[] tmpPlayerID = s.split("\\s+");
+
+                // init logger
+                try {
+                    FileHandler fileHandler = new FileHandler("lobby_0" + tmpPlayerID[1] + ".log");
+                    LOGGER.addHandler(fileHandler);
+                    LOGGER.info("*****STARTING*****");
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
             // player names and id's (sent on with every new connection)
-            if (s.startsWith("players")) {
+            else if (s.startsWith("players")) {
                 /*****************************************
                  * after split:
                  * tmpMessage[0] = "players"
@@ -475,11 +498,22 @@ public class Lobby implements ActionListener{
                 }
 
                 textAreaPlayer.setText("Players in Lobby:\n" + tmpNames);
+
+                // log players on new connection
+                LOGGER.info("INCOMING " + s);
+            }
+            // 'welcome' parameter
+            else if (s.startsWith("welcome")) {
+                // log incoming welcome message
+                LOGGER.info("INCOMING " + s);
             }
             // 'chat' parameter
             else {
+                // write incoming chat message in textArea
                 textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
                 textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
+                // log incoming chat message
+                LOGGER.info("INCOMING " + s);
             }
         }
         out.close();

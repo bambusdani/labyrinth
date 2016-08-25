@@ -59,6 +59,8 @@ public class ConnectionListener extends Thread {
                 if(ith.isAlive() && message != null && connections.get(i).isInit()) {
                     // set unique playerID
                     connections.get(i).setpId(i);
+                    // send playerID to client
+                    ith.println("initPlayerID " + connections.get(i).getpId());
                     // set unique playerName
                     if (message.startsWith("connect")) {
                         // split message @space
@@ -68,9 +70,9 @@ public class ConnectionListener extends Thread {
                         // log incoming connection
                         LOGGER.info("INCOMING connection " + tmpMessage[1]);
                         // send welcome message to client
-                        ith.println("Welcome " + connections.get(i).getpId() + " " + connections.get(i).getPlayerName());
+                        ith.println("welcome " + connections.get(i).getpId() + " " + connections.get(i).getPlayerName());
                         // log outgoing welcome message
-                        LOGGER.info("welcome " + connections.get(i).getpId() + " " + connections.get(i).getPlayerName());
+                        LOGGER.info("OUTGOING welcome " + connections.get(i).getpId() + " " + connections.get(i).getPlayerName());
                     }
 
                     // append to player var. and broadcast to all clients

@@ -1038,7 +1038,7 @@ public class PlayGround implements ActionListener {
                 // in case of chat
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
-                // log
+                // log incoming chat message
                 LOGGER.info("INCOMING " + s);
             }
         }
