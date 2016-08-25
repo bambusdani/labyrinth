@@ -30,8 +30,7 @@ public class ConnectionListener extends Thread {
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
 
-
-
+    private String disabledButtonID;
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -163,6 +162,10 @@ public class ConnectionListener extends Thread {
 
                         //testet ob der Push erlaubt ist
                         isPushAllowed = serverFunctions.isArrowMoveAllowed(buttonID);
+
+                        disabledButtonID = serverFunctions.disabledArrowID(buttonID)+"";
+
+
                         ith.println("pushAllowed " + isPushAllowed);
 
                         //log
@@ -309,6 +312,7 @@ public class ConnectionListener extends Thread {
                             //
 
                             else if (message.startsWith("insertTile ")) {
+                                jth.println("disabledButtonID " + disabledButtonID);
                                 jth.println("tileID " + tileID );
                                 jth.println("tileNextID " + tileNextID);
                                 jth.println("tileRot " + tileRot);

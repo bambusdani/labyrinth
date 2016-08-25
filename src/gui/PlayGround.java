@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 
+import com.sun.org.apache.xerces.internal.impl.dv.xs.BooleanDV;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import network.*;
 import gameLogic.*;
@@ -30,6 +31,10 @@ public class PlayGround implements ActionListener {
 
     private boolean moveValid;
     private boolean isPushAllowed;
+    private int disabledButtonID;
+
+
+
 
     private int fontSize = 20;
     private int boxSizeX = 175;
@@ -58,7 +63,7 @@ public class PlayGround implements ActionListener {
     private ImageIcon imageRotate	 = new ImageIcon("src/resources/arrows/rotateArrow.png");
 
     //Buttons for the arrows to place the next stone
-    private JButton[] buttonArrow_Array;
+    private JButton[] buttonArrow_Array = new JButton[12];
     //top
     private JButton buttonArrow_1_0;
     private JButton buttonArrow_3_0;
@@ -574,6 +579,24 @@ public class PlayGround implements ActionListener {
         //adding to frame
         this.frame = createFrame();
         this.frame.add(panelContent);
+
+
+        //Alle buttons in das array schreiben
+        //Im uhrzeigersinn von links oben beginnend
+        buttonArrow_Array[0]  = buttonArrow_1_0;
+        buttonArrow_Array[1]  = buttonArrow_3_0;
+        buttonArrow_Array[2]  = buttonArrow_5_0;
+        buttonArrow_Array[3]  = buttonArrow_6_1;
+        buttonArrow_Array[4]  = buttonArrow_6_3;
+        buttonArrow_Array[5]  = buttonArrow_6_5;
+        buttonArrow_Array[6]  = buttonArrow_5_6;
+        buttonArrow_Array[7]  = buttonArrow_3_6;
+        buttonArrow_Array[8]  = buttonArrow_1_6;
+        buttonArrow_Array[9]  = buttonArrow_0_5;
+        buttonArrow_Array[10] = buttonArrow_0_3;
+        buttonArrow_Array[11] = buttonArrow_0_1;
+
+
     }
 
     //====================================================================
@@ -667,14 +690,18 @@ public class PlayGround implements ActionListener {
             }
 
             //------------------------------------------------------------
+
+
             if(tileInserted){
                 for (int i = 0; i < boardSquares.length; i++) {
                     for (int j = 0; j < boardSquares[i].length; j++) {
                         if (e.getActionCommand().equals("gameField: " + j + " " + i)) {
                             if (j == board.getPlayer(playerID).getAcutalPosition().getX() && i == board.getPlayer(playerID).getAcutalPosition().getY()) {
                                 out.println("pass " + j + " " + i + " " + playerID);
+                                buttonRotate.setEnabled(true);
                             } else {
                                 out.println("move " + j + " " + i + " " + playerID);
+                                buttonRotate.setEnabled(true);
                             }
                         }
                     }
@@ -690,61 +717,73 @@ public class PlayGround implements ActionListener {
         if(!tileInserted){
                 if (buttonArrow_1_0 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
                     out.println("insertTile 0 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 0");
                     out.println("nextTileID " + board.getNextTile().getId());
                 }
                 if (buttonArrow_3_0 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
                     out.println("insertTile 1 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 0");
                     out.println("nextTileID " + board.getNextTile().getId());
                 }
                 if (buttonArrow_5_0 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
                     out.println("insertTile 2 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 0");
                     out.println("nextTileID " + board.getNextTile().getId());
                 }
                 if (buttonArrow_6_1 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
                     out.println("insertTile 3 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 1");
                     out.println("nextTileID " + board.getNextTile().getId());
                 }
                 if (buttonArrow_6_3 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
                     out.println("insertTile 4 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 3");
                     out.println("nextTileID " + board.getNextTile().getId());
                 }
                 if (buttonArrow_6_5 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
                     out.println("insertTile 5 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 5");
                     out.println("nextTileID " + board.getNextTile().getId());
                 }
                 if (buttonArrow_5_6 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
                     out.println("insertTile 6 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 6");
                     out.println("nextTileID " + board.getNextTile().getId());
                 }
                 if (buttonArrow_3_6 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
                     out.println("insertTile 7 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 6");
                     out.println("nextTileID " + board.getNextTile().getId());
                 }
                 if (buttonArrow_1_6 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
                     out.println("insertTile 8 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 6");
                     out.println("nextTileID " + board.getNextTile().getId());
                 }
                 if (buttonArrow_0_5 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
                     out.println("insertTile 9 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 5");
                     out.println("nextTileID " + board.getNextTile().getId());
                 }
                 if (buttonArrow_0_3 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
                     out.println("insertTile 10 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 3");
                     out.println("nextTileID " + board.getNextTile().getId());
                 }
                 if (buttonArrow_0_1 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
                     out.println("insertTile 11 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 1");
                     out.println("nextTileID " + board.getNextTile().getId());
                 }
@@ -785,8 +824,16 @@ public class PlayGround implements ActionListener {
             //tileID
             if(s.startsWith("tileID")) {
                 System.out.println(s);
-
                 saveTileIDStingInBoard(s);
+            }
+            else if(s.startsWith("disabledButtonID ")){
+                disabledButtonID = Integer.parseInt(s.substring(17));
+
+                for (int i = 0; i < buttonArrow_Array.length ; i++) {
+                    buttonArrow_Array[i].setEnabled(true);
+                }
+
+                buttonArrow_Array[disabledButtonID].setEnabled(false);
 
             }
             else if(s.startsWith("pushAllowed ")){

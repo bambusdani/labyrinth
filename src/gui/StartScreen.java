@@ -12,9 +12,10 @@ import java.beans.PropertyChangeListener;
  * Programmierprojekt Sommersemester 2016
  * Das Verrückte Labyrinth
  */
-public class StartScreen implements ActionListener {
+public class StartScreen extends JPanel implements ActionListener {
 
     private ImageIcon titleimage   = new ImageIcon("src/resources/titel/titelImage.jpg");
+    private ImageIcon background = new ImageIcon("src/resources/backgroundImages/farbverlaufBig.png");
     private JButton buttonSubmit   = new JButton();
     private JLabel labelText       = new JLabel();
     private JLabel labelIP         = new JLabel();
@@ -28,9 +29,11 @@ public class StartScreen implements ActionListener {
 
         titleimage.setImage(titleimage.getImage().getScaledInstance(480,351 ,Image.SCALE_DEFAULT));
 
-        JPanel panelContent = new JPanel(new GridBagLayout());
-
+        GradientPanel panelContent = new GradientPanel();
+        panelContent.setLayout(new GridBagLayout());
         GridBagConstraints constraintsContent = new GridBagConstraints();
+
+        panelContent.setPreferredSize(new Dimension(1000,1000));
 
         /***************************************************************************************************************
          * logo
@@ -130,6 +133,7 @@ public class StartScreen implements ActionListener {
         constraintsContent.gridy = 8;
         panelContent.add(buttonSubmit, constraintsContent);
 
+
         /***************************************************************************************************************
          * frame
          */
@@ -164,7 +168,7 @@ public class StartScreen implements ActionListener {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
 
-        //UIManager.getLookAndFeelDefaults().put("Panel.background", new Color(68, 180, 255));
+
 
 
 
@@ -172,3 +176,8 @@ public class StartScreen implements ActionListener {
     }
 
 }
+
+
+
+
+
