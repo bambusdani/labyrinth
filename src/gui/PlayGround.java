@@ -350,7 +350,7 @@ public class PlayGround implements ActionListener {
         constraintsChat.weightx = 1;
         constraintsChat.weighty = 1;
         constraintsChat.gridwidth = 1;
-        constraintsChat.insets = new Insets(0, 5, 5, 5);
+        constraintsChat.insets = new Insets(0, 5, 0, 5);
 
         //-----------------------------------------------------------------------------------
         // text area
@@ -581,11 +581,10 @@ public class PlayGround implements ActionListener {
         //adding to frame
         this.frame = createFrame();
 
-
         // sets the Opaque
         panelPlayeroverview.setOpaque(false);
         panelInformation.setOpaque(false);
-        panelGameField.setOpaque(false);
+        panelGameField.setOpaque(true);
         panelChat.setOpaque(true);
         panelContent.setOpaque(false);
 
