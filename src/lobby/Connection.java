@@ -8,7 +8,8 @@ package lobby;
 import java.net.Socket;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
-
+import network.In;
+import network.Out;
 import gameLogic.*;
 
 public class Connection extends Thread {
@@ -19,8 +20,7 @@ public class Connection extends Thread {
     private boolean init = true;   // for init message
     private int pId;                 //connection ID (for logging)
     private String playerName;
-
-
+    private boolean ready=false;
 
     public Connection(Socket socket) {
         in = new In(socket);
@@ -97,4 +97,11 @@ public class Connection extends Thread {
         this.playerName = playerName;
     }
 
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
 }

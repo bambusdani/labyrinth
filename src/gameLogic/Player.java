@@ -3,13 +3,19 @@ package gameLogic;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
+ */
 public class Player {
 
-    /** ATTRIBUTE */
+    /**
+     * Attributes
+     */
     private Position startPosition;
     private Position acutalPosition;
     private int playerID;
-    //private GoalCard[] cardSymbolNeeded;
     private List<GoalCard> creaturesNeeded;
     private Color color;
     private boolean turn;
@@ -17,30 +23,41 @@ public class Player {
     private String nameOfPlayer;
     private String message;
 
-    /** KONSTRUKTOR */
+    /**
+     * Constructor
+     * @param startPosition
+     * @param actualPosition
+     * @param playerID
+     * @param color
+     * @param turn
+     * @param score
+     * @param nameOfPlayer
+     * @param creaturesNeeded
+     */
     public Player(Position startPosition, Position actualPosition, int playerID, Color color, boolean turn, int score, String nameOfPlayer, List<GoalCard> creaturesNeeded) {
         this.startPosition = startPosition;
         this.acutalPosition = actualPosition;
         this.playerID = playerID;
-        //this.cardSymbolNeeded = cardSymbolNeeded;
         this.creaturesNeeded = creaturesNeeded;
         this.color = color;
         this.turn = turn;
         this.score = score;
         this.nameOfPlayer = nameOfPlayer;
-
-
     }
 
-    /** GETTER                                                              SETTER */
-    public Position getStartPosition(){return startPosition;}
-    public Position getAcutalPosition(){return acutalPosition;}             public void setActualPosition(Position position){this.acutalPosition = position;}
+    /**
+     * Getter Setter
+     */
+    public Position getAcutalPosition(){return acutalPosition;}
     public int getPlayerID(){return playerID;}
-    public List<GoalCard> getCreaturesNeeded(){return creaturesNeeded;}     public void setCreaturesNeeded(List<GoalCard> creaturesNeeded){this.creaturesNeeded=creaturesNeeded;}
+    public List<GoalCard> getCreaturesNeeded(){return creaturesNeeded;}
     public Color getColor(){return color;}
-    public boolean getTurn(){return turn;}                                  public void setTurn(boolean turn){this.turn = turn;}
-    public int getScore(){return score;}                                    public void setScore(int score){this.score = score;}
-    public String getNameOfPlayer(){return nameOfPlayer;}                   public void setNameOfPlayer(String name){nameOfPlayer = name;}
-    public String getMessage() {return this.message;}                       public void setMessage(String message) {this.message = message;}
+    public int getScore(){return score;}
+    public String getNameOfPlayer(){return nameOfPlayer;}
+    public String getMessage() {return this.message;}
 
+    public void setActualPosition(Position position){this.acutalPosition = position;}
+    public void setScore(int score){this.score = score;}
+    public void setNameOfPlayer(String name){nameOfPlayer = name;}
+    public void setMessage(String message) {this.message = message;}
 }

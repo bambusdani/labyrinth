@@ -9,11 +9,14 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 
+import com.sun.org.apache.xerces.internal.impl.dv.xs.BooleanDV;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import network.*;
 import gameLogic.*;
 
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 public class PlayGround implements ActionListener {
 
@@ -30,6 +33,10 @@ public class PlayGround implements ActionListener {
 
     private boolean moveValid;
     private boolean isPushAllowed;
+    private int disabledButtonID;
+
+
+
 
     private int fontSize = 20;
     private int boxSizeX = 175;
@@ -58,7 +65,7 @@ public class PlayGround implements ActionListener {
     private ImageIcon imageRotate	 = new ImageIcon("src/resources/arrows/rotateArrow.png");
 
     //Buttons for the arrows to place the next stone
-    private JButton[] buttonArrow_Array;
+    private JButton[] buttonArrow_Array = new JButton[12];
     //top
     private JButton buttonArrow_1_0;
     private JButton buttonArrow_3_0;
@@ -118,6 +125,7 @@ public class PlayGround implements ActionListener {
     private In in;
     private String screenName;
     private String initName;
+    private final Logger LOGGER = Logger.getLogger(PlayGround.class.getName());
 
     // Erstellen der Klasse mit wichtigen Funktionen
 
@@ -219,30 +227,40 @@ public class PlayGround implements ActionListener {
         constraintsPlayeroverview.gridx = 0;
         constraintsPlayeroverview.gridy = 0;
         JLabel labelSymbolsLeft = setLabel("Fehlende Symbole: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+        labelSymbolsLeft.setHorizontalAlignment(SwingConstants.CENTER);
+        labelSymbolsLeft.setVerticalAlignment(SwingConstants.CENTER);
         panelPlayeroverview.add(labelSymbolsLeft, constraintsPlayeroverview);
         //---------------------------------------------------------------------------------
         // Player 0
         constraintsPlayeroverview.gridx = 1;
         constraintsPlayeroverview.gridy = 0;
-        labelPlayer0 = setLabel(" " , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer0 = setLabel("" , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer0.setHorizontalAlignment(SwingConstants.CENTER);
+        labelPlayer0.setVerticalAlignment(SwingConstants.CENTER);
         panelPlayeroverview.add(labelPlayer0, constraintsPlayeroverview);
         //---------------------------------------------------------------------------------
         // Player 1
         constraintsPlayeroverview.gridx = 2;
         constraintsPlayeroverview.gridy = 0;
-        labelPlayer1 = setLabel(" " , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer1 = setLabel("" , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer1.setHorizontalAlignment(SwingConstants.CENTER);
+        labelPlayer1.setVerticalAlignment(SwingConstants.CENTER);
         panelPlayeroverview.add(labelPlayer1, constraintsPlayeroverview);
         //---------------------------------------------------------------------------------
         // Player 2
         constraintsPlayeroverview.gridx = 3;
         constraintsPlayeroverview.gridy = 0;
-        labelPlayer2 = setLabel(" " , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer2 = setLabel("" , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer2.setHorizontalAlignment(SwingConstants.CENTER);
+        labelPlayer2.setVerticalAlignment(SwingConstants.CENTER);
         panelPlayeroverview.add(labelPlayer2, constraintsPlayeroverview);
         //---------------------------------------------------------------------------------
         // Player 3
         constraintsPlayeroverview.gridx = 4;
         constraintsPlayeroverview.gridy = 0;
-        labelPlayer3 = setLabel(" " , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer3 = setLabel("" , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer3.setHorizontalAlignment(SwingConstants.CENTER);
+        labelPlayer3.setVerticalAlignment(SwingConstants.CENTER);
         panelPlayeroverview.add(labelPlayer3, constraintsPlayeroverview);
 
         //---------------------------------------------------------------------------------
@@ -271,64 +289,46 @@ public class PlayGround implements ActionListener {
         JPanel panelInformation = new JPanel(new GridBagLayout());
         GridBagConstraints constraintsInformation = new GridBagConstraints();
 
-        constraintsInformation.anchor = GridBagConstraints.NORTHWEST;
+        constraintsInformation.anchor = GridBagConstraints.NORTH;
         constraintsInformation.weightx = 1;
         constraintsInformation.weighty = 1;
         constraintsInformation.gridwidth = 1;
         constraintsInformation.insets = new Insets(0, 0, 0, 0);
 
         //-----------------------------------------------------------------------------------
-        // reached goals
-        constraintsInformation.gridx = 0;
-        constraintsInformation.gridy = 0;
-        JLabel labelReachedGoals = setLabel("Erreichte Ziele: ",fontSize, boxSizeX, boxSizeY, colorBlack );
-        panelInformation.add(labelReachedGoals, constraintsInformation);
-
-        //-----------------------------------------------------------------------------------
-        //TODO entfernen????
-        // last reached goal symbol
-        constraintsInformation.gridx = 0;
-        constraintsInformation.gridy = 1;
-        // instead of Dragon it should use an image
-        JLabel labelReachedGoalsSymbol = setLabel("",fontSize, stoneSize, stoneSize, colorBlack );
-        //gibt nur das ziel des Players 0 aus sowie das erste ziel gibt ebenfalls falschen wert aus!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        //labelReachedGoalsSymbol.setIcon(board.getAllPlayers()[1].getCreaturesNeeded().get(0).getSymbolImage());
-        labelReachedGoalsSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
-        panelInformation.add(labelReachedGoalsSymbol, constraintsInformation);
-
-        //-----------------------------------------------------------------------------------
         // next goal
         constraintsInformation.gridx = 0;
-        constraintsInformation.gridy = 2;
+        constraintsInformation.gridy = 0;
         JLabel labelNextGoal = setLabel("Nächstes Ziel: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+        labelNextGoal.setHorizontalAlignment(SwingConstants.CENTER);
+        labelNextGoal.setVerticalAlignment(SwingConstants.CENTER);
         panelInformation.add(labelNextGoal, constraintsInformation);
 
         //-----------------------------------------------------------------------------------
         // next goal symbol
         constraintsInformation.gridx = 0;
-        constraintsInformation.gridy = 3;
+        constraintsInformation.gridy = 1;
         labelNextGoalSymbol= setLabel("", fontSize, stoneSize,stoneSize,colorBlack);
-        labelNextGoalSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+        //labelNextGoalSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         panelInformation.add(labelNextGoalSymbol, constraintsInformation);
 
         //-----------------------------------------------------------------------------------
         // next stone
         constraintsInformation.gridx = 0;
-        constraintsInformation.gridy = 4;
+        constraintsInformation.gridy = 2;
         JLabel labelNextStone = setLabel("Nächster Stein: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+        labelNextStone.setHorizontalAlignment(SwingConstants.CENTER);
+        labelNextStone.setVerticalAlignment(SwingConstants.CENTER);
         panelInformation.add(labelNextStone, constraintsInformation);
 
         //-----------------------------------------------------------------------------------
         // next stone symbol
         constraintsInformation.gridx = 0;
-        constraintsInformation.gridy = 5;
+        constraintsInformation.gridy = 3;
         // instead of "T" it should use an image
 
-
-
         this.labelNextStoneSymbol = setLabel("",fontSize, stoneSize, stoneSize, colorBlack );
-        this.labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+        //this.labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         panelInformation.add(this.labelNextStoneSymbol, constraintsInformation);
 
 
@@ -353,7 +353,7 @@ public class PlayGround implements ActionListener {
         constraintsChat.weightx = 1;
         constraintsChat.weighty = 1;
         constraintsChat.gridwidth = 1;
-        constraintsChat.insets = new Insets(0, 5, 5, 5);
+        constraintsChat.insets = new Insets(0, 5, 0, 5);
 
         //-----------------------------------------------------------------------------------
         // text area
@@ -533,6 +533,8 @@ public class PlayGround implements ActionListener {
         //====================================================================================
 
         JPanel panelContent = new JPanel(new GridBagLayout());
+        //GradientPanel panelContent = new GradientPanel();
+        //panelContent.setLayout(new GridBagLayout());
         GridBagConstraints constraintsContent = new GridBagConstraints();
 
         //Play overview
@@ -581,7 +583,38 @@ public class PlayGround implements ActionListener {
         //---------
         //adding to frame
         this.frame = createFrame();
-        this.frame.add(panelContent);
+
+        // sets the Opaque
+        panelPlayeroverview.setOpaque(false);
+        panelInformation.setOpaque(false);
+        panelGameField.setOpaque(false);
+        panelChat.setOpaque(true);
+        panelContent.setOpaque(false);
+
+        //places the panelContent on the panelBackground
+        GradientPanel panelBackground = new GradientPanel();
+        panelBackground.setLayout(new GridBagLayout());
+        panelBackground.add(panelContent);
+
+        this.frame.add(panelBackground);
+
+
+        //Alle buttons in das array schreiben
+        //Im uhrzeigersinn von links oben beginnend
+        buttonArrow_Array[0]  = buttonArrow_1_0;
+        buttonArrow_Array[1]  = buttonArrow_3_0;
+        buttonArrow_Array[2]  = buttonArrow_5_0;
+        buttonArrow_Array[3]  = buttonArrow_6_1;
+        buttonArrow_Array[4]  = buttonArrow_6_3;
+        buttonArrow_Array[5]  = buttonArrow_6_5;
+        buttonArrow_Array[6]  = buttonArrow_5_6;
+        buttonArrow_Array[7]  = buttonArrow_3_6;
+        buttonArrow_Array[8]  = buttonArrow_1_6;
+        buttonArrow_Array[9]  = buttonArrow_0_5;
+        buttonArrow_Array[10] = buttonArrow_0_3;
+        buttonArrow_Array[11] = buttonArrow_0_1;
+
+
     }
 
     //====================================================================
@@ -589,7 +622,7 @@ public class PlayGround implements ActionListener {
     //====================================================================
     public JFrame createFrame(){
         JFrame frame = new JFrame("Join Game");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         //entfernt die obere leiste
         //frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         //frame.setUndecorated(true);
@@ -646,14 +679,20 @@ public class PlayGround implements ActionListener {
 
         //network text field
         if (textField == e.getSource()) {
+            // send to server
             out.println("chat " + screenName + textField.getText());
+            // log
+            LOGGER.info("OUTGOING chat " + textField.getText());
 
             textField.setText("");
             textField.requestFocusInWindow();
         }
 
         if (buttonEndGame == e.getSource()) {
+            // send to server
             out.println("leave " + playerID);
+            // log
+            LOGGER.info("OUTGOING leave");
             System.exit(0);
         }
 
@@ -675,14 +714,22 @@ public class PlayGround implements ActionListener {
             }
 
             //------------------------------------------------------------
+
+
             if(tileInserted){
                 for (int i = 0; i < boardSquares.length; i++) {
                     for (int j = 0; j < boardSquares[i].length; j++) {
                         if (e.getActionCommand().equals("gameField: " + j + " " + i)) {
                             if (j == board.getPlayer(playerID).getAcutalPosition().getX() && i == board.getPlayer(playerID).getAcutalPosition().getY()) {
+                                // send to server
                                 out.println("pass " + j + " " + i + " " + playerID);
+                                // log
+                                LOGGER.info("OUTGOING pass");
                             } else {
+                                // send to server
                                 out.println("move " + j + " " + i + " " + playerID);
+                                // log
+                                LOGGER.info("OUTGOING move " + j + " " + i);
                             }
                         }
                     }
@@ -698,63 +745,99 @@ public class PlayGround implements ActionListener {
         if(!tileInserted){
                 if (buttonArrow_1_0 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 0 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 0");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 0");
                 }
                 if (buttonArrow_3_0 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 1 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 0");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 0");
                 }
                 if (buttonArrow_5_0 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 2 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 0");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 0");
                 }
                 if (buttonArrow_6_1 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 3 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 1");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 1");
                 }
                 if (buttonArrow_6_3 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 4 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 3");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 3");
                 }
                 if (buttonArrow_6_5 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 5 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 5");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 5");
                 }
                 if (buttonArrow_5_6 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 6 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 6");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 6");
                 }
                 if (buttonArrow_3_6 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 7 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 6");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 6");
                 }
                 if (buttonArrow_1_6 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 8 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 6");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 6");
                 }
                 if (buttonArrow_0_5 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 9 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 5");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 5");
                 }
                 if (buttonArrow_0_3 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 10 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 3");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 3");
                 }
                 if (buttonArrow_0_1 == e.getSource()) {
                     tileInserted = true;
+                    buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 11 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 1");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 1");
                 }
             }
             else{
@@ -762,15 +845,6 @@ public class PlayGround implements ActionListener {
             }
         }
     }
-
-    public void checkButtons() {
-        for (int i = 0; i < buttonArrow_Array.length; i++) {
-            if(!buttonArrow_Array[i].isEnabled()) {
-                buttonArrow_Array[i].setEnabled(true);
-            }
-        }
-    }
-
 
 
     //================================================================================
@@ -791,45 +865,59 @@ public class PlayGround implements ActionListener {
         String s;
         while ((s = in.readLine()) != null) {
             //tileID
-            if(s.startsWith("tileID")) {
+            if (s.startsWith("tileID")) {
                 System.out.println(s);
-
                 saveTileIDStingInBoard(s);
+            } else if (s.startsWith("disabledButtonID ")) {
+                disabledButtonID = Integer.parseInt(s.substring(17));
 
-            }
-            else if(s.startsWith("pushAllowed ")){
+                for (int i = 0; i < buttonArrow_Array.length; i++) {
+                    buttonArrow_Array[i].setEnabled(true);
+                }
+
+                buttonArrow_Array[disabledButtonID].setEnabled(false);
+
+            } else if (s.startsWith("pushAllowed ")) {
                 isPushAllowed = Boolean.parseBoolean(s.substring(12));
                 System.out.println("push allowed: " + isPushAllowed);
-                if(isPushAllowed){
+                if (isPushAllowed) {
                     tileInserted = true;
-                }else{
+                    // log incoming movevalid message
+                    LOGGER.info("INCOMING movevalid true");
+                } else {
                     tileInserted = false;
+                    // log incoming movevalid message
+                    LOGGER.info("INCOMING movevalid false");
                 }
-            }
-            else if(s.startsWith("moveValid ")){
+            } else if (s.startsWith("moveValid ")) {
                 moveValid = Boolean.parseBoolean(s.substring(10));
-                if(moveValid){
+                if (moveValid) {
                     tileInserted = false;
-                }else{
+                    buttonRotate.setEnabled(true);
+                    // log
+                    LOGGER.info("INCOMING movevalid true");
+                } else {
                     tileInserted = true;
+                    // log
+                    LOGGER.info("INCOMING movevalid false");
                 }
             }
 
             //acutal playersTurnID
-            else if(s.startsWith("playersTurnID")){
+            else if (s.startsWith("playersTurnID")) {
                 String[] tmpTurnID = s.split("\\s+");
                 playersTurnID = Integer.parseInt(tmpTurnID[1]);
             }
 
             //tileNextID
-            else if(s.startsWith("tileNextID")){
+            else if (s.startsWith("tileNextID")) {
 
                 saveNextTileIDInBoard(s);
 
 
             }
             //TileRot
-            else if(s.startsWith("tileRot")){
+            else if (s.startsWith("tileRot")) {
                 //textArea.insert(s + "\n", textArea.getText().length());
                 //textArea.setCaretPosition(textArea.getText().length());
 
@@ -838,9 +926,9 @@ public class PlayGround implements ActionListener {
                 board.getNextTile().setRotation(Integer.parseInt(tmpRot[1]));
 
                 int counter = 2;
-                for(int j=0; j< 7;j++ ){
-                    for(int i=0; i<7;i++){
-                        board.getTile(j,i).setRotation(Integer.parseInt(tmpRot[counter]));
+                for (int j = 0; j < 7; j++) {
+                    for (int i = 0; i < 7; i++) {
+                        board.getTile(j, i).setRotation(Integer.parseInt(tmpRot[counter]));
                     }
                 }
                 //TODO setzt die Rotation muss aber noch überprüft werden ob das richtige Tile erwischt wird
@@ -850,99 +938,122 @@ public class PlayGround implements ActionListener {
 
                 board.getNextTile().getShape().rotateImage(Integer.parseInt(tmpRot[1]));
 
-            }
-            else if(s.startsWith("rotateTile ")){
+            } else if (s.startsWith("rotateTile ")) {
                 board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(90));
                 board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());
 
 
-            }
-            else if(s.startsWith("tileX")){
+            } else if (s.startsWith("tileX")) {
                 //TODO initialisierung passt nicht von shuffel
                 //textArea.insert(s + "\n", textArea.getText().length());
                 //textArea.setCaretPosition(textArea.getText().length());
 
-            }
-            else if(s.startsWith("tileY")){
+            } else if (s.startsWith("tileY")) {
                 //TODO initialisierung von shuffel passt nicht
                 //textArea.insert(s + "\n", textArea.getText().length());
                 //textArea.setCaretPosition(textArea.getText().length());
 
-            }
-            else if(s.startsWith("playerPosX")){
+            } else if (s.startsWith("playerPosX")) {
                 String[] playerPosX = s.split("\\s+");
 
                 for (int i = 0; i < board.getAllPlayers().length; i++) {
-                    board.getPlayer(i).setActualPosition(new Position(Integer.parseInt(playerPosX[i+1]),board.getPlayer(i).getAcutalPosition().getY()));
+                    board.getPlayer(i).setActualPosition(new Position(Integer.parseInt(playerPosX[i + 1]), board.getPlayer(i).getAcutalPosition().getY()));
                 }
-            }
-            else if(s.startsWith("playerPosY")){
+            } else if (s.startsWith("playerPosY")) {
                 String[] playerPosY = s.split("\\s+");
                 for (int i = 0; i < board.getAllPlayers().length; i++) {
-                    board.getPlayer(i).setActualPosition(new Position(board.getPlayer(i).getAcutalPosition().getX(),Integer.parseInt(playerPosY[i+1])));
+                    board.getPlayer(i).setActualPosition(new Position(board.getPlayer(i).getAcutalPosition().getX(), Integer.parseInt(playerPosY[i + 1])));
                 }
-            }
-
-
-
-            else if(s.startsWith("deal")){
+            } else if (s.startsWith("deal")) {
                 board.getCreaturesNeeded().clear();
 
                 String[] dealID = s.split("\\s+");
-                for(int first = 1; first < dealID.length; first++){
-                    for(int second = 0; second < board.getAllGoalCards().length; second ++){
-                        if(Integer.parseInt(dealID[first]) == board.getAllGoalCards()[second].getGoalCardID()){
+                for (int first = 1; first < dealID.length; first++) {
+                    for (int second = 0; second < board.getAllGoalCards().length; second++) {
+                        if (Integer.parseInt(dealID[first]) == board.getAllGoalCards()[second].getGoalCardID()) {
                             board.getCreaturesNeeded().add(board.getAllGoalCards()[second]);
                         }
                     }
                 }
-
-            }
-
-            else if(s.startsWith("points ")){
+                // log incoming deal message
+                LOGGER.info("INCOMING deal " + s.substring(5));
+            } else if (s.startsWith("points ")) {
                 String[] points = s.split("\\s+");
                 System.out.println(points.length);
-                System.out.println("points: " + points[0] + " " +points[1] + " " + points[2] +" "+ points[3] + " "+points[4]);
-                for (int i = 1; i < board.getAllPlayers().length ; i++) {
-                    board.getPlayer(i-1).setScore(Integer.parseInt(points[i]));
+                System.out.println("points: " + points[0] + " " + points[1] + " " + points[2] + " " + points[3] + " " + points[4]);
+                for (int i = 1; i < board.getAllPlayers().length; i++) {
+                    board.getPlayer(i - 1).setScore(Integer.parseInt(points[i]));
                 }
-            }
-
-            else if(s.startsWith("draw")){
+            } else if (s.startsWith("draw")) {
                 drawGameField(board);
             }
 
             //initName
 
-            else if(s.startsWith("initName")) {
+            else if (s.startsWith("initName")) {
                 String[] tmpPlayer = s.split("\\s+");
 
                 for (int i = 1; i < tmpPlayer.length; i++) {
-                    board.getPlayer(i-1).setNameOfPlayer(tmpPlayer[i]);
+                    board.getPlayer(i - 1).setNameOfPlayer(tmpPlayer[i]);
                     //System.out.println(tmpPlayer[i]);
                 }
                 drawGameField(board);
 
-            }
-            else if(s.startsWith("initPlayerID")) {
+            } else if (s.startsWith("initPlayerID")) {
                 String[] tmpPlayerID = s.split("\\s+");
 
-                //set playerID
+                // set playerID
                 playerID = Integer.parseInt(tmpPlayerID[1]);
-            }
-            else if(s.startsWith("gameEnd")){
+
+                // init logger
+                try {
+                    FileHandler fileHandler = new FileHandler("player_0" + playerID + ".log");
+                    LOGGER.addHandler(fileHandler);
+                    LOGGER.info("*****STARTING*****");
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            } else if (s.startsWith("gameEnd")) {
                 //TODO kein name wird übemittelt
 
-                System.out.println( " name: " + s.substring(7) );
+                System.out.println(" name: " + s.substring(7));
 
                 //-> 100 is never used so nobody can press anything
-                playersTurnID = 100 ;
+                playersTurnID = 100;
                 GameEnd gameEnd = new GameEnd();
                 gameEnd.createGui(s.substring(7));
             }
-            else {
+            // incoming init message
+            else if (s.startsWith("init")) {
+                // log incoming init message
+                LOGGER.info("INCOMING " + s);
+            }
+            // incoming pushed message
+            else if (s.startsWith("pushed")) {
+                LOGGER.info("INCOMING " + s);
+            }
+            // incoming pass message
+            else if (s.startsWith("passed")) {
+                LOGGER.info("INCOMING passed");
+            }
+            // incoming move message
+            else if (s.startsWith("move")) {
+                LOGGER.info("INCOMING " + s);
+            }
+            // incoming goal message
+            else if (s.startsWith("goal")) {
+                LOGGER.info("INCOMING " + s);
+            }
+            // incoming disconnect message
+            else if (s.startsWith("disconnect")) {
+                // log incoming disconnect message
+                LOGGER.info("INCOMING " + s);
+            } else {
+                // in case of chat
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
+                // log incoming chat message
+                LOGGER.info("INCOMING " + s);
             }
         }
         out.close();
@@ -1041,15 +1152,36 @@ public class PlayGround implements ActionListener {
         labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 
 
+
+
+
+
+
         //draw points of player with color
-        labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore());
-        labelPlayer0.setForeground(board.getPlayer(0).getColor());
-        labelPlayer1.setText(board.getPlayer(1).getNameOfPlayer() + ": " + board.getPlayer(1).getScore());
-        labelPlayer1.setForeground(board.getPlayer(1).getColor());
-        labelPlayer2.setText(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore());
-        labelPlayer2.setForeground(board.getPlayer(2).getColor());
-        labelPlayer3.setText(board.getPlayer(3).getNameOfPlayer() + ": " + board.getPlayer(3).getScore());
-        labelPlayer3.setForeground(board.getPlayer(3).getColor());
+        if(!board.getPlayer(0).getNameOfPlayer().isEmpty()){
+            labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore() + " / 6");
+            labelPlayer0.setForeground(board.getPlayer(0).getColor());
+            labelPlayer0.setOpaque(true);
+            labelPlayer0.setBackground(Color.white);
+        }
+        if(!board.getPlayer(1).getNameOfPlayer().isEmpty()) {
+            labelPlayer1.setText(board.getPlayer(1).getNameOfPlayer() + ": " + board.getPlayer(1).getScore() + " / 6");
+            labelPlayer1.setForeground(board.getPlayer(1).getColor());
+            labelPlayer1.setOpaque(true);
+            labelPlayer1.setBackground(Color.white);
+        }
+        if(!board.getPlayer(2).getNameOfPlayer().isEmpty()) {
+            labelPlayer2.setText(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore() + " / 6");
+            labelPlayer2.setForeground(board.getPlayer(2).getColor());
+            labelPlayer2.setOpaque(true);
+            labelPlayer2.setBackground(Color.white);
+        }
+        if(!board.getPlayer(3).getNameOfPlayer().isEmpty()) {
+            labelPlayer3.setText(board.getPlayer(3).getNameOfPlayer() + ": " + board.getPlayer(3).getScore() + " / 6");
+            labelPlayer3.setForeground(board.getPlayer(3).getColor());
+            labelPlayer3.setOpaque(true);
+            labelPlayer3.setBackground(Color.white);
+        }
 
         labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
 

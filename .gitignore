@@ -5,10 +5,7 @@
 .idea/
 
 #Chatlog
-chatLog.log
-player_*
-gameLog.log
-lobbyLog.log
+*.log*
 
 *.log
 *.ick

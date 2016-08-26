@@ -18,7 +18,7 @@ public class ConnectionListener extends Thread {
 
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
-    private String players;
+    private String players="";
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -28,7 +28,9 @@ public class ConnectionListener extends Thread {
             FileHandler fileHandler = new FileHandler("lobbyLog.log");
             LOGGER.addHandler(fileHandler);
             LOGGER.info("*****STARTING LOBBY*****");
-        } catch (Exception e) {};
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 
     //--------------------------------------------------------------------------------
@@ -53,16 +55,48 @@ public class ConnectionListener extends Thread {
                 //================================================================================
                 String message = ith.getMessage();
 
-                //send init board strings to clients (speficially)
-                if(ith.isAlive() && message != null && !connections.get(i).isInit()) {
+                // send init board strings to clients (specifically)
+                if(ith.isAlive() && message != null && connections.get(i).isInit()) {
                     // set unique playerID
                     connections.get(i).setpId(i);
-                    // send welcome message
-                    ith.println("welcome " + connections.get(i).getpId());
+                    // send playerID to client
+                    ith.println("initPlayerID " + connections.get(i).getpId());
+                    // set unique playerName
+                    if (message.startsWith("connect")) {
+                        // split message @space
+                        String[] tmpMessage = message.split("\\s+");
+                        // set player name from message
+                        connections.get(i).setPlayerName(tmpMessage[1]);
+                        // log incoming connection
+                        LOGGER.info("INCOMING connection " + tmpMessage[1]);
+                        // send welcome message to client
+                        ith.println("welcome " + connections.get(i).getpId() + " " + connections.get(i).getPlayerName());
+                        // log outgoing welcome message
+                        LOGGER.info("OUTGOING welcome " + connections.get(i).getpId() + " " + connections.get(i).getPlayerName());
+                    }
 
-                    // append to player var. (TODO add player name)
+                    // append to player var. and broadcast to all clients
                     if (!players.contains(connections.get(i).getpId()+"")) {
-                        players += connections.get(i).getpId()+"";
+                        players += connections.get(i).getpId() + " " + connections.get(i).getPlayerName() + " ";
+                        broadcast("players " + players);
+                    }
+
+                    // set connection init false
+                    connections.get(i).setInit(false);
+                }
+
+                // not init
+                if (ith.isAlive() && message != null) {
+                    // 'ready' parameter (ready playerID)
+                    if (message.startsWith("ready")) {
+                        // set players connection to ready=true
+                        connections.get(i).setReady(true);
+                        // log incoming message
+                        LOGGER.info("INCOMING ready");
+                        // send 'ready playerID' to all clients
+                        broadcast("ready " + connections.get(i).getpId());
+                        // log outgoing ready message
+                        LOGGER.info("OUTGOING ready "+ connections.get(i).getpId());
                     }
                 }
 
@@ -72,27 +106,11 @@ public class ConnectionListener extends Thread {
                 if (message != null)
                     for (Connection jth : connections) {
                         try {
-                            if (message.startsWith("connect")) {
-                                jth.println(players);
-                            }
-                            else if (message.startsWith("connect") ||
-                                     message.startsWith("host")    ||
-                                     message.startsWith("join")    ||
-                                     message.startsWith("leave")) {
-                                jth.println("rooms");
-                            }
-                            else if (message.startsWith("ready")) {
-                                String[] tmpMessage = message.split("\\s+");
-                                // tmpMessage[1] contains playerID
-                                jth.println("ready " + tmpMessage[1]);
-                            }
-                            // if chat
-                            else {
-                                String[] tmpMessage = message.split(": ");
-                                LOGGER.info("INCOMING chat " + tmpMessage[1]);
-                                jth.println(message.substring(5));
-                                LOGGER.info("OUTGOING chat player_0" + connections.get(i).getpId() + " " + tmpMessage[1]);
-                            }
+                            // in case of chat
+                            String[] tmpMessage = message.split(": ");
+                            LOGGER.info("INCOMING chat " + tmpMessage[1]);
+                            jth.println(message.substring(5));
+                            LOGGER.info("OUTGOING chat player_0" + connections.get(i).getpId() + " " + tmpMessage[1]);
                         }
                         catch (Exception e) {
                             // error displaying
@@ -103,6 +121,12 @@ public class ConnectionListener extends Thread {
             // don't monopolize processor
             try                 { Thread.sleep(100);   }
             catch (Exception e) { e.printStackTrace(); }
+        }
+    }
+
+    public void broadcast(String s) {
+        for (Connection jth : connections) {
+            jth.println(s);
         }
     }
 }
