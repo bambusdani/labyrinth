@@ -1151,12 +1151,6 @@ public class PlayGround implements ActionListener {
         //draw the NextStone image
         labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 
-
-
-
-
-
-
         //draw points of player with color
         if(!board.getPlayer(0).getNameOfPlayer().isEmpty()){
             labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore() + " / 6");
