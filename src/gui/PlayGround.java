@@ -584,7 +584,7 @@ public class PlayGround implements ActionListener {
         // sets the Opaque
         panelPlayeroverview.setOpaque(false);
         panelInformation.setOpaque(false);
-        panelGameField.setOpaque(true);
+        panelGameField.setOpaque(false);
         panelChat.setOpaque(true);
         panelContent.setOpaque(false);
 
