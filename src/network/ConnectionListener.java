@@ -17,7 +17,7 @@ public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
     private String playerID;
 
-    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", player="", playerPosX="", playerPosY="", goal0="", goal1="", goal2="", goal3="" ,playerPoints =" 0 0 0 0";
+    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", player="", playerPosX="", playerPosY="", goal0="", goal1="", goal2="", goal3="" , playerPoints =" 0 0 0 0", init="";
     private ServerFunctions serverFunctions = new ServerFunctions();
     private Board initBoard = new Board();
     //PlayerTurn
@@ -39,6 +39,7 @@ public class ConnectionListener extends Thread {
         try {
             FileHandler fileHandler = new FileHandler("gameLog.log");
             LOGGER.addHandler(fileHandler);
+            LOGGER.info("*****STARTING*****");
         } catch (Exception e) {};
 
         //--------------------------------------------------------------------------------
@@ -57,7 +58,7 @@ public class ConnectionListener extends Thread {
         //================================================================================
 
         //--------------------------------------------------------------------------------
-        // tileID
+        // initialize board strings
         for (int i = 0; i < initBoard.getallTiles().length; i++) {
             for (int j = 0; j < initBoard.getallTiles()[0].length; j++) {
                 tileID  += initBoard.getTile(j, i).getId() + " ";
@@ -66,8 +67,17 @@ public class ConnectionListener extends Thread {
                 tileY   += initBoard.getTile(j, i).getPosition().getY() + " ";
             }
         }
-        //TODO
         tileNextID = initBoard.getNextTile().getId()+"";
+
+        //--------------------------------------------------------------------------------
+        // assemble an init string for logging
+        String[] tmpTileID = tileID.split("\\s+");
+        String[] tmpTileRot = tileRot.split("\\s*");
+        String[] tmpTileX = tileX.split("\\s+");
+        String[] tmpTileY = tileY.split("\\+s");
+        for (int j = 0; j < tmpTileID.length; j++) {
+            init += tmpTileID[j] + " " + tmpTileRot[j] + " " + tmpTileX[j] + " " + tmpTileY[j] + " ";
+        }
 
         //--------------------------------------------------------------------------------
         // goal
@@ -124,9 +134,10 @@ public class ConnectionListener extends Thread {
                     ith.println("tileX " + tileX);
                     ith.println("tileY " + tileY);
 
-                    // start logging for each client
-                    LOGGER.info("*****STARTING*****");
-                    LOGGER.info("init " + tileID);
+                    // send init board for logging
+                    ith.println("init " + init);
+                    // log outgoing init message
+                    LOGGER.info("OUTGOING init " + init);
 
                     if (ith.getpId() == 0) {
                         ith.println("deal " + goal0);
@@ -252,23 +263,33 @@ public class ConnectionListener extends Thread {
                                 }
 
 
-                                //TODO Daniel hier muss das protokol rein
                                 if (ith.getpId() == 0) {
-
                                     ith.println("deal " + goalListToString(goal0,playerID));
-                                    LOGGER.info("Player_00 goal " + playerID + " " + x + " " + y);
+                                    // send goal message to all clients
+                                    broadcast("goal player_0" + playerID + " " + x + " " + y );
+                                    // log outgoing goal message
+                                    LOGGER.info("goal player_0" + playerID + " " + x + " " + y);
                                 }
                                 if (ith.getpId() == 1) {
                                     ith.println("deal " + goalListToString(goal1,playerID));                                        //ith.LOGGER.info("deal " + goal1);
-                                    LOGGER.info("Player_01 goal " + playerID + " " + x + " " + y);
+                                    // send goal message to all clients
+                                    broadcast("goal player_0" + playerID + " " + x + " " + y );
+                                    // log outgoing goal message
+                                    LOGGER.info("goal player_0" + playerID + " " + x + " " + y);
                                 }
                                 if (ith.getpId() == 2) {
                                     ith.println("deal " + goalListToString(goal2,playerID));                                        //ith.LOGGER.info("deal " + goal2);
-                                    LOGGER.info("Player_02 goal " + playerID + " " + x + " " + y);
+                                    // send goal message to all clients
+                                    broadcast("goal player_0" + playerID + " " + x + " " + y );
+                                    // log outgoing goal message
+                                    LOGGER.info("goal player_0" + playerID + " " + x + " " + y);
                                 }
                                 if (ith.getpId() == 3) {
                                     ith.println("deal " + goalListToString(goal3,playerID));                                        //ith.LOGGER.info("deal " + goal3);
-                                    LOGGER.info("Player_03 goal " + playerID + " " + x + " " + y);
+                                    // send goal message to all clients
+                                    broadcast("goal player_0" + playerID + " " + x + " " + y );
+                                    // log outgoing goal message
+                                    LOGGER.info("goal player_0" + playerID + " " + x + " " + y);
                                 }
                                 break;
                             case 2:
@@ -351,7 +372,11 @@ public class ConnectionListener extends Thread {
                             }
                             else if (message.startsWith("leave")) {
                                 String[] tmpLeave = message.split("\\s+");
+                                // log incoming leave message
                                 LOGGER.info("INCOMING leave");
+                                // send disconnect to all clients
+                                jth.println("disconnect player_0" + tmpLeave[1]);
+                                // log outgoing disconnect message
                                 LOGGER.info("OUTGOING disconnect player_0" + tmpLeave[1]);
                             }
                             else {
@@ -410,6 +435,10 @@ public class ConnectionListener extends Thread {
         return goal;
     }
 
-
+    public void broadcast(String s) {
+        for (Connection jth : connections) {
+            jth.println(s);
+        }
+    }
 
 }

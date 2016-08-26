@@ -865,37 +865,34 @@ public class PlayGround implements ActionListener {
         String s;
         while ((s = in.readLine()) != null) {
             //tileID
-            if(s.startsWith("tileID")) {
+            if (s.startsWith("tileID")) {
                 System.out.println(s);
                 saveTileIDStingInBoard(s);
-            }
-            else if(s.startsWith("disabledButtonID ")){
+            } else if (s.startsWith("disabledButtonID ")) {
                 disabledButtonID = Integer.parseInt(s.substring(17));
 
-                for (int i = 0; i < buttonArrow_Array.length ; i++) {
+                for (int i = 0; i < buttonArrow_Array.length; i++) {
                     buttonArrow_Array[i].setEnabled(true);
                 }
 
                 buttonArrow_Array[disabledButtonID].setEnabled(false);
 
-            }
-            else if(s.startsWith("pushAllowed ")){
+            } else if (s.startsWith("pushAllowed ")) {
                 isPushAllowed = Boolean.parseBoolean(s.substring(12));
                 System.out.println("push allowed: " + isPushAllowed);
-                if(isPushAllowed){
+                if (isPushAllowed) {
                     tileInserted = true;
-                }else{
+                } else {
                     tileInserted = false;
                 }
-            }
-            else if(s.startsWith("moveValid ")){
+            } else if (s.startsWith("moveValid ")) {
                 moveValid = Boolean.parseBoolean(s.substring(10));
-                if(moveValid){
+                if (moveValid) {
                     tileInserted = false;
                     buttonRotate.setEnabled(true);
                     // log
                     LOGGER.info("INCOMING movevalid true");
-                }else{
+                } else {
                     tileInserted = true;
                     // log
                     LOGGER.info("INCOMING movevalid false");
@@ -903,20 +900,20 @@ public class PlayGround implements ActionListener {
             }
 
             //acutal playersTurnID
-            else if(s.startsWith("playersTurnID")){
+            else if (s.startsWith("playersTurnID")) {
                 String[] tmpTurnID = s.split("\\s+");
                 playersTurnID = Integer.parseInt(tmpTurnID[1]);
             }
 
             //tileNextID
-            else if(s.startsWith("tileNextID")){
+            else if (s.startsWith("tileNextID")) {
 
                 saveNextTileIDInBoard(s);
 
 
             }
             //TileRot
-            else if(s.startsWith("tileRot")){
+            else if (s.startsWith("tileRot")) {
                 //textArea.insert(s + "\n", textArea.getText().length());
                 //textArea.setCaretPosition(textArea.getText().length());
 
@@ -925,9 +922,9 @@ public class PlayGround implements ActionListener {
                 board.getNextTile().setRotation(Integer.parseInt(tmpRot[1]));
 
                 int counter = 2;
-                for(int j=0; j< 7;j++ ){
-                    for(int i=0; i<7;i++){
-                        board.getTile(j,i).setRotation(Integer.parseInt(tmpRot[counter]));
+                for (int j = 0; j < 7; j++) {
+                    for (int i = 0; i < 7; i++) {
+                        board.getTile(j, i).setRotation(Integer.parseInt(tmpRot[counter]));
                     }
                 }
                 //TODO setzt die Rotation muss aber noch überprüft werden ob das richtige Tile erwischt wird
@@ -937,82 +934,68 @@ public class PlayGround implements ActionListener {
 
                 board.getNextTile().getShape().rotateImage(Integer.parseInt(tmpRot[1]));
 
-            }
-            else if(s.startsWith("rotateTile ")){
+            } else if (s.startsWith("rotateTile ")) {
                 board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(90));
                 board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());
 
 
-            }
-            else if(s.startsWith("tileX")){
+            } else if (s.startsWith("tileX")) {
                 //TODO initialisierung passt nicht von shuffel
                 //textArea.insert(s + "\n", textArea.getText().length());
                 //textArea.setCaretPosition(textArea.getText().length());
 
-            }
-            else if(s.startsWith("tileY")){
+            } else if (s.startsWith("tileY")) {
                 //TODO initialisierung von shuffel passt nicht
                 //textArea.insert(s + "\n", textArea.getText().length());
                 //textArea.setCaretPosition(textArea.getText().length());
 
-            }
-            else if(s.startsWith("playerPosX")){
+            } else if (s.startsWith("playerPosX")) {
                 String[] playerPosX = s.split("\\s+");
 
                 for (int i = 0; i < board.getAllPlayers().length; i++) {
-                    board.getPlayer(i).setActualPosition(new Position(Integer.parseInt(playerPosX[i+1]),board.getPlayer(i).getAcutalPosition().getY()));
+                    board.getPlayer(i).setActualPosition(new Position(Integer.parseInt(playerPosX[i + 1]), board.getPlayer(i).getAcutalPosition().getY()));
                 }
-            }
-            else if(s.startsWith("playerPosY")){
+            } else if (s.startsWith("playerPosY")) {
                 String[] playerPosY = s.split("\\s+");
                 for (int i = 0; i < board.getAllPlayers().length; i++) {
-                    board.getPlayer(i).setActualPosition(new Position(board.getPlayer(i).getAcutalPosition().getX(),Integer.parseInt(playerPosY[i+1])));
+                    board.getPlayer(i).setActualPosition(new Position(board.getPlayer(i).getAcutalPosition().getX(), Integer.parseInt(playerPosY[i + 1])));
                 }
-            }
-
-
-
-            else if(s.startsWith("deal")){
+            } else if (s.startsWith("deal")) {
                 board.getCreaturesNeeded().clear();
 
                 String[] dealID = s.split("\\s+");
-                for(int first = 1; first < dealID.length; first++){
-                    for(int second = 0; second < board.getAllGoalCards().length; second ++){
-                        if(Integer.parseInt(dealID[first]) == board.getAllGoalCards()[second].getGoalCardID()){
+                for (int first = 1; first < dealID.length; first++) {
+                    for (int second = 0; second < board.getAllGoalCards().length; second++) {
+                        if (Integer.parseInt(dealID[first]) == board.getAllGoalCards()[second].getGoalCardID()) {
                             board.getCreaturesNeeded().add(board.getAllGoalCards()[second]);
                         }
                     }
                 }
-                // log
+                // log incoming deal message
                 LOGGER.info("INCOMING deal " + s.substring(5));
-            }
-
-            else if(s.startsWith("points ")){
+            } else if (s.startsWith("points ")) {
                 String[] points = s.split("\\s+");
                 System.out.println(points.length);
-                System.out.println("points: " + points[0] + " " +points[1] + " " + points[2] +" "+ points[3] + " "+points[4]);
-                for (int i = 1; i < board.getAllPlayers().length ; i++) {
-                    board.getPlayer(i-1).setScore(Integer.parseInt(points[i]));
+                System.out.println("points: " + points[0] + " " + points[1] + " " + points[2] + " " + points[3] + " " + points[4]);
+                for (int i = 1; i < board.getAllPlayers().length; i++) {
+                    board.getPlayer(i - 1).setScore(Integer.parseInt(points[i]));
                 }
-            }
-
-            else if(s.startsWith("draw")){
+            } else if (s.startsWith("draw")) {
                 drawGameField(board);
             }
 
             //initName
 
-            else if(s.startsWith("initName")) {
+            else if (s.startsWith("initName")) {
                 String[] tmpPlayer = s.split("\\s+");
 
                 for (int i = 1; i < tmpPlayer.length; i++) {
-                    board.getPlayer(i-1).setNameOfPlayer(tmpPlayer[i]);
+                    board.getPlayer(i - 1).setNameOfPlayer(tmpPlayer[i]);
                     //System.out.println(tmpPlayer[i]);
                 }
                 drawGameField(board);
 
-            }
-            else if(s.startsWith("initPlayerID")) {
+            } else if (s.startsWith("initPlayerID")) {
                 String[] tmpPlayerID = s.split("\\s+");
 
                 // set playerID
@@ -1026,30 +1009,42 @@ public class PlayGround implements ActionListener {
                 } catch (Exception e) {
                     System.err.println(e);
                 }
-            }
-            else if(s.startsWith("gameEnd")){
+            } else if (s.startsWith("gameEnd")) {
                 //TODO kein name wird übemittelt
 
-                System.out.println( " name: " + s.substring(7) );
+                System.out.println(" name: " + s.substring(7));
 
                 //-> 100 is never used so nobody can press anything
-                playersTurnID = 100 ;
+                playersTurnID = 100;
                 GameEnd gameEnd = new GameEnd();
                 gameEnd.createGui(s.substring(7));
             }
+            // incoming init message
+            else if (s.startsWith("init")) {
+                // log incoming init message
+                LOGGER.info("INCOMING " + s);
+            }
             // incoming pushed message
-            else if(s.startsWith("pushed")) {
+            else if (s.startsWith("pushed")) {
                 LOGGER.info("INCOMING " + s);
             }
             // incoming pass message
-            else if(s.startsWith("pass")) {
+            else if (s.startsWith("pass")) {
                 LOGGER.info("INCOMING passed");
             }
             // incoming move message
-            else if(s.startsWith("move")) {
+            else if (s.startsWith("move")) {
                 LOGGER.info("INCOMING " + s);
             }
-            else {
+            // incoming goal message
+            else if (s.startsWith("goal")) {
+                LOGGER.info("INCOMING " + s);
+            }
+            // incoming disconnect message
+            else if (s.startsWith("disconnect")) {
+                // log incoming disconnect message
+                LOGGER.info("INCOMING " + s);
+            } else {
                 // in case of chat
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
