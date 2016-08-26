@@ -141,19 +141,19 @@ public class ConnectionListener extends Thread {
 
                     if (ith.getpId() == 0) {
                         ith.println("deal " + goal0);
-                        LOGGER.info("Player_00 deal " + goal0);
+                        LOGGER.info("OUTGOING deal " + goal0);
                     }
                     if (ith.getpId() == 1) {
                         ith.println("deal " + goal1);
-                        LOGGER.info("Player_01 deal " + goal1);
+                        LOGGER.info("OUTGOING deal " + goal1);
                     }
                     if (ith.getpId() == 2) {
                         ith.println("deal " + goal2);
-                        LOGGER.info("Player_02 deal " + goal2);
+                        LOGGER.info("OUTGOING deal " + goal2);
                     }
                     if (ith.getpId() == 3) {
                         ith.println("deal " + goal3);
-                        LOGGER.info("Player_03 deal " + goal3);
+                        LOGGER.info("OUTGOING deal " + goal3);
                     }
                     //move to draw the field should be the last thing at init
                     ith.println("draw ");
@@ -179,13 +179,18 @@ public class ConnectionListener extends Thread {
 
                         ith.println("pushAllowed " + isPushAllowed);
 
-                        //log
+                        // log incoming push message
                         LOGGER.info("INCOMING push " + tileID + " " + rotation + " " + x + " " + y);
                         // calculate
                         serverFunctions.insertTile(buttonID, initBoard);
-                        // log
+                        // send movevalid message to client
+                        ith.println("moveValid " + serverFunctions.isArrowMoveAllowed(buttonID));
+                        // log outgoing movevalid message
                         LOGGER.info("OUTGOING movevalid " + serverFunctions.isArrowMoveAllowed(buttonID));
                         if (serverFunctions.isArrowMoveAllowed(buttonID)) {
+                            // send pushed message to all clients
+                            broadcast("pushed " + tileID + " " + rotation + " " + y);
+                            // log outgoing pushed message
                             LOGGER.info("OUTGOING pushed " + tileID + " " + rotation + " " + x + " " + y);
                         }
 
@@ -219,10 +224,6 @@ public class ConnectionListener extends Thread {
                         } else {
                             LOGGER.info("INCOMING pass");
                         }
-                        LOGGER.info("OUTGOING movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
-                        if (serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID)) {
-                            LOGGER.info("OUTGOING move " + playerID + " " + x + " " + y);
-                        }
 
                         // changes the player -> if a person leaves the game goes on
                         // Todo if it´s players turn and he leaves we have a problem
@@ -230,7 +231,10 @@ public class ConnectionListener extends Thread {
                         // sowie ein stein random plaziert werden oder übersprungen werden
                         if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
                             serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
+                            // send movevalid message to client
                             ith.println("moveValid " + true);
+                            // log movevalid message
+                            LOGGER.info("OUTGOING movevalid " + true);
                             if(playersTurnID == connections.get(connections.size()-1).getpId()){
                                 playersTurnID = connections.get(0).getpId();
                                 playersTurnCounter = 0;
@@ -247,7 +251,10 @@ public class ConnectionListener extends Thread {
                             }
                         }
                         else{
+                            // send movevalid message to client
                             ith.println("moveValid " + false);
+                            // log movevalid message
+                            LOGGER.info("OUTGOING movevalid " + false);
                         }
 
                         switch (serverFunctions.isPlayerGettingPoints(initBoard , playerID)){
