@@ -154,7 +154,7 @@ public class StartScreen extends JPanel implements ActionListener {
             if((!textAreaName.getText().isEmpty())){
 
                 if(!textAreaIP.getText().isEmpty()){
-                    Lobby lobby = new Lobby(textAreaName.getText());
+                    Lobby lobby = new Lobby(textAreaIP.getText() , textAreaName.getText());
                     frame.dispose();
                 }
                 else{
@@ -164,7 +164,6 @@ public class StartScreen extends JPanel implements ActionListener {
             else{
                 labelText.setForeground(Color.red);
             }
-
         }
     }
 

@@ -17,7 +17,7 @@ public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
     private String playerID;
 
-    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", player="", playerPosX="", playerPosY="", goal0="", goal1="", goal2="", goal3="" ,playerPoints =" 0 0 0 0";
+    private String tileID="", tileNextID="", tileRot="", tileX="", tileY="", player="", playerPosX="", playerPosY="", goal0="", goal1="", goal2="", goal3="" , playerPoints =" 0 0 0 0", init="";
     private ServerFunctions serverFunctions = new ServerFunctions();
     private Board initBoard = new Board();
     //PlayerTurn
@@ -39,6 +39,7 @@ public class ConnectionListener extends Thread {
         try {
             FileHandler fileHandler = new FileHandler("gameLog.log");
             LOGGER.addHandler(fileHandler);
+            LOGGER.info("*****STARTING*****");
         } catch (Exception e) {};
 
         //--------------------------------------------------------------------------------
@@ -57,7 +58,7 @@ public class ConnectionListener extends Thread {
         //================================================================================
 
         //--------------------------------------------------------------------------------
-        // tileID
+        // initialize board strings
         for (int i = 0; i < initBoard.getallTiles().length; i++) {
             for (int j = 0; j < initBoard.getallTiles()[0].length; j++) {
                 tileID  += initBoard.getTile(j, i).getId() + " ";
@@ -66,8 +67,17 @@ public class ConnectionListener extends Thread {
                 tileY   += initBoard.getTile(j, i).getPosition().getY() + " ";
             }
         }
-        //TODO
-                tileNextID = initBoard.getNextTile().getId()+"";
+        tileNextID = initBoard.getNextTile().getId()+"";
+
+        //--------------------------------------------------------------------------------
+        // assemble an init string for logging
+        String[] tmpTileID = tileID.split("\\s+");
+        String[] tmpTileRot = tileRot.split("\\s+");
+        String[] tmpTileX = tileX.split("\\s+");
+        String[] tmpTileY = tileY.split("\\s+");
+        for (int j = 0; j < tmpTileID.length; j++) {
+            init += tmpTileID[j] + " " + tmpTileRot[j] + " " + tmpTileX[j] + " " + tmpTileY[j] + " ";
+        }
 
         //--------------------------------------------------------------------------------
         // goal
@@ -124,25 +134,26 @@ public class ConnectionListener extends Thread {
                     ith.println("tileX " + tileX);
                     ith.println("tileY " + tileY);
 
-                    // start logging for each client
-                    LOGGER.info("*****STARTING*****");
-                    LOGGER.info("init " + tileID);
+                    // send init board for logging
+                    ith.println("init " + init);
+                    // log outgoing init message
+                    LOGGER.info("OUTGOING init " + init);
 
                     if (ith.getpId() == 0) {
                         ith.println("deal " + goal0);
-                        LOGGER.info("Player_00 deal " + goal0);
+                        LOGGER.info("OUTGOING deal " + goal0);
                     }
                     if (ith.getpId() == 1) {
                         ith.println("deal " + goal1);
-                        LOGGER.info("Player_01 deal " + goal1);
+                        LOGGER.info("OUTGOING deal " + goal1);
                     }
                     if (ith.getpId() == 2) {
                         ith.println("deal " + goal2);
-                        LOGGER.info("Player_02 deal " + goal2);
+                        LOGGER.info("OUTGOING deal " + goal2);
                     }
                     if (ith.getpId() == 3) {
                         ith.println("deal " + goal3);
-                        LOGGER.info("Player_03 deal " + goal3);
+                        LOGGER.info("OUTGOING deal " + goal3);
                     }
                     //move to draw the field should be the last thing at init
                     ith.println("draw ");
@@ -166,15 +177,19 @@ public class ConnectionListener extends Thread {
                         disabledButtonID = serverFunctions.disabledArrowID(buttonID)+"";
 
 
-                        ith.println("pushAllowed " + isPushAllowed);
 
-                        //log
+                        // log incoming push message
                         LOGGER.info("INCOMING push " + tileID + " " + rotation + " " + x + " " + y);
+                        // send movevalid message to client
+                        ith.println("pushAllowed " + isPushAllowed);
+                        // log outgoing movevalid mesage
+                        LOGGER.info("OUTGOING movevalid " + isPushAllowed);
                         // calculate
                         serverFunctions.insertTile(buttonID, initBoard);
-                        // log
-                        LOGGER.info("OUTGOING movevalid " + serverFunctions.isArrowMoveAllowed(buttonID));
                         if (serverFunctions.isArrowMoveAllowed(buttonID)) {
+                            // send pushed message to all clients
+                            broadcast("pushed " + tileID + " " + rotation + " " + x + " " + y);
+                            // log outgoing pushed message
                             LOGGER.info("OUTGOING pushed " + tileID + " " + rotation + " " + x + " " + y);
                         }
 
@@ -206,11 +221,12 @@ public class ConnectionListener extends Thread {
                         if (message.startsWith("move ")) {
                             LOGGER.info("INCOMING move " + x + " " + y);
                         } else {
-                            LOGGER.info("OUTGOING pass player_0" + playerID);
-                        }
-                        LOGGER.info("OUTGOING movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
-                        if (serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID)) {
-                            LOGGER.info("OUTGOING move " + playerID + " " + x + " " + y);
+                            // log incoming pass message
+                            LOGGER.info("INCOMING pass");
+                            // send pass message to all clients
+                            broadcast("passed");
+                            // log outgoing pass message
+                            LOGGER.info("OUTGOING passed");
                         }
 
                         // changes the player -> if a person leaves the game goes on
@@ -219,7 +235,15 @@ public class ConnectionListener extends Thread {
                         // sowie ein stein random plaziert werden oder übersprungen werden
                         if(serverFunctions.checkMazeIfMoveIsPossible(initBoard,buttonPositionPressed,playerID)){
                             serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
+                            // send movevalid message to client
                             ith.println("moveValid " + true);
+                            // log movevalid message
+                            LOGGER.info("OUTGOING movevalid " + true);
+                            // send move message to all clients
+                            broadcast("move player_0" + playerID + " " + x + " " + y);
+                            // log outgoing move message
+                            LOGGER.info("OUTGOING move player_0" + playerID + " " + x + " " + y);
+
                             if(playersTurnID == connections.get(connections.size()-1).getpId()){
                                 playersTurnID = connections.get(0).getpId();
                                 playersTurnCounter = 0;
@@ -236,48 +260,61 @@ public class ConnectionListener extends Thread {
                             }
                         }
                         else{
+                            // send movevalid message to client
                             ith.println("moveValid " + false);
+                            // log movevalid message
+                            LOGGER.info("OUTGOING movevalid " + false);
                         }
 
                         switch (serverFunctions.isPlayerGettingPoints(initBoard , playerID)){
 
-                                case 0:
-                                    //System.out.println("kein Punkt");
-                                    break;
-                                case 1:
-                                    playerPoints ="";
-                                    // neu zeichnen der Punkte
-                                    for (int j = 0; j < initBoard.getAllPlayers().length ; j++) {
-                                        playerPoints += initBoard.getPlayer(j).getScore() +" ";
-                                    }
+                            case 0:
+                                //System.out.println("kein Punkt");
+                                break;
+                            case 1:
+                                playerPoints ="";
+                                // neu zeichnen der Punkte
+                                for (int j = 0; j < initBoard.getAllPlayers().length ; j++) {
+                                    playerPoints += initBoard.getPlayer(j).getScore() +" ";
+                                }
 
 
-                                    //TODO Daniel hier muss das protokol rein
-                                    if (ith.getpId() == 0) {
+                                if (ith.getpId() == 0) {
+                                    ith.println("deal " + goalListToString(goal0,playerID));
+                                    // send goal message to all clients
+                                    broadcast("goal player_0" + playerID + " " + x + " " + y );
+                                    // log outgoing goal message
+                                    LOGGER.info("OUTGOING goal player_0" + playerID + " " + x + " " + y);
+                                }
+                                if (ith.getpId() == 1) {
+                                    ith.println("deal " + goalListToString(goal1,playerID));                                        //ith.LOGGER.info("deal " + goal1);
+                                    // send goal message to all clients
+                                    broadcast("goal player_0" + playerID + " " + x + " " + y );
+                                    // log outgoing goal message
+                                    LOGGER.info("OUTGOING goal player_0" + playerID + " " + x + " " + y);
+                                }
+                                if (ith.getpId() == 2) {
+                                    ith.println("deal " + goalListToString(goal2,playerID));                                        //ith.LOGGER.info("deal " + goal2);
+                                    // send goal message to all clients
+                                    broadcast("goal player_0" + playerID + " " + x + " " + y );
+                                    // log outgoing goal message
+                                    LOGGER.info("OUTGOING goal player_0" + playerID + " " + x + " " + y);
+                                }
+                                if (ith.getpId() == 3) {
+                                    ith.println("deal " + goalListToString(goal3,playerID));                                        //ith.LOGGER.info("deal " + goal3);
+                                    // send goal message to all clients
+                                    broadcast("goal player_0" + playerID + " " + x + " " + y );
+                                    // log outgoing goal message
+                                    LOGGER.info("OUTGOING goal player_0" + playerID + " " + x + " " + y);
+                                }
+                                break;
+                            case 2:
+                                // spiel ist zu ende
 
-                                        ith.println("deal " + goalListToString(goal0,playerID));
-                                        LOGGER.info("Player_00 goal " + playerID + " " + x + " " + y);
-                                    }
-                                    if (ith.getpId() == 1) {
-                                        ith.println("deal " + goalListToString(goal1,playerID));                                        //ith.LOGGER.info("deal " + goal1);
-                                        LOGGER.info("Player_01 goal " + playerID + " " + x + " " + y);
-                                    }
-                                    if (ith.getpId() == 2) {
-                                        ith.println("deal " + goalListToString(goal2,playerID));                                        //ith.LOGGER.info("deal " + goal2);
-                                        LOGGER.info("Player_02 goal " + playerID + " " + x + " " + y);
-                                    }
-                                    if (ith.getpId() == 3) {
-                                        ith.println("deal " + goalListToString(goal3,playerID));                                        //ith.LOGGER.info("deal " + goal3);
-                                        LOGGER.info("Player_03 goal " + playerID + " " + x + " " + y);
-                                    }
-                                    break;
-                                case 2:
-                                   // spiel ist zu ende
-
-                                    //todo sperre das komplette feld
-                                    gameEnd = true;
-                                    gameEndPlayerName = initBoard.getPlayer(playerID).getNameOfPlayer();
-                                    break;
+                                //todo sperre das komplette feld
+                                gameEnd = true;
+                                gameEndPlayerName = initBoard.getPlayer(playerID).getNameOfPlayer();
+                                break;
                         }
 
 
@@ -286,7 +323,7 @@ public class ConnectionListener extends Thread {
                         //wurde davor bereits gemacht
                         //serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
                         // log
-                        LOGGER.info("movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
+                        // LOGGER.info("movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
                         playerPosToString(initBoard);
 
 
@@ -351,7 +388,11 @@ public class ConnectionListener extends Thread {
                             }
                             else if (message.startsWith("leave")) {
                                 String[] tmpLeave = message.split("\\s+");
+                                // log incoming leave message
                                 LOGGER.info("INCOMING leave");
+                                // send disconnect to all clients
+                                jth.println("disconnect player_0" + tmpLeave[1]);
+                                // log outgoing disconnect message
                                 LOGGER.info("OUTGOING disconnect player_0" + tmpLeave[1]);
                             }
                             else {
@@ -410,6 +451,10 @@ public class ConnectionListener extends Thread {
         return goal;
     }
 
-
+    public void broadcast(String s) {
+        for (Connection jth : connections) {
+            jth.println(s);
+        }
+    }
 
 }
