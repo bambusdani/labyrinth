@@ -217,7 +217,7 @@ public class ConnectionListener extends Thread {
                         if (message.startsWith("move ")) {
                             LOGGER.info("INCOMING move " + x + " " + y);
                         } else {
-                            LOGGER.info("OUTGOING pass player_0" + playerID);
+                            LOGGER.info("INCOMING pass");
                         }
                         LOGGER.info("OUTGOING movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
                         if (serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID)) {
