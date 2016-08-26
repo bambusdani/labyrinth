@@ -47,7 +47,7 @@ public class Lobby implements ActionListener{
 
     private final Logger LOGGER = Logger.getLogger(Lobby.class.getName());
 
-    private String nameOfPlayer;
+    private String tmpName, nameOfPlayer;
     private String playerID;
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
 
@@ -63,8 +63,9 @@ public class Lobby implements ActionListener{
         } catch (Exception e) {}
 
         nameOfPlayer= "[" + name + "]: ";
-        // send name to server
+        tmpName = name;
         out.println("connect " + name);
+
         titleimage.setImage(titleimage.getImage().getScaledInstance(480,350 , Image.SCALE_DEFAULT));
 
         JPanel panelContent = new JPanel(new GridBagLayout());
@@ -537,6 +538,8 @@ public class Lobby implements ActionListener{
                     FileHandler fileHandler = new FileHandler("lobby_0" + tmpPlayerID[1] + ".log");
                     LOGGER.addHandler(fileHandler);
                     LOGGER.info("*****STARTING*****");
+                    // log outgoing connect message
+                    LOGGER.info("OUTGOING connect " + tmpName);
                 } catch (Exception e) {
                     System.err.println(e);
                 }

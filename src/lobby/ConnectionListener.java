@@ -78,7 +78,10 @@ public class ConnectionListener extends Thread {
                     // append to player var. and broadcast to all clients
                     if (!players.contains(connections.get(i).getpId()+"")) {
                         players += connections.get(i).getpId() + " " + connections.get(i).getPlayerName() + " ";
+                        // send players to all clients
                         broadcast("players " + players);
+                        // log outgoing players message
+                        LOGGER.info("OUTGOING players " + players);
                     }
 
                     // set connection init false
