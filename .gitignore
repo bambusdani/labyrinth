@@ -10,6 +10,10 @@ player_*
 gameLog.log
 lobbyLog.log
 
+*.log
+*.ick
+*.lck
+
 #mac
 .DS_Store
 
