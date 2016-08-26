@@ -67,7 +67,7 @@ public class ConnectionListener extends Thread {
             }
         }
         //TODO
-                tileNextID = initBoard.getNextTile().getId()+"";
+        tileNextID = initBoard.getNextTile().getId()+"";
 
         //--------------------------------------------------------------------------------
         // goal
@@ -241,43 +241,43 @@ public class ConnectionListener extends Thread {
 
                         switch (serverFunctions.isPlayerGettingPoints(initBoard , playerID)){
 
-                                case 0:
-                                    //System.out.println("kein Punkt");
-                                    break;
-                                case 1:
-                                    playerPoints ="";
-                                    // neu zeichnen der Punkte
-                                    for (int j = 0; j < initBoard.getAllPlayers().length ; j++) {
-                                        playerPoints += initBoard.getPlayer(j).getScore() +" ";
-                                    }
+                            case 0:
+                                //System.out.println("kein Punkt");
+                                break;
+                            case 1:
+                                playerPoints ="";
+                                // neu zeichnen der Punkte
+                                for (int j = 0; j < initBoard.getAllPlayers().length ; j++) {
+                                    playerPoints += initBoard.getPlayer(j).getScore() +" ";
+                                }
 
 
-                                    //TODO Daniel hier muss das protokol rein
-                                    if (ith.getpId() == 0) {
+                                //TODO Daniel hier muss das protokol rein
+                                if (ith.getpId() == 0) {
 
-                                        ith.println("deal " + goalListToString(goal0,playerID));
-                                        LOGGER.info("Player_00 goal " + playerID + " " + x + " " + y);
-                                    }
-                                    if (ith.getpId() == 1) {
-                                        ith.println("deal " + goalListToString(goal1,playerID));                                        //ith.LOGGER.info("deal " + goal1);
-                                        LOGGER.info("Player_01 goal " + playerID + " " + x + " " + y);
-                                    }
-                                    if (ith.getpId() == 2) {
-                                        ith.println("deal " + goalListToString(goal2,playerID));                                        //ith.LOGGER.info("deal " + goal2);
-                                        LOGGER.info("Player_02 goal " + playerID + " " + x + " " + y);
-                                    }
-                                    if (ith.getpId() == 3) {
-                                        ith.println("deal " + goalListToString(goal3,playerID));                                        //ith.LOGGER.info("deal " + goal3);
-                                        LOGGER.info("Player_03 goal " + playerID + " " + x + " " + y);
-                                    }
-                                    break;
-                                case 2:
-                                   // spiel ist zu ende
+                                    ith.println("deal " + goalListToString(goal0,playerID));
+                                    LOGGER.info("Player_00 goal " + playerID + " " + x + " " + y);
+                                }
+                                if (ith.getpId() == 1) {
+                                    ith.println("deal " + goalListToString(goal1,playerID));                                        //ith.LOGGER.info("deal " + goal1);
+                                    LOGGER.info("Player_01 goal " + playerID + " " + x + " " + y);
+                                }
+                                if (ith.getpId() == 2) {
+                                    ith.println("deal " + goalListToString(goal2,playerID));                                        //ith.LOGGER.info("deal " + goal2);
+                                    LOGGER.info("Player_02 goal " + playerID + " " + x + " " + y);
+                                }
+                                if (ith.getpId() == 3) {
+                                    ith.println("deal " + goalListToString(goal3,playerID));                                        //ith.LOGGER.info("deal " + goal3);
+                                    LOGGER.info("Player_03 goal " + playerID + " " + x + " " + y);
+                                }
+                                break;
+                            case 2:
+                                // spiel ist zu ende
 
-                                    //todo sperre das komplette feld
-                                    gameEnd = true;
-                                    gameEndPlayerName = initBoard.getPlayer(playerID).getNameOfPlayer();
-                                    break;
+                                //todo sperre das komplette feld
+                                gameEnd = true;
+                                gameEndPlayerName = initBoard.getPlayer(playerID).getNameOfPlayer();
+                                break;
                         }
 
 

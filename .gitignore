@@ -5,7 +5,11 @@
 .idea/
 
 #Chatlog
+<<<<<<< HEAD
 *.log*
+=======
+*.log
+>>>>>>> Daniel2
 
 #mac
 .DS_Store

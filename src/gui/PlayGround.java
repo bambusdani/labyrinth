@@ -15,6 +15,8 @@ import network.*;
 import gameLogic.*;
 
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 public class PlayGround implements ActionListener {
 
@@ -123,6 +125,7 @@ public class PlayGround implements ActionListener {
     private In in;
     private String screenName;
     private String initName;
+    private final Logger LOGGER = Logger.getLogger(PlayGround.class.getName());
 
     // Erstellen der Klasse mit wichtigen Funktionen
 
@@ -676,14 +679,20 @@ public class PlayGround implements ActionListener {
 
         //network text field
         if (textField == e.getSource()) {
+            // send to server
             out.println("chat " + screenName + textField.getText());
+            // log
+            LOGGER.info("OUTGOING chat " + textField.getText());
 
             textField.setText("");
             textField.requestFocusInWindow();
         }
 
         if (buttonEndGame == e.getSource()) {
+            // send to server
             out.println("leave " + playerID);
+            // log
+            LOGGER.info("OUTGOING leave");
             System.exit(0);
         }
 
@@ -712,9 +721,15 @@ public class PlayGround implements ActionListener {
                     for (int j = 0; j < boardSquares[i].length; j++) {
                         if (e.getActionCommand().equals("gameField: " + j + " " + i)) {
                             if (j == board.getPlayer(playerID).getAcutalPosition().getX() && i == board.getPlayer(playerID).getAcutalPosition().getY()) {
+                                // send to server
                                 out.println("pass " + j + " " + i + " " + playerID);
+                                // log
+                                LOGGER.info("OUTGOING pass");
                             } else {
+                                // send to server
                                 out.println("move " + j + " " + i + " " + playerID);
+                                // log
+                                LOGGER.info("OUTGOING move " + j + " " + i);
                             }
                         }
                     }
@@ -731,74 +746,98 @@ public class PlayGround implements ActionListener {
                 if (buttonArrow_1_0 == e.getSource()) {
                     tileInserted = true;
                     buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 0 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 0");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 0");
                 }
                 if (buttonArrow_3_0 == e.getSource()) {
                     tileInserted = true;
                     buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 1 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 0");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 0");
                 }
                 if (buttonArrow_5_0 == e.getSource()) {
                     tileInserted = true;
                     buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 2 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 0");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 0");
                 }
                 if (buttonArrow_6_1 == e.getSource()) {
                     tileInserted = true;
                     buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 3 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 1");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 1");
                 }
                 if (buttonArrow_6_3 == e.getSource()) {
                     tileInserted = true;
                     buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 4 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 3");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 3");
                 }
                 if (buttonArrow_6_5 == e.getSource()) {
                     tileInserted = true;
                     buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 5 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 5");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 6 5");
                 }
                 if (buttonArrow_5_6 == e.getSource()) {
                     tileInserted = true;
                     buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 6 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 6");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 5 6");
                 }
                 if (buttonArrow_3_6 == e.getSource()) {
                     tileInserted = true;
                     buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 7 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 6");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 3 6");
                 }
                 if (buttonArrow_1_6 == e.getSource()) {
                     tileInserted = true;
                     buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 8 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 6");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 1 6");
                 }
                 if (buttonArrow_0_5 == e.getSource()) {
                     tileInserted = true;
                     buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 9 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 5");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 5");
                 }
                 if (buttonArrow_0_3 == e.getSource()) {
                     tileInserted = true;
                     buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 10 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 3");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 3");
                 }
                 if (buttonArrow_0_1 == e.getSource()) {
                     tileInserted = true;
                     buttonRotate.setEnabled(false);
+                    // send to server
                     out.println("insertTile 11 " + playerID + " " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 1");
-                    out.println("nextTileID " + board.getNextTile().getId());
+                    // log
+                    LOGGER.info("OUTGOING push " + board.getNextTile().getId() + " " + board.getNextTile().getRotation() + " 0 1");
                 }
             }
             else{
@@ -806,15 +845,6 @@ public class PlayGround implements ActionListener {
             }
         }
     }
-
-    public void checkButtons() {
-        for (int i = 0; i < buttonArrow_Array.length; i++) {
-            if(!buttonArrow_Array[i].isEnabled()) {
-                buttonArrow_Array[i].setEnabled(true);
-            }
-        }
-    }
-
 
 
     //================================================================================
@@ -863,8 +893,12 @@ public class PlayGround implements ActionListener {
                 if(moveValid){
                     tileInserted = false;
                     buttonRotate.setEnabled(true);
+                    // log
+                    LOGGER.info("INCOMING movevalid true");
                 }else{
                     tileInserted = true;
+                    // log
+                    LOGGER.info("INCOMING movevalid false");
                 }
             }
 
@@ -949,7 +983,8 @@ public class PlayGround implements ActionListener {
                         }
                     }
                 }
-
+                // log
+                LOGGER.info("INCOMING deal " + s.substring(5));
             }
 
             else if(s.startsWith("points ")){
@@ -980,8 +1015,17 @@ public class PlayGround implements ActionListener {
             else if(s.startsWith("initPlayerID")) {
                 String[] tmpPlayerID = s.split("\\s+");
 
-                //set playerID
+                // set playerID
                 playerID = Integer.parseInt(tmpPlayerID[1]);
+
+                // init logger
+                try {
+                    FileHandler fileHandler = new FileHandler("player_0" + playerID + ".log");
+                    LOGGER.addHandler(fileHandler);
+                    LOGGER.info("*****STARTING*****");
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
             }
             else if(s.startsWith("gameEnd")){
                 //TODO kein name wird übemittelt
@@ -993,9 +1037,24 @@ public class PlayGround implements ActionListener {
                 GameEnd gameEnd = new GameEnd();
                 gameEnd.createGui(s.substring(7));
             }
+            // incoming pushed message
+            else if(s.startsWith("pushed")) {
+                LOGGER.info("INCOMING " + s);
+            }
+            // incoming pass message
+            else if(s.startsWith("pass")) {
+                LOGGER.info("INCOMING passed");
+            }
+            // incoming move message
+            else if(s.startsWith("move")) {
+                LOGGER.info("INCOMING " + s);
+            }
             else {
+                // in case of chat
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
+                // log incoming chat message
+                LOGGER.info("INCOMING " + s);
             }
         }
         out.close();
