@@ -882,8 +882,12 @@ public class PlayGround implements ActionListener {
                 System.out.println("push allowed: " + isPushAllowed);
                 if (isPushAllowed) {
                     tileInserted = true;
+                    // log incoming movevalid message
+                    LOGGER.info("INCOMING movevalid true");
                 } else {
                     tileInserted = false;
+                    // log incoming movevalid message
+                    LOGGER.info("INCOMING movevalid false");
                 }
             } else if (s.startsWith("moveValid ")) {
                 moveValid = Boolean.parseBoolean(s.substring(10));
@@ -1029,7 +1033,7 @@ public class PlayGround implements ActionListener {
                 LOGGER.info("INCOMING " + s);
             }
             // incoming pass message
-            else if (s.startsWith("pass")) {
+            else if (s.startsWith("passed")) {
                 LOGGER.info("INCOMING passed");
             }
             // incoming move message

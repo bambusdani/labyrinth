@@ -177,19 +177,18 @@ public class ConnectionListener extends Thread {
                         disabledButtonID = serverFunctions.disabledArrowID(buttonID)+"";
 
 
-                        ith.println("pushAllowed " + isPushAllowed);
 
                         // log incoming push message
                         LOGGER.info("INCOMING push " + tileID + " " + rotation + " " + x + " " + y);
+                        // send movevalid message to client
+                        ith.println("pushAllowed " + isPushAllowed);
+                        // log outgoing movevalid mesage
+                        LOGGER.info("OUTGOING movevalid " + isPushAllowed);
                         // calculate
                         serverFunctions.insertTile(buttonID, initBoard);
-                        // send movevalid message to client
-                        ith.println("moveValid " + serverFunctions.isArrowMoveAllowed(buttonID));
-                        // log outgoing movevalid message
-                        LOGGER.info("OUTGOING movevalid " + serverFunctions.isArrowMoveAllowed(buttonID));
                         if (serverFunctions.isArrowMoveAllowed(buttonID)) {
                             // send pushed message to all clients
-                            broadcast("pushed " + tileID + " " + rotation + " " + y);
+                            broadcast("pushed " + tileID + " " + rotation + " " + x + " " + y);
                             // log outgoing pushed message
                             LOGGER.info("OUTGOING pushed " + tileID + " " + rotation + " " + x + " " + y);
                         }
@@ -222,7 +221,12 @@ public class ConnectionListener extends Thread {
                         if (message.startsWith("move ")) {
                             LOGGER.info("INCOMING move " + x + " " + y);
                         } else {
+                            // log incoming pass message
                             LOGGER.info("INCOMING pass");
+                            // send pass message to all clients
+                            broadcast("passed");
+                            // log outgoing pass message
+                            LOGGER.info("OUTGOING passed");
                         }
 
                         // changes the player -> if a person leaves the game goes on
@@ -235,6 +239,11 @@ public class ConnectionListener extends Thread {
                             ith.println("moveValid " + true);
                             // log movevalid message
                             LOGGER.info("OUTGOING movevalid " + true);
+                            // send move message to all clients
+                            broadcast("move " + playerID + " " + x + " " + y);
+                            // log outgoing move message
+                            LOGGER.info("OUTGOING move " + playerID + " " + x + " " + y);
+
                             if(playersTurnID == connections.get(connections.size()-1).getpId()){
                                 playersTurnID = connections.get(0).getpId();
                                 playersTurnCounter = 0;
@@ -275,28 +284,28 @@ public class ConnectionListener extends Thread {
                                     // send goal message to all clients
                                     broadcast("goal player_0" + playerID + " " + x + " " + y );
                                     // log outgoing goal message
-                                    LOGGER.info("goal player_0" + playerID + " " + x + " " + y);
+                                    LOGGER.info("OUTGOING goal player_0" + playerID + " " + x + " " + y);
                                 }
                                 if (ith.getpId() == 1) {
                                     ith.println("deal " + goalListToString(goal1,playerID));                                        //ith.LOGGER.info("deal " + goal1);
                                     // send goal message to all clients
                                     broadcast("goal player_0" + playerID + " " + x + " " + y );
                                     // log outgoing goal message
-                                    LOGGER.info("goal player_0" + playerID + " " + x + " " + y);
+                                    LOGGER.info("OUTGOING goal player_0" + playerID + " " + x + " " + y);
                                 }
                                 if (ith.getpId() == 2) {
                                     ith.println("deal " + goalListToString(goal2,playerID));                                        //ith.LOGGER.info("deal " + goal2);
                                     // send goal message to all clients
                                     broadcast("goal player_0" + playerID + " " + x + " " + y );
                                     // log outgoing goal message
-                                    LOGGER.info("goal player_0" + playerID + " " + x + " " + y);
+                                    LOGGER.info("OUTGOING goal player_0" + playerID + " " + x + " " + y);
                                 }
                                 if (ith.getpId() == 3) {
                                     ith.println("deal " + goalListToString(goal3,playerID));                                        //ith.LOGGER.info("deal " + goal3);
                                     // send goal message to all clients
                                     broadcast("goal player_0" + playerID + " " + x + " " + y );
                                     // log outgoing goal message
-                                    LOGGER.info("goal player_0" + playerID + " " + x + " " + y);
+                                    LOGGER.info("OUTGOING goal player_0" + playerID + " " + x + " " + y);
                                 }
                                 break;
                             case 2:
@@ -314,7 +323,7 @@ public class ConnectionListener extends Thread {
                         //wurde davor bereits gemacht
                         //serverFunctions.movePlayerIfMoveIsPossible(initBoard,playerID,buttonPositionPressed);
                         // log
-                        LOGGER.info("movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
+                        // LOGGER.info("movevalid " + serverFunctions.checkMazeIfMoveIsPossible(initBoard, buttonPositionPressed, playerID));
                         playerPosToString(initBoard);
 
 
