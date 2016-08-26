@@ -18,10 +18,12 @@ public class Lobby implements ActionListener{
     private JButton buttonStart          = new JButton();
     private JButton buttonback           = new JButton();
     private JButton buttonback2           = new JButton();
+    private JButton buttonAbout          = new JButton();
     private JTextField textFieldChat     = new JTextField();
     private JTextArea  textAreaChatText  = new JTextArea();
     private JTextArea  textAreaOpenGames = new JTextArea();
     private JTextArea  textAreaPlayer    = new JTextArea();
+    private JTextArea  textAreaJoinNumber = new JTextArea();
     private JTextArea  hostPlayer0       = new JTextArea();
     private JTextArea  hostPlayer1       = new JTextArea();
     private JTextArea  hostPlayer2       = new JTextArea();
@@ -209,6 +211,20 @@ public class Lobby implements ActionListener{
         constraintsContent.gridx = 0;
         constraintsContent.gridy = 1;
         panelButtons.add(buttonJoin, constraintsContent);
+        //
+        textAreaJoinNumber.setFont(new Font("Serif",Font.PLAIN,textSize));
+        textAreaJoinNumber.setMinimumSize(new Dimension(50,50));
+        textAreaJoinNumber.setPreferredSize(new Dimension(50,50));
+        constraintsContent.anchor = GridBagConstraints.NORTH;
+        constraintsContent.weightx = 0;
+        constraintsContent.weighty = 0;
+        constraintsContent.gridwidth = 1;
+        constraintsContent.gridheight= 1;
+        constraintsContent.insets = new Insets(15, 0, 0, 0);
+        constraintsContent.gridx = 1;
+        constraintsContent.gridy = 1;
+        panelButtons.add(textAreaJoinNumber, constraintsContent);
+        //
 
         buttonRules.setText("Game Rules");
         buttonRules.setFont(new Font("Serif",Font.PLAIN,textSize));
@@ -224,6 +240,23 @@ public class Lobby implements ActionListener{
         constraintsContent.gridx = 0;
         constraintsContent.gridy = 2;
         panelButtons.add(buttonRules, constraintsContent);
+
+        //-----------------------------------------------
+        //about
+        buttonAbout.setText("About");
+        buttonAbout.setFont(new Font("Serif",Font.PLAIN,textSize));
+        buttonAbout.setMinimumSize(new Dimension(150,50));
+        buttonAbout.setPreferredSize(new Dimension(150,50));
+        buttonAbout.addActionListener(this);
+        constraintsContent.anchor = GridBagConstraints.NORTH;
+        constraintsContent.weightx = 0;
+        constraintsContent.weighty = 0;
+        constraintsContent.gridwidth = 1;
+        constraintsContent.gridheight= 1;
+        constraintsContent.insets = new Insets(15, 0, 0, 0);
+        constraintsContent.gridx = 0;
+        constraintsContent.gridy = 3;
+        panelButtons.add(buttonAbout, constraintsContent);
 
         /***************************************************************************************************************
          * panelJoinGame
@@ -384,8 +417,12 @@ public class Lobby implements ActionListener{
         /***************************************************************************************************************
          * frame
          */
+        GradientPanel panelBackground = new GradientPanel();
+        panelContent.setOpaque(false);
+        panelBackground.add(panelContent);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panelContent,BorderLayout.NORTH);
+        frame.add(panelBackground,BorderLayout.NORTH);
         frame.setVisible(true);
         frame.setMinimumSize(new Dimension(1300, 900));
         frame.setLocation(300, 10);
@@ -398,12 +435,24 @@ public class Lobby implements ActionListener{
             panelHostGame.setVisible(true);
         }
         else if(e.getSource() == buttonJoin){
-            panelButtons.setVisible(false);
-            panelJoinGame.setVisible(true);
+
+            if(!textAreaJoinNumber.getText().isEmpty()){
+                panelButtons.setVisible(false);
+                panelJoinGame.setVisible(true);
+            }
+            else{
+                textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(2,2,2,2,Color.red));
+            }
+
+
         }
         else if(e.getSource() == buttonRules){
             Rules rules = new Rules();
             rules.createGui();
+        }
+        else if(e.getSource() == buttonAbout){
+            About about = new About();
+            about.createGui();
         }
         else if(e.getSource() == buttonback){
             panelJoinGame.setVisible(false);

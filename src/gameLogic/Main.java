@@ -32,7 +32,10 @@ public class Main {
             System.out.println("LAF not possible");
         }
 
+        BoardFromClient board = new BoardFromClient();
+
         PlayGround test = new PlayGround("localhost", "Rehan");
+
         test.listen();
     }
 }

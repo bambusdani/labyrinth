@@ -224,30 +224,40 @@ public class PlayGround implements ActionListener {
         constraintsPlayeroverview.gridx = 0;
         constraintsPlayeroverview.gridy = 0;
         JLabel labelSymbolsLeft = setLabel("Fehlende Symbole: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+        labelSymbolsLeft.setHorizontalAlignment(SwingConstants.CENTER);
+        labelSymbolsLeft.setVerticalAlignment(SwingConstants.CENTER);
         panelPlayeroverview.add(labelSymbolsLeft, constraintsPlayeroverview);
         //---------------------------------------------------------------------------------
         // Player 0
         constraintsPlayeroverview.gridx = 1;
         constraintsPlayeroverview.gridy = 0;
-        labelPlayer0 = setLabel(" " , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer0 = setLabel("" , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer0.setHorizontalAlignment(SwingConstants.CENTER);
+        labelPlayer0.setVerticalAlignment(SwingConstants.CENTER);
         panelPlayeroverview.add(labelPlayer0, constraintsPlayeroverview);
         //---------------------------------------------------------------------------------
         // Player 1
         constraintsPlayeroverview.gridx = 2;
         constraintsPlayeroverview.gridy = 0;
-        labelPlayer1 = setLabel(" " , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer1 = setLabel("" , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer1.setHorizontalAlignment(SwingConstants.CENTER);
+        labelPlayer1.setVerticalAlignment(SwingConstants.CENTER);
         panelPlayeroverview.add(labelPlayer1, constraintsPlayeroverview);
         //---------------------------------------------------------------------------------
         // Player 2
         constraintsPlayeroverview.gridx = 3;
         constraintsPlayeroverview.gridy = 0;
-        labelPlayer2 = setLabel(" " , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer2 = setLabel("" , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer2.setHorizontalAlignment(SwingConstants.CENTER);
+        labelPlayer2.setVerticalAlignment(SwingConstants.CENTER);
         panelPlayeroverview.add(labelPlayer2, constraintsPlayeroverview);
         //---------------------------------------------------------------------------------
         // Player 3
         constraintsPlayeroverview.gridx = 4;
         constraintsPlayeroverview.gridy = 0;
-        labelPlayer3 = setLabel(" " , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer3 = setLabel("" , fontSize,boxSizeX, boxSizeY, colorBlack);
+        labelPlayer3.setHorizontalAlignment(SwingConstants.CENTER);
+        labelPlayer3.setVerticalAlignment(SwingConstants.CENTER);
         panelPlayeroverview.add(labelPlayer3, constraintsPlayeroverview);
 
         //---------------------------------------------------------------------------------
@@ -276,64 +286,46 @@ public class PlayGround implements ActionListener {
         JPanel panelInformation = new JPanel(new GridBagLayout());
         GridBagConstraints constraintsInformation = new GridBagConstraints();
 
-        constraintsInformation.anchor = GridBagConstraints.NORTHWEST;
+        constraintsInformation.anchor = GridBagConstraints.NORTH;
         constraintsInformation.weightx = 1;
         constraintsInformation.weighty = 1;
         constraintsInformation.gridwidth = 1;
         constraintsInformation.insets = new Insets(0, 0, 0, 0);
 
         //-----------------------------------------------------------------------------------
-        // reached goals
-        constraintsInformation.gridx = 0;
-        constraintsInformation.gridy = 0;
-        JLabel labelReachedGoals = setLabel("Erreichte Ziele: ",fontSize, boxSizeX, boxSizeY, colorBlack );
-        panelInformation.add(labelReachedGoals, constraintsInformation);
-
-        //-----------------------------------------------------------------------------------
-        //TODO entfernen????
-        // last reached goal symbol
-        constraintsInformation.gridx = 0;
-        constraintsInformation.gridy = 1;
-        // instead of Dragon it should use an image
-        JLabel labelReachedGoalsSymbol = setLabel("",fontSize, stoneSize, stoneSize, colorBlack );
-        //gibt nur das ziel des Players 0 aus sowie das erste ziel gibt ebenfalls falschen wert aus!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        //labelReachedGoalsSymbol.setIcon(board.getAllPlayers()[1].getCreaturesNeeded().get(0).getSymbolImage());
-        labelReachedGoalsSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
-        panelInformation.add(labelReachedGoalsSymbol, constraintsInformation);
-
-        //-----------------------------------------------------------------------------------
         // next goal
         constraintsInformation.gridx = 0;
-        constraintsInformation.gridy = 2;
+        constraintsInformation.gridy = 0;
         JLabel labelNextGoal = setLabel("Nächstes Ziel: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+        labelNextGoal.setHorizontalAlignment(SwingConstants.CENTER);
+        labelNextGoal.setVerticalAlignment(SwingConstants.CENTER);
         panelInformation.add(labelNextGoal, constraintsInformation);
 
         //-----------------------------------------------------------------------------------
         // next goal symbol
         constraintsInformation.gridx = 0;
-        constraintsInformation.gridy = 3;
+        constraintsInformation.gridy = 1;
         labelNextGoalSymbol= setLabel("", fontSize, stoneSize,stoneSize,colorBlack);
-        labelNextGoalSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+        //labelNextGoalSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         panelInformation.add(labelNextGoalSymbol, constraintsInformation);
 
         //-----------------------------------------------------------------------------------
         // next stone
         constraintsInformation.gridx = 0;
-        constraintsInformation.gridy = 4;
+        constraintsInformation.gridy = 2;
         JLabel labelNextStone = setLabel("Nächster Stein: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+        labelNextStone.setHorizontalAlignment(SwingConstants.CENTER);
+        labelNextStone.setVerticalAlignment(SwingConstants.CENTER);
         panelInformation.add(labelNextStone, constraintsInformation);
 
         //-----------------------------------------------------------------------------------
         // next stone symbol
         constraintsInformation.gridx = 0;
-        constraintsInformation.gridy = 5;
+        constraintsInformation.gridy = 3;
         // instead of "T" it should use an image
 
-
-
         this.labelNextStoneSymbol = setLabel("",fontSize, stoneSize, stoneSize, colorBlack );
-        this.labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+        //this.labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         panelInformation.add(this.labelNextStoneSymbol, constraintsInformation);
 
 
@@ -538,6 +530,8 @@ public class PlayGround implements ActionListener {
         //====================================================================================
 
         JPanel panelContent = new JPanel(new GridBagLayout());
+        //GradientPanel panelContent = new GradientPanel();
+        //panelContent.setLayout(new GridBagLayout());
         GridBagConstraints constraintsContent = new GridBagConstraints();
 
         //Play overview
@@ -586,7 +580,21 @@ public class PlayGround implements ActionListener {
         //---------
         //adding to frame
         this.frame = createFrame();
-        this.frame.add(panelContent);
+
+
+        // sets the Opaque
+        panelPlayeroverview.setOpaque(false);
+        panelInformation.setOpaque(false);
+        panelGameField.setOpaque(false);
+        panelChat.setOpaque(true);
+        panelContent.setOpaque(false);
+
+        //places the panelContent on the panelBackground
+        GradientPanel panelBackground = new GradientPanel();
+        panelBackground.setLayout(new GridBagLayout());
+        panelBackground.add(panelContent);
+
+        this.frame.add(panelBackground);
 
 
         //Alle buttons in das array schreiben
@@ -612,7 +620,7 @@ public class PlayGround implements ActionListener {
     //====================================================================
     public JFrame createFrame(){
         JFrame frame = new JFrame("Join Game");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         //entfernt die obere leiste
         //frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         //frame.setUndecorated(true);
@@ -1087,15 +1095,36 @@ public class PlayGround implements ActionListener {
         labelNextStoneSymbol.setIcon(board.getNextTile().getShape().getImage());
 
 
+
+
+
+
+
         //draw points of player with color
-        labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore());
-        labelPlayer0.setForeground(board.getPlayer(0).getColor());
-        labelPlayer1.setText(board.getPlayer(1).getNameOfPlayer() + ": " + board.getPlayer(1).getScore());
-        labelPlayer1.setForeground(board.getPlayer(1).getColor());
-        labelPlayer2.setText(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore());
-        labelPlayer2.setForeground(board.getPlayer(2).getColor());
-        labelPlayer3.setText(board.getPlayer(3).getNameOfPlayer() + ": " + board.getPlayer(3).getScore());
-        labelPlayer3.setForeground(board.getPlayer(3).getColor());
+        if(!board.getPlayer(0).getNameOfPlayer().isEmpty()){
+            labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore() + " / 6");
+            labelPlayer0.setForeground(board.getPlayer(0).getColor());
+            labelPlayer0.setOpaque(true);
+            labelPlayer0.setBackground(Color.white);
+        }
+        if(!board.getPlayer(1).getNameOfPlayer().isEmpty()) {
+            labelPlayer1.setText(board.getPlayer(1).getNameOfPlayer() + ": " + board.getPlayer(1).getScore() + " / 6");
+            labelPlayer1.setForeground(board.getPlayer(1).getColor());
+            labelPlayer1.setOpaque(true);
+            labelPlayer1.setBackground(Color.white);
+        }
+        if(!board.getPlayer(2).getNameOfPlayer().isEmpty()) {
+            labelPlayer2.setText(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore() + " / 6");
+            labelPlayer2.setForeground(board.getPlayer(2).getColor());
+            labelPlayer2.setOpaque(true);
+            labelPlayer2.setBackground(Color.white);
+        }
+        if(!board.getPlayer(3).getNameOfPlayer().isEmpty()) {
+            labelPlayer3.setText(board.getPlayer(3).getNameOfPlayer() + ": " + board.getPlayer(3).getScore() + " / 6");
+            labelPlayer3.setForeground(board.getPlayer(3).getColor());
+            labelPlayer3.setOpaque(true);
+            labelPlayer3.setBackground(Color.white);
+        }
 
         labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
 
