@@ -72,9 +72,9 @@ public class ConnectionListener extends Thread {
         //--------------------------------------------------------------------------------
         // assemble an init string for logging
         String[] tmpTileID = tileID.split("\\s+");
-        String[] tmpTileRot = tileRot.split("\\s*");
+        String[] tmpTileRot = tileRot.split("\\s+");
         String[] tmpTileX = tileX.split("\\s+");
-        String[] tmpTileY = tileY.split("\\+s");
+        String[] tmpTileY = tileY.split("\\s+");
         for (int j = 0; j < tmpTileID.length; j++) {
             init += tmpTileID[j] + " " + tmpTileRot[j] + " " + tmpTileX[j] + " " + tmpTileY[j] + " ";
         }
