@@ -151,13 +151,20 @@ public class StartScreen extends JPanel implements ActionListener {
     public void actionPerformed (ActionEvent e){
 
         if(e.getSource() == buttonSubmit){
-            if((!textAreaName.getText().isEmpty())&&(!textAreaIP.getText().isEmpty())){
-                Lobby lobby = new Lobby(textAreaName.getText());
-                frame.dispose();
+            if((!textAreaName.getText().isEmpty())){
+
+                if(!textAreaIP.getText().isEmpty()){
+                    Lobby lobby = new Lobby(textAreaName.getText());
+                    frame.dispose();
+                }
+                else{
+                    labelIP.setForeground(Color.red);
+                }
             }
             else{
                 labelText.setForeground(Color.red);
             }
+
         }
     }
 

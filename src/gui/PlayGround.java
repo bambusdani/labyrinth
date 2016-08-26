@@ -221,12 +221,12 @@ public class PlayGround implements ActionListener {
 
         //--------------------------------------------------------------------------------
         // symbols left
-        constraintsPlayeroverview.gridx = 0;
-        constraintsPlayeroverview.gridy = 0;
-        JLabel labelSymbolsLeft = setLabel("Fehlende Symbole: ",fontSize, boxSizeX, boxSizeY, colorBlack );
-        labelSymbolsLeft.setHorizontalAlignment(SwingConstants.CENTER);
-        labelSymbolsLeft.setVerticalAlignment(SwingConstants.CENTER);
-        panelPlayeroverview.add(labelSymbolsLeft, constraintsPlayeroverview);
+        //constraintsPlayeroverview.gridx = 0;
+        //constraintsPlayeroverview.gridy = 0;
+        //JLabel labelSymbolsLeft = setLabel("Fehlende Symbole: ",fontSize, boxSizeX, boxSizeY, colorBlack );
+        //labelSymbolsLeft.setHorizontalAlignment(SwingConstants.CENTER);
+        //labelSymbolsLeft.setVerticalAlignment(SwingConstants.CENTER);
+        //panelPlayeroverview.add(labelSymbolsLeft, constraintsPlayeroverview);
         //---------------------------------------------------------------------------------
         // Player 0
         constraintsPlayeroverview.gridx = 1;
@@ -1135,16 +1135,16 @@ public class PlayGround implements ActionListener {
         labelPlayer3.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, colorBlack));
         // draw a border around the player which turn it is
         if(board.getPlayer(0).getPlayerID() == playersTurnID){
-            labelPlayer0.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+            labelPlayer0.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, colorBlack));
         }
         else if(board.getPlayer(1).getPlayerID() == playersTurnID){
-            labelPlayer1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+            labelPlayer1.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, colorBlack));
         }
         else if(board.getPlayer(2).getPlayerID() == playersTurnID){
-            labelPlayer2.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+            labelPlayer2.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, colorBlack));
         }
         else if(board.getPlayer(3).getPlayerID() == playersTurnID){
-            labelPlayer3.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
+            labelPlayer3.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, colorBlack));
         }
     }
 
