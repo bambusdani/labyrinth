@@ -240,9 +240,9 @@ public class ConnectionListener extends Thread {
                             // log movevalid message
                             LOGGER.info("OUTGOING movevalid " + true);
                             // send move message to all clients
-                            broadcast("move " + playerID + " " + x + " " + y);
+                            broadcast("move player_0" + playerID + " " + x + " " + y);
                             // log outgoing move message
-                            LOGGER.info("OUTGOING move " + playerID + " " + x + " " + y);
+                            LOGGER.info("OUTGOING move player_0" + playerID + " " + x + " " + y);
 
                             if(playersTurnID == connections.get(connections.size()-1).getpId()){
                                 playersTurnID = connections.get(0).getpId();
