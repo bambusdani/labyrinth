@@ -104,4 +104,5 @@ public class Connection extends Thread {
     public void setReady(boolean ready) {
         this.ready = ready;
     }
+
 }

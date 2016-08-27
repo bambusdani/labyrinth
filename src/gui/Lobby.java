@@ -49,6 +49,8 @@ public class Lobby implements ActionListener{
 
     private String tmpName, nameOfPlayer;
     private String playerID;
+    private boolean ready=false;
+    private String[] readyPlayers = new String[4];
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
 
     public Lobby(String hostName, String name){
@@ -469,6 +471,11 @@ public class Lobby implements ActionListener{
             textFieldChat.requestFocusInWindow();
         }
         else if(e.getSource() == buttonHost){
+            // hoster is always ready, send to server
+            out.println("ready");
+            // log outgoing message
+            LOGGER.info("OUTGOING ready");
+
             panelButtons.setVisible(false);
             panelHostGame.setVisible(true);
         }
@@ -513,6 +520,7 @@ public class Lobby implements ActionListener{
 
         else if(e.getSource()== buttonStart){
             //Todo start game
+            out.println("start");
             System.out.println("start Game");
         }
 
@@ -573,6 +581,27 @@ public class Lobby implements ActionListener{
             else if (s.startsWith("ready")) {
                 // log incoming ready message
                 LOGGER.info("INCOMING " + s);
+                // set player to ready
+                String[] tmpReady = s.split("\\s+");
+                if (playerID.equalsIgnoreCase(tmpReady[1])) {
+                    this.ready = true;
+                }
+            }
+            // readyPlayers
+            else if (s.startsWith("readyPlayers")) {
+                String[] tmpReadyPlayers = s.split("\\s+");
+                for (int i = 0; i < readyPlayers.length; i++) {
+                    readyPlayers[i] = tmpReadyPlayers[i+1];
+                }
+                hostPlayer0.setText(tmpReadyPlayers[1]);
+                System.out.println(readyPlayers.length);
+            }
+            // 'gamestart' parameter
+            else if (s.startsWith("gamestart")) {
+                // log incoming game start message
+                LOGGER.info("INCOMING gamestart");
+                // do something
+                System.out.println("Game is starting...");
             }
             // 'chat' parameter
             else {
@@ -581,8 +610,9 @@ public class Lobby implements ActionListener{
                 textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
                 // log incoming chat message
                 LOGGER.info("INCOMING " + s);
+                }
             }
-        }
+
         out.close();
         in.close();
         try                 { socket.close();      }

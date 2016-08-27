@@ -18,7 +18,7 @@ public class ConnectionListener extends Thread {
 
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
-    private String players="";
+    private String players="", readyPlayers="";
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -92,7 +92,7 @@ public class ConnectionListener extends Thread {
                 if (ith.isAlive() && message != null) {
                     // 'ready' parameter (ready playerID)
                     if (message.startsWith("ready")) {
-                        // set players connection to ready=true
+                        // set players connection to ready
                         connections.get(i).setReady(true);
                         // log incoming message
                         LOGGER.info("INCOMING ready");
@@ -100,6 +100,26 @@ public class ConnectionListener extends Thread {
                         broadcast("ready " + connections.get(i).getpId());
                         // log outgoing ready message
                         LOGGER.info("OUTGOING ready "+ connections.get(i).getpId());
+                        // append name to readyPlayers
+                        if (!readyPlayers.contains(connections.get(i).getpId()+"")) {
+                            readyPlayers += connections.get(i).getPlayerName() + " ";
+                            // broadcast readyPlayers to all clients
+                            broadcast("readyPlayers " + readyPlayers);
+                        }
+                    }
+                    // 'start' parameter (starting the game)
+                    else if (message.startsWith("start")) {
+                        // log incoming start message
+                        LOGGER.info("INCOMING start");
+                        // start the game with players who are ready
+                        for (Connection kth : connections) {
+                            if (kth.isReady()) {
+                                // send game start message to ready clients
+                                kth.println("gamestart");
+                                // log outgoing game start message
+                                LOGGER.info("OUTGOING gamestart");
+                            }
+                        }
                     }
                 }
 
