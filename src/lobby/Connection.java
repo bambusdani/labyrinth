@@ -28,6 +28,8 @@ public class Connection extends Thread {
         in = new In(socket);
         out = new Out(socket);
         this.socket = socket;
+
+        // startServer();
     }
 
     public void println(String s) {
@@ -48,8 +50,6 @@ public class Connection extends Thread {
         }
         System.err.println("closing socket");
     }
-
-    ;
 
     /***************************************************************************
      *  The methods getMessage() and setMessage() are synchronized
@@ -107,4 +107,16 @@ public class Connection extends Thread {
         this.ready = ready;
     }
 
+    public void startServer() {
+        try {
+            String[] startOptions = new String[]{System.getProperty("java.home") + "/bin/java",
+                    "-Djava.util.logging.config.file=src/network/logging.properties",
+                    "-jar",
+                    "gameServer.jar",
+                    "4445"};
+            new ProcessBuilder(startOptions).start();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
 }
