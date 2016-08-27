@@ -328,6 +328,17 @@ public class ConnectionListener extends Thread {
 
 
                     }
+                    else if(message.startsWith("leave ")){
+                        if(connections.size()-1 == playersTurnCounter){
+                            playersTurnCounter = 0;
+                            playersTurnID = connections.get(playersTurnCounter).getpId();
+                        }
+                        else{
+                            playersTurnCounter ++;
+                            playersTurnID = connections.get(playersTurnCounter).getpId();
+                        }
+
+                    }
                 }
                 //--------------------------------------------------------------------------------
                 // begin with server broadcasting to all clients
@@ -394,6 +405,10 @@ public class ConnectionListener extends Thread {
                                 jth.println("disconnect player_0" + tmpLeave[1]);
                                 // log outgoing disconnect message
                                 LOGGER.info("OUTGOING disconnect player_0" + tmpLeave[1]);
+
+                                jth.println("playersTurnID " + playersTurnID);
+                                jth.println("draw ");
+
                             }
                             else {
                                 // sendet alles was nicht über ifs abgefangen wird weiter (chat)
