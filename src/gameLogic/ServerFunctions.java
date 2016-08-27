@@ -282,13 +282,14 @@ public class ServerFunctions {
             possibleArrowInsertions[index] = true;
         }
     }
-    //==================================================================================================================
 
-
-
-
-
-
+    /**
+     * Players is moved if the move is valid
+     * @param board
+     * @param playerID
+     * @param buttonPositionPressed
+     * @return
+     */
     public Board movePlayerIfMoveIsPossible(Board board, int playerID, Position buttonPositionPressed){
         if(checkMazeIfMoveIsPossible(board, buttonPositionPressed, playerID)){
             board.getPlayer(playerID).setActualPosition(buttonPositionPressed);
@@ -298,14 +299,15 @@ public class ServerFunctions {
         }
         return board;
     }
-    //------------------------------------------------------------------------------------------------------------------
 
-    /**================================================================================
-     * function checkMazeIfMoveIsPossible
-     * buttonPositionPressed = Position wo der Button gedrückt wurde
-     * visited = merkt sich wo man bereits war sonst durchläuft es eine dauerschleife
-     * ================================================================================**/
-
+    /**
+     * checks wether move to button pressed position is possible
+     * Visited is set to remember already visited tiles -> no endless loop
+     * @param board
+     * @param buttonPositionPressed
+     * @param playerID
+     * @return
+     */
     public boolean checkMazeIfMoveIsPossible(Board board, Position buttonPositionPressed, int playerID){
         // setzt alle Werte auf false -> wurde noch nicht besucht
         for (int p=0; p<7;p++){
@@ -321,14 +323,13 @@ public class ServerFunctions {
 
     /**
      * isMovePossible
+     * goes trough the maze
+     * places booleans in visited and walks on the maze
      * @param board
      * @param buttonPositionPressed
      * @param tilePositionX -> actual x-position of the player on the tiles
      * @param tilePositionY -> actual y-position of the player on the tiles
      * @return
-     * goes trough the maze
-     * places booleans in visited and walks on the maze
-     *
      */
     public boolean isMovePossible (Board board, Position buttonPositionPressed,int tilePositionX , int tilePositionY){
 
@@ -371,7 +372,12 @@ public class ServerFunctions {
         return false;
     }
 
-
+    /**
+     * players are moved with tile by insertion
+     * @param board
+     * @param arrowNumber
+     * @return
+     */
     public Board movePlayerIfStoneIsPlacedInMaze(Board board, int arrowNumber){
         int rownumber = 0;
         switch (arrowNumber){
@@ -460,8 +466,7 @@ public class ServerFunctions {
 
 
 
-    /*******************************************************************************************************************
-     * //TODO
+    /**
      * IsPlayerGettingPoints
      * Funktion, welche überprüft, ob der Spieler auf dem gesuchten Symbol steht. Falls ja wird ein Punkt dazu addiert
      * return 0 = kein Punkt
@@ -499,7 +504,11 @@ public class ServerFunctions {
         return possibleArrowInsertions;
     }
 
-
+    /**
+     * ID is given back, to check which button must be disabled
+     * @param buttonID
+     * @return
+     */
     public int disabledArrowID(int buttonID){
         switch (buttonID){
             case 0:

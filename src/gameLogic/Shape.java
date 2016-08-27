@@ -7,9 +7,13 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.*;
 
-
+/**
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
+ */
 public class Shape {
-
+    
     private ImageIcon buImg;
     private String shape;
     private boolean[] possiblePaths = new boolean[4]; //top right bottom left???
