@@ -24,6 +24,8 @@ public class Server {
             Connection connection = new Connection(clientSocket);
             connections.add(connection);
             connection.start();
+
+
         }
     }
 }

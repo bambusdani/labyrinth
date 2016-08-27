@@ -16,12 +16,14 @@
 
 package network;
 
+import com.sun.tools.internal.jxc.SchemaGenerator;
+
 import java.net.Socket;
 import java.net.ServerSocket;
 import java.util.Vector;
 
-public class Server {
-    public static void main(String[] args) throws Exception {
+public class Server extends Thread {
+    public static void main() throws Exception {
         Vector<Connection> connections        = new Vector<Connection>();
         ServerSocket serverSocket             = new ServerSocket(4445);
         ConnectionListener connectionListener = new ConnectionListener(connections);
@@ -40,6 +42,10 @@ public class Server {
             Connection connection = new Connection(clientSocket);
             connections.add(connection);
             connection.start();
+
+                        try {
+                Thread.sleep(100);
+            } catch (Exception e) {}
         }
     }
 }

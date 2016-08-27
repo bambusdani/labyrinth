@@ -12,6 +12,8 @@ import network.In;
 import network.Out;
 import gameLogic.*;
 
+import static com.sun.javafx.tools.resource.DeployResource.Type.jar;
+
 public class Connection extends Thread {
     private Socket socket;
     private Out out;
