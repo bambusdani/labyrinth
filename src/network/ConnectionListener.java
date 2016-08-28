@@ -23,6 +23,7 @@ public class ConnectionListener extends Thread {
     //PlayerTurn
     private int playersTurnID=0;
     private int playersTurnCounter = 0;
+    private boolean[] leftPlayers = {false,false,false,false};
 
     private boolean gameEnd = false;
     private String gameEndPlayerName = "";
@@ -329,14 +330,31 @@ public class ConnectionListener extends Thread {
 
                     }
                     else if(message.startsWith("leave ")){
-                        if(connections.size()-1 == playersTurnCounter){
-                            playersTurnCounter = 0;
-                            playersTurnID = connections.get(playersTurnCounter).getpId();
+                        String[] leaveString = message.split("\\s+");
+
+                        int idLeftPlayer = Integer.parseInt(leaveString[1]);
+
+                        System.out.println("1 idLeftPlayer: " + idLeftPlayer);
+                        System.out.println("1 id turn: " + connections.get(playersTurnCounter).getpId());
+
+                        //wenn es mein zug ist dann gehe eins weiter
+                        if(connections.get(playersTurnCounter).getId() == idLeftPlayer ){
+
+                            if(connections.size()-1 == playersTurnCounter){
+                                System.out.println("IN IF");
+                                playersTurnCounter = 0;
+                                playersTurnID = connections.get(playersTurnCounter).getpId();
+                            }
+                            else{
+                                System.out.println("in else");
+                                playersTurnCounter ++;
+                                playersTurnID = connections.get(playersTurnCounter).getpId();
+                            }
                         }
-                        else{
-                            playersTurnCounter ++;
-                            playersTurnID = connections.get(playersTurnCounter).getpId();
-                        }
+
+                        System.out.println("2 idLeftPlayer: " + idLeftPlayer);
+                        System.out.println("2 id turn: " + connections.get(playersTurnCounter).getpId());
+
 
                     }
                 }
