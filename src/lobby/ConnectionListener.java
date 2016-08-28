@@ -18,8 +18,8 @@ public class ConnectionListener extends Thread {
 
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
-    private String players="", readyPlayers="", gameRooms="";
-    private int gameRoomID=0;
+    private String players="", readyPlayers="", rooms="", hosts="";
+    private int roomID=0;
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -92,16 +92,28 @@ public class ConnectionListener extends Thread {
                 // not init
                 if (ith.isAlive() && message != null) {
                     // 'host' parameter
-                    // TODO it has to be 'host GameRoomName'
                     if (message.startsWith("host")) {
+                        String[] tmpHost = message.split("\\s+");
                         // log incoming message
-                        LOGGER.info("INCOMING host");
+                        LOGGER.info("INCOMING " + message);
                         // set client to host
                         connections.get(i).setHost(true);
-                        // send players gameRommID
-                        // gameRoomID+1
-                        gameRoomID++;
-                        broadcast("gameRoomID " + gameRoomID + "");
+                        // rooms
+                        // save room name
+                        rooms += tmpHost[1];
+                        // roomID + 1
+                        roomID++;
+                        // send rooms to all clients
+                        broadcast("rooms " + tmpHost[1] + " " + roomID+"");
+                        // log outgoing rooms message
+                        LOGGER.info("OUTGOING rooms " + tmpHost[1]);
+
+                        // hosts
+                        hosts += tmpHost[1] + " " + connections.get(i).getpId() + " ";
+                        // send hosts too all clients
+                        broadcast("hosts " + hosts);
+                        // log outgoing hosts message
+                        LOGGER.info("OUTGOING hosts " + hosts);
                     }
                     // 'ready' parameter (ready playerID)
                     else {
