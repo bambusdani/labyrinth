@@ -337,13 +337,33 @@ public class ConnectionListener extends Thread {
                         System.out.println("1 idLeftPlayer: " + idLeftPlayer);
                         System.out.println("1 id turn: " + connections.get(playersTurnCounter).getpId());
 
-                        //wenn es mein zug ist dann gehe eins weiter
 
 
-                        //wenn ein spieler geht der nicht am zug ist und vor der jetzigen spieler ist
-                        if(idLeftPlayer < connections.get(playersTurnCounter).getId()){
-                            playersTurnCounter --;
+                        System.out.println("1playersTurnID:  " + playersTurnID);
+                        System.out.println("1playersCounter: " + playersTurnCounter);
+
+                        //wenn der spieler geht der gerade dran ist und es mehr als ein spieler ist
+                        if((connections.get(playersTurnCounter).getpId() == idLeftPlayer) && (connections.size() > 1)){
+                            System.out.println("in if");
+
+                            if(idLeftPlayer == connections.get(connections.size()-1).getpId()){
+                                System.out.println("1if");
+                                //playersTurnCounter=0;
+                                playersTurnID =connections.get(0).getpId();
+                            }else{
+                                System.out.println("else");
+                                //wenn es nicht der lezte ist -> liste verkürzt sich um eins -> wie eins weitergehen
+                                //müsste gleich bleiben nicht ++
+                                //playersTurnCounter++;
+                                playersTurnID = connections.get(playersTurnCounter+1).getpId();
+                            }
+
+                            System.out.println("2playersTurnID:  " + playersTurnID);
+                            System.out.println("2playersCounter: " + playersTurnCounter);
+
+
                         }
+
 
                         /*
                         if((connections.get(playersTurnCounter).getpId() == idLeftPlayer )&&(connections.size()> 1)){
@@ -366,6 +386,14 @@ public class ConnectionListener extends Thread {
 
 
 
+
+
+                        //wenn ein spieler geht der nicht am zug ist und vor dem jetzigen spieler ist
+                        //Bsp. spieler 3 ist dran und spieler 1 verlässt das spiel
+                        else if(idLeftPlayer < connections.get(playersTurnCounter).getId()){
+                            System.out.println("previous person left");
+                            playersTurnCounter --;
+                        }
                     }
                 }
                 //--------------------------------------------------------------------------------
