@@ -89,19 +89,19 @@ public class PlayGround implements ActionListener {
     private Border border2;
     private Border border3;
     //two colors
-    Border border01;
-    Border border02;
-    Border border03;
-    Border border12;
-    Border border13;
-    Border border23;
+    private Border border01;
+    private Border border02;
+    private Border border03;
+    private Border border12;
+    private Border border13;
+    private Border border23;
     //three colors
-    Border border012;
-    Border border123;
-    Border border230;
-    Border border013;
+    private Border border012;
+    private Border border123;
+    private Border border230;
+    private Border border013;
     //four colors
-    Border border0123;
+    private Border border0123;
 
     //label für das Nachste Ziel
     private JLabel labelNextGoalSymbol;
@@ -929,7 +929,7 @@ public class PlayGround implements ActionListener {
                 String[] points = s.split("\\s+");
                 System.out.println(points.length);
                 System.out.println("points: " + points[0] + " " + points[1] + " " + points[2] + " " + points[3] + " " + points[4]);
-                for (int i = 1; i < board.getAllPlayers().length; i++) {
+                for (int i = 1; i < board.getAllPlayers().length+1; i++) {
                     board.getPlayer(i - 1).setScore(Integer.parseInt(points[i]));
                 }
             } else if (s.startsWith("draw")) {
@@ -996,7 +996,8 @@ public class PlayGround implements ActionListener {
             else if (s.startsWith("disconnect")) {
                 // log incoming disconnect message
                 LOGGER.info("INCOMING " + s);
-            } else {
+            }
+            else {
                 // in case of chat
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
@@ -1126,7 +1127,6 @@ public class PlayGround implements ActionListener {
         }
 
         labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
-
 
         //resets the borders
         labelPlayer0.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, colorBlack));
