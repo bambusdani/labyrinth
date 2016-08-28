@@ -516,11 +516,19 @@ public class Lobby implements ActionListener{
             panelJoinGame.setVisible(false);
             panelHostGame.setVisible(false);
             panelButtons.setVisible(true);
+            textAreaHostName.setBorder(BorderFactory.createMatteBorder(0,0,0,0,Color.black));
+            textAreaHostName.setText("");
+            textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(0,0,0,0,Color.black));
+            textAreaJoinNumber.setText("");
         }
         else if(e.getSource() == buttonback2){
             panelJoinGame.setVisible(false);
             panelHostGame.setVisible(false);
             panelButtons.setVisible(true);
+            textAreaHostName.setBorder(BorderFactory.createMatteBorder(0,0,0,0,Color.black));
+            textAreaHostName.setText("");
+            textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(0,0,0,0,Color.black));
+            textAreaJoinNumber.setText("");
         }
 
         else if (e.getSource()== buttonReady){
