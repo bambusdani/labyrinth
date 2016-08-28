@@ -14,7 +14,7 @@ import javax.swing.*;
  * if you press join at the lobby it will create joinGame
  *
  */
-public class Main {
+public class Main3 {
     public static void main(String[] args) {
 
         /**
@@ -33,7 +33,7 @@ public class Main {
 
         BoardFromClient board = new BoardFromClient();
 
-        PlayGround test = new PlayGround("localhost", "marvin");
+        PlayGround test = new PlayGround("localhost", "daniel");
 
         test.listen();
     }
