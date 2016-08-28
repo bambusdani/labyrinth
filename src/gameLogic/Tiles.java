@@ -39,7 +39,9 @@ public class Tiles {
     public void setPosition(Position position){this.position = position;}
     public void setRotation(int rotation){this.rotation = rotation;}
 
-    /** PUSH */
+    /**
+     * PUSH
+     */
     public void push(int pRotation, int pX, int pY) {
         setRotation(pRotation);
         setPosition(new Position(pX,pY));
