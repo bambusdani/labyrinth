@@ -963,7 +963,7 @@ public class PlayGround implements ActionListener {
 
                 //-> 100 is never used so nobody can press anything
                 playersTurnID = 100;
-                GameEnd gameEnd = new GameEnd();
+                GameEnd gameEnd = new GameEnd(this.frame);
                 gameEnd.createGui(s.substring(7));
             }
             // incoming init message

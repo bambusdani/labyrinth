@@ -19,6 +19,11 @@ public class GameEnd implements ActionListener{
     private JButton newGame = addButtons("neues Spiel");
     private JButton endGame = addButtons("Spiel beenden");
     private JFrame frame = createFrame();
+    private JFrame playGroundFrame;
+
+    public GameEnd(JFrame playGroundFrame){
+        this.playGroundFrame = playGroundFrame;
+    }
 
     //======================================================================
     //creates the GUI for the Class GameEnd
@@ -127,15 +132,15 @@ public class GameEnd implements ActionListener{
     //action listener funktionen
     public void actionPerformed (ActionEvent ae){
         if(ae.getSource() == this.endGame){
-            frame.dispose();
+            System.exit(0);
         }
-        else if(ae.getSource() == this.newGame){s
+        else if(ae.getSource() == this.newGame){
+            this.frame.dispose();
+            this.playGroundFrame.dispose();
         }
     }
 
     public static void main(String[] args) {
-        GameEnd gameEnd = new GameEnd();
-        gameEnd.createGui("Wurschtbrot");
     }
 
 }
