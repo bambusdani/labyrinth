@@ -30,6 +30,7 @@ public class Lobby implements ActionListener{
     private JTextArea  textAreaChatText  = new JTextArea();
     private JTextArea  textAreaOpenGames = new JTextArea();
     private JTextArea  textAreaPlayer    = new JTextArea();
+    private JTextArea  textAreaHostName  = new JTextArea();
     private JTextArea  textAreaJoinNumber = new JTextArea();
     private JTextArea  hostPlayer0       = new JTextArea();
     private JTextArea  hostPlayer1       = new JTextArea();
@@ -229,6 +230,20 @@ public class Lobby implements ActionListener{
         constraintsContent.gridy = 0;
         panelButtons.add(buttonHost, constraintsContent);
 
+        textAreaHostName.setFont(new Font("Serif",Font.PLAIN,textSize));
+        textAreaHostName.setMinimumSize(new Dimension(150,50));
+        textAreaHostName.setPreferredSize(new Dimension(150,50));
+        constraintsContent.anchor = GridBagConstraints.NORTH;
+        constraintsContent.weightx = 0;
+        constraintsContent.weighty = 0;
+        constraintsContent.gridwidth = 1;
+        constraintsContent.gridheight= 1;
+        constraintsContent.insets = new Insets(15, 10, 0, 0);
+        constraintsContent.gridx = 1;
+        constraintsContent.gridy = 0;
+        panelButtons.add(textAreaHostName, constraintsContent);
+        //
+
         buttonJoin.setText("Join Game");
         buttonJoin.setFont(new Font("Serif",Font.PLAIN,textSize));
         buttonJoin.setMinimumSize(new Dimension(150,50));
@@ -245,14 +260,14 @@ public class Lobby implements ActionListener{
         panelButtons.add(buttonJoin, constraintsContent);
         //
         textAreaJoinNumber.setFont(new Font("Serif",Font.PLAIN,textSize));
-        textAreaJoinNumber.setMinimumSize(new Dimension(50,50));
-        textAreaJoinNumber.setPreferredSize(new Dimension(50,50));
+        textAreaJoinNumber.setMinimumSize(new Dimension(150,50));
+        textAreaJoinNumber.setPreferredSize(new Dimension(150,50));
         constraintsContent.anchor = GridBagConstraints.NORTH;
         constraintsContent.weightx = 0;
         constraintsContent.weighty = 0;
         constraintsContent.gridwidth = 1;
         constraintsContent.gridheight= 1;
-        constraintsContent.insets = new Insets(15, 0, 0, 0);
+        constraintsContent.insets = new Insets(15, 10, 0, 0);
         constraintsContent.gridx = 1;
         constraintsContent.gridy = 1;
         panelButtons.add(textAreaJoinNumber, constraintsContent);
@@ -486,8 +501,13 @@ public class Lobby implements ActionListener{
             // log outgoing message
             LOGGER.info("OUTGOING ready");
 
-            panelButtons.setVisible(false);
-            panelHostGame.setVisible(true);
+            if(!textAreaHostName.getText().isEmpty()){
+                panelButtons.setVisible(false);
+                panelHostGame.setVisible(true);
+            }
+            else {
+                textAreaHostName.setBorder(BorderFactory.createMatteBorder(2,2,2,2,Color.red));
+            }
         }
         else if(e.getSource() == buttonJoin){
 
@@ -513,11 +533,19 @@ public class Lobby implements ActionListener{
             panelJoinGame.setVisible(false);
             panelHostGame.setVisible(false);
             panelButtons.setVisible(true);
+            textAreaHostName.setBorder(BorderFactory.createMatteBorder(0,0,0,0,Color.black));
+            textAreaHostName.setText("");
+            textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(0,0,0,0,Color.black));
+            textAreaJoinNumber.setText("");
         }
         else if(e.getSource() == buttonback2){
             panelJoinGame.setVisible(false);
             panelHostGame.setVisible(false);
             panelButtons.setVisible(true);
+            textAreaHostName.setBorder(BorderFactory.createMatteBorder(0,0,0,0,Color.black));
+            textAreaHostName.setText("");
+            textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(0,0,0,0,Color.black));
+            textAreaJoinNumber.setText("");
         }
 
         else if (e.getSource()== buttonReady){
