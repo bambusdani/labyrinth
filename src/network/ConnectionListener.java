@@ -338,22 +338,32 @@ public class ConnectionListener extends Thread {
                         System.out.println("1 id turn: " + connections.get(playersTurnCounter).getpId());
 
                         //wenn es mein zug ist dann gehe eins weiter
-                        if(connections.get(playersTurnCounter).getId() == idLeftPlayer ){
 
+
+                        //wenn ein spieler geht der nicht am zug ist und vor der jetzigen spieler ist
+                        if(idLeftPlayer < connections.get(playersTurnCounter).getId()){
+                            playersTurnCounter --;
+                        }
+
+                        /*
+                        if((connections.get(playersTurnCounter).getpId() == idLeftPlayer )&&(connections.size()> 1)){
+
+                            //wenn der letzte geht
                             if(connections.size()-1 == playersTurnCounter){
-                                System.out.println("IN IF");
                                 playersTurnCounter = 0;
                                 playersTurnID = connections.get(playersTurnCounter).getpId();
                             }
-                            else{
-                                System.out.println("in else");
-                                playersTurnCounter ++;
+                            else {
+
+                                //wenn nicht der letzte geht
+                                playersTurnCounter++;
                                 playersTurnID = connections.get(playersTurnCounter).getpId();
                             }
-                        }
 
-                        System.out.println("2 idLeftPlayer: " + idLeftPlayer);
-                        System.out.println("2 id turn: " + connections.get(playersTurnCounter).getpId());
+
+
+                        }*/
+
 
 
                     }
