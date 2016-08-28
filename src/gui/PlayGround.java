@@ -978,7 +978,7 @@ public class PlayGround implements ActionListener {
                 String[] points = s.split("\\s+");
                 System.out.println(points.length);
                 System.out.println("points: " + points[0] + " " + points[1] + " " + points[2] + " " + points[3] + " " + points[4]);
-                for (int i = 1; i < board.getAllPlayers().length; i++) {
+                for (int i = 1; i < board.getAllPlayers().length+1; i++) {
                     board.getPlayer(i - 1).setScore(Integer.parseInt(points[i]));
                 }
             } else if (s.startsWith("draw")) {
