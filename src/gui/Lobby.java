@@ -11,10 +11,12 @@ import java.util.logging.Logger;
 import network.In;
 import network.Out;
 import lobby.Server;
-/**
- * Created by m on 23.08.2016.
- */
 
+/**
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
+ */
 public class Lobby implements ActionListener{
 
     private ImageIcon titleimage         = new ImageIcon("src/resources/titel/titelImage.jpg");
@@ -625,7 +627,6 @@ public class Lobby implements ActionListener{
                 }
             }
         } catch (Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look and feel.
         }
 
         //StartScreen startScreen = new StartScreen();

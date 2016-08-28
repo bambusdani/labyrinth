@@ -16,6 +16,9 @@ import javax.swing.*;
 * */
 public class GameEnd implements ActionListener{
 
+    /**
+     * Attributes
+     */
     private JButton newGame = addButtons("neues Spiel");
     private JButton endGame = addButtons("Spiel beenden");
     private JFrame frame = createFrame();
@@ -25,10 +28,11 @@ public class GameEnd implements ActionListener{
         this.playGroundFrame = playGroundFrame;
     }
 
-    //======================================================================
-    //creates the GUI for the Class GameEnd
+    /**
+     * creates the GUI for the class GameEnd
+     * @param nameOfPlayer
+     */
     public void createGui(String nameOfPlayer){
-
         //creats new panel with GridBagLayout
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -41,11 +45,9 @@ public class GameEnd implements ActionListener{
         constraints.insets = new Insets(30,0,0,0);
         constraints.gridx = 0;
         constraints.gridy = 0;
-
         //create new Label and set to defined Layout
         panel.add(setLabel("Das verrückte Labyrinth", 40), constraints);
         //-------------------------------------------------------------
-
 
         //-------------------------------------------------------------
         //Layout for label is set (x=1 ; y=1)
@@ -53,8 +55,6 @@ public class GameEnd implements ActionListener{
         constraints.gridwidth = 2;
         constraints.gridx = 0;
         constraints.gridy = 1;
-
-
         //create new Label and set to defined Layout
         panel.add(setLabel(nameOfPlayer + " hat gewonnen!", 30), constraints);
         //-------------------------------------------------------------
@@ -65,38 +65,31 @@ public class GameEnd implements ActionListener{
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.insets = new Insets(30,30,0,0);
-
         //create new button and set to defined Layout
         newGame.addActionListener(this);
         panel.add(newGame, constraints);
         //-------------------------------------------------------------
-
 
         //-------------------------------------------------------------
         //Layout for button is set (x=3 ; y=2)
         constraints.gridwidth = 1;
         constraints.gridx = 1;
         constraints.gridy = 2;
-
         //create new button and set to defined Layout
         endGame.addActionListener(this);
         panel.add(endGame, constraints);
         //-------------------------------------------------------------
 
-
         //--------------------------------------------------------------
-        //create frame
-
-
         //add panel to frame and add a borderlayout
         this.frame.add(panel, BorderLayout.NORTH);
         //-------------------------------------------------------------
     }
-    //=================================================================
 
-
-    //=====================================================================
-    //creates a specialized frame for this class
+    /**
+     * creates a specialized frame for this class
+     * @return
+     */
     public JFrame createFrame(){
         JFrame frame = new JFrame("DvL Spiel beendet");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -105,11 +98,13 @@ public class GameEnd implements ActionListener{
         frame.setLocation(300, 200);
         return frame;
     }
-    //=====================================================================
 
-
-    //=====================================================================
-    //creates a specialized label and gets text and size as input
+    /**
+     * creates a specialized label and gets text and size as input
+     * @param labelString
+     * @param size
+     * @return
+     */
     public JLabel setLabel(String labelString, int size){
         JLabel label = new JLabel(labelString);
         label.setFont(new Font("Serif", Font.PLAIN, size));
@@ -117,11 +112,12 @@ public class GameEnd implements ActionListener{
         label.setVerticalAlignment(SwingConstants.CENTER);
         return label;
     }
-    //=====================================================================
 
-
-    //=====================================================================
-    //creates a specialized button and gets text as input
+    /**
+     * creates a specialized button and gets text as input
+     * @param text
+     * @return
+     */
     public JButton addButtons(String text){
         JButton button = new JButton(text);
         button.setPreferredSize(new Dimension(250, 50));
@@ -129,7 +125,10 @@ public class GameEnd implements ActionListener{
         return button;
     }
 
-    //action listener funktionen
+    /**
+     * action listener funktionen
+     * @param ae
+     */
     public void actionPerformed (ActionEvent ae){
         if(ae.getSource() == this.endGame){
             System.exit(0);
@@ -139,8 +138,4 @@ public class GameEnd implements ActionListener{
             this.playGroundFrame.dispose();
         }
     }
-
-    public static void main(String[] args) {
-    }
-
 }

@@ -30,11 +30,7 @@ public class Main {
         } catch (Exception e) {
             System.out.println("LAF not possible");
         }
-
-        BoardFromClient board = new BoardFromClient();
-
         PlayGround test = new PlayGround("localhost", "777");
-
         test.listen();
     }
 }

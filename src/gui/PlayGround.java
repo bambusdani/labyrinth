@@ -18,6 +18,11 @@ import java.util.ArrayList;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
+/**
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
+ */
 public class PlayGround implements ActionListener {
 
     /**
