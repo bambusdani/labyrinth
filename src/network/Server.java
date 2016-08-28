@@ -42,10 +42,6 @@ public class Server {
             Connection connection = new Connection(clientSocket);
             connections.add(connection);
             connection.start();
-
-                        try {
-                Thread.sleep(100);
-            } catch (Exception e) {}
         }
     }
 }

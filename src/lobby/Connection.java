@@ -23,13 +23,12 @@ public class Connection extends Thread {
     private int pId;                 //connection ID (for logging)
     private String playerName;
     private boolean ready=false;
+    private boolean host=false;
 
     public Connection(Socket socket) {
         in = new In(socket);
         out = new Out(socket);
         this.socket = socket;
-
-        // startServer();
     }
 
     public void println(String s) {
@@ -107,12 +106,33 @@ public class Connection extends Thread {
         this.ready = ready;
     }
 
-    public void startServer() {
+    public boolean isHost() {
+        return host;
+    }
+
+    public void setHost(boolean host) {
+        this.host = host;
+    }
+
+    public void startGameServer() {
         try {
             String[] startOptions = new String[]{System.getProperty("java.home") + "/bin/java",
                     "-Djava.util.logging.config.file=src/network/logging.properties",
                     "-jar",
                     "gameServer.jar",
+                    "4445"};
+            new ProcessBuilder(startOptions).start();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+    public void connectToGame() {
+        try {
+            String[] startOptions = new String[]{System.getProperty("java.home") + "/bin/java",
+                    "-Djava.util.logging.config.file=src/network/logging.properties",
+                    "-jar",
+                    "game.jar",
                     "4445"};
             new ProcessBuilder(startOptions).start();
         } catch (Exception e) {

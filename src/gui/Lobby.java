@@ -50,6 +50,7 @@ public class Lobby implements ActionListener{
     private String tmpName, nameOfPlayer;
     private String playerID;
     private boolean ready=false;
+    private boolean host=false;
     private String[] readyPlayers = new String[4];
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
 
@@ -175,7 +176,7 @@ public class Lobby implements ActionListener{
         /***************************************************************************************************************
          * textAreaOpenGames
          */
-        textAreaOpenGames.setText("open games");
+        textAreaOpenGames.setText("Open Game Rooms:");
         textAreaOpenGames.setFont(new Font("Serif",Font.PLAIN,textSize));
         textAreaOpenGames.setMinimumSize(new Dimension(280,350));
         textAreaOpenGames.setPreferredSize(new Dimension(280,350));
@@ -363,6 +364,7 @@ public class Lobby implements ActionListener{
         hostPlayer0.setFont(new Font("Serif",Font.PLAIN,textSize));
         hostPlayer0.setMinimumSize(new Dimension(150,50));
         hostPlayer0.setPreferredSize(new Dimension(150,50));
+        hostPlayer0.setEditable(false);
         constraintsContent.anchor = GridBagConstraints.NORTH;
         constraintsContent.weightx = 0;
         constraintsContent.weighty = 0;
@@ -377,6 +379,7 @@ public class Lobby implements ActionListener{
         hostPlayer1.setFont(new Font("Serif",Font.PLAIN,textSize));
         hostPlayer1.setMinimumSize(new Dimension(150,50));
         hostPlayer1.setPreferredSize(new Dimension(150,50));
+        hostPlayer1.setEditable(false);
         constraintsContent.anchor = GridBagConstraints.NORTH;
         constraintsContent.weightx = 0;
         constraintsContent.weighty = 0;
@@ -391,6 +394,7 @@ public class Lobby implements ActionListener{
         hostPlayer2.setFont(new Font("Serif",Font.PLAIN,textSize));
         hostPlayer2.setMinimumSize(new Dimension(150,50));
         hostPlayer2.setPreferredSize(new Dimension(150,50));
+        hostPlayer2.setEditable(false);
         constraintsContent.anchor = GridBagConstraints.NORTH;
         constraintsContent.weightx = 0;
         constraintsContent.weighty = 0;
@@ -405,6 +409,7 @@ public class Lobby implements ActionListener{
         hostPlayer3.setFont(new Font("Serif",Font.PLAIN,textSize));
         hostPlayer3.setMinimumSize(new Dimension(150,50));
         hostPlayer3.setPreferredSize(new Dimension(150,50));
+        hostPlayer3.setEditable(false);
         constraintsContent.anchor = GridBagConstraints.NORTH;
         constraintsContent.weightx = 0;
         constraintsContent.weighty = 0;
@@ -471,7 +476,12 @@ public class Lobby implements ActionListener{
             textFieldChat.requestFocusInWindow();
         }
         else if(e.getSource() == buttonHost){
-            // hoster is always ready, send to server
+            // indicate to server that this player is host
+            out.println("host");
+            // log outgoing message
+            LOGGER.info("OUTGOING host");
+
+            // host is always ready, send to server
             out.println("ready");
             // log outgoing message
             LOGGER.info("OUTGOING ready");
@@ -515,17 +525,14 @@ public class Lobby implements ActionListener{
             out.println("ready");
             // log outgoing message
             LOGGER.info("OUTGOING ready");
-            System.out.println("ready");
         }
 
         else if(e.getSource()== buttonStart){
-            //Todo start game
+            // send start to server
             out.println("start");
-            System.out.println("start Game");
+            // log outgoing message
+            LOGGER.info("OUTGOING start");
         }
-
-
-
     }
 
     /*******************************************************************************************************************
@@ -577,40 +584,52 @@ public class Lobby implements ActionListener{
                 // log incoming welcome message
                 LOGGER.info("INCOMING " + s);
             }
+            // 'gameRoomID'
+            else if (s.startsWith("gameRoomID")) {
+                String[] tmpRoomID = s.split("\\s+");
+
+
+                for (int i = 1; i < tmpRoomID.length; i++) {
+                    textAreaOpenGames.setText("Open Game Rooms:\n" + tmpRoomID[i]);
+                }
+            }
             // 'ready playerID' parameter
-            else if (s.startsWith("ready")) {
-                // log incoming ready message
-                LOGGER.info("INCOMING " + s);
-                // set player to ready
-                String[] tmpReady = s.split("\\s+");
-                if (playerID.equalsIgnoreCase(tmpReady[1])) {
-                    this.ready = true;
-                }
-            }
-            // readyPlayers
-            else if (s.startsWith("readyPlayers")) {
-                String[] tmpReadyPlayers = s.split("\\s+");
-                for (int i = 0; i < readyPlayers.length; i++) {
-                    readyPlayers[i] = tmpReadyPlayers[i+1];
-                }
-                hostPlayer0.setText(tmpReadyPlayers[1]);
-                System.out.println(readyPlayers.length);
-            }
-            // 'gamestart' parameter
-            else if (s.startsWith("gamestart")) {
-                // log incoming game start message
-                LOGGER.info("INCOMING gamestart");
-                // do something
-                System.out.println("Game is starting...");
-            }
-            // 'chat' parameter
             else {
-                // write incoming chat message in textArea
-                textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
-                textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
-                // log incoming chat message
-                LOGGER.info("INCOMING " + s);
+                if (s.startsWith("ready")) {
+                    // log incoming ready message
+                    LOGGER.info("INCOMING " + s);
+                    // set player to ready
+                    String[] tmpReady = s.split("\\s+");
+                    if (playerID.equalsIgnoreCase(tmpReady[1])) {
+                        this.ready = true;
+                    }
                 }
+                // readyPlayers
+                else if (s.startsWith("readyPlayers")) {
+                    hostPlayer0.setText("Ich");
+                    String[] tmpReadyPlayers = s.split("\\s+");
+                    for (int i = 0; i < readyPlayers.length; i++) {
+                        readyPlayers[i] = tmpReadyPlayers[i + 1];
+                    }
+                    // hostPlayer0.setText(tmpReadyPlayers[1]);
+                    System.out.println(readyPlayers.length);
+                }
+                // 'gamestart' parameter
+                else if (s.startsWith("gamestart")) {
+                    // log incoming game start message
+                    LOGGER.info("INCOMING gamestart");
+                    // do something
+                    System.out.println("Game is starting...");
+                }
+                // 'chat' parameter
+                else {
+                    // write incoming chat message in textArea
+                    textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
+                    textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
+                    // log incoming chat message
+                    LOGGER.info("INCOMING " + s);
+                }
+            }
             }
 
         out.close();
