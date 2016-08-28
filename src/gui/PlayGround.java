@@ -20,23 +20,18 @@ import java.util.logging.Logger;
 
 public class PlayGround implements ActionListener {
 
-    //------------------------
-    //PlayerManagement
+    /**
+     * Attributes
+     */
     private int playerID;
     ArrayList<Boolean> playersTurn = new ArrayList<Boolean>();
     private Boolean tileInsertionAllowed = true;
-
     private int playersTurnID = 0;
-
     private boolean tileInserted = false;
-    //------------------------
 
     private boolean moveValid;
     private boolean isPushAllowed;
     private int disabledButtonID;
-
-
-
 
     private int fontSize = 20;
     private int boxSizeX = 175;
@@ -44,18 +39,13 @@ public class PlayGround implements ActionListener {
     private Color colorBlack = new Color(0, 0, 0);
     private int stoneSize = 75;
 
-    //all buttons for actionListener
     private JButton buttonNewGame;
     private JButton buttonEndGame;
     private	JButton buttonRotate;
     public JButton[][] boardSquares = new JButton[7][7];
     private JFrame frame;
 
-    //Nächstes Teil das eingefügt wird
-    public Tiles tmpStorageTile;
     public JLabel labelNextStoneSymbol;
-    public int rotationAngle = 0 ;
-
 
     // Images for the Arrrow buttons
     private ImageIcon imageArrowDown = new ImageIcon("src/resources/arrows/downArrow.png");
@@ -127,35 +117,6 @@ public class PlayGround implements ActionListener {
     private String initName;
     private final Logger LOGGER = Logger.getLogger(PlayGround.class.getName());
 
-    // Erstellen der Klasse mit wichtigen Funktionen
-
-    //TODO muss weg
-    //private GameFunctions gameFunctions = new GameFunctions();
-
-    //TODO des muss auch wieder weg
-    public void nextPlayersTurn(){
-        for(int index = 0; index < playersTurn.size(); index++) {
-            if (playersTurn.get(index) && index < playersTurn.size()-1) {
-                playersTurn.set(index, false);
-                playersTurn.set(index + 1, true);
-                break;
-
-            }
-            else if(playersTurn.get(index)){
-                playersTurn.set(index, false);
-                playersTurn.set(0, true);
-                break;
-            }
-        }
-        //playerID hochzählen
-        if(playerID < 3){ playerID++;}else{	playerID = 0; }
-        tileInsertionAllowed = true;
-        System.out.println("PlayerID:" + playerID);
-    }
-    //TODO weg mit dem Drüber :D
-
-
-
     public PlayGround(String hostName, String screenName) {
         // connect to server
         try {
@@ -172,11 +133,6 @@ public class PlayGround implements ActionListener {
         playersTurn.add(false);
         playersTurn.add(false);
         playersTurn.add(false);
-        //TODO Bis hier
-
-
-
-        //TODO ---------------------------------------------------------------------------------------------------------
 
         //to draw the borders
         border0 = BorderFactory.createLineBorder(board.getAllPlayers()[0].getColor(), 3);
@@ -198,9 +154,6 @@ public class PlayGround implements ActionListener {
         //four colors
         border0123 = new CompoundBorder(border01,border23);
 
-
-        //TODO _________________________________________________________________________________________________________
-
         //--------------------------------------------------------------------------------------------------
         //set size of images
         imageArrowDown.setImage(imageArrowDown.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
@@ -208,7 +161,6 @@ public class PlayGround implements ActionListener {
         imageArrowUp.setImage(imageArrowUp.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
         imageArrowRight.setImage(imageArrowRight.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
         imageRotate.setImage(imageRotate.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
-
 
         //================================================================================
         // panel Player overview
@@ -222,15 +174,6 @@ public class PlayGround implements ActionListener {
         constraintsPlayeroverview.gridwidth = 1;
         constraintsPlayeroverview.insets = new Insets(15, 10, 10, 10);
 
-        //--------------------------------------------------------------------------------
-        // symbols left
-        //constraintsPlayeroverview.gridx = 0;
-        //constraintsPlayeroverview.gridy = 0;
-        //JLabel labelSymbolsLeft = setLabel("Fehlende Symbole: ",fontSize, boxSizeX, boxSizeY, colorBlack );
-        //labelSymbolsLeft.setHorizontalAlignment(SwingConstants.CENTER);
-        //labelSymbolsLeft.setVerticalAlignment(SwingConstants.CENTER);
-        //panelPlayeroverview.add(labelSymbolsLeft, constraintsPlayeroverview);
-        //---------------------------------------------------------------------------------
         // Player 0
         constraintsPlayeroverview.gridx = 1;
         constraintsPlayeroverview.gridy = 0;

@@ -13,13 +13,22 @@ import java.util.*;
  * Das Verrückte Labyrinth
  */
 public class Shape {
-    
+
+    /**
+     * Attributes
+     */
     private ImageIcon buImg;
     private String shape;
     private boolean[] possiblePaths = new boolean[4]; //top right bottom left???
     private String creature;
 
-    /** Konstrutkor */
+    /**
+     * Constructor
+     * @param image
+     * @param shape
+     * @param possiblePaths
+     * @param creature
+     */
     public Shape(ImageIcon image, String shape, boolean[] possiblePaths, String creature){
         this.buImg = image;
         this.shape = shape;
@@ -27,18 +36,21 @@ public class Shape {
         this.creature = creature;
     }
 
-    /** Getter                                      Setter */
-    public ImageIcon getImage(){return this.buImg;}                     public void setImage(ImageIcon image){this.buImg = image;}
-    public String getShape(){return this.shape;}
-    public boolean[] getPossiblePaths(){return this.possiblePaths;}     public void setPossiblePaths(boolean[] possiblePaths){this.possiblePaths = possiblePaths;}
-    public String getCreature(){return creature;}                       public void setCreature(String creature){this.creature = creature;}
+    /**
+     * Getter Setter
+     * */
+    public ImageIcon getImage(){return this.buImg;}
+    public boolean[] getPossiblePaths(){return this.possiblePaths;}
+    public String getCreature(){return creature;}
 
+    public void setImage(ImageIcon image){this.buImg = image;}
 
-
-    /** Rotate Image Function */
-
+    /**
+     * Rotates an image by 90°
+     * @param degrees
+     * @return
+     */
     public ImageIcon rotateImage(double degrees){
-
         ImageIcon imageIcon = this.buImg;
         BufferedImage buImg = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         buImg.getGraphics().drawImage(imageIcon.getImage(), 0,0, imageIcon.getImageObserver());
@@ -54,6 +66,10 @@ public class Shape {
         return imageI;
     }
 
+    /**
+     * Sets the new paths for the tiles after rotation
+     * @param possiblePaths
+     */
     public void setRotatedPossiblePath(boolean[] possiblePaths){
         boolean oben = possiblePaths[0];
         boolean rechts = possiblePaths[1];
