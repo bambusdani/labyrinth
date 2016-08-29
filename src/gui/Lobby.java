@@ -50,6 +50,9 @@ public class Lobby implements ActionListener{
 
     private final Logger LOGGER = Logger.getLogger(Lobby.class.getName());
 
+    private String playerName;
+    private String hostName;
+
     private String tmpName, nameOfPlayer;
     private String playerID;
     private String room;
@@ -59,6 +62,9 @@ public class Lobby implements ActionListener{
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
 
     public Lobby(String hostName, String name) {
+
+        this.hostName = hostName;
+        this.playerName = name;
 
         /***************************************************************************************************************
          * create connection with lobbyServer
@@ -651,7 +657,7 @@ public class Lobby implements ActionListener{
                 System.out.println(System.getProperty("java.home"));
 
                 frame.dispose();
-                PlayGround playGround = new PlayGround("192.168.14.37", 4445, "Rehan");
+                PlayGround playGround = new PlayGround(this.hostName, 4445, this.playerName);
                 playGround.listen();
 
                 connectToGame();
@@ -711,6 +717,13 @@ public class Lobby implements ActionListener{
         } catch (Exception e) {
             System.err.println(e);
         }
+    }
+
+    public String getHostName(){
+        return this.hostName;
+    }
+    public String getPlayerName(){
+        return this.playerName;
     }
 }
 
