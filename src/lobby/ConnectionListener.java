@@ -151,21 +151,21 @@ public class ConnectionListener extends Thread {
                         String tmpRoom = "";
                         ith.startGameServer();
                         ith.connectToGame();
-                        // for (Connection kth : connections) {
-                        // start gameServer and first client of host
-                        // if (kth.isHost()) {
-                        //     tmpRoom = kth.getRoom();
-                        //     kth.startGameServer();
-                        // kth.connectToGame();
-                        // }
-                        // start client games
-                        // if (kth.getRoom().equalsIgnoreCase(tmpRoom) && kth.isReady()) {
-                        //     kth.connectToGame();
-                        // }
-                        // }
+                        for (Connection kth : connections) {
+                            // start gameServer and first client of host
+                            if (kth.isHost()) {
+                                tmpRoom = kth.getRoom();
+                                kth.startGameServer();
+                                kth.connectToGame();
+                            }
+                            // start client games
+                            if (kth.getRoom().equalsIgnoreCase(tmpRoom) && kth.isReady()) {
+                                kth.connectToGame();
+                            }
+                        }
 
                         // broadcast gameStart to all clients
-                        // broadcast("gamestart " + tmpRoom);
+                        broadcast("gamestart " + tmpRoom);
                         // log outgoing message
                         LOGGER.info("OUTGOING gamestart " + tmpRoom);
 
