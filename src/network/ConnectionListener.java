@@ -38,7 +38,7 @@ public class ConnectionListener extends Thread {
 
         //init Logger
         try {
-            FileHandler fileHandler = new FileHandler("gameLog.log");
+            FileHandler fileHandler = new FileHandler("gameServer.log");
             LOGGER.addHandler(fileHandler);
             LOGGER.info("*****STARTING*****");
         } catch (Exception e) {};
