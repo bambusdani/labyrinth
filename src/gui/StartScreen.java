@@ -14,6 +14,9 @@ import java.beans.PropertyChangeListener;
  */
 public class StartScreen extends JPanel implements ActionListener {
 
+    /**
+     * Attributes
+     */
     private ImageIcon titleimage   = new ImageIcon("src/resources/titel/titelImage.jpg");
     private ImageIcon background = new ImageIcon("src/resources/backgroundImages/farbverlaufBig.png");
     private JButton buttonSubmit   = new JButton();
@@ -22,20 +25,17 @@ public class StartScreen extends JPanel implements ActionListener {
     private JTextArea textAreaIP   = new JTextArea();
     private JTextArea textAreaName = new JTextArea();
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
-
     private int textSize = 20;
 
-
+    /**
+     * Constructor
+     */
     public StartScreen(){
-
         titleimage.setImage(titleimage.getImage().getScaledInstance(480,351 ,Image.SCALE_DEFAULT));
-
         JPanel panelContent = new JPanel();
         panelContent.setLayout(new GridBagLayout());
         panelContent.setOpaque(false);
-
         GridBagConstraints constraintsContent = new GridBagConstraints();
-
 
         /***************************************************************************************************************
          * logo
@@ -82,9 +82,6 @@ public class StartScreen extends JPanel implements ActionListener {
         constraintsContent.gridx = 0;
         constraintsContent.gridy = 5;
         panelContent.add(textAreaName, constraintsContent);
-
-
-
 
         /***************************************************************************************************************
          * IP address insert
@@ -135,7 +132,6 @@ public class StartScreen extends JPanel implements ActionListener {
         constraintsContent.gridy = 8;
         panelContent.add(buttonSubmit, constraintsContent);
 
-
         /***************************************************************************************************************
          * frame
          */
@@ -148,11 +144,14 @@ public class StartScreen extends JPanel implements ActionListener {
         frame.setMinimumSize(new Dimension(900, 700));
         frame.setLocation(300, 200);
 }
-    public void actionPerformed (ActionEvent e){
 
+    /**
+     * action Listener
+     * @param e
+     */
+    public void actionPerformed (ActionEvent e){
         if(e.getSource() == buttonSubmit){
             if((!textAreaName.getText().isEmpty())){
-
                 if(!textAreaIP.getText().isEmpty()){
                     Lobby lobby = new Lobby(textAreaIP.getText() , textAreaName.getText());
                     frame.dispose();
@@ -167,7 +166,14 @@ public class StartScreen extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Main class to create a StartScreen
+     * @param args
+     */
     public static void main(String[] args) {
+        /**
+         * Style
+         */
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -176,13 +182,12 @@ public class StartScreen extends JPanel implements ActionListener {
                 }
             }
         } catch (Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look and feel.
+            System.out.println("Not possible to set Style");
         }
 
-
-
-
-
+        /**
+         * new startScreen created
+         */
         StartScreen startScreen = new StartScreen();
     }
 

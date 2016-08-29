@@ -11,9 +11,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-/*
-* THIS CLASS CREATES THE GUI FOR THE GAME END
-* */
+/**
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
+ */
 public class GameEnd implements ActionListener{
 
     /**

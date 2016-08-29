@@ -9,8 +9,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.BooleanDV;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import network.*;
 import gameLogic.*;
 
@@ -28,28 +26,35 @@ public class PlayGround implements ActionListener {
     /**
      * Attributes
      */
+    //player
     private int playerID;
     ArrayList<Boolean> playersTurn = new ArrayList<Boolean>();
     private Boolean tileInsertionAllowed = true;
     private int playersTurnID = 0;
     private boolean tileInserted = false;
 
+    //to check if turns are valid
     private boolean moveValid;
     private boolean isPushAllowed;
     private int disabledButtonID;
 
+    //style settings
     private int fontSize = 20;
     private int boxSizeX = 175;
     private int boxSizeY = 50;
     private Color colorBlack = new Color(0, 0, 0);
     private int stoneSize = 75;
 
+    //gameField buttons
     private JButton buttonNewGame;
     private JButton buttonEndGame;
     private	JButton buttonRotate;
     public JButton[][] boardSquares = new JButton[7][7];
+
+    //Frame
     private JFrame frame;
 
+    //Label of the nextStone
     public JLabel labelNextStoneSymbol;
 
     // Images for the Arrrow buttons
@@ -122,6 +127,11 @@ public class PlayGround implements ActionListener {
     private String initName;
     private final Logger LOGGER = Logger.getLogger(PlayGround.class.getName());
 
+    /**
+     * Constructor
+     * @param hostName
+     * @param screenName
+     */
     public PlayGround(String hostName, String screenName) {
         // connect to server
         try {
@@ -225,10 +235,8 @@ public class PlayGround implements ActionListener {
         constraintsPlayeroverview.gridx = 6;
         constraintsPlayeroverview.gridy = 0;
         this.buttonEndGame = setButtons("Spiel beenden", fontSize, boxSizeX, boxSizeY);
-
         //adding ActionListener
         this.buttonEndGame.addActionListener(this);
-
         panelPlayeroverview.add(this.buttonEndGame, constraintsPlayeroverview);
 
         //===================================================================================
@@ -274,11 +282,9 @@ public class PlayGround implements ActionListener {
         constraintsInformation.gridx = 0;
         constraintsInformation.gridy = 3;
         // instead of "T" it should use an image
-
         this.labelNextStoneSymbol = setLabel("",fontSize, stoneSize, stoneSize, colorBlack );
         //this.labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         panelInformation.add(this.labelNextStoneSymbol, constraintsInformation);
-
 
         //-----------------------------------------------------------------------------------
         // Button rotate
@@ -330,7 +336,6 @@ public class PlayGround implements ActionListener {
         //===================================================================================
         // panel board
         //===================================================================================
-
         JPanel panelGameField = new JPanel(new GridBagLayout());
         GridBagConstraints constraintsGameField = new GridBagConstraints();
 
@@ -339,7 +344,6 @@ public class PlayGround implements ActionListener {
         constraintsGameField.weighty = 1;
         constraintsGameField.gridwidth = 1;
         constraintsGameField.insets = new Insets(0, 0, 0, 0);
-
 
         //--------------------------------------------------
         // Buttons to place the next stone
@@ -352,6 +356,7 @@ public class PlayGround implements ActionListener {
         //adding ActionListener
         this.buttonArrow_1_0.addActionListener(this);
         panelGameField.add(this.buttonArrow_1_0, constraintsGameField);
+
         // #2 top
         constraintsGameField.gridx = 4;
         constraintsGameField.gridy = 0;
@@ -360,6 +365,7 @@ public class PlayGround implements ActionListener {
         //adding ActionListener
         this.buttonArrow_3_0.addActionListener(this);
         panelGameField.add(this.buttonArrow_3_0, constraintsGameField);
+
         // #3 top
         constraintsGameField.gridx = 6;
         constraintsGameField.gridy = 0;
@@ -368,6 +374,7 @@ public class PlayGround implements ActionListener {
         this.buttonArrow_5_0.addActionListener(this);
         this.buttonArrow_5_0.setIcon(imageArrowDown);
         panelGameField.add(this.buttonArrow_5_0, constraintsGameField);
+
         //-----------------------------
         // #1 bottom
         constraintsGameField.gridx = 2;
@@ -377,6 +384,7 @@ public class PlayGround implements ActionListener {
         //adding ActionListener
         this.buttonArrow_1_6.addActionListener(this);
         panelGameField.add(this.buttonArrow_1_6, constraintsGameField);
+
         // #2 bottom
         constraintsGameField.gridx = 4;
         constraintsGameField.gridy = 8;
@@ -385,6 +393,7 @@ public class PlayGround implements ActionListener {
         //adding ActionListener
         this.buttonArrow_3_6.addActionListener(this);
         panelGameField.add(this.buttonArrow_3_6, constraintsGameField);
+
         // #3 bottom
         constraintsGameField.gridx = 6;
         constraintsGameField.gridy = 8;
@@ -393,6 +402,7 @@ public class PlayGround implements ActionListener {
         //adding ActionListener
         this.buttonArrow_5_6.addActionListener(this);
         panelGameField.add(this.buttonArrow_5_6, constraintsGameField);
+
         //-----------------------------
         // #1 left
         constraintsGameField.gridx = 0;
@@ -402,6 +412,7 @@ public class PlayGround implements ActionListener {
         this.buttonArrow_0_1.addActionListener(this);
         this.buttonArrow_0_1.setIcon(imageArrowRight);
         panelGameField.add(this.buttonArrow_0_1, constraintsGameField);
+
         // #2 left
         constraintsGameField.gridx = 0;
         constraintsGameField.gridy = 4;
@@ -410,6 +421,7 @@ public class PlayGround implements ActionListener {
         //adding ActionListener
         this.buttonArrow_0_3.addActionListener(this);
         panelGameField.add(this.buttonArrow_0_3, constraintsGameField);
+
         // #3 left
         constraintsGameField.gridx = 0;
         constraintsGameField.gridy = 6;
@@ -418,6 +430,7 @@ public class PlayGround implements ActionListener {
         //adding ActionListener
         this.buttonArrow_0_5.addActionListener(this);
         panelGameField.add(this.buttonArrow_0_5, constraintsGameField);
+
         //-----------------------------
         // #1 right
         constraintsGameField.gridx = 8;
@@ -427,6 +440,7 @@ public class PlayGround implements ActionListener {
         //adding ActionListener
         this.buttonArrow_6_1.addActionListener(this);
         panelGameField.add(this.buttonArrow_6_1, constraintsGameField);
+
         // #2 right
         constraintsGameField.gridx = 8;
         constraintsGameField.gridy = 4;
@@ -435,6 +449,7 @@ public class PlayGround implements ActionListener {
         //adding ActionListener
         this.buttonArrow_6_3.addActionListener(this);
         panelGameField.add(this.buttonArrow_6_3, constraintsGameField);
+
         // #3 right
         constraintsGameField.gridx = 8;
         constraintsGameField.gridy = 6;
@@ -450,36 +465,24 @@ public class PlayGround implements ActionListener {
         //JButton[][] boardSquares = new JButton[7][7];
         for(int j = 0; j < boardSquares.length; j++){
             for(int i = 0; i< boardSquares[j].length; i++){
-
                 //creating button
                 constraintsGameField.gridx = j+1;
                 constraintsGameField.gridy = i+1;
-
                 JButton buttonStone = setButtons("", fontSize, stoneSize, stoneSize);
-
 
                 //-------------------------
                 // saves the field in a 2d array
                 boardSquares[j][i]= buttonStone;
-
                 //adding actionListener
                 boardSquares[j][i].setActionCommand("gameField: "+j+" "+i);
                 boardSquares[j][i].addActionListener(this);
-
                 panelGameField.add(boardSquares[j][i], constraintsGameField);
-
-                //-------------
             }
-
-
         }
-
 
         //====================================================================================
         // creating frame
         // sets the position on the panelContent
-        //====================================================================================
-
         JPanel panelContent = new JPanel(new GridBagLayout());
         //GradientPanel panelContent = new GradientPanel();
         //panelContent.setLayout(new GridBagLayout());
@@ -495,6 +498,7 @@ public class PlayGround implements ActionListener {
         constraintsContent.gridx = 0;
         constraintsContent.gridy = 0;
         panelContent.add(panelPlayeroverview, constraintsContent);
+
         //--------------------
         //GameField
         constraintsContent.anchor = GridBagConstraints.EAST;
@@ -506,7 +510,8 @@ public class PlayGround implements ActionListener {
         constraintsContent.gridx = 0;
         constraintsContent.gridy = 1;
         panelContent.add(panelGameField, constraintsContent);
-        //---------
+
+        //-----------
         //Information
         constraintsContent.anchor = GridBagConstraints.WEST;
         constraintsContent.weightx = 1;
@@ -517,7 +522,8 @@ public class PlayGround implements ActionListener {
         constraintsContent.gridx = 4;
         constraintsContent.gridy = 1;
         panelContent.add(panelInformation, constraintsContent);
-        //---------
+
+        //----
         //Chat
         constraintsContent.anchor = GridBagConstraints.SOUTHWEST;
         constraintsContent.weightx = 1;
@@ -528,7 +534,8 @@ public class PlayGround implements ActionListener {
         constraintsContent.gridx = 0;
         constraintsContent.gridy = 5;
         panelContent.add(panelChat, constraintsContent);
-        //---------
+
+        //---------------
         //adding to frame
         this.frame = createFrame();
 
@@ -543,12 +550,9 @@ public class PlayGround implements ActionListener {
         GradientPanel panelBackground = new GradientPanel();
         panelBackground.setLayout(new GridBagLayout());
         panelBackground.add(panelContent);
-
         this.frame.add(panelBackground);
 
-
-        //Alle buttons in das array schreiben
-        //Im uhrzeigersinn von links oben beginnend
+        //buttons are clockwise written to array
         buttonArrow_Array[0]  = buttonArrow_1_0;
         buttonArrow_Array[1]  = buttonArrow_3_0;
         buttonArrow_Array[2]  = buttonArrow_5_0;
@@ -561,13 +565,12 @@ public class PlayGround implements ActionListener {
         buttonArrow_Array[9]  = buttonArrow_0_5;
         buttonArrow_Array[10] = buttonArrow_0_3;
         buttonArrow_Array[11] = buttonArrow_0_1;
-
-
     }
 
-    //====================================================================
-    // Functions
-    //====================================================================
+    /**
+     * creates specialized frame for playGround
+     * @return
+     */
     public JFrame createFrame(){
         JFrame frame = new JFrame("Join Game");
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -582,6 +585,15 @@ public class PlayGround implements ActionListener {
         return frame;
     }
 
+    /**
+     * creates specialized label for playGround
+     * @param labelString
+     * @param fontSize
+     * @param sizeX
+     * @param sizeY
+     * @param fontColor
+     * @return
+     */
     public JLabel setLabel(String labelString, int fontSize, int sizeX, int sizeY, Color fontColor){
         JLabel label = new JLabel(labelString);
         label.setMinimumSize(new Dimension(sizeX, sizeY));
@@ -592,6 +604,14 @@ public class PlayGround implements ActionListener {
         return label;
     }
 
+    /**
+     * creates button with different size
+     * @param text
+     * @param fontSize
+     * @param sizeX
+     * @param sizeY
+     * @return
+     */
     public JButton setButtons(String text, int fontSize, int sizeX, int sizeY){
         JButton button = new JButton(text);
 
@@ -603,6 +623,12 @@ public class PlayGround implements ActionListener {
         return button;
     }
 
+    /**
+     * creates textfield -> width and height can directly be set
+     * @param width
+     * @param height
+     * @return
+     */
     public JTextField setTextField(int width, int height) {
         JTextField textField = new JTextField(width);
         textField.setMinimumSize(new Dimension(width, height));
@@ -610,6 +636,12 @@ public class PlayGround implements ActionListener {
         return textField;
     }
 
+    /**
+     * creates TextArea for playGround -> width and hight can directly be set
+     * @param width
+     * @param height
+     * @return
+     */
     public JTextArea setTextArea(int width , int height) {
         JTextArea textArea = new JTextArea(height, width);
         textArea.setMinimumSize(new Dimension(width, height));
@@ -617,25 +649,20 @@ public class PlayGround implements ActionListener {
         return textArea;
     }
 
-    //=================================================================================
-    //actionListener
-    //=================================================================================
-
+    /**
+     * ActionListener
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
-
-        //Abfrage ob Spieler dran ist
-
         //network text field
         if (textField == e.getSource()) {
             // send to server
             out.println("chat " + screenName + textField.getText());
             // log
             LOGGER.info("OUTGOING chat " + textField.getText());
-
             textField.setText("");
             textField.requestFocusInWindow();
         }
-
         if (buttonEndGame == e.getSource()) {
             // send to server
             out.println("leave " + playerID);
@@ -643,26 +670,16 @@ public class PlayGround implements ActionListener {
             LOGGER.info("OUTGOING leave");
             System.exit(0);
         }
-
         if (buttonNewGame == e.getSource()) {
             frame.dispose();
             CreateNewGame newGame = new CreateNewGame();
             newGame.createGui();
         }
-
-
         if (playersTurnID == playerID) {
             if (buttonRotate == e.getSource()) {
-
                 out.println("rotateTile 90 " + playerID);
                 //todo was soll hier gesendet werden??????? -> "nextTileID" gibts nicht
-                //out.println("nextTileID " + board.getNextTile().getId());
-
-
             }
-
-            //------------------------------------------------------------
-
 
             if(tileInserted){
                 for (int i = 0; i < boardSquares.length; i++) {
@@ -683,8 +700,6 @@ public class PlayGround implements ActionListener {
                     }
                 }
             }
-
-
 
 		/* checks which button was pressed  to place the next stone
 		 buttonArrow_1_0 means line j:1 i:0 on the field
@@ -794,7 +809,6 @@ public class PlayGround implements ActionListener {
         }
     }
 
-
     //================================================================================
     // listen to socket and print everything that server broadcasts
     //================================================================================
@@ -850,19 +864,15 @@ public class PlayGround implements ActionListener {
                     LOGGER.info("INCOMING movevalid false");
                 }
             }
-
             //acutal playersTurnID
             else if (s.startsWith("playersTurnID")) {
                 String[] tmpTurnID = s.split("\\s+");
                 playersTurnID = Integer.parseInt(tmpTurnID[1]);
             }
-
             //tileNextID
             else if (s.startsWith("tileNextID")) {
 
                 saveNextTileIDInBoard(s);
-
-
             }
             //TileRot
             else if (s.startsWith("tileRot")) {
@@ -879,29 +889,11 @@ public class PlayGround implements ActionListener {
                         board.getTile(j, i).setRotation(Integer.parseInt(tmpRot[counter]));
                     }
                 }
-                //TODO setzt die Rotation muss aber noch überprüft werden ob das richtige Tile erwischt wird
-                //System.out.println(board.getTile(0,0).getRotation());
-
-                //System.out.println("tile rotation " + tmpRot[1]);
-
                 board.getNextTile().getShape().rotateImage(Integer.parseInt(tmpRot[1]));
-
             } else if (s.startsWith("rotateTile ")) {
                 board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(90));
                 board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());
-
-
-            } else if (s.startsWith("tileX")) {
-                //TODO initialisierung passt nicht von shuffel
-                //textArea.insert(s + "\n", textArea.getText().length());
-                //textArea.setCaretPosition(textArea.getText().length());
-
-            } else if (s.startsWith("tileY")) {
-                //TODO initialisierung von shuffel passt nicht
-                //textArea.insert(s + "\n", textArea.getText().length());
-                //textArea.setCaretPosition(textArea.getText().length());
-
-            } else if (s.startsWith("playerPosX")) {
+            }else if (s.startsWith("playerPosX")) {
                 String[] playerPosX = s.split("\\s+");
 
                 for (int i = 0; i < board.getAllPlayers().length; i++) {
@@ -914,7 +906,6 @@ public class PlayGround implements ActionListener {
                 }
             } else if (s.startsWith("deal")) {
                 board.getCreaturesNeeded().clear();
-
                 String[] dealID = s.split("\\s+");
                 for (int first = 1; first < dealID.length; first++) {
                     for (int second = 0; second < board.getAllGoalCards().length; second++) {
@@ -937,10 +928,8 @@ public class PlayGround implements ActionListener {
             }
 
             //initName
-
             else if (s.startsWith("initName")) {
                 String[] tmpPlayer = s.split("\\s+");
-
                 for (int i = 1; i < tmpPlayer.length; i++) {
                     board.getPlayer(i - 1).setNameOfPlayer(tmpPlayer[i]);
                     //System.out.println(tmpPlayer[i]);
@@ -949,10 +938,8 @@ public class PlayGround implements ActionListener {
 
             } else if (s.startsWith("initPlayerID")) {
                 String[] tmpPlayerID = s.split("\\s+");
-
                 // set playerID
                 playerID = Integer.parseInt(tmpPlayerID[1]);
-
                 // init logger
                 try {
                     FileHandler fileHandler = new FileHandler("player_0" + playerID + ".log");
@@ -962,10 +949,6 @@ public class PlayGround implements ActionListener {
                     System.err.println(e);
                 }
             } else if (s.startsWith("gameEnd")) {
-                //TODO kein name wird übemittelt
-
-                System.out.println(" name: " + s.substring(7));
-
                 //-> 100 is never used so nobody can press anything
                 playersTurnID = 100;
                 GameEnd gameEnd = new GameEnd(this.frame);
@@ -1011,11 +994,6 @@ public class PlayGround implements ActionListener {
         catch (Exception e) { e.printStackTrace(); }
         System.err.println("Closed client socket");
     }
-
-    /**
-     * setname
-     */
-
 
     /*******************************************************************************************************************
      * drawGameField()
@@ -1148,11 +1126,15 @@ public class PlayGround implements ActionListener {
         }
     }
 
+    /**
+     * Information of the String is saved in the Board
+     * @param s
+     */
     public void saveTileIDStingInBoard(String s){
         String[] tmpTileID = s.split("\\s+");
         Tiles[] tmpTiles = new Tiles[board.getAllTilesInOneArray().length-1];
 
-        //vergleicht jeden mit jedem in der liste und speichert es in
+        //all are compared and saved to tmpTiles
         for(int first= 1 ; first < tmpTileID.length; first++){
             for(int second = 0; second < board.getAllTilesInOneArray().length; second ++){
                 if(Integer.parseInt(tmpTileID[first]) == board.getAllTilesInOneArray()[second].getId()){
@@ -1160,7 +1142,8 @@ public class PlayGround implements ActionListener {
                 }
             }
         }
-        //macht aus einer Liste ein 2d Array und speichert es in board
+
+        //convertes list to 2d Array and set it to the Board
         int counter=0;
         for(int j = 0; j< 7; j++){
             for(int i = 0; i< 7; i++){
@@ -1170,6 +1153,10 @@ public class PlayGround implements ActionListener {
         }
     }
 
+    /**
+     * searches nextTile from the list and saves it to the nextTile
+     * @param s
+     */
     public void saveNextTileIDInBoard(String s){
         for (int index = 0 ; index < board.getAllTilesInOneArray().length ; index ++ ){
             if(Integer.parseInt(s.substring(11)) == board.getAllTilesInOneArray()[index].getId()){
