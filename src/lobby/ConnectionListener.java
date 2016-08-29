@@ -166,6 +166,12 @@ public class ConnectionListener extends Thread {
                                 broadcast("gamestart " + tmpRoom);
                                 // log outgoing message
                                 LOGGER.info("OUTGOING gamestart " + tmpRoom);
+
+                                // TODO
+                                // - remove gameRoom from lobby
+                                // - set joined players to not Ready
+                                // - increment gameServer socket
+                                // - get ip address of startScreen
                             }
                         }
                     }

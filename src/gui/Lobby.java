@@ -50,6 +50,7 @@ public class Lobby implements ActionListener {
 
     private String tmpName, nameOfPlayer;
     private String playerID;
+    private String room;
     private boolean ready = false;
     private boolean host = false;
     private String[] readyPlayers = new String[4];
@@ -513,6 +514,8 @@ public class Lobby implements ActionListener {
                 out.println("join " + textAreaJoinNumber.getText());
                 // log outgoing message
                 LOGGER.info("OUTGOING join " + textAreaJoinNumber.getText());
+                // set room
+                room = textAreaJoinNumber.getText();
 
                 panelButtons.setVisible(false);
                 panelJoinGame.setVisible(true);
@@ -605,47 +608,54 @@ public class Lobby implements ActionListener {
                 // log incoming welcome message
                 LOGGER.info("INCOMING " + s);
             }
+            // 'hosts' parameter
+            else if (s.startsWith("hosts")) {
+                // log incoming message
+                LOGGER.info("INCOMING " + s);
+            }
             // 'rooms' parameter
-            else if (s.startsWith("rooms")) {
-                // log incoming rooms message
-                LOGGER.info("INCOMING " + s);
-
-                String[] tmpRooms = s.split("\\s+");
-                for (int i = 1; i < tmpRooms.length; i = i+2) {
-                    textAreaOpenGames.setText("Open Game Rooms:\n" + tmpRooms[i] + " (id: " + tmpRooms[i+1] + ")\n");
-                }
-            }
-            // 'ready playerID' parameter
-            else if (s.startsWith("ready")) {
-                // log incoming ready message
-                LOGGER.info("INCOMING " + s);
-                // set player to ready
-                String[] tmpReady = s.split("\\s+");
-                if (playerID.equalsIgnoreCase(tmpReady[1])) {
-                    this.ready = true;
-                }
-            }
-            // readyPlayers
-            else if (s.startsWith("readyPlayers")) {
-                String[] tmpReadyPlayers = s.split("\\s+");
-                for (int i = 0; i < readyPlayers.length; i++) {
-                    readyPlayers[i] = tmpReadyPlayers[i + 1];
-                }
-                // hostPlayer0.setText(tmpReadyPlayers[1]);
-                System.out.println(readyPlayers.length);
-            }
-            // 'gamestart' parameter
-            else if (s.startsWith("gamestart")) {
-                // log incoming game start message
-                LOGGER.info("INCOMING " + s);
-            }
-            // 'chat' parameter
             else {
-                // write incoming chat message in textArea
-                textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
-                textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
-                // log incoming chat message
-                LOGGER.info("INCOMING " + s);
+                if (s.startsWith("rooms")) {
+                    // log incoming rooms message
+                    LOGGER.info("INCOMING " + s);
+
+                    String[] tmpRooms = s.split("\\s+");
+                    for (int i = 1; i < tmpRooms.length; i = i + 2) {
+                        textAreaOpenGames.setText("Open Game Rooms:\n" + tmpRooms[i] + " (id: " + tmpRooms[i + 1] + ")\n");
+                    }
+                }
+                // 'ready playerID' parameter
+                else if (s.startsWith("ready")) {
+                    // log incoming ready message
+                    LOGGER.info("INCOMING " + s);
+                    // set player to ready
+                    String[] tmpReady = s.split("\\s+");
+                    if (playerID.equalsIgnoreCase(tmpReady[1])) {
+                        this.ready = true;
+                    }
+                }
+                // readyPlayers
+                else if (s.startsWith("readyPlayers")) {
+                    String[] tmpReadyPlayers = s.split("\\s+");
+                    for (int i = 0; i < readyPlayers.length; i++) {
+                        readyPlayers[i] = tmpReadyPlayers[i + 1];
+                    }
+                    // hostPlayer0.setText(tmpReadyPlayers[1]);
+                    System.out.println(readyPlayers.length);
+                }
+                // 'gamestart' parameter
+                else if (s.startsWith("gamestart")) {
+                    // log incoming game start message
+                    LOGGER.info("INCOMING " + s);
+                }
+                // 'chat' parameter
+                else {
+                    // write incoming chat message in textArea
+                    textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
+                    textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
+                    // log incoming chat message
+                    LOGGER.info("INCOMING " + s);
+                }
             }
         }
 
