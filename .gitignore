@@ -12,9 +12,8 @@
 *.lck
 
 #jar files
-*.jar
+#*.jar
 
 #mac
 .DS_Store
 
-*.jar
