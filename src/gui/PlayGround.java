@@ -803,7 +803,6 @@ public class PlayGround implements ActionListener {
         while ((s = in.readLine()) != null) {
             //tileID
             if (s.startsWith("tileID")) {
-                System.out.println(s);
                 saveTileIDStingInBoard(s);
             } else if (s.startsWith("disabledButtonID ")) {
                 disabledButtonID = Integer.parseInt(s.substring(17));
@@ -816,7 +815,6 @@ public class PlayGround implements ActionListener {
 
             } else if (s.startsWith("pushAllowed ")) {
                 isPushAllowed = Boolean.parseBoolean(s.substring(12));
-                System.out.println("push allowed: " + isPushAllowed);
                 if (isPushAllowed) {
                     tileInserted = true;
                     // log incoming movevalid message
@@ -893,8 +891,6 @@ public class PlayGround implements ActionListener {
                 LOGGER.info("INCOMING deal " + s.substring(5));
             } else if (s.startsWith("points ")) {
                 String[] points = s.split("\\s+");
-                System.out.println(points.length);
-                System.out.println("points: " + points[0] + " " + points[1] + " " + points[2] + " " + points[3] + " " + points[4]);
                 for (int i = 1; i < board.getAllPlayers().length+1; i++) {
                     board.getPlayer(i - 1).setScore(Integer.parseInt(points[i]));
                 }
