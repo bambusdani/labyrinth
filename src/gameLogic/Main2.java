@@ -33,7 +33,7 @@ public class Main2 {
 
         BoardFromClient board = new BoardFromClient();
 
-        PlayGround test = new PlayGround("localhost", "rehan");
+        PlayGround test = new PlayGround("192.168.5.115", "reh@n");
 
         test.listen();
     }
