@@ -1182,25 +1182,25 @@ public class PlayGround implements ActionListener {
             labelPlayer0.setText(board.getPlayer(0).getNameOfPlayer() + ": " + board.getPlayer(0).getScore() + " / 6");
             labelPlayer0.setForeground(board.getPlayer(0).getColor());
             labelPlayer0.setOpaque(true);
-            labelPlayer0.setBackground(Color.white);
+            labelPlayer0.setBackground(new Color(154, 192, 205));
         }
         if(!board.getPlayer(1).getNameOfPlayer().isEmpty()) {
             labelPlayer1.setText(board.getPlayer(1).getNameOfPlayer() + ": " + board.getPlayer(1).getScore() + " / 6");
             labelPlayer1.setForeground(board.getPlayer(1).getColor());
             labelPlayer1.setOpaque(true);
-            labelPlayer1.setBackground(Color.white);
+            labelPlayer1.setBackground(new Color(154, 192, 205));
         }
         if(!board.getPlayer(2).getNameOfPlayer().isEmpty()) {
             labelPlayer2.setText(board.getPlayer(2).getNameOfPlayer() + ": " + board.getPlayer(2).getScore() + " / 6");
             labelPlayer2.setForeground(board.getPlayer(2).getColor());
             labelPlayer2.setOpaque(true);
-            labelPlayer2.setBackground(Color.white);
+            labelPlayer2.setBackground(new Color(154, 192, 205));
         }
         if(!board.getPlayer(3).getNameOfPlayer().isEmpty()) {
             labelPlayer3.setText(board.getPlayer(3).getNameOfPlayer() + ": " + board.getPlayer(3).getScore() + " / 6");
             labelPlayer3.setForeground(board.getPlayer(3).getColor());
             labelPlayer3.setOpaque(true);
-            labelPlayer3.setBackground(Color.white);
+            labelPlayer3.setBackground(new Color(154, 192, 205));
         }
 
         labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());

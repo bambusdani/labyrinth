@@ -298,7 +298,7 @@ public class BoardFromClient {
         allPlayers[0] = new Player(new Position(6,6), new Position(6,6), 0 , new Color(255, 0 ,0),      true,   0, "",  creaturesNeeded );
         allPlayers[1] = new Player(new Position(0,6), new Position(0,6), 1 , new Color(0, 0 ,255),      false,  0, "",  creaturesNeeded );
         allPlayers[2] = new Player(new Position(6,0), new Position(6,0), 2 , new Color(252, 255, 0),    false,  0, "",  creaturesNeeded );
-        allPlayers[3] = new Player(new Position(0,0), new Position(0,0), 3 , new Color(53, 255 ,0),     false,  0, "" , creaturesNeeded );
+        allPlayers[3] = new Player(new Position(0,0), new Position(0,0), 3 , new Color(0, 255,0),     false,  0, "" , creaturesNeeded );
     }
     //===========================
 
