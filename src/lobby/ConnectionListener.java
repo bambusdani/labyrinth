@@ -98,6 +98,8 @@ public class ConnectionListener extends Thread {
                         LOGGER.info("INCOMING " + message);
                         // set client to host
                         connections.get(i).setHost(true);
+                        // set clients room name
+                        connections.get(i).setRoom(tmpHost[1]);
                         // rooms
                         // save room name
                         rooms += tmpHost[1];
@@ -114,6 +116,15 @@ public class ConnectionListener extends Thread {
                         broadcast("hosts " + hosts);
                         // log outgoing hosts message
                         LOGGER.info("OUTGOING hosts " + hosts);
+                    }
+                    // 'join' parameter (join room name)
+                    else if (message.startsWith("join")) {
+                        String[] tmpJoin = message.split("\\s+");
+                        // log incoming message
+                        LOGGER.info("INCOMING " + message);
+                        // set client room name
+                        connections.get(i).setRoom(tmpJoin[1]);
+                        // TODO send rooms and hosts to all cients
                     }
                     // 'ready' parameter (ready playerID)
                     else {
@@ -132,23 +143,29 @@ public class ConnectionListener extends Thread {
                                 // broadcast readyPlayers to all clients
                                 broadcast("readyPlayers " + readyPlayers);
                             }
-                        }
-                        // 'start' parameter (starting the game)
-                        else if (message.startsWith("start")) {
-                            // log incoming start message
-                            LOGGER.info("INCOMING start");
-                            // start the game with players who are ready
-                            for (Connection kth : connections) {
-                                if (kth.isHost()) {
-                                    kth.startGameServer();
-                                    kth.connectToGame();
+                            // 'start' parameter (starting the game)
+                            else if (message.startsWith("start")) {
+                                // log incoming start message
+                                LOGGER.info("INCOMING start");
+                                // start the game with players who are ready
+                                String tmpRoom="";
+                                for (Connection kth : connections) {
+                                    // start gameServer and first client of host
+                                    if (kth.isHost()) {
+                                        tmpRoom = kth.getRoom();
+                                        kth.startGameServer();
+                                        kth.connectToGame();
+                                    }
+                                    // start client games
+                                    if (kth.getRoom().equalsIgnoreCase(tmpRoom) && kth.isReady()) {
+                                        kth.connectToGame();
+                                    }
                                 }
-                            /*if (kth.isReady()) {
-                                // send game start message to ready clients
-                                kth.println("gamestart");
-                                // log outgoing game start message
-                                LOGGER.info("OUTGOING gamestart");
-                            }*/
+
+                                // broadcast gameStart to all clients
+                                broadcast("gamestart " + tmpRoom);
+                                // log outgoing message
+                                LOGGER.info("OUTGOING gamestart " + tmpRoom);
                             }
                         }
                     }

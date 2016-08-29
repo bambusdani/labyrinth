@@ -21,6 +21,8 @@ public class Connection extends Thread {
     private String message;         // one line buffer
     private boolean init = true;   // for init message
     private int pId;                 //connection ID (for logging)
+    private int roomID;
+    private String room;
     private String playerName;
     private boolean ready=false;
     private boolean host=false;
@@ -112,6 +114,22 @@ public class Connection extends Thread {
 
     public void setHost(boolean host) {
         this.host = host;
+    }
+
+    public int getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(int roomID) {
+        this.roomID = roomID;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
     }
 
     public void startGameServer() {

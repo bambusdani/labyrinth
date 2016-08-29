@@ -508,8 +508,12 @@ public class Lobby implements ActionListener {
                 textAreaHostName.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
             }
         } else if (e.getSource() == buttonJoin) {
-
             if (!textAreaJoinNumber.getText().isEmpty()) {
+                // send join message to server
+                out.println("join " + textAreaJoinNumber.getText());
+                // log outgoing message
+                LOGGER.info("OUTGOING join " + textAreaJoinNumber.getText());
+
                 panelButtons.setVisible(false);
                 panelJoinGame.setVisible(true);
             } else {
@@ -633,9 +637,7 @@ public class Lobby implements ActionListener {
             // 'gamestart' parameter
             else if (s.startsWith("gamestart")) {
                 // log incoming game start message
-                LOGGER.info("INCOMING gamestart");
-                // do something
-                System.out.println("Game is starting...");
+                LOGGER.info("INCOMING " + s);
             }
             // 'chat' parameter
             else {
