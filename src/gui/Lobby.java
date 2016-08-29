@@ -649,28 +649,26 @@ public class Lobby implements ActionListener{
                 startGameServer();
             }
             // 'gamestart' parameter
+            else if (s.startsWith("gamestart")) {
+                // log incoming game start message
+                LOGGER.info("INCOMING " + s);
+                System.out.println(System.getProperty("java.home"));
+
+                connectToGame();
+            }
+            // gameRoom
+            else if (s.startsWith("gameRoom")) {
+                String[] tmpGameRoom = s.split("\\s+");
+
+                room = tmpGameRoom[1];
+            }
+            // 'chat' parameter
             else {
-                if (s.startsWith("gamestart")) {
-                    // log incoming game start message
-                    LOGGER.info("INCOMING " + s);
-                    System.out.println(System.getProperty("java.home"));
-
-                    connectToGame();
-                }
-                // gameRoom
-                else if (s.startsWith("gameRoom")) {
-                    String[] tmpGameRoom = s.split("\\s+");
-
-                    room = tmpGameRoom[1];
-                }
-                // 'chat' parameter
-                else {
-                    // write incoming chat message in textArea
-                    textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
-                    textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
-                    // log incoming chat message
-                    LOGGER.info("INCOMING " + s);
-                }
+                // write incoming chat message in textArea
+                textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
+                textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
+                // log incoming chat message
+                LOGGER.info("INCOMING " + s);
             }
         }
 
