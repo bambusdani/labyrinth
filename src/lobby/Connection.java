@@ -143,17 +143,4 @@ public class Connection extends Thread {
             System.err.println(e);
         }
     }
-
-    public void connectToGame() {
-        try {
-            String[] startOptions = new String[]{System.getProperty("java.home") + "/bin/java",
-                    "-Djava.util.logging.config.file=src/network/logging.properties",
-                    "-jar",
-                    "game.jar",
-                    "4445"};
-            new ProcessBuilder(startOptions).start();
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-    }
 }

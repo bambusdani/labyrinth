@@ -151,8 +151,8 @@ public class ConnectionListener extends Thread {
                         // start the game with players who are ready
                         String tmpRoom = "";
                         ith.startGameServer();
-                        ith.connectToGame();
 
+                        broadcast("chat gamestarting...");
                         // broadcast gameStart to all clients
                         broadcast("gamestart " + tmpRoom);
                         // log outgoing message

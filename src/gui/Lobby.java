@@ -699,6 +699,7 @@ public class Lobby implements ActionListener{
                     "-Djava.util.logging.config.file=src/network/logging.properties",
                     "-jar",
                     "game.jar",
+                    "192.168.14.37",
                     "4445"};
             new ProcessBuilder(startOptions).start();
         } catch (Exception e) {
