@@ -18,8 +18,8 @@ public class ConnectionListener extends Thread {
 
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
-    private String players="", readyPlayers="", rooms="", hosts="";
-    private int roomID=0;
+    private String players = "", readyPlayers = "", rooms = "", hosts = "";
+    private int roomID = 0;
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -57,7 +57,7 @@ public class ConnectionListener extends Thread {
                 String message = ith.getMessage();
 
                 // send init board strings to clients (specifically)
-                if(ith.isAlive() && message != null && connections.get(i).isInit()) {
+                if (ith.isAlive() && message != null && connections.get(i).isInit()) {
                     // set unique playerID
                     connections.get(i).setpId(i);
                     // send playerID to client
@@ -77,7 +77,7 @@ public class ConnectionListener extends Thread {
                     }
 
                     // append to player var. and broadcast to all clients
-                    if (!players.contains(connections.get(i).getpId()+"")) {
+                    if (!players.contains(connections.get(i).getpId() + "")) {
                         players += connections.get(i).getpId() + " " + connections.get(i).getPlayerName() + " ";
                         // send players to all clients
                         broadcast("players " + players);
@@ -106,7 +106,7 @@ public class ConnectionListener extends Thread {
                         // roomID + 1
                         roomID++;
                         // send rooms to all clients
-                        broadcast("rooms " + tmpHost[1] + " " + roomID+"");
+                        broadcast("rooms " + tmpHost[1] + " " + roomID + "");
                         // log outgoing rooms message
                         LOGGER.info("OUTGOING rooms " + tmpHost[1]);
 
@@ -127,55 +127,56 @@ public class ConnectionListener extends Thread {
                         // TODO send rooms and hosts to all cients
                     }
                     // 'ready' parameter (ready playerID)
-                    else {
-                        if (message.startsWith("ready")) {
-                            // set players connection to ready
-                            connections.get(i).setReady(true);
-                            // log incoming message
-                            LOGGER.info("INCOMING ready");
-                            // send 'ready playerID' to all clients
-                            broadcast("ready " + connections.get(i).getpId());
-                            // log outgoing ready message
-                            LOGGER.info("OUTGOING ready " + connections.get(i).getpId());
-                            // append name to readyPlayers
-                            if (!readyPlayers.contains(connections.get(i).getPlayerName())) {
-                                readyPlayers += connections.get(i).getPlayerName() + " ";
-                                // broadcast readyPlayers to all clients
-                                broadcast("readyPlayers " + readyPlayers);
-                            }
-                            // 'start' parameter (starting the game)
-                            else if (message.startsWith("start")) {
-                                // log incoming start message
-                                LOGGER.info("INCOMING start");
-                                // start the game with players who are ready
-                                String tmpRoom="";
-                                for (Connection kth : connections) {
-                                    // start gameServer and first client of host
-                                    if (kth.isHost()) {
-                                        tmpRoom = kth.getRoom();
-                                        kth.startGameServer();
-                                        kth.connectToGame();
-                                    }
-                                    // start client games
-                                    if (kth.getRoom().equalsIgnoreCase(tmpRoom) && kth.isReady()) {
-                                        kth.connectToGame();
-                                    }
-                                }
-
-                                // broadcast gameStart to all clients
-                                broadcast("gamestart " + tmpRoom);
-                                // log outgoing message
-                                LOGGER.info("OUTGOING gamestart " + tmpRoom);
-
-                                // TODO
-                                // - remove gameRoom from lobby
-                                // - set joined players to not Ready
-                                // - increment gameServer socket
-                                // - get ip address of startScreen
-                            }
+                    else if (message.startsWith("ready")) {
+                        // set players connection to ready
+                        connections.get(i).setReady(true);
+                        // log incoming message
+                        LOGGER.info("INCOMING ready");
+                        // send 'ready playerID' to all clients
+                        broadcast("ready " + connections.get(i).getpId());
+                        // log outgoing ready message
+                        LOGGER.info("OUTGOING ready " + connections.get(i).getpId());
+                        // append name to readyPlayers
+                        if (!readyPlayers.contains(connections.get(i).getPlayerName())) {
+                            readyPlayers += connections.get(i).getPlayerName() + " ";
+                            // broadcast readyPlayers to all clients
+                            broadcast("readyPlayers " + readyPlayers);
                         }
                     }
+                    // 'start' parameter (starting the game)
+                    else if (message.startsWith("start")) {
+                        // log incoming start message
+                        LOGGER.info("INCOMING start");
+                        // start the game with players who are ready
+                        String tmpRoom = "";
+                        ith.startGameServer();
+                        ith.connectToGame();
+                        // for (Connection kth : connections) {
+                        // start gameServer and first client of host
+                        // if (kth.isHost()) {
+                        //     tmpRoom = kth.getRoom();
+                        //     kth.startGameServer();
+                        // kth.connectToGame();
+                        // }
+                        // start client games
+                        // if (kth.getRoom().equalsIgnoreCase(tmpRoom) && kth.isReady()) {
+                        //     kth.connectToGame();
+                        // }
+                        // }
+
+                        // broadcast gameStart to all clients
+                        // broadcast("gamestart " + tmpRoom);
+                        // log outgoing message
+                        LOGGER.info("OUTGOING gamestart " + tmpRoom);
+
+                        // TODO
+                        // - remove gameRoom from lobby
+                        // - set joined players to not Ready
+                        // - increment gameServer socket
+                        // - get ip address of startScreen
+                    }
                 }
+
 
                 //--------------------------------------------------------------------------------
                 // begin with server broadcasting to all clients
@@ -191,16 +192,19 @@ public class ConnectionListener extends Thread {
                             jth.println(message.substring(5));
                             // log outgoing chat message
                             LOGGER.info("OUTGOING chat player_0" + connections.get(i).getpId() + " " + tmpMessage[1]);
-                        }
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             // error displaying
                             System.err.println(e.getMessage());
                         }
                     }
             }
             // don't monopolize processor
-            try                 { Thread.sleep(100);   }
-            catch (Exception e) { e.printStackTrace(); }
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
