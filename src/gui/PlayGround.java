@@ -29,7 +29,6 @@ public class PlayGround implements ActionListener {
     //player
     private int playerID;
     ArrayList<Boolean> playersTurn = new ArrayList<Boolean>();
-    private Boolean tileInsertionAllowed = true;
     private int playersTurnID = 0;
     private boolean tileInserted = false;
 
@@ -46,7 +45,6 @@ public class PlayGround implements ActionListener {
     private int stoneSize = 75;
 
     //gameField buttons
-    private JButton buttonNewGame;
     private JButton buttonEndGame;
     private	JButton buttonRotate;
     public JButton[][] boardSquares = new JButton[7][7];
@@ -223,17 +221,10 @@ public class PlayGround implements ActionListener {
         labelPlayer3.setVerticalAlignment(SwingConstants.CENTER);
         panelPlayeroverview.add(labelPlayer3, constraintsPlayeroverview);
 
-        //---------------------------------------------------------------------------------
-        // Button new Game
-        constraintsPlayeroverview.gridx = 5;
-        constraintsPlayeroverview.gridy = 0;
-        this.buttonNewGame = setButtons("Neues Spiel", fontSize, boxSizeX, boxSizeY);
-        //adding ActionListener
-        this.buttonNewGame.addActionListener(this);
-        panelPlayeroverview.add(this.buttonNewGame, constraintsPlayeroverview);
 
         //---------------------------------------------------------------------------------
         // Button end Game
+        constraintsPlayeroverview.anchor = GridBagConstraints.EAST;
         constraintsPlayeroverview.gridx = 6;
         constraintsPlayeroverview.gridy = 0;
         this.buttonEndGame = setButtons("Spiel beenden", fontSize, boxSizeX, boxSizeY);
@@ -300,7 +291,9 @@ public class PlayGround implements ActionListener {
         this.buttonRotate.addActionListener(this);
         panelInformation.add(this.buttonRotate, constraintsInformation);
 
-        //chat zur info hinzufügen
+        //----------------------------------------------------------------------------------
+        //chat
+        //----------------------------------------------------------------------------------
         GridBagConstraints constraintsChat = new GridBagConstraints();
 
         constraintsChat.anchor = GridBagConstraints.SOUTHEAST;
@@ -309,7 +302,6 @@ public class PlayGround implements ActionListener {
         constraintsChat.gridwidth = 1;
         constraintsChat.gridheight = 5;
         constraintsChat.insets = new Insets(50, 0, 0, 0);
-
         //-----------------------------------------------------------------------------------
         // text area
         constraintsChat.gridx = 0;
@@ -334,44 +326,6 @@ public class PlayGround implements ActionListener {
         textField.addActionListener(this);
         panelInformation.add(textField, constraintsChat);
 
-
-
-        //===================================================================================
-        // panel network
-        //===================================================================================
-        /*JPanel panelChat = new JPanel(new GridBagLayout());
-        GridBagConstraints constraintsChat = new GridBagConstraints();
-
-        constraintsChat.anchor = GridBagConstraints.SOUTHWEST;
-        constraintsChat.weightx = 1;
-        constraintsChat.weighty = 1;
-        constraintsChat.gridwidth = 1;
-        constraintsChat.insets = new Insets(0, 5, 0, 5);
-
-        //-----------------------------------------------------------------------------------
-        // text area
-        constraintsChat.gridx = 0;
-        constraintsChat.gridy = 0;
-
-        textArea = setTextArea(300 , 125);
-        textArea.setEditable(false);
-
-        // creating scroll panel
-        JScrollPane scroll = new JScrollPane(textArea);
-        scroll.setMinimumSize(new Dimension(300,125));
-        scroll.setPreferredSize(new Dimension(300,125));
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        panelChat.add(scroll, constraintsChat);
-
-        //-----------------------------------------------------------------------------------
-        // input field
-        constraintsChat.gridx = 0;
-        constraintsChat.gridy = 1;
-        textField = setTextField(300 , 32);
-        textField.addActionListener(this);
-        panelChat.add(textField, constraintsChat);
-*/
         //===================================================================================
         // panel board
         //===================================================================================
@@ -562,21 +516,6 @@ public class PlayGround implements ActionListener {
         constraintsContent.gridy = 1;
         panelContent.add(panelInformation, constraintsContent);
 
-        //----
-        //Chat
-        /*
-        constraintsContent.anchor = GridBagConstraints.SOUTHWEST;
-        constraintsContent.weightx = 1;
-        constraintsContent.weighty = 1;
-        constraintsContent.gridwidth = 1;
-        constraintsContent.gridheight= 2;
-        constraintsContent.insets = new Insets(0, 0, 0, 0);
-        constraintsContent.gridx = 0;
-        constraintsContent.gridy = 5;
-        */
-        //panelContent.add(panelChat, constraintsContent);
-        //---------
-
         //adding to frame
         this.frame = createFrame();
 
@@ -584,14 +523,12 @@ public class PlayGround implements ActionListener {
         panelPlayeroverview.setOpaque(false);
         panelInformation.setOpaque(false);
         panelGameField.setOpaque(false);
-        //panelChat.setOpaque(true);
         panelContent.setOpaque(false);
 
         //places the panelContent on the panelBackground
         GradientPanel panelBackground = new GradientPanel();
         panelBackground.setLayout(new BorderLayout());
         panelBackground.add(panelContent,BorderLayout.NORTH);
-
 
         this.frame.add(panelBackground);
 
@@ -712,11 +649,6 @@ public class PlayGround implements ActionListener {
             // log
             LOGGER.info("OUTGOING leave");
             System.exit(0);
-        }
-        if (buttonNewGame == e.getSource()) {
-            frame.dispose();
-            CreateNewGame newGame = new CreateNewGame();
-            newGame.createGui();
         }
         if (playersTurnID == playerID) {
             if (buttonRotate == e.getSource()) {

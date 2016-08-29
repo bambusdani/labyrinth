@@ -4,8 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+
 
 /**
  * Created by Marvin Röck, Daniel Deuscher, Rehan App
@@ -151,10 +150,18 @@ public class StartScreen extends JPanel implements ActionListener {
      */
     public void actionPerformed (ActionEvent e){
         if(e.getSource() == buttonSubmit){
+
+
             if((!textAreaName.getText().isEmpty())){
                 if(!textAreaIP.getText().isEmpty()){
+
+                    System.out.println("ip: " + textAreaIP.getText() + " name: " + textAreaName.getText());
+
+                     //Lobby lobby = new Lobby("localhost", "marvin");
                     Lobby lobby = new Lobby(textAreaIP.getText() , textAreaName.getText());
-                    frame.dispose();
+                    lobby.listen();
+
+
                 }
                 else{
                     labelIP.setForeground(Color.red);
@@ -164,6 +171,7 @@ public class StartScreen extends JPanel implements ActionListener {
                 labelText.setForeground(Color.red);
             }
         }
+
     }
 
     /**
