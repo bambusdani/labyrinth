@@ -687,7 +687,7 @@ public class Lobby implements ActionListener{
         }
 
         //StartScreen startScreen = new StartScreen();
-        Lobby lobby = new Lobby("localhost", "Daniel");
+        Lobby lobby = new Lobby("192.168.14.37", "Daniel");
         lobby.listen();
     }
 
@@ -699,7 +699,8 @@ public class Lobby implements ActionListener{
                     "-jar",
                     "game.jar",
                     "192.168.14.37",
-                    "4445"};
+                    "4445",
+                    "Daniel"};
             new ProcessBuilder(startOptions).start();
         } catch (Exception e) {
             System.err.println(e);
