@@ -134,13 +134,13 @@ public class Rules implements ActionListener{
     public String gameRules(){
 
         String rules =  "Ziel des Spiels: \n" +
-                        "In einem verwunschenen Labyrinth gehen die Spieler auf Suche nach geheimnisvollen Gegenständen und Lebewesen. Jeder Spieler verucht durch" +
+                        "In einem verwunschenen Labyrinth gehen die Spieler auf Suche nach geheimnisvollen Gegenständen und Lebewesen. Jeder Spieler verucht durch " +
                         "geschicktes Verschieben der Gänge zu ihnen zu gelangen." +
-                        "Wer als erstes Alle Geheimnisse lüftet und wieder auf seinem Startfeld landet, ist der Gewinner dieses spannenden Spieles. \n \n" +
+                        "Wer als erstes alle Geheimnisse lüftet und wieder auf seinem Startfeld landet, ist der Gewinner dieses spannenden Spieles. \n \n" +
                         "Vorbereitung: \n" +
                         "Die beweglichen Gänge-Karten werden zufällig auf das Spielfeld verteilt und jeder Spieler bekommt 6 Bildkarten, welche die anderen Spieler nicht sehen. \n \n" +
                         "Spielverlauf: \n" +
-                        "Das Spiel läuft reihumm im Kreis. Ist ein Spieler an der Reihe,muss er versuchen auf das Feld zu gelangen, das dieselbe Figur zeigt, wie die oberste Karte seines Stapels." +
+                        "Das Spiel läuft reihumm im Kreis. Ist ein Spieler an der Reihe, muss er versuchen auf das Feld zu gelangen, das dieselbe Figur zeigt, wie die oberste Karte seines Stapels." +
                         "Dazu verschiebt er immer zuerst das Labyrinth durch Einschieben einer Gänge-Karte und zieht danach mit seiner Spielfigur. \n \n" +
                         "Gänge verschieben: \n" +
                         "Entlang des Spielbrettes befinden sich 12 Pfeile. Der Spieler am Zug entscheidet sich für einen dieser Pfeile und schiebt hier die überzählige Gänge-Karte in das Spielfeld." +
