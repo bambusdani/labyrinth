@@ -616,58 +616,57 @@ public class Lobby implements ActionListener{
                 LOGGER.info("INCOMING " + s);
             }
             // 'rooms' parameter
-            else {
-                if (s.startsWith("rooms")) {
-                    // log incoming rooms message
-                    LOGGER.info("INCOMING " + s);
+            else if (s.startsWith("rooms")) {
+                // log incoming rooms message
+                LOGGER.info("INCOMING " + s);
 
-                    String[] tmpRooms = s.split("\\s+");
-                    for (int i = 1; i < tmpRooms.length; i = i + 2) {
-                        textAreaOpenGames.setText("Open Game Rooms:\n" + tmpRooms[i] + " (id: " + tmpRooms[i + 1] + ")\n");
-                    }
-                }
-                // 'ready playerID' parameter
-                else if (s.startsWith("ready")) {
-                    // log incoming ready message
-                    LOGGER.info("INCOMING " + s);
-                    // set player to ready
-                    String[] tmpReady = s.split("\\s+");
-                    if (playerID.equalsIgnoreCase(tmpReady[1])) {
-                        this.ready = true;
-                    }
-                }
-                // readyPlayers
-                else if (s.startsWith("readyPlayers")) {
-                    String[] tmpReadyPlayers = s.split("\\s+");
-                    for (int i = 0; i < readyPlayers.length; i++) {
-                        readyPlayers[i] = tmpReadyPlayers[i + 1];
-                    }
-                    // hostPlayer0.setText(tmpReadyPlayers[1]);
-                    System.out.println(readyPlayers.length);
-                }
-                // 'gamestart' parameter
-                else if (s.startsWith("gamestart")) {
-                    // log incoming game start message
-                    LOGGER.info("INCOMING " + s);
-
-                    connectToGame();
-                }
-                // gameRoom
-                else if (s.startsWith("gameRoom")) {
-                    String[] tmpGameRoom = s.split("\\s+");
-
-                    room = tmpGameRoom[1];
-                }
-                // 'chat' parameter
-                else {
-                    // write incoming chat message in textArea
-                    textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
-                    textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
-                    // log incoming chat message
-                    LOGGER.info("INCOMING " + s);
+                String[] tmpRooms = s.split("\\s+");
+                for (int i = 1; i < tmpRooms.length; i = i + 2) {
+                    textAreaOpenGames.setText("Open Game Rooms:\n" + tmpRooms[i] + " (id: " + tmpRooms[i + 1] + ")\n");
                 }
             }
+            // 'ready playerID' parameter
+            else if (s.startsWith("ready")) {
+                // log incoming ready message
+                LOGGER.info("INCOMING " + s);
+                // set player to ready
+                String[] tmpReady = s.split("\\s+");
+                if (playerID.equalsIgnoreCase(tmpReady[1])) {
+                    this.ready = true;
+                }
+            }
+            // readyPlayers
+            else if (s.startsWith("readyPlayers")) {
+                String[] tmpReadyPlayers = s.split("\\s+");
+                for (int i = 0; i < readyPlayers.length; i++) {
+                    readyPlayers[i] = tmpReadyPlayers[i + 1];
+                }
+                // hostPlayer0.setText(tmpReadyPlayers[1]);
+                System.out.println(readyPlayers.length);
+            }
+            // 'gamestart' parameter
+            else if (s.startsWith("gamestart")) {
+                // log incoming game start message
+                LOGGER.info("INCOMING " + s);
+
+                connectToGame();
+            }
+            // gameRoom
+            else if (s.startsWith("gameRoom")) {
+                String[] tmpGameRoom = s.split("\\s+");
+
+                room = tmpGameRoom[1];
+            }
+            // 'chat' parameter
+            else {
+                // write incoming chat message in textArea
+                textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
+                textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
+                // log incoming chat message
+                LOGGER.info("INCOMING " + s);
+            }
         }
+
 
         out.close();
         in.close();
