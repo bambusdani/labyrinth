@@ -650,10 +650,7 @@ public class Lobby implements ActionListener{
                     // log incoming game start message
                     LOGGER.info("INCOMING " + s);
 
-                    String[] tmpRoom = s.split("\\s+");
-                    if (room.equalsIgnoreCase(tmpRoom[1])) {
-                        connectToGame();
-                    }
+                    connectToGame();
                 }
                 // gameRoom
                 else if (s.startsWith("gameRoom")) {
