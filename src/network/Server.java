@@ -16,6 +16,8 @@
 
 package network;
 
+import com.sun.tools.internal.jxc.SchemaGenerator;
+
 import java.net.Socket;
 import java.net.ServerSocket;
 import java.util.Vector;
@@ -23,7 +25,7 @@ import java.util.Vector;
 public class Server {
     public static void main(String[] args) throws Exception {
         Vector<Connection> connections        = new Vector<Connection>();
-        ServerSocket serverSocket             = new ServerSocket(4445);
+        ServerSocket serverSocket             = new ServerSocket(Integer.parseInt(args[0]));
         ConnectionListener connectionListener = new ConnectionListener(connections);
 
         //thread that broadcasts messages to clients

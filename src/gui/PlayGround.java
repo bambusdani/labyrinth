@@ -122,10 +122,12 @@ public class PlayGround implements ActionListener {
     private String initName;
     private final Logger LOGGER = Logger.getLogger(PlayGround.class.getName());
 
-    public PlayGround(String hostName, String screenName) {
+    // Erstellen der Klasse mit wichtigen Funktionen
+    public PlayGround(String hostName, int port, String screenName) {
+
         // connect to server
         try {
-            socket = new Socket(hostName, 4445);
+            socket = new Socket(hostName, port);
             out    = new Out(socket);
             in     = new In(socket);
         }

@@ -34,8 +34,7 @@ public class Main {
 
         BoardFromClient board = new BoardFromClient();
 
-        PlayGround test = new PlayGround("localhost", "marvin");
-
+        PlayGround test = new PlayGround("localhost", Integer.parseInt(args[0]), "Daniel");
 
         test.listen();
     }
