@@ -9,8 +9,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.BooleanDV;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import network.*;
 import gameLogic.*;
 
@@ -219,14 +217,7 @@ public class PlayGround implements ActionListener {
         constraintsPlayeroverview.gridwidth = 1;
         constraintsPlayeroverview.insets = new Insets(15, 10, 10, 10);
 
-        //--------------------------------------------------------------------------------
-        // symbols left
-        //constraintsPlayeroverview.gridx = 0;
-        //constraintsPlayeroverview.gridy = 0;
-        //JLabel labelSymbolsLeft = setLabel("Fehlende Symbole: ",fontSize, boxSizeX, boxSizeY, colorBlack );
-        //labelSymbolsLeft.setHorizontalAlignment(SwingConstants.CENTER);
-        //labelSymbolsLeft.setVerticalAlignment(SwingConstants.CENTER);
-        //panelPlayeroverview.add(labelSymbolsLeft, constraintsPlayeroverview);
+
         //---------------------------------------------------------------------------------
         // Player 0
         constraintsPlayeroverview.gridx = 1;
@@ -286,11 +277,11 @@ public class PlayGround implements ActionListener {
         JPanel panelInformation = new JPanel(new GridBagLayout());
         GridBagConstraints constraintsInformation = new GridBagConstraints();
 
-        constraintsInformation.anchor = GridBagConstraints.NORTH;
+        constraintsInformation.anchor = GridBagConstraints.CENTER;
         constraintsInformation.weightx = 1;
         constraintsInformation.weighty = 1;
         constraintsInformation.gridwidth = 1;
-        constraintsInformation.insets = new Insets(0, 0, 0, 0);
+        constraintsInformation.insets = new Insets(75, 0, 0, 0);
 
         //-----------------------------------------------------------------------------------
         // next goal
@@ -305,6 +296,7 @@ public class PlayGround implements ActionListener {
         // next goal symbol
         constraintsInformation.gridx = 0;
         constraintsInformation.gridy = 1;
+        constraintsInformation.insets = new Insets(0, 0, 0, 0);
         labelNextGoalSymbol= setLabel("", fontSize, stoneSize,stoneSize,colorBlack);
         //labelNextGoalSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         panelInformation.add(labelNextGoalSymbol, constraintsInformation);
@@ -322,12 +314,10 @@ public class PlayGround implements ActionListener {
         // next stone symbol
         constraintsInformation.gridx = 0;
         constraintsInformation.gridy = 3;
-        // instead of "T" it should use an image
 
         this.labelNextStoneSymbol = setLabel("",fontSize, stoneSize, stoneSize, colorBlack );
         //this.labelNextStoneSymbol.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colorBlack));
         panelInformation.add(this.labelNextStoneSymbol, constraintsInformation);
-
 
         //-----------------------------------------------------------------------------------
         // Button rotate
@@ -340,10 +330,46 @@ public class PlayGround implements ActionListener {
         this.buttonRotate.addActionListener(this);
         panelInformation.add(this.buttonRotate, constraintsInformation);
 
+        //chat zur info hinzufügen
+        GridBagConstraints constraintsChat = new GridBagConstraints();
+
+        constraintsChat.anchor = GridBagConstraints.SOUTHEAST;
+        constraintsChat.weightx = 1;
+        constraintsChat.weighty = 1;
+        constraintsChat.gridwidth = 1;
+        constraintsChat.gridheight = 5;
+        constraintsChat.insets = new Insets(50, 0, 0, 0);
+
+        //-----------------------------------------------------------------------------------
+        // text area
+        constraintsChat.gridx = 0;
+        constraintsChat.gridy = 7;
+        textArea = setTextArea(350 , 125);
+        textArea.setEditable(false);
+
+        // creating scroll panel
+        JScrollPane scroll = new JScrollPane(textArea);
+        scroll.setMinimumSize(new Dimension(350,125));
+        scroll.setPreferredSize(new Dimension(350,125));
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        panelInformation.add(scroll, constraintsChat);
+
+        // input field
+        constraintsChat.gridheight=1;
+        constraintsChat.gridx = 0;
+        constraintsChat.gridy = 13;
+        constraintsChat.insets = new Insets(0, 0, 0, 0);
+        textField = setTextField(350 , 32);
+        textField.addActionListener(this);
+        panelInformation.add(textField, constraintsChat);
+
+
+
         //===================================================================================
         // panel network
         //===================================================================================
-        JPanel panelChat = new JPanel(new GridBagLayout());
+        /*JPanel panelChat = new JPanel(new GridBagLayout());
         GridBagConstraints constraintsChat = new GridBagConstraints();
 
         constraintsChat.anchor = GridBagConstraints.SOUTHWEST;
@@ -375,7 +401,7 @@ public class PlayGround implements ActionListener {
         textField = setTextField(300 , 32);
         textField.addActionListener(this);
         panelChat.add(textField, constraintsChat);
-
+*/
         //===================================================================================
         // panel board
         //===================================================================================
@@ -551,13 +577,13 @@ public class PlayGround implements ActionListener {
         constraintsContent.weighty = 1;
         constraintsContent.gridwidth = 2;
         constraintsContent.gridheight= 4;
-        constraintsContent.insets = new Insets(0, 50, 0, 50);
+        constraintsContent.insets = new Insets(5, 50, 0, 50);
         constraintsContent.gridx = 0;
         constraintsContent.gridy = 1;
         panelContent.add(panelGameField, constraintsContent);
         //---------
         //Information
-        constraintsContent.anchor = GridBagConstraints.WEST;
+        constraintsContent.anchor = GridBagConstraints.SOUTHWEST;
         constraintsContent.weightx = 1;
         constraintsContent.weighty = 1;
         constraintsContent.gridwidth = 2;
@@ -568,6 +594,7 @@ public class PlayGround implements ActionListener {
         panelContent.add(panelInformation, constraintsContent);
         //---------
         //Chat
+        /*
         constraintsContent.anchor = GridBagConstraints.SOUTHWEST;
         constraintsContent.weightx = 1;
         constraintsContent.weighty = 1;
@@ -576,7 +603,8 @@ public class PlayGround implements ActionListener {
         constraintsContent.insets = new Insets(0, 0, 0, 0);
         constraintsContent.gridx = 0;
         constraintsContent.gridy = 5;
-        panelContent.add(panelChat, constraintsContent);
+        */
+        //panelContent.add(panelChat, constraintsContent);
         //---------
         //adding to frame
         this.frame = createFrame();
@@ -585,13 +613,13 @@ public class PlayGround implements ActionListener {
         panelPlayeroverview.setOpaque(false);
         panelInformation.setOpaque(false);
         panelGameField.setOpaque(false);
-        panelChat.setOpaque(true);
+        //panelChat.setOpaque(true);
         panelContent.setOpaque(false);
 
         //places the panelContent on the panelBackground
         GradientPanel panelBackground = new GradientPanel();
-        panelBackground.setLayout(new GridBagLayout());
-        panelBackground.add(panelContent);
+        panelBackground.setLayout(new BorderLayout());
+        panelBackground.add(panelContent,BorderLayout.NORTH);
 
         this.frame.add(panelBackground);
 
