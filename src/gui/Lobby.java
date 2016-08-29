@@ -52,7 +52,7 @@ public class Lobby implements ActionListener{
 
     private String tmpName, nameOfPlayer;
     private String playerID;
-    private String room;
+    private String room="";
     private boolean ready = false;
     private boolean host = false;
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
@@ -343,7 +343,7 @@ public class Lobby implements ActionListener{
         constraintsContent.gridy = 1;
         panelJoinGame.add(buttonReady, constraintsContent);
 
-        buttonback2.setText("Back to Lobby");
+        buttonback2.setText("Leave " + room);
         buttonback2.setFont(new Font("Serif", Font.PLAIN, textSize));
         buttonback2.setMinimumSize(new Dimension(150, 50));
         buttonback2.setPreferredSize(new Dimension(150, 50));
@@ -453,7 +453,7 @@ public class Lobby implements ActionListener{
         constraintsContent.gridy = 5;
         panelHostGame.add(buttonStart, constraintsContent);
 
-        buttonback.setText("Back to Lobby");
+        buttonback.setText("Leave " + room);
         buttonback.setFont(new Font("Serif", Font.PLAIN, textSize));
         buttonback.setMinimumSize(new Dimension(150, 50));
         buttonback.setPreferredSize(new Dimension(150, 50));
@@ -498,11 +498,15 @@ public class Lobby implements ActionListener{
                 out.println("host " + textAreaHostName.getText());
                 // log outgoing message
                 LOGGER.info("OUTGOING host " + textAreaHostName.getText());
+                // set room
+                room = textAreaHostName.getText();
 
                 // host is always ready, send to server
                 out.println("ready");
                 // log outgoing message
                 LOGGER.info("OUTGOING ready");
+                // set back button text
+                buttonback.setText("Leave " + room);
 
                 panelButtons.setVisible(false);
                 panelHostGame.setVisible(true);
@@ -517,6 +521,8 @@ public class Lobby implements ActionListener{
                 LOGGER.info("OUTGOING join " + textAreaJoinNumber.getText());
                 // set room
                 room = textAreaJoinNumber.getText();
+                // set back button text
+                buttonback2.setText("Leave " + room);
 
                 panelButtons.setVisible(false);
                 panelJoinGame.setVisible(true);
@@ -539,6 +545,11 @@ public class Lobby implements ActionListener{
             textAreaHostName.setText("");
             textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black));
             textAreaJoinNumber.setText("");
+
+            // send leave message to server
+            out.println("leave " + room);
+            // log outgoing message
+            LOGGER.info("OUTGOING leave " + room);
         } else if (e.getSource() == buttonback2) {
             panelJoinGame.setVisible(false);
             panelHostGame.setVisible(false);
@@ -547,6 +558,11 @@ public class Lobby implements ActionListener{
             textAreaHostName.setText("");
             textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black));
             textAreaJoinNumber.setText("");
+
+            // send leave message to server
+            out.println("leave " + room);
+            // log outgoing message
+            LOGGER.info("OUTGOING leave " + room);
         } else if (e.getSource() == buttonReady) {
             // send 'ready playerID' to server
             out.println("ready");
@@ -703,7 +719,7 @@ public class Lobby implements ActionListener{
         }
 
         //StartScreen startScreen = new StartScreen();
-        Lobby lobby = new Lobby("localhost", "Sheldon");
+        Lobby lobby = new Lobby("localhost", "Daniel");
         lobby.listen();
     }
 
