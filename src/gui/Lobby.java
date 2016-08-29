@@ -644,26 +644,33 @@ public class Lobby implements ActionListener{
                 // hostPlayer0.setText(tmpReadyPlayers[1]);
                 System.out.println(readyPlayers.length);
             }
+            // 'serverstart'
+            else if (s.startsWith("serverstart")) {
+                startGameServer();
+            }
             // 'gamestart' parameter
-            else if (s.startsWith("gamestart")) {
-                // log incoming game start message
-                LOGGER.info("INCOMING " + s);
-
-                connectToGame();
-            }
-            // gameRoom
-            else if (s.startsWith("gameRoom")) {
-                String[] tmpGameRoom = s.split("\\s+");
-
-                room = tmpGameRoom[1];
-            }
-            // 'chat' parameter
             else {
-                // write incoming chat message in textArea
-                textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
-                textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
-                // log incoming chat message
-                LOGGER.info("INCOMING " + s);
+                if (s.startsWith("gamestart")) {
+                    // log incoming game start message
+                    LOGGER.info("INCOMING " + s);
+                    System.out.println(System.getProperty("java.home"));
+
+                    connectToGame();
+                }
+                // gameRoom
+                else if (s.startsWith("gameRoom")) {
+                    String[] tmpGameRoom = s.split("\\s+");
+
+                    room = tmpGameRoom[1];
+                }
+                // 'chat' parameter
+                else {
+                    // write incoming chat message in textArea
+                    textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
+                    textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
+                    // log incoming chat message
+                    LOGGER.info("INCOMING " + s);
+                }
             }
         }
 
@@ -701,6 +708,19 @@ public class Lobby implements ActionListener{
                     "192.168.14.37",
                     "4445",
                     "Daniel"};
+            new ProcessBuilder(startOptions).start();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+    public void startGameServer() {
+        try {
+            String[] startOptions = new String[]{System.getProperty("java.home") + "/bin/java",
+                    "-Djava.util.logging.config.file=src/network/logging.properties",
+                    "-jar",
+                    "gameServer.jar",
+                    "4445"};
             new ProcessBuilder(startOptions).start();
         } catch (Exception e) {
             System.err.println(e);
