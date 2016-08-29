@@ -18,25 +18,25 @@ import java.util.ArrayList;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
+/**
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
+ */
 public class PlayGround implements ActionListener {
 
-    //------------------------
-    //PlayerManagement
+    /**
+     * Attributes
+     */
     private int playerID;
     ArrayList<Boolean> playersTurn = new ArrayList<Boolean>();
     private Boolean tileInsertionAllowed = true;
-
     private int playersTurnID = 0;
-
     private boolean tileInserted = false;
-    //------------------------
 
     private boolean moveValid;
     private boolean isPushAllowed;
     private int disabledButtonID;
-
-
-
 
     private int fontSize = 20;
     private int boxSizeX = 175;
@@ -44,18 +44,13 @@ public class PlayGround implements ActionListener {
     private Color colorBlack = new Color(0, 0, 0);
     private int stoneSize = 75;
 
-    //all buttons for actionListener
     private JButton buttonNewGame;
     private JButton buttonEndGame;
     private	JButton buttonRotate;
     public JButton[][] boardSquares = new JButton[7][7];
     private JFrame frame;
 
-    //Nächstes Teil das eingefügt wird
-    public Tiles tmpStorageTile;
     public JLabel labelNextStoneSymbol;
-    public int rotationAngle = 0 ;
-
 
     // Images for the Arrrow buttons
     private ImageIcon imageArrowDown = new ImageIcon("src/resources/arrows/downArrow.png");
@@ -94,19 +89,19 @@ public class PlayGround implements ActionListener {
     private Border border2;
     private Border border3;
     //two colors
-    Border border01;
-    Border border02;
-    Border border03;
-    Border border12;
-    Border border13;
-    Border border23;
+    private Border border01;
+    private Border border02;
+    private Border border03;
+    private Border border12;
+    private Border border13;
+    private Border border23;
     //three colors
-    Border border012;
-    Border border123;
-    Border border230;
-    Border border013;
+    private Border border012;
+    private Border border123;
+    private Border border230;
+    private Border border013;
     //four colors
-    Border border0123;
+    private Border border0123;
 
     //label für das Nachste Ziel
     private JLabel labelNextGoalSymbol;
@@ -128,35 +123,8 @@ public class PlayGround implements ActionListener {
     private final Logger LOGGER = Logger.getLogger(PlayGround.class.getName());
 
     // Erstellen der Klasse mit wichtigen Funktionen
-
-    //TODO muss weg
-    //private GameFunctions gameFunctions = new GameFunctions();
-
-    //TODO des muss auch wieder weg
-    public void nextPlayersTurn(){
-        for(int index = 0; index < playersTurn.size(); index++) {
-            if (playersTurn.get(index) && index < playersTurn.size()-1) {
-                playersTurn.set(index, false);
-                playersTurn.set(index + 1, true);
-                break;
-
-            }
-            else if(playersTurn.get(index)){
-                playersTurn.set(index, false);
-                playersTurn.set(0, true);
-                break;
-            }
-        }
-        //playerID hochzählen
-        if(playerID < 3){ playerID++;}else{	playerID = 0; }
-        tileInsertionAllowed = true;
-        System.out.println("PlayerID:" + playerID);
-    }
-    //TODO weg mit dem Drüber :D
-
-
-
     public PlayGround(String hostName, int port, String screenName) {
+
         // connect to server
         try {
             socket = new Socket(hostName, port);
@@ -172,11 +140,6 @@ public class PlayGround implements ActionListener {
         playersTurn.add(false);
         playersTurn.add(false);
         playersTurn.add(false);
-        //TODO Bis hier
-
-
-
-        //TODO ---------------------------------------------------------------------------------------------------------
 
         //to draw the borders
         border0 = BorderFactory.createLineBorder(board.getAllPlayers()[0].getColor(), 3);
@@ -198,9 +161,6 @@ public class PlayGround implements ActionListener {
         //four colors
         border0123 = new CompoundBorder(border01,border23);
 
-
-        //TODO _________________________________________________________________________________________________________
-
         //--------------------------------------------------------------------------------------------------
         //set size of images
         imageArrowDown.setImage(imageArrowDown.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
@@ -208,7 +168,6 @@ public class PlayGround implements ActionListener {
         imageArrowUp.setImage(imageArrowUp.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
         imageArrowRight.setImage(imageArrowRight.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
         imageRotate.setImage(imageRotate.getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
-
 
         //================================================================================
         // panel Player overview
@@ -222,15 +181,6 @@ public class PlayGround implements ActionListener {
         constraintsPlayeroverview.gridwidth = 1;
         constraintsPlayeroverview.insets = new Insets(15, 10, 10, 10);
 
-        //--------------------------------------------------------------------------------
-        // symbols left
-        //constraintsPlayeroverview.gridx = 0;
-        //constraintsPlayeroverview.gridy = 0;
-        //JLabel labelSymbolsLeft = setLabel("Fehlende Symbole: ",fontSize, boxSizeX, boxSizeY, colorBlack );
-        //labelSymbolsLeft.setHorizontalAlignment(SwingConstants.CENTER);
-        //labelSymbolsLeft.setVerticalAlignment(SwingConstants.CENTER);
-        //panelPlayeroverview.add(labelSymbolsLeft, constraintsPlayeroverview);
-        //---------------------------------------------------------------------------------
         // Player 0
         constraintsPlayeroverview.gridx = 1;
         constraintsPlayeroverview.gridy = 0;
@@ -981,7 +931,7 @@ public class PlayGround implements ActionListener {
                 String[] points = s.split("\\s+");
                 System.out.println(points.length);
                 System.out.println("points: " + points[0] + " " + points[1] + " " + points[2] + " " + points[3] + " " + points[4]);
-                for (int i = 1; i < board.getAllPlayers().length; i++) {
+                for (int i = 1; i < board.getAllPlayers().length+1; i++) {
                     board.getPlayer(i - 1).setScore(Integer.parseInt(points[i]));
                 }
             } else if (s.startsWith("draw")) {
@@ -1020,7 +970,7 @@ public class PlayGround implements ActionListener {
 
                 //-> 100 is never used so nobody can press anything
                 playersTurnID = 100;
-                GameEnd gameEnd = new GameEnd();
+                GameEnd gameEnd = new GameEnd(this.frame);
                 gameEnd.createGui(s.substring(7));
             }
             // incoming init message
@@ -1048,7 +998,8 @@ public class PlayGround implements ActionListener {
             else if (s.startsWith("disconnect")) {
                 // log incoming disconnect message
                 LOGGER.info("INCOMING " + s);
-            } else {
+            }
+            else {
                 // in case of chat
                 textArea.insert(s + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
@@ -1178,7 +1129,6 @@ public class PlayGround implements ActionListener {
         }
 
         labelNextGoalSymbol.setIcon(board.getAllPlayers()[playerID].getCreaturesNeeded().get(0).getSymbolImage());
-
 
         //resets the borders
         labelPlayer0.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, colorBlack));

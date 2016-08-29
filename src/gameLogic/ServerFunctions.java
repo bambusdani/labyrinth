@@ -282,13 +282,14 @@ public class ServerFunctions {
             possibleArrowInsertions[index] = true;
         }
     }
-    //==================================================================================================================
 
-
-
-
-
-
+    /**
+     * Players is moved if the move is valid
+     * @param board
+     * @param playerID
+     * @param buttonPositionPressed
+     * @return
+     */
     public Board movePlayerIfMoveIsPossible(Board board, int playerID, Position buttonPositionPressed){
         if(checkMazeIfMoveIsPossible(board, buttonPositionPressed, playerID)){
             board.getPlayer(playerID).setActualPosition(buttonPositionPressed);
@@ -298,14 +299,15 @@ public class ServerFunctions {
         }
         return board;
     }
-    //------------------------------------------------------------------------------------------------------------------
 
-    /**================================================================================
-     * function checkMazeIfMoveIsPossible
-     * buttonPositionPressed = Position wo der Button gedrückt wurde
-     * visited = merkt sich wo man bereits war sonst durchläuft es eine dauerschleife
-     * ================================================================================**/
-
+    /**
+     * checks wether move to button pressed position is possible
+     * Visited is set to remember already visited tiles -> no endless loop
+     * @param board
+     * @param buttonPositionPressed
+     * @param playerID
+     * @return
+     */
     public boolean checkMazeIfMoveIsPossible(Board board, Position buttonPositionPressed, int playerID){
         // setzt alle Werte auf false -> wurde noch nicht besucht
         for (int p=0; p<7;p++){
@@ -321,14 +323,13 @@ public class ServerFunctions {
 
     /**
      * isMovePossible
+     * goes trough the maze
+     * places booleans in visited and walks on the maze
      * @param board
      * @param buttonPositionPressed
      * @param tilePositionX -> actual x-position of the player on the tiles
      * @param tilePositionY -> actual y-position of the player on the tiles
      * @return
-     * goes trough the maze
-     * places booleans in visited and walks on the maze
-     *
      */
     public boolean isMovePossible (Board board, Position buttonPositionPressed,int tilePositionX , int tilePositionY){
 
@@ -371,7 +372,12 @@ public class ServerFunctions {
         return false;
     }
 
-
+    /**
+     * players are moved with tile by insertion
+     * @param board
+     * @param arrowNumber
+     * @return
+     */
     public Board movePlayerIfStoneIsPlacedInMaze(Board board, int arrowNumber){
         int rownumber = 0;
         switch (arrowNumber){
@@ -405,63 +411,47 @@ public class ServerFunctions {
 
         for (int playerID = 0 ; playerID < board.getAllPlayers().length ; playerID ++) {
 
-            // Für Pfeil 0 1 2 top
+            // for arrow 0 1 2 top
             if (((arrowNumber==0) || (arrowNumber == 1) || (arrowNumber == 2)) && (board.getPlayer(playerID).getAcutalPosition().getX() == rownumber)) {
                 if (board.getPlayer(playerID).getAcutalPosition().getY() == 6) {
-                    // aus dem spielfeld schieben
                     board.getPlayer(playerID).setActualPosition(new Position(rownumber, 0));
                 } else {
-                    //eins weiter schieben
                     board.getPlayer(playerID).setActualPosition(new Position(rownumber, board.getPlayer(playerID).getAcutalPosition().getY() + 1));
                 }
             }
             //----------------------------
-            // Für Pfeil  6 7 8 bottom
+            // for arrow  6 7 8 bottom
             if (((arrowNumber == 6) || (arrowNumber == 7) || (arrowNumber == 8)) && (board.getPlayer(playerID).getAcutalPosition().getX() == rownumber)) {
                 if (board.getPlayer(playerID).getAcutalPosition().getY() == 0) {
-                    // aus dem spielfeld schieben
                     board.getPlayer(playerID).setActualPosition(new Position(rownumber, 6));
                 } else {
-                    //eins weiter schieben
                     board.getPlayer(playerID).setActualPosition(new Position(rownumber, board.getPlayer(playerID).getAcutalPosition().getY() - 1));
                 }
             }
             //----------------------------
-            // Für Pfeil  3 4 5 right
+            // for arrow  3 4 5 right
             if (((arrowNumber == 3) || (arrowNumber == 4) || (arrowNumber == 5)) && (board.getPlayer(playerID).getAcutalPosition().getY() == rownumber)) {
                 if (board.getPlayer(playerID).getAcutalPosition().getX() == 0) {
-                    // aus dem spielfeld schieben
                     board.getPlayer(playerID).setActualPosition(new Position(6,rownumber));
                 } else {
-                    //eins weiter schieben
                     board.getPlayer(playerID).setActualPosition(new Position(board.getPlayer(playerID).getAcutalPosition().getX() - 1, rownumber));
                 }
             }
             //----------------------------
-            // Für Pfeil  9 10 11 right
+            // for arrow  9 10 11 right
             if (((arrowNumber == 9) || (arrowNumber == 10) || (arrowNumber == 11)) && (board.getPlayer(playerID).getAcutalPosition().getY() == rownumber)) {
-                //setze Farbe zurück
+                //reset color
                 if (board.getPlayer(playerID).getAcutalPosition().getX() == 6) {
-                    // aus dem spielfeld schieben
                     board.getPlayer(playerID).setActualPosition(new Position(0,rownumber));
                 } else {
-                    //eins weiter schieben
                     board.getPlayer(playerID).setActualPosition(new Position(board.getPlayer(playerID).getAcutalPosition().getX() + 1, rownumber));
                 }
             }
         }
         return board;
     }
-    //==================================================================================================================
 
-
-
-
-
-
-
-    /*******************************************************************************************************************
-     * //TODO
+    /**
      * IsPlayerGettingPoints
      * Funktion, welche überprüft, ob der Spieler auf dem gesuchten Symbol steht. Falls ja wird ein Punkt dazu addiert
      * return 0 = kein Punkt
@@ -473,23 +463,21 @@ public class ServerFunctions {
         System.out.println("player is getting points");
 
         if(board.getPlayer(playerID).getCreaturesNeeded().get(0).getCreature() == board.getTile(board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY()).getShape().getCreature()){
-            //falls sie identisch sind
-            //erstes Element wird entfernt
+            //if they are equal -> first element is deketed
             board.getPlayer(playerID).getCreaturesNeeded().remove(0);
-
             if(board.getPlayer(playerID).getCreaturesNeeded().isEmpty()){
-                //falls die Liste der NeededCreatures leer ist -> Spieler hat gewonnen
+                //if list of NeededCreatures is empty -> player has won
                 return 2;
             }
             else{
                 System.out.println(board.getPlayer(playerID).getCreaturesNeeded().get(0).getCreature());
-                //Wert beim Spieler um 1 erhöhen
+                //increase value of player
                 board.getPlayer(playerID).setScore(board.getPlayer(playerID).getScore() + 1);
                 return 1;
             }
         }
         else{
-            // kein Punkt erziehlt
+            //no points
             return 0;
         }
     }
@@ -499,7 +487,11 @@ public class ServerFunctions {
         return possibleArrowInsertions;
     }
 
-
+    /**
+     * ID is given back, to check which button must be disabled
+     * @param buttonID
+     * @return
+     */
     public int disabledArrowID(int buttonID){
         switch (buttonID){
             case 0:

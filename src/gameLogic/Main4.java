@@ -14,7 +14,7 @@ import javax.swing.*;
  * if you press join at the lobby it will create joinGame
  *
  */
-public class Main {
+public class Main4 {
     public static void main(String[] args) {
 
         /**
@@ -31,10 +31,9 @@ public class Main {
             System.out.println("LAF not possible");
         }
 
-
         BoardFromClient board = new BoardFromClient();
 
-        PlayGround test = new PlayGround("localhost", Integer.parseInt(args[0]), "Daniel");
+        PlayGround test = new PlayGround("localhost", "louis");
 
         test.listen();
     }

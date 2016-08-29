@@ -23,6 +23,7 @@ public class ConnectionListener extends Thread {
     //PlayerTurn
     private int playersTurnID=0;
     private int playersTurnCounter = 0;
+    private boolean[] leftPlayers = {false,false,false,false};
 
     private boolean gameEnd = false;
     private String gameEndPlayerName = "";
@@ -248,12 +249,12 @@ public class ConnectionListener extends Thread {
                                 playersTurnID = connections.get(0).getpId();
                                 playersTurnCounter = 0;
                             }
-                            else if(connections.get(playersTurnCounter) == null){
+                            /*else if(connections.get(playersTurnCounter) == null){
                                 //need it if the third person is leaving
                                 //not shure if we need it -> had a error alert
                                 playersTurnCounter = 0;
                                 playersTurnID = connections.get(playersTurnID).getpId();
-                            }
+                            }*/
                             else{
                                 playersTurnCounter+=1;
                                 playersTurnID = connections.get(playersTurnCounter).getpId();
@@ -329,15 +330,32 @@ public class ConnectionListener extends Thread {
 
                     }
                     else if(message.startsWith("leave ")){
-                        if(connections.size()-1 == playersTurnCounter){
-                            playersTurnCounter = 0;
-                            playersTurnID = connections.get(playersTurnCounter).getpId();
-                        }
-                        else{
-                            playersTurnCounter ++;
-                            playersTurnID = connections.get(playersTurnCounter).getpId();
-                        }
+                        String[] leaveString = message.split("\\s+");
+                        int idLeftPlayer = Integer.parseInt(leaveString[1]);
 
+                        //wenn der spieler geht der gerade dran ist und es mehr als ein spieler ist
+                        if((connections.get(playersTurnCounter).getpId() == idLeftPlayer) && (connections.size() > 1)){
+
+                            if(idLeftPlayer == connections.get(connections.size()-1).getpId()){
+                                playersTurnID =connections.get(0).getpId();
+                                playersTurnCounter = 0;
+                                broadcast("playersTurnID " + playersTurnID);
+                                broadcast("draw ");
+                            }else{
+                                System.out.println("else");
+                                //wenn es nicht der lezte ist -> liste verkürzt sich um eins -> wie eins weitergehen
+                                //hole aber die nächste spieler ID -> +1
+                                playersTurnID = connections.get(playersTurnCounter+1).getpId();
+                                broadcast("playersTurnID " + playersTurnID);
+                                broadcast("draw ");
+                            }
+                        }
+                        //wenn ein spieler geht der nicht am zug ist und vor dem jetzigen spieler ist
+                        //Bsp. spieler 3 ist dran und spieler 1 verlässt das spiel
+                        else if(idLeftPlayer < connections.get(playersTurnCounter).getId()){
+                            System.out.println("previous person left");
+                            playersTurnCounter --;
+                        }
                     }
                 }
                 //--------------------------------------------------------------------------------
@@ -406,8 +424,8 @@ public class ConnectionListener extends Thread {
                                 // log outgoing disconnect message
                                 LOGGER.info("OUTGOING disconnect player_0" + tmpLeave[1]);
 
-                                jth.println("playersTurnID " + playersTurnID);
-                                jth.println("draw ");
+                                //jth.println("playersTurnID " + playersTurnID);
+                                //jth.println("draw ");
 
                             }
                             else {

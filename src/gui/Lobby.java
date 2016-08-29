@@ -11,34 +11,36 @@ import java.util.logging.Logger;
 import network.In;
 import network.Out;
 import lobby.Server;
+
 /**
- * Created by m on 23.08.2016.
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
  */
+public class Lobby implements ActionListener{
 
-public class Lobby implements ActionListener {
-
-    private ImageIcon titleimage = new ImageIcon("src/resources/titel/titelImage.jpg");
-    private JButton buttonHost = new JButton();
-    private JButton buttonJoin = new JButton();
-    private JButton buttonRules = new JButton();
-    private JButton buttonReady = new JButton();
-    private JButton buttonStart = new JButton();
-    private JButton buttonback = new JButton();
-    private JButton buttonback2 = new JButton();
-    private JButton buttonAbout = new JButton();
-    private JTextField textFieldChat = new JTextField();
-    private JTextArea textAreaChatText = new JTextArea();
-    private JTextArea textAreaOpenGames = new JTextArea();
-    private JTextArea textAreaPlayer = new JTextArea();
-    private JTextArea textAreaHostName = new JTextArea();
-    private JTextArea textAreaJoinNumber = new JTextArea();
-    private JTextArea hostPlayer0 = new JTextArea();
-    private JTextArea hostPlayer1 = new JTextArea();
-    private JTextArea hostPlayer2 = new JTextArea();
-    private JTextArea hostPlayer3 = new JTextArea();
-    private JPanel panelButtons = new JPanel(new GridBagLayout());
-    private JPanel panelJoinGame = new JPanel(new GridBagLayout());
-    private JPanel panelHostGame = new JPanel(new GridBagLayout());
+    private ImageIcon titleimage         = new ImageIcon("src/resources/titel/titelImage.jpg");
+    private JButton buttonHost           = new JButton();
+    private JButton buttonJoin           = new JButton();
+    private JButton buttonRules          = new JButton();
+    private JButton buttonReady          = new JButton();
+    private JButton buttonStart          = new JButton();
+    private JButton buttonback           = new JButton();
+    private JButton buttonback2           = new JButton();
+    private JButton buttonAbout          = new JButton();
+    private JTextField textFieldChat     = new JTextField();
+    private JTextArea  textAreaChatText  = new JTextArea();
+    private JTextArea  textAreaOpenGames = new JTextArea();
+    private JTextArea  textAreaPlayer    = new JTextArea();
+    private JTextArea  textAreaHostName  = new JTextArea();
+    private JTextArea  textAreaJoinNumber = new JTextArea();
+    private JTextArea  hostPlayer0       = new JTextArea();
+    private JTextArea  hostPlayer1       = new JTextArea();
+    private JTextArea  hostPlayer2       = new JTextArea();
+    private JTextArea  hostPlayer3       = new JTextArea();
+    private JPanel panelButtons          = new JPanel(new GridBagLayout());
+    private JPanel panelJoinGame         = new JPanel(new GridBagLayout());
+    private JPanel panelHostGame         = new JPanel(new GridBagLayout());
 
     private int textSize = 20;
 
@@ -675,7 +677,6 @@ public class Lobby implements ActionListener {
                 }
             }
         } catch (Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look and feel.
         }
 
         //StartScreen startScreen = new StartScreen();
