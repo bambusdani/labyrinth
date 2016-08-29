@@ -650,6 +650,10 @@ public class Lobby implements ActionListener{
                 LOGGER.info("INCOMING " + s);
                 System.out.println(System.getProperty("java.home"));
 
+                frame.dispose();
+                PlayGround playGround = new PlayGround("192.168.14.37", 4445, "Rehan");
+                playGround.listen();
+
                 connectToGame();
             }
             // gameRoom
@@ -688,7 +692,7 @@ public class Lobby implements ActionListener{
         }
 
         //StartScreen startScreen = new StartScreen();
-        Lobby lobby = new Lobby("192.168.14.37", "Daniel");
+        Lobby lobby = new Lobby("192.168.14.37", "Rehan");
         lobby.listen();
     }
 
@@ -702,7 +706,7 @@ public class Lobby implements ActionListener{
                     "game.jar",
                     "192.168.14.37",
                     "4445",
-                    "Daniel"};
+                    "Rehan"};
             new ProcessBuilder(startOptions).start();
         } catch (Exception e) {
             System.err.println(e);
