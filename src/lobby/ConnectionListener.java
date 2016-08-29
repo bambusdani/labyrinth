@@ -150,7 +150,7 @@ public class ConnectionListener extends Thread {
                         LOGGER.info("INCOMING start");
                         // start the game with players who are ready
                         String tmpRoom = "";
-                        ith.println("serverstart");
+                        ith.startGameServer();
 
                         broadcast("chat gamestarting...");
                         // broadcast gameStart to all clients

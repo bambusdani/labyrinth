@@ -131,5 +131,16 @@ public class Connection extends Thread {
         this.room = room;
     }
 
-
+    public void startGameServer() {
+        try {
+            String[] startOptions = new String[]{System.getProperty("java.home") + "/bin/java",
+                    "-Djava.util.logging.config.file=src/network/logging.properties",
+                    "-jar",
+                    "gameServer.jar",
+                    "4445"};
+            new ProcessBuilder(startOptions).start();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
 }
