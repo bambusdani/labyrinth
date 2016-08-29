@@ -649,6 +649,17 @@ public class Lobby implements ActionListener{
                 else if (s.startsWith("gamestart")) {
                     // log incoming game start message
                     LOGGER.info("INCOMING " + s);
+
+                    String[] tmpRoom = s.split("\\s+");
+                    if (room.equalsIgnoreCase(tmpRoom[1])) {
+                        connectToGame();
+                    }
+                }
+                // gameRoom
+                else if (s.startsWith("gameRoom")) {
+                    String[] tmpGameRoom = s.split("\\s+");
+
+                    room = tmpGameRoom[1];
                 }
                 // 'chat' parameter
                 else {
@@ -684,4 +695,18 @@ public class Lobby implements ActionListener{
         lobby.listen();
     }
 
+
+    public void connectToGame() {
+        try {
+            String[] startOptions = new String[]{System.getProperty("java.home") + "/bin/java",
+                    "-Djava.util.logging.config.file=src/network/logging.properties",
+                    "-jar",
+                    "game.jar",
+                    "4445"};
+            new ProcessBuilder(startOptions).start();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
 }
+
