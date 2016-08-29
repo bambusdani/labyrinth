@@ -55,7 +55,6 @@ public class Lobby implements ActionListener{
     private String room;
     private boolean ready = false;
     private boolean host = false;
-    private String[] readyPlayers = new String[4];
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
 
     public Lobby(String hostName, String name) {
@@ -636,13 +635,25 @@ public class Lobby implements ActionListener{
                 }
             }
             // readyPlayers
-            else if (s.startsWith("readyPlayers")) {
+            else if (s.startsWith("drawReadyPlayers")) {
                 String[] tmpReadyPlayers = s.split("\\s+");
-                for (int i = 0; i < readyPlayers.length; i++) {
-                    readyPlayers[i] = tmpReadyPlayers[i + 1];
+
+                // draw readyPlayers
+                if (tmpReadyPlayers.length == 2) {
+                    hostPlayer0.setText(tmpReadyPlayers[1]);
+                } else if (tmpReadyPlayers.length == 3) {
+                    hostPlayer0.setText(tmpReadyPlayers[1]);
+                    hostPlayer1.setText(tmpReadyPlayers[2]);
+                } else if (tmpReadyPlayers.length == 4) {
+                    hostPlayer0.setText(tmpReadyPlayers[1]);
+                    hostPlayer1.setText(tmpReadyPlayers[2]);
+                    hostPlayer2.setText(tmpReadyPlayers[3]);
+                } else if (tmpReadyPlayers.length == 5) {
+                    hostPlayer0.setText(tmpReadyPlayers[1]);
+                    hostPlayer1.setText(tmpReadyPlayers[2]);
+                    hostPlayer2.setText(tmpReadyPlayers[3]);
+                    hostPlayer3.setText(tmpReadyPlayers[4]);
                 }
-                // hostPlayer0.setText(tmpReadyPlayers[1]);
-                System.out.println(readyPlayers.length);
             }
             // 'gamestart' parameter
             else if (s.startsWith("gamestart")) {
@@ -692,7 +703,7 @@ public class Lobby implements ActionListener{
         }
 
         //StartScreen startScreen = new StartScreen();
-        Lobby lobby = new Lobby("192.168.14.37", "Rehan");
+        Lobby lobby = new Lobby("localhost", "Sheldon");
         lobby.listen();
     }
 

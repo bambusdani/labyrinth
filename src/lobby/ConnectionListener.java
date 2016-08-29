@@ -141,7 +141,7 @@ public class ConnectionListener extends Thread {
                         if (!readyPlayers.contains(connections.get(i).getPlayerName())) {
                             readyPlayers += connections.get(i).getPlayerName() + " ";
                             // broadcast readyPlayers to all clients
-                            broadcast("readyPlayers " + readyPlayers);
+                            broadcast("drawReadyPlayers " + readyPlayers);
                         }
                     }
                     // 'start' parameter (starting the game)
@@ -159,10 +159,11 @@ public class ConnectionListener extends Thread {
                         LOGGER.info("OUTGOING gamestart " + tmpRoom);
 
                         // TODO
-                        // - remove gameRoom from lobby
-                        // - set joined players to not Ready
-                        // - increment gameServer socket
-                        // - get ip address of startScreen
+                        // - ready players in textfelder werden nicht angezeigt
+                        // port fort laufend
+                        // remove user von lobby wenn er ein spiel startet
+                        // delete gameRoom if game started
+
                     }
                 }
 
