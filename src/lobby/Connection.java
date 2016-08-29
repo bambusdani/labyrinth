@@ -12,6 +12,7 @@ import network.In;
 import network.Out;
 import gameLogic.*;
 
+
 public class Connection extends Thread {
     private Socket socket;
     private Out out;
@@ -19,8 +20,11 @@ public class Connection extends Thread {
     private String message;         // one line buffer
     private boolean init = true;   // for init message
     private int pId;                 //connection ID (for logging)
+    private int roomID;
+    private String room;
     private String playerName;
     private boolean ready=false;
+    private boolean host=false;
 
     public Connection(Socket socket) {
         in = new In(socket);
@@ -46,8 +50,6 @@ public class Connection extends Thread {
         }
         System.err.println("closing socket");
     }
-
-    ;
 
     /***************************************************************************
      *  The methods getMessage() and setMessage() are synchronized
@@ -103,5 +105,55 @@ public class Connection extends Thread {
 
     public void setReady(boolean ready) {
         this.ready = ready;
+    }
+
+    public boolean isHost() {
+        return host;
+    }
+
+    public void setHost(boolean host) {
+        this.host = host;
+    }
+
+    public int getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(int roomID) {
+        this.roomID = roomID;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public void startGameServer() {
+        try {
+            String[] startOptions = new String[]{System.getProperty("java.home") + "/bin/java",
+                    "-Djava.util.logging.config.file=src/network/logging.properties",
+                    "-jar",
+                    "gameServer.jar",
+                    "4445"};
+            new ProcessBuilder(startOptions).start();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+    public void connectToGame() {
+        try {
+            String[] startOptions = new String[]{System.getProperty("java.home") + "/bin/java",
+                    "-Djava.util.logging.config.file=src/network/logging.properties",
+                    "-jar",
+                    "game.jar",
+                    "4445"};
+            new ProcessBuilder(startOptions).start();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 }
