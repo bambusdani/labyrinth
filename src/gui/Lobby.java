@@ -732,6 +732,8 @@ public class Lobby implements ActionListener{
             // 'kick' (kick roomName)
             else if (s.startsWith("kick")) {
                 String[] tmpKick = s.split("\\s+");
+                // log incoming message
+                LOGGER.info("INCOMING " + s);
 
                 // leave game
                 if (tmpKick[1].equalsIgnoreCase(room)) {
