@@ -15,6 +15,7 @@ import gameLogic.*;
 
 public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
+    private int portNumber = 4445;
 
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
@@ -116,6 +117,8 @@ public class ConnectionListener extends Thread {
                         broadcast("hosts " + hosts);
                         // log outgoing hosts message
                         LOGGER.info("OUTGOING hosts " + hosts);
+
+                        portNumber++;
                     }
                     // 'join' parameter (join room name)
                     else if (message.startsWith("join")) {
@@ -149,14 +152,16 @@ public class ConnectionListener extends Thread {
                         // log incoming start message
                         LOGGER.info("INCOMING start");
                         // start the game with players who are ready
-                        String tmpRoom = "";
-                        ith.startGameServer();
+                        String tmpRoom = "1 ";
+                        System.out.println("startGameServer " + portNumber);
+                        ith.startGameServer(portNumber+" ");
 
                         broadcast("chat gamestarting...");
                         // broadcast gameStart to all clients
-                        broadcast("gamestart " + tmpRoom);
+                        broadcast("gamestart " + tmpRoom + portNumber);
                         // log outgoing message
                         LOGGER.info("OUTGOING gamestart " + tmpRoom);
+
 
                         // TODO
                         // - remove gameRoom from lobby

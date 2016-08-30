@@ -46,6 +46,7 @@ public class Lobby implements ActionListener{
     private JPanel panelJoinGame         = new JPanel(new GridBagLayout());
     private JPanel panelHostGame         = new JPanel(new GridBagLayout());
 
+
     private int textSize = 20;
 
     private Socket socket;
@@ -580,6 +581,7 @@ public class Lobby implements ActionListener{
 
                 panelButtons.setVisible(false);
                 panelHostGame.setVisible(true);
+
             } else {
                 textAreaHostName.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
             }
@@ -590,7 +592,8 @@ public class Lobby implements ActionListener{
                 // log outgoing message
                 LOGGER.info("OUTGOING join " + textAreaJoinNumber.getText());
                 // set room
-                room = textAreaJoinNumber.getText();
+
+                //room = textAreaJoinNumber.getText();
 
                 panelButtons.setVisible(false);
                 panelJoinGame.setVisible(true);
@@ -719,23 +722,26 @@ public class Lobby implements ActionListener{
             }
             // 'gamestart' parameter
             else if (s.startsWith("gamestart")) {
+                String[] tmpGameStart = s.split("\\s+");
+
                 // log incoming game start message
                 LOGGER.info("INCOMING " + s);
                 System.out.println(System.getProperty("java.home"));
 
                 frame.dispose();
 
-                PlayGround playGround = new PlayGround(this.hostName, 4445, this.playerName);
-
-                playGround.listen();
+                //if(tmpGameStart[1].equals("")){
+                    System.out.println(room);
+                    PlayGround playGround = new PlayGround(this.hostName, Integer.parseInt(tmpGameStart[2]), this.playerName);
+                    playGround.listen();
+                //}
 
                 connectToGame();
             }
             // gameRoom
             else if (s.startsWith("gameRoom")) {
                 String[] tmpGameRoom = s.split("\\s+");
-
-                room = tmpGameRoom[1];
+                this.room = tmpGameRoom[1];
             }
             // 'chat' parameter
             else {
@@ -767,7 +773,7 @@ public class Lobby implements ActionListener{
         }
 
         //StartScreen startScreen = new StartScreen();
-        Lobby lobby = new Lobby("localhost", "marvin");
+        Lobby lobby = new Lobby("localhost", "Rehan");
         lobby.listen();
     }
 

@@ -190,7 +190,6 @@ public class StartScreen extends JPanel implements ActionListener {
          */
         StartScreen startScreen = new StartScreen();
     }
-
 }
 
 
