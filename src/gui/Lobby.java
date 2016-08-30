@@ -613,6 +613,8 @@ public class Lobby implements ActionListener{
         } else if (e.getSource() == buttonJoin) {
             // send join request to server
             if (!textAreaJoinNumber.getText().isEmpty()) {
+                // set room
+                room = textAreaJoinNumber.getText();
                 // count the players in a gameRoom by counting
                 // the strings of the same room
                 int tmpCounter = 0;
@@ -632,8 +634,7 @@ public class Lobby implements ActionListener{
                     // log outgoing message
                     LOGGER.info("OUTGOING join " + textAreaJoinNumber.getText());
 
-                    // set room
-                    room = textAreaJoinNumber.getText();
+
                     // set back button text
                     buttonback2.setText("Leave " + room);
 
@@ -802,28 +803,27 @@ public class Lobby implements ActionListener{
                                 joinPlayer1.getText().equalsIgnoreCase(tmpReadyPlayers[i+1]) ||
                                 joinPlayer2.getText().equalsIgnoreCase(tmpReadyPlayers[i+1]) ||
                                 joinPlayer3.getText().equalsIgnoreCase(tmpReadyPlayers[i+1])) {
-                            i = i+2;
                         }
-                        if (tmpReadyPlayers[i].equalsIgnoreCase(room)) {
+                        else if (tmpReadyPlayers[i].equalsIgnoreCase(room)) {
                             // player 0
                             if (hostPlayer0.getText().equalsIgnoreCase("") && joinPlayer0.getText().equalsIgnoreCase("")) {
                                 hostPlayer0.setText(tmpReadyPlayers[i+1]);
-                                hostPlayer0.setText(tmpReadyPlayers[i+1]);
+                                joinPlayer0.setText(tmpReadyPlayers[i+1]);
                             }
                             // player 1
                             else if (hostPlayer1.getText().equalsIgnoreCase("") && joinPlayer1.getText().equalsIgnoreCase("")) {
                                 hostPlayer1.setText(tmpReadyPlayers[i+1]);
-                                hostPlayer1.setText(tmpReadyPlayers[i+1]);
+                                joinPlayer1.setText(tmpReadyPlayers[i+1]);
                             }
                             // player 2
                             else if (hostPlayer2.getText().equalsIgnoreCase("") && joinPlayer2.getText().equalsIgnoreCase("")) {
                                 hostPlayer2.setText(tmpReadyPlayers[i+1]);
-                                hostPlayer2.setText(tmpReadyPlayers[i+1]);
+                                joinPlayer2.setText(tmpReadyPlayers[i+1]);
                             }
                             // player 3
                             else if (hostPlayer3.getText().equalsIgnoreCase("") && joinPlayer3.getText().equalsIgnoreCase("")) {
                                 hostPlayer3.setText(tmpReadyPlayers[i+1]);
-                                hostPlayer3.setText(tmpReadyPlayers[i+1]);
+                                joinPlayer3.setText(tmpReadyPlayers[i+1]);
                             }
                         }
                     }
