@@ -592,6 +592,8 @@ public class Lobby implements ActionListener{
                 // set room
                 room = textAreaHostName.getText();
 
+                // host is always ready, send to server
+                out.println("ready");
                 // log outgoing message
                 LOGGER.info("OUTGOING ready");
                 // set back button text
