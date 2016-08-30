@@ -777,10 +777,10 @@ public class Lobby implements ActionListener{
                 // log incoming game start message
                 LOGGER.info("INCOMING " + s);
 
-                frame.dispose();
+
 
                 if(tmpGameStart[1].equals(room)){
-                System.out.println("hostname: " +hostName + " playername: " +playerName);
+                    frame.dispose();
                     PlayGround playGround = new PlayGround(this.hostName, portNumber , this.playerName);
                     playGround.listen();
                 }
