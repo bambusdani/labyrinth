@@ -765,6 +765,7 @@ public class Lobby implements ActionListener{
             }
             // 'rooms' parameter
             else if (s.startsWith("rooms")) {
+                textAreaOpenGames.setText("Open Games:\n");
                 // log incoming rooms message
                 LOGGER.info("INCOMING " + s);
                 // assign rooms to gameRooms
@@ -773,7 +774,6 @@ public class Lobby implements ActionListener{
                 String[] tmpRooms = s.split("\\s+");
                 System.out.println(s);
                 for (int i = 1; i < tmpRooms.length; i = i+2) {
-                    // textAreaOpenGames.setText("Open Game Rooms:\n");
                     if (!textAreaOpenGames.getText().contains(tmpRooms[i])) {
                         textAreaOpenGames.append(tmpRooms[i] + "\n");
                     }
