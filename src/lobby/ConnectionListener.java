@@ -194,12 +194,20 @@ public class ConnectionListener extends Thread {
                         if (ith.isHost()) {
                             // remove game room from rooms
                             rooms = rooms.replace(connections.get(i).getRoom(), "");
+                            // broadcast rooms to all clients
+                            broadcast("rooms " + rooms);
+                            // log outgoing message
+                            LOGGER.info("OUTGOING rooms " + rooms);
 
                             /* remove game room and hostID from hosts */
                             // remove game room form hosts
                             hosts = hosts.replace(connections.get(i).getRoom(), "");
                             // remove hostID from hosts
                             hosts = hosts.replace(connections.get(i).getpId()+"", "");
+                            // broadcast hosts too all clients
+                            broadcast("hosts " + hosts);
+                            // log outgoing message
+                            LOGGER.info("hosts " + hosts);
                         }
                         // remove player from lobby
                         connections.remove(i);
