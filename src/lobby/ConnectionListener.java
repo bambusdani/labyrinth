@@ -20,7 +20,6 @@ public class ConnectionListener extends Thread {
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
     private String players = "", readyPlayers = "", rooms = "", hosts = "";
-    private int roomID = 0;
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -101,15 +100,14 @@ public class ConnectionListener extends Thread {
                         connections.get(i).setHost(true);
                         // set clients room name
                         connections.get(i).setRoom(tmpHost[1]);
+
                         // rooms
                         // save room name
-                        rooms += tmpHost[1];
-                        // roomID + 1
-                        roomID++;
+                        rooms += tmpHost[1] + " ";
                         // send rooms to all clients
-                        broadcast("rooms " + tmpHost[1] + " " + roomID + "");
+                        broadcast("rooms " + rooms);
                         // log outgoing rooms message
-                        LOGGER.info("OUTGOING rooms " + tmpHost[1]);
+                        LOGGER.info("OUTGOING rooms " + rooms);
 
                         // hosts
                         hosts += tmpHost[1] + " " + connections.get(i).getpId() + " ";
@@ -140,37 +138,87 @@ public class ConnectionListener extends Thread {
                         broadcast("ready " + connections.get(i).getpId());
                         // log outgoing ready message
                         LOGGER.info("OUTGOING ready " + connections.get(i).getpId());
+
                         // append name to readyPlayers
                         if (!readyPlayers.contains(connections.get(i).getPlayerName())) {
                             readyPlayers += connections.get(i).getPlayerName() + " ";
                             // broadcast readyPlayers to all clients
-                            broadcast("readyPlayers " + readyPlayers);
+                            broadcast("drawReadyPlayers " + readyPlayers);
                         }
+                    }
+                    // 'leave' parameter (leave GameRoomName)
+                    else if (message.startsWith("leave")) {
+                        // String[] tmpLeave = message.split("\\s+");
+
+                        // log incoming message
+                        LOGGER.info("INCOMING " + message);
+                        // reset client game room
+                        ith.setRoom("");
                     }
                     // 'start' parameter (starting the game)
                     else if (message.startsWith("start")) {
                         // log incoming start message
                         LOGGER.info("INCOMING start");
-                        // start the game with players who are ready
-                        String tmpRoom = "1 ";
-                        System.out.println("startGameServer " + portNumber);
-                        ith.startGameServer(portNumber+"");
 
-                        broadcast("chat gamestarting...");
+                        // assembly 'gamestart GameRoomName PlayerID1 ... PlayerIDN'
+                        // append GameRoomName
+                        String tmpGameStart = ith.getRoom() + " ";
+                        // get playerID's where gameRoom equals
+                        /*for (Connection kth : connections) {
+                            if (kth.getRoom().equalsIgnoreCase(ith.getRoom())) {
+                                tmpGameStart += "player_" + kth.getpId() + " ";
+                            }
+                        }*/
+
+                        String tmpRoom = "1 ";
                         // broadcast gameStart to all clients
                         broadcast("gamestart " + tmpRoom);
                         // log outgoing message
-                        LOGGER.info("OUTGOING gamestart " + tmpRoom);
+                        LOGGER.info("OUTGOING gamestart " + tmpGameStart);
+
+                        // start the game with players who are ready
+                        System.out.println("startGameServer " + portNumber);
+                        ith.startGameServer(portNumber+"");
 
 
                         // TODO
-                        // - remove gameRoom from lobby
-                        // - set joined players to not Ready
-                        // - increment gameServer socket
-                        // - get ip address of startScreen
+                        // remove user von lobby wenn er ein spiel startet
+                        // delete gameRoom if game started
+
+                    }
+                    // 'quitLobby'
+                    else if (message.startsWith("quitLobby")) {
+                        /* remove player from players string */
+                        // remove playerID
+                        players = players.replace(connections.get(i).getpId()+"", "");
+                        // remove player name
+                        players = players.replace(connections.get(i).getPlayerName(), "");
+                        // broadcast new players string to all clients
+                        broadcast("players " + players);
+
+                        /* remove game room from rooms and hosts (only when host is sending) */
+                        if (ith.isHost()) {
+                            // remove game room from rooms
+                            rooms = rooms.replace(connections.get(i).getRoom(), "");
+                            // broadcast rooms to all clients
+                            broadcast("rooms " + rooms);
+                            // log outgoing message
+                            LOGGER.info("OUTGOING rooms " + rooms);
+
+                            /* remove game room and hostID from hosts */
+                            // remove game room form hosts
+                            hosts = hosts.replace(connections.get(i).getRoom(), "");
+                            // remove hostID from hosts
+                            hosts = hosts.replace(connections.get(i).getpId()+"", "");
+                            // broadcast hosts too all clients
+                            broadcast("hosts " + hosts);
+                            // log outgoing message
+                            LOGGER.info("hosts " + hosts);
+                        }
+                        // remove player from lobby
+                        connections.remove(i);
                     }
                 }
-
 
                 //--------------------------------------------------------------------------------
                 // begin with server broadcasting to all clients

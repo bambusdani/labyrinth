@@ -60,10 +60,9 @@ public class Lobby implements ActionListener{
 
     private String tmpName, nameOfPlayer;
     private String playerID;
-    private String room;
+    private String room="";
     private boolean ready = false;
     private boolean host = false;
-    private String[] readyPlayers = new String[4];
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
 
 
@@ -429,7 +428,7 @@ public class Lobby implements ActionListener{
         constraintsContent.gridy = 5;
         panelJoinGame.add(buttonReady, constraintsContent);
 
-        buttonback2.setText("Back to Lobby");
+        buttonback2.setText("Leave " + room);
         buttonback2.setFont(new Font("Serif", Font.PLAIN, textSize));
         buttonback2.setMinimumSize(new Dimension(150, 50));
         buttonback2.setPreferredSize(new Dimension(150, 50));
@@ -539,7 +538,7 @@ public class Lobby implements ActionListener{
         constraintsContent.gridy = 5;
         panelHostGame.add(buttonStart, constraintsContent);
 
-        buttonback.setText("Back to Lobby");
+        buttonback.setText("Leave " + room);
         buttonback.setFont(new Font("Serif", Font.PLAIN, textSize));
         buttonback.setMinimumSize(new Dimension(150, 50));
         buttonback.setPreferredSize(new Dimension(150, 50));
@@ -584,11 +583,15 @@ public class Lobby implements ActionListener{
                 out.println("host " + textAreaHostName.getText());
                 // log outgoing message
                 LOGGER.info("OUTGOING host " + textAreaHostName.getText());
+                // set room
+                room = textAreaHostName.getText();
 
                 // host is always ready, send to server
                 out.println("ready");
                 // log outgoing message
                 LOGGER.info("OUTGOING ready");
+                // set back button text
+                buttonback.setText("Leave " + room);
 
                 panelButtons.setVisible(false);
                 panelHostGame.setVisible(true);
@@ -603,8 +606,9 @@ public class Lobby implements ActionListener{
                 // log outgoing message
                 LOGGER.info("OUTGOING join " + textAreaJoinNumber.getText());
                 // set room
-
-                //room = textAreaJoinNumber.getText();
+                room = textAreaJoinNumber.getText();
+                // set back button text
+                buttonback2.setText("Leave " + room);
 
                 panelButtons.setVisible(false);
                 panelJoinGame.setVisible(true);
@@ -627,6 +631,11 @@ public class Lobby implements ActionListener{
             textAreaHostName.setText("");
             textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black));
             textAreaJoinNumber.setText("");
+
+            // send leave message to server
+            out.println("leave " + room);
+            // log outgoing message
+            LOGGER.info("OUTGOING leave " + room);
         } else if (e.getSource() == buttonback2) {
             panelJoinGame.setVisible(false);
             panelHostGame.setVisible(false);
@@ -635,6 +644,11 @@ public class Lobby implements ActionListener{
             textAreaHostName.setText("");
             textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black));
             textAreaJoinNumber.setText("");
+
+            // send leave message to server
+            out.println("leave " + room);
+            // log outgoing message
+            LOGGER.info("OUTGOING leave " + room);
         } else if (e.getSource() == buttonReady) {
             // send 'ready playerID' to server
             out.println("ready");
@@ -708,8 +722,8 @@ public class Lobby implements ActionListener{
                 LOGGER.info("INCOMING " + s);
 
                 String[] tmpRooms = s.split("\\s+");
-                for (int i = 1; i < tmpRooms.length; i = i + 2) {
-                    textAreaOpenGames.setText("Open Game Rooms:\n" + tmpRooms[i] + " (id: " + tmpRooms[i + 1] + ")\n");
+                for (int i = 1; i < tmpRooms.length; i++) {
+                    textAreaOpenGames.setText("Open Game Rooms:\n" + tmpRooms[i] + "\n");
                 }
             }
             // 'ready playerID' parameter
@@ -723,13 +737,25 @@ public class Lobby implements ActionListener{
                 }
             }
             // readyPlayers
-            else if (s.startsWith("readyPlayers")) {
+            else if (s.startsWith("drawReadyPlayers")) {
                 String[] tmpReadyPlayers = s.split("\\s+");
-                for (int i = 0; i < readyPlayers.length; i++) {
-                    readyPlayers[i] = tmpReadyPlayers[i + 1];
+
+                // draw readyPlayers
+                if (tmpReadyPlayers.length == 2) {
+                    hostPlayer0.setText(tmpReadyPlayers[1]);
+                } else if (tmpReadyPlayers.length == 3) {
+                    hostPlayer0.setText(tmpReadyPlayers[1]);
+                    hostPlayer1.setText(tmpReadyPlayers[2]);
+                } else if (tmpReadyPlayers.length == 4) {
+                    hostPlayer0.setText(tmpReadyPlayers[1]);
+                    hostPlayer1.setText(tmpReadyPlayers[2]);
+                    hostPlayer2.setText(tmpReadyPlayers[3]);
+                } else if (tmpReadyPlayers.length == 5) {
+                    hostPlayer0.setText(tmpReadyPlayers[1]);
+                    hostPlayer1.setText(tmpReadyPlayers[2]);
+                    hostPlayer2.setText(tmpReadyPlayers[3]);
+                    hostPlayer3.setText(tmpReadyPlayers[4]);
                 }
-                // hostPlayer0.setText(tmpReadyPlayers[1]);
-                System.out.println(readyPlayers.length);
             }
             // 'gamestart' parameter
             else if (s.startsWith("gamestart")) {
@@ -737,7 +763,6 @@ public class Lobby implements ActionListener{
 
                 // log incoming game start message
                 LOGGER.info("INCOMING " + s);
-                System.out.println(System.getProperty("java.home"));
 
                 frame.dispose();
 
@@ -747,8 +772,6 @@ public class Lobby implements ActionListener{
                     PlayGround playGround = new PlayGround(this.hostName, 4445 , this.playerName);
                     playGround.listen();
                 //}
-
-                connectToGame();
             }
             // gameRoom
             else if (s.startsWith("gameRoom")) {
