@@ -179,11 +179,23 @@ public class ConnectionListener extends Thread {
 
                         if (ith.isHost()) {
                             // send kick message with room name
-                            broadcast("kick " + ith.getRoom());
+                            // broadcast("kick " + ith.getRoom());
                             // log outgoing message
                             LOGGER.info("OUTGOING kick " + ith.getRoom());
                             // reset host status
                             ith.setHost(false);
+
+                            /* remove game room and hostID from hosts */
+                            // remove game room form hosts
+                            hosts = hosts.replace(connections.get(i).getRoom(), "");
+                            // remove hostID from hosts
+                            hosts = hosts.replace("player_0" + connections.get(i).getpId() + "", "");
+                            // trim hosts
+                            hosts = hosts.trim();
+                            // broadcast hosts too all clients
+                            broadcast("hosts " + hosts);
+                            // log outgoing message
+                            LOGGER.info("hosts " + hosts);
 
                             // reset room name of clients in game room
                             for (Connection lth : connections) {
@@ -192,6 +204,29 @@ public class ConnectionListener extends Thread {
                                 }
                             }
                         }
+
+                        // remove game room from rooms
+                        String[] tmpRooms = rooms.split("\\s+");
+                        for (int j = 0; j < tmpRooms.length; j = j+2) {
+                            // delete room name
+                            if (rooms.contains(tmpRooms[j])) {
+                                rooms = rooms.replace(tmpRooms[j], "");
+                            }
+                            // delete playerID of room
+                            System.out.println(tmpRooms.length);
+                            if (rooms.contains(tmpRooms[j + 1])) {
+                                rooms = rooms.replace(tmpRooms[j+1], "");
+                            }
+                        }
+                        // trim rooms
+                        rooms = rooms.trim();
+                        // broadcast rooms to all clients
+                        broadcast("rooms " + rooms);
+                        // log outgoing message
+                        LOGGER.info("OUTGOING rooms " + rooms);
+
+                        // reset room on client
+                        ith.setRoom("");
                     }
                     // 'start' parameter (starting the game)
                     else if (message.startsWith("start")) {
