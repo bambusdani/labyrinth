@@ -775,9 +775,13 @@ public class Lobby implements ActionListener{
                 LOGGER.info("INCOMING " + s);
 
                 frame.dispose();
-                out.println("quitLobby");
-                PlayGround playGround = new PlayGround("192.168.14.37", 4445, "Rehan");
-                playGround.listen();
+
+                //if(tmpGameStart[1].equals("")){
+                    //System.out.println(room);
+                System.out.println("hostname: " +hostName + " playername: " +playerName);
+                    PlayGround playGround = new PlayGround(this.hostName, 4445 , this.playerName);
+                    playGround.listen();
+                //}
             }
             // gameRoom
             else if (s.startsWith("gameRoom")) {
