@@ -6,7 +6,6 @@
 
 package network;
 
-import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.*;
 
@@ -132,8 +131,8 @@ public class ConnectionListener extends Thread {
                     ith.println("tileID " + tileID);
                     ith.println("tileNextID " + tileNextID);
                     ith.println("tileRot " + tileRot);
-                    ith.println("tileX " + tileX);
-                    ith.println("tileY " + tileY);
+                    //ith.println("tileX " + tileX);
+                    //ith.println("tileY " + tileY);
 
                     // send init board for logging
                     ith.println("init " + init);
@@ -382,8 +381,8 @@ public class ConnectionListener extends Thread {
                                 jth.println("tileID " + tileID );
                                 jth.println("tileNextID " + tileNextID);
                                 jth.println("tileRot " + tileRot);
-                                jth.println("tileX " + tileX);
-                                jth.println("tileY " + tileY);
+                                //jth.println("tileX " + tileX);
+                                //jth.println("tileY " + tileY);
                                 jth.println("playerPosX " + playerPosX);
                                 jth.println("playerPosY " + playerPosY);
                                 jth.println("draw ");
@@ -395,8 +394,8 @@ public class ConnectionListener extends Thread {
                                 jth.println("tileID " + tileID );
                                 jth.println("tileNextID " + tileNextID);
                                 jth.println("tileRot " + tileRot);
-                                jth.println("tileX " + tileX);
-                                jth.println("tileY " + tileY);
+                                //jth.println("tileX " + tileX);
+                                //jth.println("tileY " + tileY);
                                 jth.println("rotateTile ");
 
                                 jth.println("draw ");
