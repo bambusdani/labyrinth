@@ -70,6 +70,7 @@ public class Lobby implements ActionListener{
     private String tmpName, nameOfPlayer;
     private String playerID;
     private String room="";
+    private String gameRooms="";
     private boolean ready = false;
     private boolean host = false;
     private boolean joinValid = false;
@@ -211,7 +212,7 @@ public class Lobby implements ActionListener{
         /***************************************************************************************************************
          * textAreaOpenGames
          */
-        textAreaOpenGames.setText("Open Game Rooms:");
+        textAreaOpenGames.setText("Open Game Rooms:\n");
         textAreaOpenGames.setFont(new Font("Serif", Font.PLAIN, textSize));
         textAreaOpenGames.setMinimumSize(new Dimension(280, 350));
         textAreaOpenGames.setPreferredSize(new Dimension(280, 350));
@@ -613,13 +614,39 @@ public class Lobby implements ActionListener{
         } else if (e.getSource() == buttonJoin) {
             // send join request to server
             if (!textAreaJoinNumber.getText().isEmpty()) {
-                // send join message to server
-                out.println("join " + textAreaJoinNumber.getText());
-                // log outgoing message
-                LOGGER.info("OUTGOING join " + textAreaJoinNumber.getText());
+                // count the players in a gameRoom by counting
+                // the strings of the same room
+                int tmpCounter = 0;
+                // split gameRooms string
+                String[] tmpRooms = gameRooms.split("\\s+");
+                for (int j = 0; j < tmpRooms.length; j = j+2) {
+                    if (tmpRooms[j].equalsIgnoreCase(textAreaJoinNumber.getText())) {
+                        tmpCounter++;
+                    }
+                }
+
+                // if tmpCounter is greater 0 and less than 4 then there
+                // is room for more players in the gameRoom
+                if (tmpCounter > 0 && tmpCounter < 4) {
+                    // send join message to server
+                    out.println("join " + textAreaJoinNumber.getText());
+                    // log outgoing message
+                    LOGGER.info("OUTGOING join " + textAreaJoinNumber.getText());
+
+                    // set room
+                    room = textAreaJoinNumber.getText();
+                    // set back button text
+                    buttonback2.setText("Leave " + room);
+
+                    panelButtons.setVisible(false);
+                    panelJoinGame.setVisible(true);
+                } else {
+                    textAreaChatText.append(textAreaJoinNumber.getText() + " ist voll oder existiert nicht!\n");
+                }
             } else {
                 textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
             }
+
             // only join is join is valid
             if (joinValid) {
                 // set room
@@ -717,7 +744,7 @@ public class Lobby implements ActionListener{
                 String tmpNames = "";
 
                 for (int i = 2; i < tmpMessage.length; i = i + 2) {
-                    tmpNames += tmpMessage[i] + "\n";
+                    tmpNames += tmpMessage[i] + " (id: " + tmpMessage[i-1] + ")" + "\n";
                 }
 
                 textAreaPlayer.setText("Players in Lobby:\n" + tmpNames);
@@ -740,10 +767,14 @@ public class Lobby implements ActionListener{
             else if (s.startsWith("rooms")) {
                 // log incoming rooms message
                 LOGGER.info("INCOMING " + s);
+                // assign rooms to gameRooms
+                gameRooms = s.substring(6);
 
                 String[] tmpRooms = s.split("\\s+");
-                for (int i = 1; i < tmpRooms.length; i++) {
-                    textAreaOpenGames.setText("Open Game Rooms:\n" + tmpRooms[i] + "\n");
+                for (int i = 1; i < tmpRooms.length; i = i+2) {
+                    if (!textAreaOpenGames.getText().contains(tmpRooms[i])) {
+                        textAreaOpenGames.append(tmpRooms[i] + "\n");
+                    }
                 }
             }
             // 'kick' (kick roomName)
@@ -762,7 +793,7 @@ public class Lobby implements ActionListener{
             else {
                 if (s.startsWith("ready")) {
                     // log incoming ready message
-                    LOGGER.info("INCOMING " + s);
+                    LOGGER.info("INCOMING player_0" + s);
                     // set player to ready
                     String[] tmpReady = s.split("\\s+");
                     if (playerID.equalsIgnoreCase(tmpReady[1])) {
@@ -825,19 +856,6 @@ public class Lobby implements ActionListener{
                 else if (s.startsWith("gameRoom")) {
                     String[] tmpGameRoom = s.split("\\s+");
                     this.room = tmpGameRoom[1];
-                }
-                // joinValid
-                else if (s.startsWith("joinValid")) {
-                    // log incoming message
-                    LOGGER.info("INCOMING " + s);
-                    String[] tmpJoinValid = s.split("\\s+");
-
-                    // set join valid
-                    if (tmpJoinValid[1].equalsIgnoreCase("true")) {
-                        joinValid = true;
-                    } else {
-                        joinValid = false;
-                    }
                 }
                 // 'chat' parameter
                 else {

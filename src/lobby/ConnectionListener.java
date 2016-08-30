@@ -20,7 +20,7 @@ public class ConnectionListener extends Thread {
 
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
-    private String players = "", readyPlayers = "", rooms = "", roomCounter = "", hosts = "";
+    private String players = "", readyPlayers = "", rooms = "", hosts = "";
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -117,53 +117,39 @@ public class ConnectionListener extends Thread {
                         connections.get(i).setRoom(tmpHost[1]);
 
                         // rooms
-                        // save room name
-                        rooms += tmpHost[1] + " ";
+                        // save room name and player id
+                        rooms += tmpHost[1] + " player_0" + connections.get(i).getpId() + " ";
                         // send rooms to all clients
                         broadcast("rooms " + rooms);
                         // log outgoing rooms message
                         LOGGER.info("OUTGOING rooms " + rooms);
 
                         // hosts
-                        hosts += tmpHost[1] + " " + connections.get(i).getpId() + " ";
+                        hosts += tmpHost[1] + " player_0" + connections.get(i).getpId() + " ";
                         // send hosts too all clients
                         broadcast("hosts " + hosts);
                         // log outgoing hosts message
                         LOGGER.info("OUTGOING hosts " + hosts);
-
-                        // append to roomCounter
-                        roomCounter += tmpHost[1] + " " + "1" + " ";
                     }
                     // 'join' parameter (join room name)
                     else if (message.startsWith("join")) {
+                        // tmpJoin[1] equals room name
                         String[] tmpJoin = message.split("\\s+");
                         // log incoming message
                         LOGGER.info("INCOMING " + message);
 
-                        // if join is vaiable
-                        String[] tmpRoomCounter = roomCounter.split("\\s+");
-                        for (int j = 0; j < tmpRoomCounter.length; j++) {
-                            if (tmpRoomCounter[i].equalsIgnoreCase(tmpJoin[1])) {
-                                int tmpCounter = Integer.parseInt(tmpRoomCounter[i+1]);
-                                // counting 1 to 4
-                                if (tmpCounter <= 4) {
-                                    // set room counter + 1
-                                    roomCounter = roomCounter.replace(tmpRoomCounter[i]+ " " + tmpCounter, tmpRoomCounter[i] + " " + tmpCounter+1 + "");
+                        // set client room name
+                        connections.get(i).setRoom(tmpJoin[1]);
 
-                                    //set client room name
-                                    connections.get(i).setRoom(tmpJoin[1]);
-                                    // send client join is viable
-                                    ith.println("joinValid true");
-                                    // log outgoing message
-                                    LOGGER.info("OUTGOING joinValid true");
-                                }
-                            }
-                        }
-
+                        // add player to rooms string
+                        rooms += tmpJoin[1] + " player_0" + connections.get(i).getpId() + " ";
                         // send rooms to all clients
                         broadcast("rooms " + rooms);
                         // log outgoing message
                         LOGGER.info("OUTGOING rooms " + rooms);
+
+                        // draw ready players
+                        broadcast("drawReadyPlayers " + readyPlayers);
                     }
                     // 'ready' parameter (ready playerID)
                     else if (message.startsWith("ready")) {
@@ -174,7 +160,7 @@ public class ConnectionListener extends Thread {
                         // send 'ready playerID' to all clients
                         broadcast("ready " + connections.get(i).getpId());
                         // log outgoing ready message
-                        LOGGER.info("OUTGOING ready " + connections.get(i).getpId());
+                        LOGGER.info("OUTGOING ready player_0" + connections.get(i).getpId());
 
                         // append name to readyPlayers
                         if (!readyPlayers.contains(connections.get(i).getPlayerName())) {
@@ -255,38 +241,36 @@ public class ConnectionListener extends Thread {
                         LOGGER.info("OUTGOING players " + players);
                     }
                     // 'quitLobby'
-                    else {
-                        if (message.startsWith("quitLobby")) {
+                    else if (message.startsWith("quitLobby")) {
                         /* remove player from players string */
-                            // remove playerID
-                            players = players.replace(connections.get(i).getpId() + "", "");
-                            // remove player name
-                            players = players.replace(connections.get(i).getPlayerName(), "");
-                            // broadcast new players string to all clients
-                            broadcast("players " + players);
+                        // remove playerID
+                        players = players.replace(connections.get(i).getpId() + "", "");
+                        // remove player name
+                        players = players.replace(connections.get(i).getPlayerName(), "");
+                        // broadcast new players string to all clients
+                        broadcast("players " + players);
 
                         /* remove game room from rooms and hosts (only when host is sending) */
-                            if (ith.isHost()) {
-                                // remove game room from rooms
-                                rooms = rooms.replace(connections.get(i).getRoom(), "");
-                                // broadcast rooms to all clients
-                                broadcast("rooms " + rooms);
-                                // log outgoing message
-                                LOGGER.info("OUTGOING rooms " + rooms);
+                        if (ith.isHost()) {
+                            // remove game room from rooms
+                            rooms = rooms.replace(connections.get(i).getRoom(), "");
+                            // broadcast rooms to all clients
+                            broadcast("rooms " + rooms);
+                            // log outgoing message
+                            LOGGER.info("OUTGOING rooms " + rooms);
 
                             /* remove game room and hostID from hosts */
-                                // remove game room form hosts
-                                hosts = hosts.replace(connections.get(i).getRoom(), "");
-                                // remove hostID from hosts
-                                hosts = hosts.replace(connections.get(i).getpId() + "", "");
-                                // broadcast hosts too all clients
-                                broadcast("hosts " + hosts);
-                                // log outgoing message
-                                LOGGER.info("hosts " + hosts);
-                            }
-                            // remove player from lobby
-                            connections.remove(i);
+                            // remove game room form hosts
+                            hosts = hosts.replace(connections.get(i).getRoom(), "");
+                            // remove hostID from hosts
+                            hosts = hosts.replace(connections.get(i).getpId() + "", "");
+                            // broadcast hosts too all clients
+                            broadcast("hosts " + hosts);
+                            // log outgoing message
+                            LOGGER.info("hosts " + hosts);
                         }
+                        // remove player from lobby
+                        connections.remove(i);
                     }
                 }
 
