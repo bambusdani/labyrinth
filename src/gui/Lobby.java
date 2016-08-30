@@ -174,6 +174,8 @@ public class Lobby implements ActionListener{
         textAreaChatText.setPreferredSize(new Dimension(480, 700));
         textAreaChatText.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
         textAreaChatText.setEditable(false);
+        textAreaChatText.setLineWrap(true);
+        textAreaChatText.setWrapStyleWord(true);
         constraintsContent.anchor = GridBagConstraints.NORTH;
         constraintsContent.weightx = 0;
         constraintsContent.weighty = 0;
