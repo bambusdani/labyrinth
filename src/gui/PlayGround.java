@@ -951,6 +951,10 @@ public class PlayGround implements ActionListener {
                 // log incoming disconnect message
                 LOGGER.info("INCOMING " + s);
             }
+            else if(s.startsWith("tileX ")){
+            }
+            else if(s.startsWith("tileY")){
+            }
             else {
                 // in case of chat
                 textArea.insert(s + "\n", textArea.getText().length());
