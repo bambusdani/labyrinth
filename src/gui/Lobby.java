@@ -38,6 +38,10 @@ public class Lobby implements ActionListener{
     private JTextArea  hostPlayer1       = new JTextArea();
     private JTextArea  hostPlayer2       = new JTextArea();
     private JTextArea  hostPlayer3       = new JTextArea();
+    private JTextArea  joinPlayer0       = new JTextArea();
+    private JTextArea  joinPlayer1       = new JTextArea();
+    private JTextArea  joinPlayer2       = new JTextArea();
+    private JTextArea  joinPlayer3       = new JTextArea();
     private JPanel panelButtons          = new JPanel(new GridBagLayout());
     private JPanel panelJoinGame         = new JPanel(new GridBagLayout());
     private JPanel panelHostGame         = new JPanel(new GridBagLayout());
@@ -335,6 +339,69 @@ public class Lobby implements ActionListener{
         constraintsContent.gridy = 0;
         panelJoinGame.add(labelReady, constraintsContent);
 
+
+        joinPlayer0.setText("");
+        joinPlayer0.setFont(new Font("Serif", Font.PLAIN, textSize));
+        joinPlayer0.setMinimumSize(new Dimension(150, 50));
+        joinPlayer0.setPreferredSize(new Dimension(150, 50));
+        joinPlayer0.setEditable(false);
+        constraintsContent.anchor = GridBagConstraints.NORTH;
+        constraintsContent.weightx = 0;
+        constraintsContent.weighty = 0;
+        constraintsContent.gridwidth = 1;
+        constraintsContent.gridheight = 1;
+        constraintsContent.insets = new Insets(15, 0, 0, 0);
+        constraintsContent.gridx = 0;
+        constraintsContent.gridy = 1;
+        panelJoinGame.add(joinPlayer0, constraintsContent);
+
+        joinPlayer1.setText("");
+        joinPlayer1.setFont(new Font("Serif", Font.PLAIN, textSize));
+        joinPlayer1.setMinimumSize(new Dimension(150, 50));
+        joinPlayer1.setPreferredSize(new Dimension(150, 50));
+        joinPlayer1.setEditable(false);
+        constraintsContent.anchor = GridBagConstraints.NORTH;
+        constraintsContent.weightx = 0;
+        constraintsContent.weighty = 0;
+        constraintsContent.gridwidth = 1;
+        constraintsContent.gridheight = 1;
+        constraintsContent.insets = new Insets(15, 0, 0, 0);
+        constraintsContent.gridx = 0;
+        constraintsContent.gridy = 2;
+        panelJoinGame.add(joinPlayer1, constraintsContent);
+
+        joinPlayer2.setText("");
+        joinPlayer2.setFont(new Font("Serif", Font.PLAIN, textSize));
+        joinPlayer2.setMinimumSize(new Dimension(150, 50));
+        joinPlayer2.setPreferredSize(new Dimension(150, 50));
+        joinPlayer2.setEditable(false);
+        constraintsContent.anchor = GridBagConstraints.NORTH;
+        constraintsContent.weightx = 0;
+        constraintsContent.weighty = 0;
+        constraintsContent.gridwidth = 1;
+        constraintsContent.gridheight = 1;
+        constraintsContent.insets = new Insets(15, 0, 0, 0);
+        constraintsContent.gridx = 0;
+        constraintsContent.gridy = 3;
+        panelJoinGame.add(joinPlayer2, constraintsContent);
+
+        joinPlayer3.setText("");
+        joinPlayer3.setFont(new Font("Serif", Font.PLAIN, textSize));
+        joinPlayer3.setMinimumSize(new Dimension(150, 50));
+        joinPlayer3.setPreferredSize(new Dimension(150, 50));
+        joinPlayer3.setEditable(false);
+        constraintsContent.anchor = GridBagConstraints.NORTH;
+        constraintsContent.weightx = 0;
+        constraintsContent.weighty = 0;
+        constraintsContent.gridwidth = 1;
+        constraintsContent.gridheight = 1;
+        constraintsContent.insets = new Insets(15, 0, 0, 0);
+        constraintsContent.gridx = 0;
+        constraintsContent.gridy = 4;
+        panelJoinGame.add(joinPlayer3, constraintsContent);
+
+
+
         buttonReady.setText("Ready?");
         buttonReady.setFont(new Font("Serif", Font.PLAIN, textSize));
         buttonReady.setMinimumSize(new Dimension(150, 50));
@@ -347,7 +414,7 @@ public class Lobby implements ActionListener{
         constraintsContent.gridheight = 1;
         constraintsContent.insets = new Insets(15, 0, 0, 0);
         constraintsContent.gridx = 0;
-        constraintsContent.gridy = 1;
+        constraintsContent.gridy = 5;
         panelJoinGame.add(buttonReady, constraintsContent);
 
         buttonback2.setText("Back to Lobby");
@@ -362,7 +429,7 @@ public class Lobby implements ActionListener{
         constraintsContent.gridheight = 1;
         constraintsContent.insets = new Insets(15, 0, 0, 0);
         constraintsContent.gridx = 0;
-        constraintsContent.gridy = 2;
+        constraintsContent.gridy = 6;
         panelJoinGame.add(buttonback2, constraintsContent);
 
         /***************************************************************************************************************
@@ -657,7 +724,9 @@ public class Lobby implements ActionListener{
                 System.out.println(System.getProperty("java.home"));
 
                 frame.dispose();
+
                 PlayGround playGround = new PlayGround(this.hostName, 4445, this.playerName);
+
                 playGround.listen();
 
                 connectToGame();
@@ -698,7 +767,7 @@ public class Lobby implements ActionListener{
         }
 
         //StartScreen startScreen = new StartScreen();
-        Lobby lobby = new Lobby("192.168.14.37", "Rehan");
+        Lobby lobby = new Lobby("localhost", "marvin");
         lobby.listen();
     }
 
@@ -710,20 +779,13 @@ public class Lobby implements ActionListener{
                     "-Djava.util.logging.config.file=src/network/logging.properties",
                     "-jar",
                     "game.jar",
-                    "192.168.14.37",
+                    this.hostName,
                     "4445",
-                    "Rehan"};
+                    this.playerName};
             new ProcessBuilder(startOptions).start();
         } catch (Exception e) {
             System.err.println(e);
         }
-    }
-
-    public String getHostName(){
-        return this.hostName;
-    }
-    public String getPlayerName(){
-        return this.playerName;
     }
 }
 
