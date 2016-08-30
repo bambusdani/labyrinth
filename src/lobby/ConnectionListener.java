@@ -19,7 +19,7 @@ public class ConnectionListener extends Thread {
 
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
-    private String players = "", readyPlayers = "", rooms = "", hosts = "";
+    private String players = "", readyPlayers = "", rooms = "", roomCounter = "", hosts = "";
 
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
@@ -85,6 +85,11 @@ public class ConnectionListener extends Thread {
                         LOGGER.info("OUTGOING players " + players);
                     }
 
+                    // send rooms to players
+                    broadcast("rooms " + rooms);
+                    // log outgoing message
+                    LOGGER.info("OUTGOING rooms " + rooms);
+
                     // set connection init false
                     connections.get(i).setInit(false);
                 }
@@ -116,17 +121,39 @@ public class ConnectionListener extends Thread {
                         // log outgoing hosts message
                         LOGGER.info("OUTGOING hosts " + hosts);
 
-                        //portNumber++;
+                        // append to roomCounter
+                        roomCounter += tmpHost[1] + " " + "1" + " ";
                     }
                     // 'join' parameter (join room name)
                     else if (message.startsWith("join")) {
                         String[] tmpJoin = message.split("\\s+");
                         // log incoming message
                         LOGGER.info("INCOMING " + message);
-                        // set client room name
-                        connections.get(i).setRoom(tmpJoin[1]);
-                        ith.println("gameRoom " + tmpJoin[1]);
-                        // TODO send rooms and hosts to all cients
+
+                        // if join is vaiable
+                        String[] tmpRoomCounter = roomCounter.split("\\s+");
+                        for (int j = 0; j < tmpRoomCounter.length; j++) {
+                            if (tmpRoomCounter[i].equalsIgnoreCase(tmpJoin[1])) {
+                                int tmpCounter = Integer.parseInt(tmpRoomCounter[i+1]);
+                                // counting 1 to 4
+                                if (tmpCounter <= 4) {
+                                    // set room counter + 1
+                                    roomCounter = roomCounter.replace(tmpRoomCounter[i]+ " " + tmpCounter, tmpRoomCounter[i] + " " + tmpCounter+1 + "");
+
+                                    //set client room name
+                                    connections.get(i).setRoom(tmpJoin[1]);
+                                    // send client join is viable
+                                    ith.println("joinValid true");
+                                    // log outgoing message
+                                    LOGGER.info("OUTGOING joinValid true");
+                                }
+                            }
+                        }
+
+                        // send rooms to all clients
+                        broadcast("rooms " + rooms);
+                        // log outgoing message
+                        LOGGER.info("OUTGOING rooms " + rooms);
                     }
                     // 'ready' parameter (ready playerID)
                     else if (message.startsWith("ready")) {

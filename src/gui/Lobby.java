@@ -63,6 +63,7 @@ public class Lobby implements ActionListener{
     private String room="";
     private boolean ready = false;
     private boolean host = false;
+    private boolean joinValid = false;
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
 
     //portnummer
@@ -605,11 +606,18 @@ public class Lobby implements ActionListener{
                 textAreaHostName.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
             }
         } else if (e.getSource() == buttonJoin) {
+            // send join request to server
             if (!textAreaJoinNumber.getText().isEmpty()) {
                 // send join message to server
                 out.println("join " + textAreaJoinNumber.getText());
                 // log outgoing message
                 LOGGER.info("OUTGOING join " + textAreaJoinNumber.getText());
+            } else {
+                textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+            }
+
+            // only join is join is valid
+            if (joinValid) {
                 // set room
                 room = textAreaJoinNumber.getText();
                 // set back button text
@@ -617,11 +625,7 @@ public class Lobby implements ActionListener{
 
                 panelButtons.setVisible(false);
                 panelJoinGame.setVisible(true);
-            } else {
-                textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
             }
-
-
         } else if (e.getSource() == buttonRules) {
             Rules rules = new Rules();
             rules.createGui();
@@ -810,6 +814,19 @@ public class Lobby implements ActionListener{
                 else if (s.startsWith("gameRoom")) {
                     String[] tmpGameRoom = s.split("\\s+");
                     this.room = tmpGameRoom[1];
+                }
+                // joinValid
+                else if (s.startsWith("joinValid")) {
+                    // log incoming message
+                    LOGGER.info("INCOMING " + s);
+                    String[] tmpJoinValid = s.split("\\s+");
+
+                    // set join valid
+                    if (tmpJoinValid[1].equalsIgnoreCase("true")) {
+                        joinValid = true;
+                    } else {
+                        joinValid = false;
+                    }
                 }
                 // 'chat' parameter
                 else {
