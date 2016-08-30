@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * Created by Marvin Röck, Daniel Deuscher, Rehan App
@@ -18,14 +16,17 @@ public class StartScreen extends JPanel implements ActionListener {
      * Attributes
      */
     private ImageIcon titleimage   = new ImageIcon("src/resources/titel/titelImage.jpg");
-    private ImageIcon background = new ImageIcon("src/resources/backgroundImages/farbverlaufBig.png");
+    private ImageIcon background   = new ImageIcon("src/resources/backgroundImages/farbverlaufBig.png");
     private JButton buttonSubmit   = new JButton();
     private JLabel labelText       = new JLabel();
     private JLabel labelIP         = new JLabel();
     private JTextArea textAreaIP   = new JTextArea();
     private JTextArea textAreaName = new JTextArea();
-    JFrame frame = new JFrame("Das Verrückte Labyrinth");
+    private JFrame frame = new JFrame("Das Verrückte Labyrinth");
     private int textSize = 20;
+    private String ip;
+    private String name;
+    boolean submitPressed = false;
 
     /**
      * Constructor
@@ -153,8 +154,9 @@ public class StartScreen extends JPanel implements ActionListener {
         if(e.getSource() == buttonSubmit){
             if((!textAreaName.getText().isEmpty())){
                 if(!textAreaIP.getText().isEmpty()){
-                    Lobby lobby = new Lobby(textAreaIP.getText() , textAreaName.getText());
-                    frame.dispose();
+                    ip= textAreaIP.getText();
+                    name = textAreaName.getText();
+                    submitPressed = true;
                 }
                 else{
                     labelIP.setForeground(Color.red);
@@ -164,31 +166,17 @@ public class StartScreen extends JPanel implements ActionListener {
                 labelText.setForeground(Color.red);
             }
         }
+
     }
 
-    /**
-     * Main class to create a StartScreen
-     * @param args
-     */
-    public static void main(String[] args) {
-        /**
-         * Style
-         */
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Not possible to set Style");
-        }
-
-        /**
-         * new startScreen created
-         */
-        StartScreen startScreen = new StartScreen();
+    public String getIP(){
+        return ip;
+    }
+    public String getName(){
+        return name;
+    }
+    public boolean getSubmitPressed(){
+        return submitPressed;
     }
 }
 
