@@ -85,7 +85,7 @@ public class Lobby implements ActionListener{
             out.println("connect " + name);
 
         } catch (Exception e) {
-            System.out.println("nicht verbunden");
+            textAreaChatText.setText("Keine Verbindung zum Server, bitte Spiel neu starten!");
         }
 
         nameOfPlayer = "[" + name + "]: ";
