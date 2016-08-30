@@ -460,7 +460,6 @@ public class ServerFunctions {
      */
     public int isPlayerGettingPoints(Board board, int playerID){
 
-        System.out.println("player is getting points");
 
         if(board.getPlayer(playerID).getCreaturesNeeded().get(0).getCreature() == board.getTile(board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY()).getShape().getCreature()){
             //if they are equal -> first element is deketed
@@ -470,7 +469,6 @@ public class ServerFunctions {
                 return 2;
             }
             else{
-                System.out.println(board.getPlayer(playerID).getCreaturesNeeded().get(0).getCreature());
                 //increase value of player
                 board.getPlayer(playerID).setScore(board.getPlayer(playerID).getScore() + 1);
                 return 1;

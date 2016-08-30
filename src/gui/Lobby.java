@@ -61,7 +61,8 @@ public class Lobby implements ActionListener{
     private boolean host = false;
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
 
-    public Lobby(String hostName, String name) {
+
+    public void connectToServer(String hostName, String name){
 
         /***************************************************************************************************************
          * create connection with lobbyServer
@@ -70,12 +71,22 @@ public class Lobby implements ActionListener{
             socket = new Socket(hostName, 4444);
             out = new Out(socket);
             in = new In(socket);
+
+            out.println("connect " + name);
+
         } catch (Exception e) {
+            System.out.println("nicht verbunden");
         }
 
         nameOfPlayer = "[" + name + "]: ";
         tmpName = name;
-        out.println("connect " + name);
+
+
+
+    }
+
+    public void createLobby() {
+
 
         titleimage.setImage(titleimage.getImage().getScaledInstance(480, 350, Image.SCALE_DEFAULT));
 
@@ -783,10 +794,28 @@ public class Lobby implements ActionListener{
         } catch (Exception e) {
         }
 
-        //StartScreen startScreen = new StartScreen();
-        Lobby lobby = new Lobby("localhost", "Daniel");
-        lobby.listen();
+        StartScreen startScreen = new StartScreen();
+        boolean endWhile = true;
+        do{
+            System.out.println("");
+            if(startScreen.getSubmitPressed()){
+                String ip =startScreen.getIP();
+                String name = startScreen.getName();
+                //StartScreen startScreen = new StartScreen();
+                Lobby lobby = new Lobby();
+                lobby.createLobby();
+                lobby.connectToServer(ip,name);
+                //startScreen.closeStartScreen();
+                lobby.listen();
+                endWhile = false;
+            }
+            else{
+
+            }
+        }while (endWhile);
     }
+
+
 
 
     public void connectToGame() {
