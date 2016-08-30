@@ -210,16 +210,14 @@ public class ConnectionListener extends Thread {
                         for (int j = 0; j < tmpRooms.length; j = j+2) {
                             // delete room name
                             if (rooms.contains(tmpRooms[j])) {
-                                rooms = rooms.replace(tmpRooms[j], "");
-                            }
-                            // delete playerID of room
-                            System.out.println(tmpRooms.length);
-                            if (rooms.contains(tmpRooms[j + 1])) {
-                                rooms = rooms.replace(tmpRooms[j+1], "");
+                                rooms = rooms.replace(tmpRooms[j] + " " + tmpRooms[j+1], "");
+                                rooms = rooms.trim();
+                                System.out.println("schleife: " + rooms);
                             }
                         }
                         // trim rooms
                         rooms = rooms.trim();
+                        System.out.println("broadcast: " + rooms);
                         // broadcast rooms to all clients
                         broadcast("rooms " + rooms);
                         // log outgoing message
@@ -286,40 +284,6 @@ public class ConnectionListener extends Thread {
                         broadcast("players " + players);
                         // log outgoing message
                         LOGGER.info("OUTGOING players " + players);
-                    }
-                    // 'quitLobby'
-                    else if (message.startsWith("quitLobby")) {
-                        /* remove player from players string */
-                        // remove playerID
-                        players = players.replace(connections.get(i).getpId() + "", "");
-                        // remove player name
-                        players = players.replace(connections.get(i).getPlayerName(), "");
-                        // trim players
-                        players = players.trim();
-                        // broadcast new players string to all clients
-                        broadcast("players " + players);
-
-                        /* remove game room from rooms and hosts (only when host is sending) */
-                        if (ith.isHost()) {
-                            // remove game room from rooms
-                            rooms = rooms.replace(connections.get(i).getRoom(), "");
-                            // broadcast rooms to all clients
-                            broadcast("rooms " + rooms);
-                            // log outgoing message
-                            LOGGER.info("OUTGOING rooms " + rooms);
-
-                            /* remove game room and hostID from hosts */
-                            // remove game room form hosts
-                            hosts = hosts.replace(connections.get(i).getRoom(), "");
-                            // remove hostID from hosts
-                            hosts = hosts.replace(connections.get(i).getpId() + "", "");
-                            // broadcast hosts too all clients
-                            broadcast("hosts " + hosts);
-                            // log outgoing message
-                            LOGGER.info("hosts " + hosts);
-                        }
-                        // remove player from lobby
-                        connections.remove(i);
                     }
                 }
 
