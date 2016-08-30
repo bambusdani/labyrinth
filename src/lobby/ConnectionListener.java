@@ -102,11 +102,11 @@ public class ConnectionListener extends Thread {
 
                         // rooms
                         // save room name
-                        rooms += tmpHost[1];
+                        rooms += tmpHost[1] + " ";
                         // send rooms to all clients
-                        // broadcast("rooms " + tmpHost[1] + " ");
+                        broadcast("rooms " + rooms);
                         // log outgoing rooms message
-                        LOGGER.info("OUTGOING rooms " + tmpHost[1]);
+                        LOGGER.info("OUTGOING rooms " + rooms);
 
                         // hosts
                         hosts += tmpHost[1] + " " + connections.get(i).getpId() + " ";

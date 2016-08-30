@@ -636,7 +636,7 @@ public class Lobby implements ActionListener{
                 LOGGER.info("INCOMING " + s);
 
                 String[] tmpRooms = s.split("\\s+");
-                for (int i = 1; i < tmpRooms.length; i = i++) {
+                for (int i = 1; i < tmpRooms.length; i++) {
                     textAreaOpenGames.setText("Open Game Rooms:\n" + tmpRooms[i] + "\n");
                 }
             }
