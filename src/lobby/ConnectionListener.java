@@ -118,7 +118,7 @@ public class ConnectionListener extends Thread {
                         // log outgoing hosts message
                         LOGGER.info("OUTGOING hosts " + hosts);
 
-                        portNumber++;
+                        //portNumber++;
                     }
                     // 'join' parameter (join room name)
                     else if (message.startsWith("join")) {
@@ -154,11 +154,11 @@ public class ConnectionListener extends Thread {
                         // start the game with players who are ready
                         String tmpRoom = "1 ";
                         System.out.println("startGameServer " + portNumber);
-                        ith.startGameServer(portNumber+" ");
+                        ith.startGameServer(portNumber+"");
 
                         broadcast("chat gamestarting...");
                         // broadcast gameStart to all clients
-                        broadcast("gamestart " + tmpRoom + portNumber);
+                        broadcast("gamestart " + tmpRoom);
                         // log outgoing message
                         LOGGER.info("OUTGOING gamestart " + tmpRoom);
 

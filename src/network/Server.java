@@ -16,7 +16,6 @@
 
 package network;
 
-import com.sun.tools.internal.jxc.SchemaGenerator;
 
 import java.net.Socket;
 import java.net.ServerSocket;

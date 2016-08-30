@@ -742,8 +742,9 @@ public class Lobby implements ActionListener{
                 frame.dispose();
 
                 //if(tmpGameStart[1].equals("")){
-                    System.out.println(room);
-                    PlayGround playGround = new PlayGround(this.hostName, Integer.parseInt(tmpGameStart[2]), this.playerName);
+                    //System.out.println(room);
+                System.out.println("hostname: " +hostName + " playername: " +playerName);
+                    PlayGround playGround = new PlayGround(this.hostName, 4445 , this.playerName);
                     playGround.listen();
                 //}
 
