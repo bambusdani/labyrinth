@@ -16,7 +16,6 @@ public class StartScreen extends JPanel implements ActionListener {
      * Attributes
      */
     private ImageIcon titleimage   = new ImageIcon("src/resources/titel/titelImage.jpg");
-    private ImageIcon background   = new ImageIcon("src/resources/backgroundImages/farbverlaufBig.png");
     private JButton buttonSubmit   = new JButton();
     private JButton buttonExit   = new JButton();
     private JLabel labelText       = new JLabel();
@@ -151,8 +150,6 @@ public class StartScreen extends JPanel implements ActionListener {
         constraintsContent.gridx = 1;
         constraintsContent.gridy = 8;
         panelContent.add(buttonExit, constraintsContent);
-
-
 
         /***************************************************************************************************************
          * frame
