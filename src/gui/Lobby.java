@@ -774,15 +774,12 @@ public class Lobby implements ActionListener{
             else if (s.startsWith("gamestart")) {
                 String[] tmpGameStart = s.split("\\s+");
 
-                // send player name to server so we can update players string
-                out.println("playerName " + playerName);
-
                 // log incoming game start message
                 LOGGER.info("INCOMING " + s);
 
-
-
                 if(tmpGameStart[1].equals(room)){
+                    // send player name to server so we can update players string
+                    out.println("playerName " + playerName);
                     frame.dispose();
                     PlayGround playGround = new PlayGround(this.hostName, portNumber , this.playerName);
                     playGround.listen();
