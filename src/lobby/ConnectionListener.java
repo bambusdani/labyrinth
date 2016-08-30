@@ -104,7 +104,7 @@ public class ConnectionListener extends Thread {
                         // save room name
                         rooms += tmpHost[1];
                         // send rooms to all clients
-                        broadcast("rooms " + tmpHost[1] + " ");
+                        // broadcast("rooms " + tmpHost[1] + " ");
                         // log outgoing rooms message
                         LOGGER.info("OUTGOING rooms " + tmpHost[1]);
 
@@ -135,12 +135,13 @@ public class ConnectionListener extends Thread {
                         broadcast("ready " + connections.get(i).getpId());
                         // log outgoing ready message
                         LOGGER.info("OUTGOING ready " + connections.get(i).getpId());
+
                         // append name to readyPlayers
-                        // if (!readyPlayers.contains(connections.get(i).getPlayerName())) {
-                        //     readyPlayers += connections.get(i).getPlayerName() + " ";
+                        if (!readyPlayers.contains(connections.get(i).getPlayerName())) {
+                            readyPlayers += connections.get(i).getPlayerName() + " ";
                             // broadcast readyPlayers to all clients
-                            // broadcast("drawReadyPlayers " + readyPlayers);
-                        // }
+                            broadcast("drawReadyPlayers " + readyPlayers);
+                        }
                     }
                     // 'leave' parameter (leave GameRoomName)
                     else if (message.startsWith("leave")) {
