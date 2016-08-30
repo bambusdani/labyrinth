@@ -5,6 +5,7 @@
 .idea/
 
 #Chatlog
+
 *.log*
 
 *.log
@@ -13,6 +14,9 @@
 
 #jar files
 #*.jar
+chatLog.log
+player_*
+
 
 #mac
 .DS_Store
