@@ -772,10 +772,8 @@ public class Lobby implements ActionListener{
 
         StartScreen startScreen = new StartScreen();
         boolean endWhile = true;
-        int counter=0;
         do{
-             counter ++;
-            System.out.println("what");
+            System.out.println("");
             if(startScreen.getSubmitPressed()){
                 String ip =startScreen.getIP();
                 String name = startScreen.getName();
