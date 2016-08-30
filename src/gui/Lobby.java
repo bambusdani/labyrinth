@@ -46,6 +46,7 @@ public class Lobby implements ActionListener{
     private JPanel panelJoinGame         = new JPanel(new GridBagLayout());
     private JPanel panelHostGame         = new JPanel(new GridBagLayout());
 
+
     private int textSize = 20;
 
     private Socket socket;
@@ -53,6 +54,9 @@ public class Lobby implements ActionListener{
     private Out out;
 
     private final Logger LOGGER = Logger.getLogger(Lobby.class.getName());
+
+    private String playerName;
+    private String hostName;
 
     private String tmpName, nameOfPlayer;
     private String playerID;
@@ -63,6 +67,9 @@ public class Lobby implements ActionListener{
 
 
     public void connectToServer(String hostName, String name){
+
+        this.hostName = hostName;
+        this.playerName = name;
 
         /***************************************************************************************************************
          * create connection with lobbyServer
@@ -588,6 +595,7 @@ public class Lobby implements ActionListener{
 
                 panelButtons.setVisible(false);
                 panelHostGame.setVisible(true);
+
             } else {
                 textAreaHostName.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
             }
@@ -751,6 +759,8 @@ public class Lobby implements ActionListener{
             }
             // 'gamestart' parameter
             else if (s.startsWith("gamestart")) {
+                String[] tmpGameStart = s.split("\\s+");
+
                 // log incoming game start message
                 LOGGER.info("INCOMING " + s);
 
@@ -762,8 +772,7 @@ public class Lobby implements ActionListener{
             // gameRoom
             else if (s.startsWith("gameRoom")) {
                 String[] tmpGameRoom = s.split("\\s+");
-
-                room = tmpGameRoom[1];
+                this.room = tmpGameRoom[1];
             }
             // 'chat' parameter
             else {
@@ -825,9 +834,9 @@ public class Lobby implements ActionListener{
                     "-Djava.util.logging.config.file=src/network/logging.properties",
                     "-jar",
                     "game.jar",
-                    "localhost",
+                    this.hostName,
                     "4445",
-                    "marvin"};
+                    this.playerName};
             new ProcessBuilder(startOptions).start();
         } catch (Exception e) {
             System.err.println(e);

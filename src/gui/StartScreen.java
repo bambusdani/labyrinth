@@ -178,7 +178,6 @@ public class StartScreen extends JPanel implements ActionListener {
     public boolean getSubmitPressed(){
         return submitPressed;
     }
-
 }
 
 

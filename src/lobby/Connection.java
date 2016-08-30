@@ -122,13 +122,13 @@ public class Connection extends Thread {
         this.room = room;
     }
 
-    public void startGameServer() {
+    public void startGameServer(String portNumber) {
         try {
             String[] startOptions = new String[]{System.getProperty("java.home") + "/bin/java",
                     "-Djava.util.logging.config.file=src/network/logging.properties",
                     "-jar",
                     "gameServer.jar",
-                    "4445"};
+                    portNumber};
             new ProcessBuilder(startOptions).start();
         } catch (Exception e) {
             System.err.println(e);
