@@ -708,6 +708,7 @@ public class Lobby implements ActionListener{
 
                 // log players on new connection
                 LOGGER.info("INCOMING " + s);
+
             }
             // 'welcome' parameter
             else if (s.startsWith("welcome")) {

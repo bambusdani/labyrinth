@@ -16,6 +16,7 @@ import gameLogic.*;
 public class ConnectionListener extends Thread {
     private Vector<Connection> connections;
     private int portNumber = 4445;
+    private int playerCounter = 1;
 
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
 
@@ -66,8 +67,17 @@ public class ConnectionListener extends Thread {
                     if (message.startsWith("connect")) {
                         // split message @space
                         String[] tmpMessage = message.split("\\s+");
-                        // set player name from message
-                        connections.get(i).setPlayerName(tmpMessage[1]);
+
+                        //check if player Name is already in use
+                        System.out.println("players: " + players);
+                        if(players.contains(tmpMessage[1])){
+                            connections.get(i).setPlayerName(tmpMessage[1]+playerCounter);
+                            playerCounter++;
+                        }else{
+                            // set player name from message
+                            connections.get(i).setPlayerName(tmpMessage[1]);
+                        }
+
                         // log incoming connection
                         LOGGER.info("INCOMING connection " + tmpMessage[1]);
                         // send welcome message to client
@@ -83,6 +93,9 @@ public class ConnectionListener extends Thread {
                         broadcast("players " + players);
                         // log outgoing players message
                         LOGGER.info("OUTGOING players " + players);
+
+
+
                     }
 
                     // set connection init false
@@ -267,6 +280,8 @@ public class ConnectionListener extends Thread {
                             // error displaying
                             System.err.println(e.getMessage());
                         }
+
+
                     }
             }
             // don't monopolize processor
