@@ -12,7 +12,11 @@ import network.In;
 import network.Out;
 import gameLogic.*;
 
-
+/**
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
+ */
 public class Connection extends Thread {
 
     /**
@@ -84,6 +88,10 @@ public class Connection extends Thread {
         message = s;
     }
 
+    /**
+     * Getter
+     * @return
+     */
     public int getpId() {
         return pId;
     }
@@ -94,16 +102,10 @@ public class Connection extends Thread {
         return room;
     }
 
-    public boolean isInit() {
-        return init;
-    }
-    public boolean isReady() {
-        return ready;
-    }
-    public boolean isHost() {
-        return host;
-    }
-
+    /**
+     * Setter
+     * @param init
+     */
     public void setInit(boolean init) {
         this.init = init;
     }
@@ -121,6 +123,16 @@ public class Connection extends Thread {
     }
     public void setRoom(String room) {
         this.room = room;
+    }
+
+    public boolean isInit() {
+        return init;
+    }
+    public boolean isReady() {
+        return ready;
+    }
+    public boolean isHost() {
+        return host;
     }
 
     /**
