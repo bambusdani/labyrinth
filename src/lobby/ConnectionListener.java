@@ -164,7 +164,7 @@ public class ConnectionListener extends Thread {
 
                         // append name to readyPlayers
                         if (!readyPlayers.contains(connections.get(i).getPlayerName())) {
-                            readyPlayers += connections.get(i).getPlayerName() + " ";
+                            readyPlayers += connections.get(i).getRoom() + " " + connections.get(i).getPlayerName() + " ";
                             // broadcast readyPlayers to all clients
                             broadcast("drawReadyPlayers " + readyPlayers);
                         }
@@ -247,6 +247,8 @@ public class ConnectionListener extends Thread {
                             if (rooms.contains(tmpRooms[j])) {
                                 rooms = rooms.replace(tmpRooms[j], "");
                             }
+                            // TRIM THE FUCKING ROOMS AGAIN
+                            rooms = rooms.trim();
                             // delete playerID of room
                             System.out.println(tmpRooms.length);
                             if (rooms.contains(tmpRooms[j + 1])) {
