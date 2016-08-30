@@ -189,37 +189,50 @@ public class ConnectionListener extends Thread {
                         // delete gameRoom if game started
 
                     }
-                    // 'quitLobby'
-                    else if (message.startsWith("quitLobby")) {
-                        /* remove player from players string */
+                    // 'playerName' delete playerName form players string
+                    else if (message.startsWith("playerName")) {
+                        String[] tmpPlayerName = message.split("\\s+");
+
                         // remove playerID
-                        players = players.replace(connections.get(i).getpId()+"", "");
+                        players = players.replace(connections.get(i).getpId() + "", "");
                         // remove player name
                         players = players.replace(connections.get(i).getPlayerName(), "");
                         // broadcast new players string to all clients
                         broadcast("players " + players);
+                    }
+                    // 'quitLobby'
+                    else {
+                        if (message.startsWith("quitLobby")) {
+                        /* remove player from players string */
+                            // remove playerID
+                            players = players.replace(connections.get(i).getpId() + "", "");
+                            // remove player name
+                            players = players.replace(connections.get(i).getPlayerName(), "");
+                            // broadcast new players string to all clients
+                            broadcast("players " + players);
 
                         /* remove game room from rooms and hosts (only when host is sending) */
-                        if (ith.isHost()) {
-                            // remove game room from rooms
-                            rooms = rooms.replace(connections.get(i).getRoom(), "");
-                            // broadcast rooms to all clients
-                            broadcast("rooms " + rooms);
-                            // log outgoing message
-                            LOGGER.info("OUTGOING rooms " + rooms);
+                            if (ith.isHost()) {
+                                // remove game room from rooms
+                                rooms = rooms.replace(connections.get(i).getRoom(), "");
+                                // broadcast rooms to all clients
+                                broadcast("rooms " + rooms);
+                                // log outgoing message
+                                LOGGER.info("OUTGOING rooms " + rooms);
 
                             /* remove game room and hostID from hosts */
-                            // remove game room form hosts
-                            hosts = hosts.replace(connections.get(i).getRoom(), "");
-                            // remove hostID from hosts
-                            hosts = hosts.replace(connections.get(i).getpId()+"", "");
-                            // broadcast hosts too all clients
-                            broadcast("hosts " + hosts);
-                            // log outgoing message
-                            LOGGER.info("hosts " + hosts);
+                                // remove game room form hosts
+                                hosts = hosts.replace(connections.get(i).getRoom(), "");
+                                // remove hostID from hosts
+                                hosts = hosts.replace(connections.get(i).getpId() + "", "");
+                                // broadcast hosts too all clients
+                                broadcast("hosts " + hosts);
+                                // log outgoing message
+                                LOGGER.info("hosts " + hosts);
+                            }
+                            // remove player from lobby
+                            connections.remove(i);
                         }
-                        // remove player from lobby
-                        connections.remove(i);
                     }
                 }
 
