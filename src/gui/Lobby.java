@@ -765,12 +765,14 @@ public class Lobby implements ActionListener{
             }
             // 'rooms' parameter
             else if (s.startsWith("rooms")) {
+                textAreaOpenGames.setText("Open Games:\n");
                 // log incoming rooms message
                 LOGGER.info("INCOMING " + s);
                 // assign rooms to gameRooms
                 gameRooms = s.substring(6);
 
                 String[] tmpRooms = s.split("\\s+");
+                System.out.println(s);
                 for (int i = 1; i < tmpRooms.length; i = i+2) {
                     if (!textAreaOpenGames.getText().contains(tmpRooms[i])) {
                         textAreaOpenGames.append(tmpRooms[i] + "\n");
@@ -793,7 +795,7 @@ public class Lobby implements ActionListener{
             else {
                 if (s.startsWith("ready")) {
                     // log incoming ready message
-                    LOGGER.info("INCOMING player_0" + s);
+                    LOGGER.info("INCOMING " + s);
                     // set player to ready
                     String[] tmpReady = s.split("\\s+");
                     if (playerID.equalsIgnoreCase(tmpReady[1])) {
