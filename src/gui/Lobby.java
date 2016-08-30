@@ -743,18 +743,28 @@ public class Lobby implements ActionListener{
                 // draw readyPlayers
                 if (tmpReadyPlayers.length == 2) {
                     hostPlayer0.setText(tmpReadyPlayers[1]);
+                    joinPlayer0.setText(tmpReadyPlayers[1]);
                 } else if (tmpReadyPlayers.length == 3) {
                     hostPlayer0.setText(tmpReadyPlayers[1]);
+                    joinPlayer0.setText(tmpReadyPlayers[1]);
                     hostPlayer1.setText(tmpReadyPlayers[2]);
+                    joinPlayer1.setText(tmpReadyPlayers[2]);
                 } else if (tmpReadyPlayers.length == 4) {
                     hostPlayer0.setText(tmpReadyPlayers[1]);
+                    joinPlayer0.setText(tmpReadyPlayers[1]);
                     hostPlayer1.setText(tmpReadyPlayers[2]);
+                    joinPlayer1.setText(tmpReadyPlayers[2]);
                     hostPlayer2.setText(tmpReadyPlayers[3]);
+                    joinPlayer2.setText(tmpReadyPlayers[3]);
                 } else if (tmpReadyPlayers.length == 5) {
                     hostPlayer0.setText(tmpReadyPlayers[1]);
+                    joinPlayer0.setText(tmpReadyPlayers[1]);
                     hostPlayer1.setText(tmpReadyPlayers[2]);
+                    joinPlayer1.setText(tmpReadyPlayers[2]);
                     hostPlayer2.setText(tmpReadyPlayers[3]);
+                    joinPlayer2.setText(tmpReadyPlayers[3]);
                     hostPlayer3.setText(tmpReadyPlayers[4]);
+                    joinPlayer3.setText(tmpReadyPlayers[4]);
                 }
             }
             // 'gamestart' parameter
