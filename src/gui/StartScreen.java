@@ -16,8 +16,8 @@ public class StartScreen extends JPanel implements ActionListener {
      * Attributes
      */
     private ImageIcon titleimage   = new ImageIcon("src/resources/titel/titelImage.jpg");
-    private ImageIcon background   = new ImageIcon("src/resources/backgroundImages/farbverlaufBig.png");
     private JButton buttonSubmit   = new JButton();
+    private JButton buttonExit   = new JButton();
     private JLabel labelText       = new JLabel();
     private JLabel labelIP         = new JLabel();
     private JTextArea textAreaIP   = new JTextArea();
@@ -128,23 +128,41 @@ public class StartScreen extends JPanel implements ActionListener {
         constraintsContent.weighty = 2;
         constraintsContent.gridwidth = 3;
         constraintsContent.gridheight = 1; //<-
-        constraintsContent.insets = new Insets(20, 0, 20, 0);
+        constraintsContent.insets = new Insets(20, 0, 20, 110);
         constraintsContent.gridx = 0;
         constraintsContent.gridy = 8;
         panelContent.add(buttonSubmit, constraintsContent);
+
+        /********************************
+         * EXIT
+         */
+        buttonExit.setText("Exit");
+        buttonExit.setMinimumSize(new Dimension(100, 50));
+        buttonExit.setPreferredSize(new Dimension(100,50));
+        buttonExit.setFont(new Font("Serif",Font.PLAIN,textSize));
+        buttonExit.addActionListener(this);
+        constraintsContent.anchor = GridBagConstraints.SOUTH;
+        constraintsContent.weightx = 2;
+        constraintsContent.weighty = 2;
+        constraintsContent.gridwidth = 3;
+        constraintsContent.gridheight = 1; //<-
+        constraintsContent.insets = new Insets(20, 110, 20, 0);
+        constraintsContent.gridx = 1;
+        constraintsContent.gridy = 8;
+        panelContent.add(buttonExit, constraintsContent);
 
         /***************************************************************************************************************
          * frame
          */
         GradientPanel panelBackground = new GradientPanel();
         panelBackground.add(panelContent);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         //frame.add(panelContent,BorderLayout.NORTH);
         frame.add(panelBackground);
         frame.setVisible(true);
         frame.setMinimumSize(new Dimension(900, 700));
         frame.setLocation(300, 200);
-}
+    }
 
     /**
      * action Listener
@@ -165,6 +183,9 @@ public class StartScreen extends JPanel implements ActionListener {
             else{
                 labelText.setForeground(Color.red);
             }
+        }
+        else if(e.getSource() == buttonExit){
+            System.exit(0);
         }
     }
 
