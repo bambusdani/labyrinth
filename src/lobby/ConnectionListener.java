@@ -152,8 +152,19 @@ public class ConnectionListener extends Thread {
 
                         // log incoming message
                         LOGGER.info("INCOMING " + message);
-                        // reset client game room
-                        ith.setRoom("");
+
+
+                        if (ith.isHost()) {
+                            // send kick message with room name
+                            broadcast("kick " + ith.getRoom());
+
+                            // reset room name of clients in game room
+                            for (Connection lth : connections) {
+                                if (ith.getRoom().equalsIgnoreCase(lth.getRoom())) {
+                                    lth.setRoom("");
+                                }
+                            }
+                        }
                     }
                     // 'start' parameter (starting the game)
                     else if (message.startsWith("start")) {
@@ -168,7 +179,7 @@ public class ConnectionListener extends Thread {
                         broadcast("portNumber " + portNumber);
 
                         // remove game room from string
-                        rooms = rooms.replace(tmpGameStart, "");
+                        rooms = rooms.replace(tmpGameStart + " ", "");
                         // broadcast rooms to all players
                         broadcast("rooms " + rooms);
                         // log outgoing message

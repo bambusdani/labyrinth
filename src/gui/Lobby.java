@@ -729,80 +729,92 @@ public class Lobby implements ActionListener{
                     textAreaOpenGames.setText("Open Game Rooms:\n" + tmpRooms[i] + "\n");
                 }
             }
+            // 'kick' (kick roomName)
+            else if (s.startsWith("kick")) {
+                String[] tmpKick = s.split("\\s+");
+
+                // leave game
+                if (tmpKick[1].equalsIgnoreCase(room)) {
+                    buttonback.doClick();
+                    buttonback2.doClick();
+                }
+            }
             // 'ready playerID' parameter
-            else if (s.startsWith("ready")) {
-                // log incoming ready message
-                LOGGER.info("INCOMING " + s);
-                // set player to ready
-                String[] tmpReady = s.split("\\s+");
-                if (playerID.equalsIgnoreCase(tmpReady[1])) {
-                    this.ready = true;
-                }
-            }
-            // readyPlayers
-            else if (s.startsWith("drawReadyPlayers")) {
-                String[] tmpReadyPlayers = s.split("\\s+");
-
-                // draw readyPlayers
-                if (tmpReadyPlayers.length == 2) {
-                    hostPlayer0.setText(tmpReadyPlayers[1]);
-                    joinPlayer0.setText(tmpReadyPlayers[1]);
-                } else if (tmpReadyPlayers.length == 3) {
-                    hostPlayer0.setText(tmpReadyPlayers[1]);
-                    joinPlayer0.setText(tmpReadyPlayers[1]);
-                    hostPlayer1.setText(tmpReadyPlayers[2]);
-                    joinPlayer1.setText(tmpReadyPlayers[2]);
-                } else if (tmpReadyPlayers.length == 4) {
-                    hostPlayer0.setText(tmpReadyPlayers[1]);
-                    joinPlayer0.setText(tmpReadyPlayers[1]);
-                    hostPlayer1.setText(tmpReadyPlayers[2]);
-                    joinPlayer1.setText(tmpReadyPlayers[2]);
-                    hostPlayer2.setText(tmpReadyPlayers[3]);
-                    joinPlayer2.setText(tmpReadyPlayers[3]);
-                } else if (tmpReadyPlayers.length == 5) {
-                    hostPlayer0.setText(tmpReadyPlayers[1]);
-                    joinPlayer0.setText(tmpReadyPlayers[1]);
-                    hostPlayer1.setText(tmpReadyPlayers[2]);
-                    joinPlayer1.setText(tmpReadyPlayers[2]);
-                    hostPlayer2.setText(tmpReadyPlayers[3]);
-                    joinPlayer2.setText(tmpReadyPlayers[3]);
-                    hostPlayer3.setText(tmpReadyPlayers[4]);
-                    joinPlayer3.setText(tmpReadyPlayers[4]);
-                }
-            }
-            // 'gamestart' parameter
-            else if (s.startsWith("gamestart")) {
-                String[] tmpGameStart = s.split("\\s+");
-
-                // log incoming game start message
-                LOGGER.info("INCOMING " + s);
-
-                if(tmpGameStart[1].equals(room)){
-                    // send player name to server so we can update players string
-                    out.println("playerName " + playerName);
-                    frame.dispose();
-                    PlayGround playGround = new PlayGround(this.hostName, portNumber , this.playerName);
-                    playGround.listen();
-                }
-            }
-            //portNummer
-            else if(s.startsWith("portNumber ")){
-                String[] tmpPortNumber = s.split("\\s+");
-                portNumber = Integer.parseInt(tmpPortNumber[1]);
-
-            }
-            // gameRoom
-            else if (s.startsWith("gameRoom")) {
-                String[] tmpGameRoom = s.split("\\s+");
-                this.room = tmpGameRoom[1];
-            }
-            // 'chat' parameter
             else {
-                // write incoming chat message in textArea
-                textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
-                textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
-                // log incoming chat message
-                LOGGER.info("INCOMING " + s);
+                if (s.startsWith("ready")) {
+                    // log incoming ready message
+                    LOGGER.info("INCOMING " + s);
+                    // set player to ready
+                    String[] tmpReady = s.split("\\s+");
+                    if (playerID.equalsIgnoreCase(tmpReady[1])) {
+                        this.ready = true;
+                    }
+                }
+                // readyPlayers
+                else if (s.startsWith("drawReadyPlayers")) {
+                    String[] tmpReadyPlayers = s.split("\\s+");
+
+                    // draw readyPlayers
+                    if (tmpReadyPlayers.length == 2) {
+                        hostPlayer0.setText(tmpReadyPlayers[1]);
+                        joinPlayer0.setText(tmpReadyPlayers[1]);
+                    } else if (tmpReadyPlayers.length == 3) {
+                        hostPlayer0.setText(tmpReadyPlayers[1]);
+                        joinPlayer0.setText(tmpReadyPlayers[1]);
+                        hostPlayer1.setText(tmpReadyPlayers[2]);
+                        joinPlayer1.setText(tmpReadyPlayers[2]);
+                    } else if (tmpReadyPlayers.length == 4) {
+                        hostPlayer0.setText(tmpReadyPlayers[1]);
+                        joinPlayer0.setText(tmpReadyPlayers[1]);
+                        hostPlayer1.setText(tmpReadyPlayers[2]);
+                        joinPlayer1.setText(tmpReadyPlayers[2]);
+                        hostPlayer2.setText(tmpReadyPlayers[3]);
+                        joinPlayer2.setText(tmpReadyPlayers[3]);
+                    } else if (tmpReadyPlayers.length == 5) {
+                        hostPlayer0.setText(tmpReadyPlayers[1]);
+                        joinPlayer0.setText(tmpReadyPlayers[1]);
+                        hostPlayer1.setText(tmpReadyPlayers[2]);
+                        joinPlayer1.setText(tmpReadyPlayers[2]);
+                        hostPlayer2.setText(tmpReadyPlayers[3]);
+                        joinPlayer2.setText(tmpReadyPlayers[3]);
+                        hostPlayer3.setText(tmpReadyPlayers[4]);
+                        joinPlayer3.setText(tmpReadyPlayers[4]);
+                    }
+                }
+                // 'gamestart' parameter
+                else if (s.startsWith("gamestart")) {
+                    String[] tmpGameStart = s.split("\\s+");
+
+                    // log incoming game start message
+                    LOGGER.info("INCOMING " + s);
+
+                    if (tmpGameStart[1].equals(room)) {
+                        // send player name to server so we can update players string
+                        out.println("playerName " + playerName);
+                        frame.dispose();
+                        PlayGround playGround = new PlayGround(this.hostName, portNumber, this.playerName);
+                        playGround.listen();
+                    }
+                }
+                //portNummer
+                else if (s.startsWith("portNumber ")) {
+                    String[] tmpPortNumber = s.split("\\s+");
+                    portNumber = Integer.parseInt(tmpPortNumber[1]);
+
+                }
+                // gameRoom
+                else if (s.startsWith("gameRoom")) {
+                    String[] tmpGameRoom = s.split("\\s+");
+                    this.room = tmpGameRoom[1];
+                }
+                // 'chat' parameter
+                else {
+                    // write incoming chat message in textArea
+                    textAreaChatText.insert(s + "\n", textAreaChatText.getText().length());
+                    textAreaChatText.setCaretPosition(textAreaChatText.getText().length());
+                    // log incoming chat message
+                    LOGGER.info("INCOMING " + s);
+                }
             }
         }
 
