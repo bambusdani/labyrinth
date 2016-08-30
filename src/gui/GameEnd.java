@@ -62,17 +62,6 @@ public class GameEnd implements ActionListener{
         //-------------------------------------------------------------
 
         //-------------------------------------------------------------
-        //Layout for button is set (x=1 ; y=2)
-        constraints.gridwidth = 1;
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        constraints.insets = new Insets(30,30,0,0);
-        //create new button and set to defined Layout
-        newGame.addActionListener(this);
-        panel.add(newGame, constraints);
-        //-------------------------------------------------------------
-
-        //-------------------------------------------------------------
         //Layout for button is set (x=3 ; y=2)
         constraints.gridwidth = 1;
         constraints.gridx = 1;
@@ -86,6 +75,12 @@ public class GameEnd implements ActionListener{
         //add panel to frame and add a borderlayout
         this.frame.add(panel, BorderLayout.NORTH);
         //-------------------------------------------------------------
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame();
+        GameEnd gameEnd = new GameEnd(frame);
+        gameEnd.createGui("acb");
     }
 
     /**

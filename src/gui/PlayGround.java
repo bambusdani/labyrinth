@@ -977,6 +977,8 @@ public class PlayGround implements ActionListener {
      */
     public void drawGameField(BoardFromClient board){
 
+        System.out.println("playerID: " + playerID);
+
         //Spielfeld wird komplett neu gezeichnet
         for(int j = 0; j < boardSquares.length; j++) {
             for (int i = 0; i < boardSquares[j].length; i++) {
@@ -1138,6 +1140,10 @@ public class PlayGround implements ActionListener {
                 board.setNextTile(board.getAllTilesInOneArray()[index]);
             }
         }
+    }
+
+    public JFrame getFrame(){
+        return this.frame;
     }
 }
 
