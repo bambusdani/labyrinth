@@ -65,6 +65,9 @@ public class Lobby implements ActionListener{
     private boolean host = false;
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
 
+    //portnummer
+    private int portNumber = 0;
+
 
     public void connectToServer(String hostName, String name){
 
@@ -776,12 +779,17 @@ public class Lobby implements ActionListener{
 
                 frame.dispose();
 
-                //if(tmpGameStart[1].equals("")){
-                    //System.out.println(room);
+                if(tmpGameStart[1].equals(room)){
                 System.out.println("hostname: " +hostName + " playername: " +playerName);
-                    PlayGround playGround = new PlayGround(this.hostName, 4445 , this.playerName);
+                    PlayGround playGround = new PlayGround(this.hostName, portNumber , this.playerName);
                     playGround.listen();
-                //}
+                }
+            }
+            //portNummer
+            else if(s.startsWith("portNumber ")){
+                String[] tmpPortNumber = s.split("\\s+");
+                portNumber = Integer.parseInt(tmpPortNumber[1]);
+
             }
             // gameRoom
             else if (s.startsWith("gameRoom")) {

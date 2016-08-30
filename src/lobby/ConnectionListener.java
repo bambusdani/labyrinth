@@ -170,15 +170,19 @@ public class ConnectionListener extends Thread {
                             }
                         }*/
 
-                        String tmpRoom = "1 ";
                         // broadcast gameStart to all clients
-                        broadcast("gamestart " + tmpRoom);
+                        broadcast("gamestart " + tmpGameStart);
                         // log outgoing message
                         LOGGER.info("OUTGOING gamestart " + tmpGameStart);
+
+                        //send port to all clients
+                        broadcast("portNumber " + portNumber);
 
                         // start the game with players who are ready
                         System.out.println("startGameServer " + portNumber);
                         ith.startGameServer(portNumber+"");
+                        portNumber++;
+
 
 
                         // TODO
