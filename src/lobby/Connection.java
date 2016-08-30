@@ -14,6 +14,10 @@ import gameLogic.*;
 
 
 public class Connection extends Thread {
+
+    /**
+     * Attributes
+     */
     private Socket socket;
     private Out out;
     private In in;
@@ -25,16 +29,22 @@ public class Connection extends Thread {
     private boolean ready=false;
     private boolean host=false;
 
+    /**
+     * connect
+     * @param socket
+     */
     public Connection(Socket socket) {
         in = new In(socket);
         out = new Out(socket);
         this.socket = socket;
     }
-
     public void println(String s) {
         out.println(s);
     }
 
+    /**
+     * run
+     */
     public void run() {
         String s;
         while ((s = in.readLine()) != null) {
@@ -74,54 +84,49 @@ public class Connection extends Thread {
         message = s;
     }
 
+    public int getpId() {
+        return pId;
+    }
+    public String getPlayerName() {
+        return playerName;
+    }
+    public String getRoom() {
+        return room;
+    }
+
     public boolean isInit() {
         return init;
+    }
+    public boolean isReady() {
+        return ready;
+    }
+    public boolean isHost() {
+        return host;
     }
 
     public void setInit(boolean init) {
         this.init = init;
     }
-
-    public int getpId() {
-        return pId;
-    }
-
     public void setpId(int pId) {
         this.pId = pId;
     }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
-
-    public boolean isReady() {
-        return ready;
-    }
-
     public void setReady(boolean ready) {
         this.ready = ready;
     }
-
-    public boolean isHost() {
-        return host;
-    }
-
     public void setHost(boolean host) {
         this.host = host;
     }
-
-    public String getRoom() {
-        return room;
-    }
-
     public void setRoom(String room) {
         this.room = room;
     }
 
+    /**
+     * Starting Game Server
+     * @param portNumber
+     */
     public void startGameServer(String portNumber) {
         try {
             String[] startOptions = new String[]{System.getProperty("java.home") + "/bin/java",

@@ -19,7 +19,12 @@ import lobby.Server;
  */
 public class Lobby implements ActionListener{
 
+    /**
+     * Attributes
+     */
     private ImageIcon titleimage         = new ImageIcon("src/resources/titel/titelImage.jpg");
+
+    //buttons
     private JButton buttonHost           = new JButton();
     private JButton buttonJoin           = new JButton();
     private JButton buttonRules          = new JButton();
@@ -28,6 +33,8 @@ public class Lobby implements ActionListener{
     private JButton buttonback           = new JButton();
     private JButton buttonback2           = new JButton();
     private JButton buttonAbout          = new JButton();
+
+    //textFields - textAreas
     private JTextField textFieldChat     = new JTextField();
     private JTextArea  textAreaChatText  = new JTextArea();
     private JTextArea  textAreaOpenGames = new JTextArea();
@@ -42,31 +49,34 @@ public class Lobby implements ActionListener{
     private JTextArea  joinPlayer1       = new JTextArea();
     private JTextArea  joinPlayer2       = new JTextArea();
     private JTextArea  joinPlayer3       = new JTextArea();
+    private int textSize = 20;
+
+    //panels
     private JPanel panelButtons          = new JPanel(new GridBagLayout());
     private JPanel panelJoinGame         = new JPanel(new GridBagLayout());
     private JPanel panelHostGame         = new JPanel(new GridBagLayout());
 
-
-    private int textSize = 20;
-
+    //socket
     private Socket socket;
     private In in;
     private Out out;
 
+    //logger
     private final Logger LOGGER = Logger.getLogger(Lobby.class.getName());
 
+    //players
     private String playerName;
     private String hostName;
-
     private String tmpName, nameOfPlayer;
     private String playerID;
     private String room="";
     private boolean ready = false;
     private boolean host = false;
     private boolean joinValid = false;
+
+    //Frame
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
 
-    //portnummer
     private int portNumber = 0;
 
 
@@ -88,19 +98,12 @@ public class Lobby implements ActionListener{
         } catch (Exception e) {
             textAreaChatText.setText("Keine Verbindung zum Server, bitte Spiel neu starten!");
         }
-
         nameOfPlayer = "[" + name + "]: ";
         tmpName = name;
-
-
-
     }
 
     public void createLobby() {
-
-
         titleimage.setImage(titleimage.getImage().getScaledInstance(480, 350, Image.SCALE_DEFAULT));
-
         JPanel panelContent = new JPanel(new GridBagLayout());
         GridBagConstraints constraintsContent = new GridBagConstraints();
 
@@ -273,7 +276,6 @@ public class Lobby implements ActionListener{
         constraintsContent.gridx = 1;
         constraintsContent.gridy = 0;
         panelButtons.add(textAreaHostName, constraintsContent);
-        //
 
         buttonJoin.setText("Join Game");
         buttonJoin.setFont(new Font("Serif", Font.PLAIN, textSize));
@@ -289,7 +291,7 @@ public class Lobby implements ActionListener{
         constraintsContent.gridx = 0;
         constraintsContent.gridy = 1;
         panelButtons.add(buttonJoin, constraintsContent);
-        //
+
         textAreaJoinNumber.setFont(new Font("Serif", Font.PLAIN, textSize));
         textAreaJoinNumber.setMinimumSize(new Dimension(150, 50));
         textAreaJoinNumber.setPreferredSize(new Dimension(150, 50));
@@ -302,7 +304,7 @@ public class Lobby implements ActionListener{
         constraintsContent.gridx = 1;
         constraintsContent.gridy = 1;
         panelButtons.add(textAreaJoinNumber, constraintsContent);
-        //
+
 
         buttonRules.setText("Game Rules");
         buttonRules.setFont(new Font("Serif", Font.PLAIN, textSize));
@@ -319,8 +321,9 @@ public class Lobby implements ActionListener{
         constraintsContent.gridy = 2;
         panelButtons.add(buttonRules, constraintsContent);
 
-        //-----------------------------------------------
-        //about
+        /*************************************************************************
+         * About
+         */
         buttonAbout.setText("About");
         buttonAbout.setFont(new Font("Serif", Font.PLAIN, textSize));
         buttonAbout.setMinimumSize(new Dimension(150, 50));
@@ -355,7 +358,6 @@ public class Lobby implements ActionListener{
         constraintsContent.gridx = 0;
         constraintsContent.gridy = 0;
         panelJoinGame.add(labelReady, constraintsContent);
-
 
         joinPlayer0.setText("");
         joinPlayer0.setFont(new Font("Serif", Font.PLAIN, textSize));
@@ -416,8 +418,6 @@ public class Lobby implements ActionListener{
         constraintsContent.gridx = 0;
         constraintsContent.gridy = 4;
         panelJoinGame.add(joinPlayer3, constraintsContent);
-
-
 
         buttonReady.setText("Ready?");
         buttonReady.setFont(new Font("Serif", Font.PLAIN, textSize));
@@ -573,6 +573,10 @@ public class Lobby implements ActionListener{
         frame.setLocation(300, 10);
     }
 
+    /**
+     * ActionListener
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == textFieldChat) {
             // send message to server
@@ -605,6 +609,7 @@ public class Lobby implements ActionListener{
             } else {
                 textAreaHostName.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
             }
+
         } else if (e.getSource() == buttonJoin) {
             // send join request to server
             if (!textAreaJoinNumber.getText().isEmpty()) {
@@ -615,7 +620,6 @@ public class Lobby implements ActionListener{
             } else {
                 textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
             }
-
             // only join is join is valid
             if (joinValid) {
                 // set room
@@ -626,12 +630,15 @@ public class Lobby implements ActionListener{
                 panelButtons.setVisible(false);
                 panelJoinGame.setVisible(true);
             }
+
         } else if (e.getSource() == buttonRules) {
             Rules rules = new Rules();
             rules.createGui();
+
         } else if (e.getSource() == buttonAbout) {
             About about = new About();
             about.createGui();
+
         } else if (e.getSource() == buttonback) {
             panelJoinGame.setVisible(false);
             panelHostGame.setVisible(false);
@@ -645,6 +652,7 @@ public class Lobby implements ActionListener{
             out.println("leave " + room);
             // log outgoing message
             LOGGER.info("OUTGOING leave " + room);
+
         } else if (e.getSource() == buttonback2) {
             panelJoinGame.setVisible(false);
             panelHostGame.setVisible(false);
@@ -658,11 +666,13 @@ public class Lobby implements ActionListener{
             out.println("leave " + room);
             // log outgoing message
             LOGGER.info("OUTGOING leave " + room);
+
         } else if (e.getSource() == buttonReady) {
             // send 'ready playerID' to server
             out.println("ready");
             // log outgoing message
             LOGGER.info("OUTGOING ready");
+
         } else if (e.getSource() == buttonStart) {
             // send start to server
             out.println("start");
@@ -840,7 +850,6 @@ public class Lobby implements ActionListener{
             }
         }
 
-
         out.close();
         in.close();
         try                 { socket.close();      }
@@ -848,6 +857,10 @@ public class Lobby implements ActionListener{
         System.err.println("Closed client socket");
     }
 
+    /**
+     * main -> starts StartScreen
+     * @param args
+     */
     public static void main(String[] args) {
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -874,29 +887,7 @@ public class Lobby implements ActionListener{
                 lobby.listen();
                 endWhile = false;
             }
-            else{
-
-            }
         }while (endWhile);
-    }
-
-
-
-
-    public void connectToGame() {
-        try {
-            System.out.println("CONNECT TO GAME");
-            String[] startOptions = new String[]{System.getProperty("java.home") + "/bin/java",
-                    "-Djava.util.logging.config.file=src/network/logging.properties",
-                    "-jar",
-                    "game.jar",
-                    this.hostName,
-                    "4445",
-                    this.playerName};
-            new ProcessBuilder(startOptions).start();
-        } catch (Exception e) {
-            System.err.println(e);
-        }
     }
 }
 

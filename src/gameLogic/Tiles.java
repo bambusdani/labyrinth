@@ -33,7 +33,7 @@ public class Tiles {
     }
 
     /**
-     * Getter Setter
+     * Getter
      */
     public boolean getMoveable(){return moveable;}
     public Position getPosition(){return position;}
@@ -41,14 +41,8 @@ public class Tiles {
     public int getRotation(){return rotation;}
     public int getId(){return this.id;}
 
-    public void setPosition(Position position){this.position = position;}
-    public void setRotation(int rotation){this.rotation = rotation;}
-
     /**
-     * PUSH
+     * Setter
      */
-    public void push(int pRotation, int pX, int pY) {
-        setRotation(pRotation);
-        setPosition(new Position(pX,pY));
-    }
+    public void setRotation(int rotation){this.rotation = rotation;}
 }

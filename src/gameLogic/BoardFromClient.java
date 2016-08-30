@@ -10,27 +10,25 @@ import java.util.List;
 
 public class BoardFromClient {
 
-
-    //==============================================================
-    /** -> ATTRIBUTE */
-    //liste aller player (maximal 4)
+    /**
+     * Attributes
+     */
+    //List of all players(max 4)
     private Player[] allPlayers = new Player[4];
+    //List of all tiles 2dimensional -> sorted like playground
     private Tiles[][] tiles = new Tiles[7][7];
     private Tiles nextTile = null;
+    //All tiles in 1dimensional array -> left to right then next row...
     private Tiles[] allTilesInOneArray = new Tiles[50];
     private List<GoalCard> creaturesNeeded = new ArrayList<>();
     private GoalCard[] allGoalCards = new GoalCard[28];
 
-    //=============================================================
-
-    //=============================================================
-    //Save Images in Variables
-    // Tiles
-    //"I"
     private ImageIcon tile1Image   = new ImageIcon("src/resources/tiles/tile1.jpg");
-    //"L"
     private ImageIcon tile2Image   = new ImageIcon("src/resources/tiles/tile2.jpg");
-    //movable
+
+    /**
+     * movable Tiles
+     */
     private ImageIcon tile3Image   = new ImageIcon("src/resources/tiles/tile3.jpg");
     private ImageIcon tile4Image   = new ImageIcon("src/resources/tiles/tile4.jpg");
     private ImageIcon tile5Image   = new ImageIcon("src/resources/tiles/tile5.jpg");
@@ -43,7 +41,10 @@ public class BoardFromClient {
     private ImageIcon tile12Image  = new ImageIcon("src/resources/tiles/tile12.jpg");
     private ImageIcon tile13Image  = new ImageIcon("src/resources/tiles/tile13.jpg");
     private ImageIcon tile14Image  = new ImageIcon("src/resources/tiles/tile14.jpg");
-    //not moveable
+
+    /**
+     * not movable tiles
+     */
     private ImageIcon tile15Image  = new ImageIcon("src/resources/tiles/tile15.jpg");
     private ImageIcon tile16Image  = new ImageIcon("src/resources/tiles/tile16.jpg");
     private ImageIcon tile17Image  = new ImageIcon("src/resources/tiles/tile17.jpg");
@@ -56,6 +57,7 @@ public class BoardFromClient {
     private ImageIcon tile24Image  = new ImageIcon("src/resources/tiles/tile24.jpg");
     private ImageIcon tile25Image  = new ImageIcon("src/resources/tiles/tile25.jpg");
     private ImageIcon tile26Image  = new ImageIcon("src/resources/tiles/tile26.jpg");
+
     //start position
     private ImageIcon tile27Image  = new ImageIcon("src/resources/tiles/tile27.jpg");
     private ImageIcon tile28Image  = new ImageIcon("src/resources/tiles/tile28.jpg");
@@ -93,16 +95,10 @@ public class BoardFromClient {
     private ImageIcon creatureImageYellow = new ImageIcon("src/resources/creatures/yellow.png");
     private ImageIcon creatureImageGreen  = new ImageIcon("src/resources/creatures/green.png");
 
-
-
-
-
-
-    //============================
-    /** -> KONSTRUKTOR */
+    /**
+     * Constructor
+     */
     public BoardFromClient(){
-
-
         //--------------------------------------------
         //set size of all images
         tile1Image.setImage(tile1Image.getImage().getScaledInstance(70,70,Image.SCALE_DEFAULT));
@@ -161,6 +157,7 @@ public class BoardFromClient {
         creatureImage22.setImage(creatureImage22.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
         creatureImage23.setImage(creatureImage23.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
         creatureImage24.setImage(creatureImage24.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
+
         //startPositionCreatures
         creatureImageGreen.setImage(creatureImageGreen.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
         creatureImageYellow.setImage(creatureImageYellow.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
@@ -168,20 +165,11 @@ public class BoardFromClient {
         creatureImageRed.setImage(creatureImageRed.getImage().getScaledInstance(72,72,Image.SCALE_DEFAULT));
 
 
-
-        //--------------------------------------------
-
-        //Tiles erzeugen
-         //createTiles(this.tiles);
-
-
-        //==============================================================================================================
         /**
          * Creating all GoalCards
          * placeing all Cards into the list allCreaturesNeeded
          * shuffel all and place it in the player neededCreatures
          */
-
         allGoalCards[0]     = new GoalCard("mouse",     creatureImage1 , 0);
         allGoalCards[1]     = new GoalCard("krone",     creatureImage2 , 1);
         allGoalCards[2]     = new GoalCard("spinne",    creatureImage3 , 2);
@@ -206,17 +194,15 @@ public class BoardFromClient {
         allGoalCards[21]    = new GoalCard("book",      creatureImage22,21);
         allGoalCards[22]    = new GoalCard("schwert",   creatureImage23,22);
         allGoalCards[23]    = new GoalCard("käfer",     creatureImage24,23);
-        //Startpositionen -> falsches Bild
+        //Startpositionen
         allGoalCards[24]    = new GoalCard("red",       creatureImageRed,24);
         allGoalCards[25]    = new GoalCard("yellow",    creatureImageYellow,25);
         allGoalCards[26]    = new GoalCard("green",     creatureImageGreen,26);
         allGoalCards[27]    = new GoalCard("blue",      creatureImageBlue,27);
 
-
         /**
          * All Tiles in one array
          */
-        //todo nacher wieder weg
         nextTile= new Tiles(0 ,true, null, new Shape(tile2Image, "L", new boolean[] {true,false,false,true} , null ), 0);
         allTilesInOneArray[0]  = new Tiles(0 ,true, new Position(99,99), new Shape(tile2Image, "L", new boolean[] {true,false,false,true} , null ), 0);
 
@@ -276,67 +262,37 @@ public class BoardFromClient {
         allTilesInOneArray[48] = new Tiles(48,true,new  Position(6,5), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
         allTilesInOneArray[49] = new Tiles(49,false,new Position(6,6),new Shape(tile27Image, "L" , new boolean[] {true,false,false,true},"red"),0);
 
-
-
-
-
-
-
-
-
-
-
-
-
-        //==============================================================================================================
-
-
-
-
-    //TODO bei der Spielererstellung müssen die Daten aus dem Fenster davor übergeben werde
+        /**
+         * players
+         */
                                   //startPosition   , actualPosition   , ID, Color                      ,turn,score, name, cardsymbolNeeded
         allPlayers[0] = new Player(new Position(6,6), new Position(6,6), 0 , new Color(255, 0 ,0),      true,   0, "",  creaturesNeeded );
         allPlayers[1] = new Player(new Position(0,6), new Position(0,6), 1 , new Color(0, 0 ,255),      false,  0, "",  creaturesNeeded );
         allPlayers[2] = new Player(new Position(6,0), new Position(6,0), 2 , new Color(252, 255, 0),    false,  0, "",  creaturesNeeded );
         allPlayers[3] = new Player(new Position(0,0), new Position(0,0), 3 , new Color(0, 255,0),     false,  0, "" , creaturesNeeded );
     }
-    //===========================
+
 
     /**
-     * getter und setter
+     * getter
      */
-
     public Player getPlayer(int id){
         return this.allPlayers[id];
     }
     public Player[] getAllPlayers(){
         return  this.allPlayers;
     }
-
     public Tiles[][] getallTiles(){
         return this.tiles;
-    }
-    public void setAllTiles(Tiles[][] newTiles){
-        this.tiles = newTiles;
     }
     public Tiles getTile(int x, int y){
         return this.tiles[x][y];
     }
-    public void setTiles(int x, int y, Tiles tile){
-        this.tiles[x][y] = tile;
-    }
     public Tiles getNextTile(){
         return nextTile;
     }
-    public void setNextTile(Tiles nextTile){
-        this.nextTile = nextTile;
-    }
     public Tiles[] getAllTilesInOneArray(){
         return allTilesInOneArray;
-    }
-
-    public void setCreaturesNeeded(List<GoalCard>creaturesNeeded){
-        this.creaturesNeeded = creaturesNeeded;
     }
     public List<GoalCard> getCreaturesNeeded(){
        return creaturesNeeded;
@@ -345,18 +301,25 @@ public class BoardFromClient {
         return allGoalCards;
     }
 
+    /**
+     * setter
+     */
+    public void setTiles(int x, int y, Tiles tile){
+        this.tiles[x][y] = tile;
+    }
+    public void setNextTile(Tiles nextTile){
+        this.nextTile = nextTile;
+    }
 
 
-
-
-    //=================================================================================================================================
-    /** -> Creates Tiles */
+    /**
+     * Tiles are created
+     * @param tiles
+     * All tiles are seperately set -> each tile can be exactly determind
+     * new Tiles(id, movable, position(x,y), shape(image, shapeOfImage, possibleWaysToMove, Symbol), rotation)
+     */
     public void createTiles(Tiles[][] tiles){
-        //Alle tiles extra gesetzt, dadurch kann man jedes tile genau festlegen...
-        //new Tiless(id, moveable, position(x,y), shape(image,shapeOfImage, possibleWaysToMove, Symbol), rotation)
-        //erste Reihe                                                                                                                               //fünfte Reihe
-
-        //TODO tileID von 0 beginnend
+        //first row
         tiles[0][0] = new Tiles(1,false,new Position(0,0), new Shape(tile30Image, "L" , new boolean[] {false,true,true,false},"green"),0);          tiles[4][0] = new Tiles(29,false,new Position(4,0),new Shape(tile16Image, "T" , new boolean[] {false,true,true,true},"map"),0);
         tiles[0][1] = new Tiles(2,true,new  Position(0,1),  new Shape(tile8Image, "L" ,  new boolean[] {true,true,false,false},"motte"),0);         tiles[4][1] = new Tiles(30,true,new  Position(4,1), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
         tiles[0][2] = new Tiles(3,false,new Position(0,2), new Shape(tile17Image, "T" , new boolean[] {true,true,true,false},"kerze"),0);           tiles[4][2] = new Tiles(31,false,new Position(4,2),new Shape(tile19Image, "T" , new boolean[] {false,true,true,true},"krone"),0);
@@ -364,7 +327,7 @@ public class BoardFromClient {
         tiles[0][4] = new Tiles(5,false,new Position(0,4), new Shape(tile21Image, "T" , new boolean[] {true,true,true,false},"helm"),0);            tiles[4][4] = new Tiles(33,false,new Position(4,4),new Shape(tile23Image, "T" , new boolean[] {true,false,true,true},"key"),0);
         tiles[0][5] = new Tiles(6,true,new  Position(0,5),  new Shape(tile3Image, "L" ,  new boolean[] {false,true,true,false},"eule"),0);          tiles[4][5] = new Tiles(34,true,new  Position(4,5), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
         tiles[0][6] = new Tiles(7,false,new Position(0,6), new Shape(tile28Image, "L" , new boolean[] {true,true,false,false},"blue"),0);           tiles[4][6] = new Tiles(35,false,new Position(4,6),new Shape(tile26Image, "T" , new boolean[] {true,true,false,true},"skull"),0);
-        //zweite Reihe                                                                                                                              //sechste Reihe
+        //second row                                                                                                                         //sechste Reihe
         tiles[1][0] = new Tiles(8,true,new  Position(1,0),  new Shape(tile4Image, "T" ,  new boolean[] {true,true,false,true},"zauberer"),0);       tiles[5][0] = new Tiles(36,true,new Position(5,0),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
         tiles[1][1] = new Tiles(9,true,new  Position(1,1),  new Shape(tile5Image, "L" ,  new boolean[] {true,true,false,false},"käfer"),0);         tiles[5][1] = new Tiles(37,true,new Position(5,1),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
         tiles[1][2] = new Tiles(10,true,new Position(1,2), new Shape(tile6Image, "T" ,  new boolean[] {true,true,false,true},"fgeist"),0);          tiles[5][2] = new Tiles(38,true,new Position(5,2),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
@@ -372,7 +335,7 @@ public class BoardFromClient {
         tiles[1][4] = new Tiles(12,true,new Position(1,4), new Shape(tile10Image, "T" , new boolean[] {true,true,false,true},"troll"),0);           tiles[5][4] = new Tiles(40,true,new Position(5,4),new Shape(tile1Image, "I" , new boolean[] {false,true,false,true},null),0);
         tiles[1][5] = new Tiles(13,true,new Position(1,5), new Shape(tile11Image, "L" , new boolean[] {false,false,true,true},"mouse"),0);          tiles[5][5] = new Tiles(41,true,new Position(5,5),new Shape(tile1Image, "I" , new boolean[] {false,true,false,true},null),0);
         tiles[1][6] = new Tiles(14,true,new Position(1,6), new Shape(tile12Image, "T" , new boolean[] {true,true,false,true},"fledermaus"),0);      tiles[5][6] = new Tiles(42,true,new Position(5,6),new Shape(tile1Image, "I" , new boolean[] {false,true,false,true},null),0);
-        //dritte Reihe                                                                                                                              //siebte Reihe
+        //third row                                                                                                                           //siebte Reihe
         tiles[2][0] = new Tiles(15,false,new Position(2,0),new Shape(tile15Image, "T" , new boolean[] {false,true,true,true},"ring"),0);            tiles[6][0] = new Tiles(43,false,new Position(6,0),new Shape(tile29Image, "L" , new boolean[] {false,false,true,true},"yellow"),0);
         tiles[2][1] = new Tiles(16,true,new  Position(2,1), new Shape(tile13Image, "T" , new boolean[] {true,true,false,true},"geist"),0);          tiles[6][1] = new Tiles(44,true,new  Position(6,1), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
         tiles[2][2] = new Tiles(17,false,new Position(2,2),new Shape(tile18Image, "T" , new boolean[] {true,true,true,false},"schatz"),0);          tiles[6][2] = new Tiles(45,false,new Position(6,2),new Shape(tile20Image, "T" , new boolean[] {true,false,true,true},"book"),0);
@@ -380,7 +343,7 @@ public class BoardFromClient {
         tiles[2][4] = new Tiles(19,false,new Position(2,4),new Shape(tile22Image, "T" , new boolean[] {true,true,false,true},"rubin"),0);           tiles[6][4] = new Tiles(47,false,new Position(6,4),new Shape(tile24Image, "T" , new boolean[] {true,false,true,true},"coins"),0);
         tiles[2][5] = new Tiles(20,true,new  Position(2,5), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);            tiles[6][5] = new Tiles(48,true,new  Position(6,5), new Shape(tile1Image, "I" ,  new boolean[] {false,true,false,true},null),0);
         tiles[2][6] = new Tiles(21,false,new Position(2,6),new Shape(tile25Image, "T" , new boolean[] {true,true,false,true},"schwert"),0);         tiles[6][6] = new Tiles(49,false,new Position(6,6),new Shape(tile27Image, "L" , new boolean[] {true,false,false,true},"red"),0);
-        //vierte Reihe
+        //fourth row
         tiles[3][0] = new Tiles(22,true,new Position(3,0),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
         tiles[3][1] = new Tiles(23,true,new Position(3,1),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
         tiles[3][2] = new Tiles(24,true,new Position(3,2),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
@@ -388,22 +351,7 @@ public class BoardFromClient {
         tiles[3][4] = new Tiles(26,true,new Position(3,4),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
         tiles[3][5] = new Tiles(27,true,new Position(3,5),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
         tiles[3][6] = new Tiles(28,true,new Position(3,6),new Shape(tile2Image, "L" , new boolean[] {true,false,false,true},null),0);
-
     }
-    //===================================================================================================================================
-
-    //=================================================================================
-    /** PUSH TILE */
-    public void pushTile(int pID, int pRotation, int pX, int pY) {
-        for (int i = 0; i < getallTiles().length; i++) {
-            for (int j = 0; j < getallTiles()[0].length; j++) {
-                if(pID == getallTiles()[i][j].getId()) {
-                    getallTiles()[i][j].push(pRotation, pX, pY);
-                }
-            }
-        }
-    }
-    //=================================================================================
 }
 
 

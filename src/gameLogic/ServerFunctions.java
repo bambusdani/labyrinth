@@ -32,7 +32,6 @@ public class ServerFunctions {
         }
         board.getNextTile().getShape().setImage(board.getNextTile().getShape().rotateImage(90));
         board.getNextTile().getShape().setRotatedPossiblePath(board.getNextTile().getShape().getPossiblePaths());
-
     }
 
     /****************+++++***********************************************************
@@ -171,7 +170,6 @@ public class ServerFunctions {
         }
     }
 
-
     /**
      * Checks if the insertion(push) is allowed
      * @param buttonID
@@ -271,7 +269,6 @@ public class ServerFunctions {
         return false;
     }
 
-
     /**
      * resetAllPossibleArrowInsertrions
      * resets the variable possibleArrowInsertions
@@ -319,7 +316,6 @@ public class ServerFunctions {
         int actualPosY = board.getPlayer(playerID).getAcutalPosition().getY();
         return isMovePossible(board, buttonPositionPressed, actualPosX,actualPosY);
     }
-    //==================================================================================================================
 
     /**
      * isMovePossible
@@ -459,8 +455,6 @@ public class ServerFunctions {
      * return 2 = spiel beenden
      */
     public int isPlayerGettingPoints(Board board, int playerID){
-
-
         if(board.getPlayer(playerID).getCreaturesNeeded().get(0).getCreature() == board.getTile(board.getPlayer(playerID).getAcutalPosition().getX(),board.getPlayer(playerID).getAcutalPosition().getY()).getShape().getCreature()){
             //if they are equal -> first element is deketed
             board.getPlayer(playerID).getCreaturesNeeded().remove(0);
@@ -478,11 +472,6 @@ public class ServerFunctions {
             //no points
             return 0;
         }
-    }
-    //==================================================================================================================
-
-    public boolean[] getPossibleArrowInsertions(){
-        return possibleArrowInsertions;
     }
 
     /**
@@ -520,8 +509,5 @@ public class ServerFunctions {
                 System.err.println("FEHLER BEIM ERKENNEN DES BUTTONS");
                 return 0;
         }
-
     }
-
-
 }

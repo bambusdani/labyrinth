@@ -46,7 +46,7 @@ public class Player {
     }
 
     /**
-     * Getter Setter
+     * Getter
      */
     public Position getAcutalPosition(){return acutalPosition;}
     public int getPlayerID(){return playerID;}
@@ -56,6 +56,9 @@ public class Player {
     public String getNameOfPlayer(){return nameOfPlayer;}
     public String getMessage() {return this.message;}
 
+    /**
+     * Setter
+     */
     public void setActualPosition(Position position){this.acutalPosition = position;}
     public void setScore(int score){this.score = score;}
     public void setNameOfPlayer(String name){nameOfPlayer = name;}

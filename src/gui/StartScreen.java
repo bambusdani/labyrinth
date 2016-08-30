@@ -166,7 +166,6 @@ public class StartScreen extends JPanel implements ActionListener {
                 labelText.setForeground(Color.red);
             }
         }
-
     }
 
     public String getIP(){

@@ -31,13 +31,8 @@ public class Main {
             System.out.println("LAF not possible");
         }
 
-
         BoardFromClient board = new BoardFromClient();
-
-
         PlayGround test = new PlayGround(args[0], Integer.parseInt(args[1]), args[2]);
-
-
         test.listen();
     }
 }

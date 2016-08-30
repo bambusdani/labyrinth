@@ -125,7 +125,6 @@ public class PlayGround implements ActionListener {
     private String initName;
     private final Logger LOGGER = Logger.getLogger(PlayGround.class.getName());
 
-
     /**
      * Constructor
      * @param hostName

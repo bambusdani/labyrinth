@@ -93,9 +93,6 @@ public class ConnectionListener extends Thread {
                         broadcast("players " + players);
                         // log outgoing players message
                         LOGGER.info("OUTGOING players " + players);
-
-
-
                     }
 
                     // send rooms to players

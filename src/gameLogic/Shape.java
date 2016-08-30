@@ -83,6 +83,4 @@ public class Shape {
 
         this.possiblePaths = possiblePaths;
     }
-
-
 }
