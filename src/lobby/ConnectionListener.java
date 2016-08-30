@@ -179,7 +179,7 @@ public class ConnectionListener extends Thread {
 
                         if (ith.isHost()) {
                             // send kick message with room name
-                            // broadcast("kick " + ith.getRoom());
+                            broadcast("kick " + ith.getRoom());
                             // log outgoing message
                             LOGGER.info("OUTGOING kick " + ith.getRoom());
                             // reset host status
