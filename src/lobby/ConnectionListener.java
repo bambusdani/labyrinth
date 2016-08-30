@@ -164,13 +164,15 @@ public class ConnectionListener extends Thread {
                         // append GameRoomName
                         String tmpGameStart = ith.getRoom() + " ";
                         // get playerID's where gameRoom equals
-                        /*for (Connection kth : connections) {
-                            if (kth.getRoom().equalsIgnoreCase(ith.getRoom())) {
-                                tmpGameStart += "player_" + kth.getpId() + " ";
-                            }
-                        }*/
                         //send port to all clients
                         broadcast("portNumber " + portNumber);
+
+                        // remove game room from string
+                        rooms = rooms.replace(tmpGameStart, "");
+                        // broadcast rooms to all players
+                        broadcast("rooms " + rooms);
+                        // log outgoing message
+                        LOGGER.info("OUTGOING rooms " + rooms);
 
                         // broadcast gameStart to all clients
                         broadcast("gamestart " + tmpGameStart);
@@ -181,8 +183,6 @@ public class ConnectionListener extends Thread {
                         System.out.println("startGameServer " + portNumber);
                         ith.startGameServer(portNumber+"");
                         portNumber++;
-
-
 
                         // TODO
                         // remove user von lobby wenn er ein spiel startet
@@ -199,6 +199,8 @@ public class ConnectionListener extends Thread {
                         players = players.replace(connections.get(i).getPlayerName(), "");
                         // broadcast new players string to all clients
                         broadcast("players " + players);
+                        // log outgoing message
+                        LOGGER.info("OUTGOING players " + players);
                     }
                     // 'quitLobby'
                     else {
