@@ -171,7 +171,7 @@ public class ConnectionListener extends Thread {
                     }
                     // 'leave' parameter (leave GameRoomName)
                     else if (message.startsWith("leave")) {
-                        // String[] tmpLeave = message.split("\\s+");
+                        String[] tmpLeave = message.split("\\s+");
 
                         // log incoming message
                         LOGGER.info("INCOMING " + message);
@@ -209,15 +209,13 @@ public class ConnectionListener extends Thread {
                         String[] tmpRooms = rooms.split("\\s+");
                         for (int j = 0; j < tmpRooms.length; j = j+2) {
                             // delete room name
-                            if (rooms.contains(tmpRooms[j])) {
+                            if (rooms.contains(tmpLeave[1])) {
                                 rooms = rooms.replace(tmpRooms[j] + " " + tmpRooms[j+1], "");
                                 rooms = rooms.trim();
-                                System.out.println("schleife: " + rooms);
                             }
                         }
                         // trim rooms
                         rooms = rooms.trim();
-                        System.out.println("broadcast: " + rooms);
                         // broadcast rooms to all clients
                         broadcast("rooms " + rooms);
                         // log outgoing message
