@@ -176,11 +176,33 @@ public class ConnectionListener extends Thread {
                         ith.startGameServer();
 
                         // TODO
-                        // - ready players in textfelder werden nicht angezeigt
-                        // port fort laufend
                         // remove user von lobby wenn er ein spiel startet
                         // delete gameRoom if game started
 
+                    }
+                    // 'quitLobby'
+                    else if (message.startsWith("quitLobby")) {
+                        /* remove player from players string */
+                        // remove playerID
+                        players = players.replace(connections.get(i).getpId()+"", "");
+                        // remove player name
+                        players = players.replace(connections.get(i).getPlayerName(), "");
+                        // broadcast new players string to all clients
+                        broadcast("players " + players);
+
+                        /* remove game room from rooms and hosts (only when host is sending) */
+                        if (ith.isHost()) {
+                            // remove game room from rooms
+                            rooms = rooms.replace(connections.get(i).getRoom(), "");
+
+                            /* remove game room and hostID from hosts */
+                            // remove game room form hosts
+                            hosts = hosts.replace(connections.get(i).getRoom(), "");
+                            // remove hostID from hosts
+                            hosts = hosts.replace(connections.get(i).getpId()+"", "");
+                        }
+                        // remove player from lobby
+                        connections.remove(i);
                     }
                 }
 
