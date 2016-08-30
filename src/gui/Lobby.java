@@ -636,8 +636,8 @@ public class Lobby implements ActionListener{
                 LOGGER.info("INCOMING " + s);
 
                 String[] tmpRooms = s.split("\\s+");
-                for (int i = 1; i < tmpRooms.length; i = i + 2) {
-                    textAreaOpenGames.setText("Open Game Rooms:\n" + tmpRooms[i] + " (id: " + tmpRooms[i + 1] + ")\n");
+                for (int i = 1; i < tmpRooms.length; i = i++) {
+                    textAreaOpenGames.setText("Open Game Rooms:\n" + tmpRooms[i] + "\n");
                 }
             }
             // 'ready playerID' parameter
@@ -675,13 +675,10 @@ public class Lobby implements ActionListener{
             else if (s.startsWith("gamestart")) {
                 // log incoming game start message
                 LOGGER.info("INCOMING " + s);
-                System.out.println(System.getProperty("java.home"));
 
                 frame.dispose();
                 PlayGround playGround = new PlayGround("192.168.14.37", 4445, "Rehan");
                 playGround.listen();
-
-                connectToGame();
             }
             // gameRoom
             else if (s.startsWith("gameRoom")) {

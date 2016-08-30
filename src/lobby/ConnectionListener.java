@@ -136,11 +136,11 @@ public class ConnectionListener extends Thread {
                         // log outgoing ready message
                         LOGGER.info("OUTGOING ready " + connections.get(i).getpId());
                         // append name to readyPlayers
-                        if (!readyPlayers.contains(connections.get(i).getPlayerName())) {
-                            readyPlayers += connections.get(i).getPlayerName() + " ";
+                        // if (!readyPlayers.contains(connections.get(i).getPlayerName())) {
+                        //     readyPlayers += connections.get(i).getPlayerName() + " ";
                             // broadcast readyPlayers to all clients
-                            broadcast("drawReadyPlayers " + readyPlayers);
-                        }
+                            // broadcast("drawReadyPlayers " + readyPlayers);
+                        // }
                     }
                     // 'leave' parameter (leave GameRoomName)
                     else if (message.startsWith("leave")) {
@@ -152,30 +152,36 @@ public class ConnectionListener extends Thread {
                         ith.setRoom("");
                     }
                     // 'start' parameter (starting the game)
-                    else {
-                        if (message.startsWith("start")) {
-                            // log incoming start message
-                            LOGGER.info("INCOMING start");
-                            // start the game with players who are ready
-                            String tmpRoom = "";
-                            ith.startGameServer();
+                    else if (message.startsWith("start")) {
+                        // log incoming start message
+                        LOGGER.info("INCOMING start");
 
-                            broadcast("chat gamestarting...");
-                            // broadcast gameStart to all clients
-                            broadcast("gamestart " + tmpRoom);
-                            // log outgoing message
-                            LOGGER.info("OUTGOING gamestart " + tmpRoom);
+                        // assembly 'gamestart GameRoomName PlayerID1 ... PlayerIDN'
+                        // append GameRoomName
+                        String tmpGameStart = ith.getRoom() + " ";
+                        // get playerID's where gameRoom equals
+                        /*for (Connection kth : connections) {
+                            if (kth.getRoom().equalsIgnoreCase(ith.getRoom())) {
+                                tmpGameStart += "player_" + kth.getpId() + " ";
+                            }
+                        }*/
 
-                            // TODO
-                            // - ready players in textfelder werden nicht angezeigt
-                            // port fort laufend
-                            // remove user von lobby wenn er ein spiel startet
-                            // delete gameRoom if game started
+                        // broadcast gameStart to all clients
+                        broadcast("gamestart " + tmpGameStart);
+                        // log outgoing message
+                        LOGGER.info("OUTGOING gamestart " + tmpGameStart);
 
-                        }
+                        // start game server
+                        ith.startGameServer();
+
+                        // TODO
+                        // - ready players in textfelder werden nicht angezeigt
+                        // port fort laufend
+                        // remove user von lobby wenn er ein spiel startet
+                        // delete gameRoom if game started
+
                     }
                 }
-
 
                 //--------------------------------------------------------------------------------
                 // begin with server broadcasting to all clients
