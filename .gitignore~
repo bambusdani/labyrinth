@@ -5,7 +5,7 @@
 .idea/
 
 #Chatlog
-
+<<<<<<< HEAD
 *.log*
 
 *.log
@@ -14,10 +14,10 @@
 
 #jar files
 #*.jar
-
+=======
 chatLog.log
 player_*
-
+>>>>>>> 4893dc1899854953c38ae5041dbed731a7674c11
 
 #mac
 .DS_Store
