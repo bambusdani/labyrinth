@@ -200,7 +200,10 @@ public class ConnectionListener extends Thread {
                             // reset room name of clients in game room
                             for (Connection lth : connections) {
                                 if (ith.getRoom().equalsIgnoreCase(lth.getRoom())) {
+                                    // reset room
                                     lth.setRoom("");
+                                    // reset ready
+                                    lth.setReady(false);
                                 }
                             }
                         }
@@ -216,13 +219,34 @@ public class ConnectionListener extends Thread {
                         }
                         // trim rooms
                         rooms = rooms.trim();
+
+                        // remove player names from ready players
+                        String[] tmpReadyPlayers = readyPlayers.split("\\s+");
+                        for (int j = 0; j < tmpReadyPlayers.length; j++) {
+                            // delete names from readyPlayers string
+                            if (readyPlayers.contains(tmpLeave[1])) {
+                                System.out.println("before: " + readyPlayers);
+                                readyPlayers = readyPlayers.replace(tmpReadyPlayers[j] + " " + tmpReadyPlayers[j+1], "");
+                                readyPlayers = readyPlayers.trim();
+                                System.out.println("after: " + readyPlayers);
+                            }
+                        }
+                        // trim readyPlayers
+                        readyPlayers = readyPlayers.trim();
+
                         // broadcast rooms to all clients
                         broadcast("rooms " + rooms);
                         // log outgoing message
                         LOGGER.info("OUTGOING rooms " + rooms);
 
+                        // broadcast readyPlayers to all clients
+                        broadcast("drawReadyPlayers " + readyPlayers);
+
+
                         // reset room on client
                         ith.setRoom("");
+                        // reset ready
+                        ith.setReady(false);
                     }
                     // 'start' parameter (starting the game)
                     else if (message.startsWith("start")) {
