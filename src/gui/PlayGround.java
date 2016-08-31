@@ -643,6 +643,7 @@ public class PlayGround implements ActionListener {
             textField.requestFocusInWindow();
         }
         if (buttonEndGame == e.getSource()) {
+            //checks if players turn
             if(playersTurnID == playerID){
             // send to server
             out.println("leave " + playerID);
@@ -651,7 +652,7 @@ public class PlayGround implements ActionListener {
             System.exit(0);
             }
             else{
-                textArea.insert("Nur der Spieler der an der Reihe ist darf das Spiel verlassen" + "\n", textArea.getText().length());
+                textArea.insert("Um den Spielfluss nicht zu unterbrechen, darf das Spiel nur verlassen werden, wenn man an der Reihe ist" + "\n", textArea.getText().length());
                 textArea.setCaretPosition(textArea.getText().length());
             }
         }
