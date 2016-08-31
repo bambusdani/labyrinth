@@ -13,18 +13,28 @@ import java.util.logging.*;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import gameLogic.*;
 
+/**
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
+ */
 public class ConnectionListener extends Thread {
+
+    /**
+     * Attributes
+     */
     private Vector<Connection> connections;
     private int portNumber = 4445;
     private int playerCounter = 1;
-
     public Logger LOGGER = Logger.getLogger(Connection.class.getName());
-
     private String players = "", readyPlayers = "", rooms = "", hosts = "";
 
+    /**
+     * Connectionslistener
+     * @param connections
+     */
     public ConnectionListener(Vector<Connection> connections) {
         this.connections = connections;
-
         //init Logger
         try {
             FileHandler fileHandler = new FileHandler("lobbyLog.log");
@@ -327,8 +337,6 @@ public class ConnectionListener extends Thread {
                             // error displaying
                             System.err.println(e.getMessage());
                         }
-
-
                     }
             }
             // don't monopolize processor
@@ -337,7 +345,6 @@ public class ConnectionListener extends Thread {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
     }
 

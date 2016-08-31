@@ -4,6 +4,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
 
+/**
+ * Created by Marvin Röck, Daniel Deuscher, Rehan App
+ * Programmierprojekt Sommersemester 2016
+ * Das Verrückte Labyrinth
+ */
 public class Server {
     public static void main(String[] args) throws Exception {
         Vector<Connection> connections        = new Vector<Connection>();
