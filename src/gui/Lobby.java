@@ -791,6 +791,7 @@ public class Lobby implements ActionListener{
                 }
                 // readyPlayers
                 else if (s.startsWith("drawReadyPlayers")) {
+                    resetReadyPlayes();
                     String[] tmpReadyPlayers = s.split("\\s+");
 
                     // draw readyPlayers
@@ -903,6 +904,17 @@ public class Lobby implements ActionListener{
                 endWhile = false;
             }
         }while (endWhile);
+    }
+
+    public void resetReadyPlayes() {
+        hostPlayer0.setText("");
+        hostPlayer1.setText("");
+        hostPlayer2.setText("");
+        hostPlayer3.setText("");
+        joinPlayer0.setText("");
+        joinPlayer1.setText("");
+        joinPlayer2.setText("");
+        joinPlayer3.setText("");
     }
 }
 
