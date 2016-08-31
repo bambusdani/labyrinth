@@ -109,6 +109,10 @@ public class ConnectionListener extends Thread {
                     broadcast("rooms " + rooms);
                     // log outgoing message
                     LOGGER.info("OUTGOING rooms " + rooms);
+                    // send hosts to all players
+                    broadcast("hosts " + hosts);
+                    // log outgoing message
+                    LOGGER.info("OUTGOING hosts " + hosts);
 
                     // set connection init false
                     connections.get(i).setInit(false);
@@ -157,6 +161,10 @@ public class ConnectionListener extends Thread {
                         broadcast("rooms " + rooms);
                         // log outgoing message
                         LOGGER.info("OUTGOING rooms " + rooms);
+                        // send hosts to all clients
+                        broadcast("hosts " + hosts);
+                        // log outgoing message
+                        LOGGER.info("OUTGOING hosts " + hosts);
 
                         // draw ready players
                         broadcast("drawReadyPlayers " + readyPlayers);
@@ -274,15 +282,9 @@ public class ConnectionListener extends Thread {
                         String[] tmpRooms = rooms.split("\\s+");
                         for (int j = 0; j < tmpRooms.length; j = j+2) {
                             // delete room name
-                            if (rooms.contains(tmpRooms[j])) {
-                                rooms = rooms.replace(tmpRooms[j], "");
-                            }
-                            // TRIM THE FUCKING ROOMS AGAIN
-                            rooms = rooms.trim();
-                            // delete playerID of room
-                            System.out.println(tmpRooms.length);
-                            if (rooms.contains(tmpRooms[j + 1])) {
-                                rooms = rooms.replace(tmpRooms[j+1], "");
+                            if (rooms.contains(tmpGameStart)) {
+                                rooms = rooms.replace(tmpRooms[j] + " " + tmpRooms[j+1], "");
+                                rooms = rooms.trim();
                             }
                         }
                         // trim rooms
