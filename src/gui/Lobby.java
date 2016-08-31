@@ -73,7 +73,6 @@ public class Lobby implements ActionListener{
     private String gameRooms="";
     private boolean ready = false;
     private boolean host = false;
-    private boolean joinValid = false;
 
     //Frame
     JFrame frame = new JFrame("Das Verrückte Labyrinth");
@@ -614,6 +613,8 @@ public class Lobby implements ActionListener{
         } else if (e.getSource() == buttonJoin) {
             // send join request to server
             if (!textAreaJoinNumber.getText().isEmpty()) {
+                // set room
+                room = textAreaJoinNumber.getText();
                 // count the players in a gameRoom by counting
                 // the strings of the same room
                 int tmpCounter = 0;
@@ -633,8 +634,7 @@ public class Lobby implements ActionListener{
                     // log outgoing message
                     LOGGER.info("OUTGOING join " + textAreaJoinNumber.getText());
 
-                    // set room
-                    room = textAreaJoinNumber.getText();
+
                     // set back button text
                     buttonback2.setText("Leave " + room);
 
@@ -646,18 +646,6 @@ public class Lobby implements ActionListener{
             } else {
                 textAreaJoinNumber.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
             }
-
-            // only join is join is valid
-            if (joinValid) {
-                // set room
-                room = textAreaJoinNumber.getText();
-                // set back button text
-                buttonback2.setText("Leave " + room);
-
-                panelButtons.setVisible(false);
-                panelJoinGame.setVisible(true);
-            }
-
         } else if (e.getSource() == buttonRules) {
             Rules rules = new Rules();
             rules.createGui();
@@ -772,7 +760,6 @@ public class Lobby implements ActionListener{
                 gameRooms = s.substring(6);
 
                 String[] tmpRooms = s.split("\\s+");
-                System.out.println(s);
                 for (int i = 1; i < tmpRooms.length; i = i+2) {
                     if (!textAreaOpenGames.getText().contains(tmpRooms[i])) {
                         textAreaOpenGames.append(tmpRooms[i] + "\n");
@@ -807,30 +794,38 @@ public class Lobby implements ActionListener{
                     String[] tmpReadyPlayers = s.split("\\s+");
 
                     // draw readyPlayers
-                    if (tmpReadyPlayers.length == 2) {
-                        hostPlayer0.setText(tmpReadyPlayers[1]);
-                        joinPlayer0.setText(tmpReadyPlayers[1]);
-                    } else if (tmpReadyPlayers.length == 3) {
-                        hostPlayer0.setText(tmpReadyPlayers[1]);
-                        joinPlayer0.setText(tmpReadyPlayers[1]);
-                        hostPlayer1.setText(tmpReadyPlayers[2]);
-                        joinPlayer1.setText(tmpReadyPlayers[2]);
-                    } else if (tmpReadyPlayers.length == 4) {
-                        hostPlayer0.setText(tmpReadyPlayers[1]);
-                        joinPlayer0.setText(tmpReadyPlayers[1]);
-                        hostPlayer1.setText(tmpReadyPlayers[2]);
-                        joinPlayer1.setText(tmpReadyPlayers[2]);
-                        hostPlayer2.setText(tmpReadyPlayers[3]);
-                        joinPlayer2.setText(tmpReadyPlayers[3]);
-                    } else if (tmpReadyPlayers.length == 5) {
-                        hostPlayer0.setText(tmpReadyPlayers[1]);
-                        joinPlayer0.setText(tmpReadyPlayers[1]);
-                        hostPlayer1.setText(tmpReadyPlayers[2]);
-                        joinPlayer1.setText(tmpReadyPlayers[2]);
-                        hostPlayer2.setText(tmpReadyPlayers[3]);
-                        joinPlayer2.setText(tmpReadyPlayers[3]);
-                        hostPlayer3.setText(tmpReadyPlayers[4]);
-                        joinPlayer3.setText(tmpReadyPlayers[4]);
+                    for (int i = 1; i < tmpReadyPlayers.length; i = i+2) {
+                        if (hostPlayer0.getText().equalsIgnoreCase(tmpReadyPlayers[i+1]) ||
+                                hostPlayer1.getText().equalsIgnoreCase(tmpReadyPlayers[i+1]) ||
+                                hostPlayer2.getText().equalsIgnoreCase(tmpReadyPlayers[i+1]) ||
+                                hostPlayer3.getText().equalsIgnoreCase(tmpReadyPlayers[i+1]) ||
+                                joinPlayer0.getText().equalsIgnoreCase(tmpReadyPlayers[i+1]) ||
+                                joinPlayer1.getText().equalsIgnoreCase(tmpReadyPlayers[i+1]) ||
+                                joinPlayer2.getText().equalsIgnoreCase(tmpReadyPlayers[i+1]) ||
+                                joinPlayer3.getText().equalsIgnoreCase(tmpReadyPlayers[i+1])) {
+                        }
+                        else if (tmpReadyPlayers[i].equalsIgnoreCase(room)) {
+                            // player 0
+                            if (hostPlayer0.getText().equalsIgnoreCase("") && joinPlayer0.getText().equalsIgnoreCase("")) {
+                                hostPlayer0.setText(tmpReadyPlayers[i+1]);
+                                joinPlayer0.setText(tmpReadyPlayers[i+1]);
+                            }
+                            // player 1
+                            else if (hostPlayer1.getText().equalsIgnoreCase("") && joinPlayer1.getText().equalsIgnoreCase("")) {
+                                hostPlayer1.setText(tmpReadyPlayers[i+1]);
+                                joinPlayer1.setText(tmpReadyPlayers[i+1]);
+                            }
+                            // player 2
+                            else if (hostPlayer2.getText().equalsIgnoreCase("") && joinPlayer2.getText().equalsIgnoreCase("")) {
+                                hostPlayer2.setText(tmpReadyPlayers[i+1]);
+                                joinPlayer2.setText(tmpReadyPlayers[i+1]);
+                            }
+                            // player 3
+                            else if (hostPlayer3.getText().equalsIgnoreCase("") && joinPlayer3.getText().equalsIgnoreCase("")) {
+                                hostPlayer3.setText(tmpReadyPlayers[i+1]);
+                                joinPlayer3.setText(tmpReadyPlayers[i+1]);
+                            }
+                        }
                     }
                 }
                 // 'gamestart' parameter
