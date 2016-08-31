@@ -643,11 +643,17 @@ public class PlayGround implements ActionListener {
             textField.requestFocusInWindow();
         }
         if (buttonEndGame == e.getSource()) {
+            if(playersTurnID == playerID){
             // send to server
             out.println("leave " + playerID);
             // log
             LOGGER.info("OUTGOING leave");
             System.exit(0);
+            }
+            else{
+                textArea.insert("Nur der Spieler der an der Reihe ist darf das Spiel verlassen" + "\n", textArea.getText().length());
+                textArea.setCaretPosition(textArea.getText().length());
+            }
         }
         if (playersTurnID == playerID) {
             if (buttonRotate == e.getSource()) {

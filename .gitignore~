@@ -14,7 +14,10 @@
 
 #jar files
 #*.jar
+<<<<<<< HEAD
+=======
 
+>>>>>>> Rehan2
 chatLog.log
 player_*
 
