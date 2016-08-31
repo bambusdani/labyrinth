@@ -1,0 +1,27 @@
+/bin/
+
+#Intellij
+*.iml
+.idea/
+
+#Chatlog
+
+*.log*
+
+*.log
+*.ick
+*.lck
+
+#jar files
+#*.jar
+<<<<<<< HEAD
+=======
+
+>>>>>>> Rehan2
+chatLog.log
+player_*
+
+
+#mac
+.DS_Store
+
